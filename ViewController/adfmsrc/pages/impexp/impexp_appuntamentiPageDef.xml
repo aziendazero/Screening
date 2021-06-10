@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="impexp_appuntamentiPageDef"
+                Package="pages.impexp">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Impexp_SoCnfImpexpView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ImpexpBeanDataControl" id="ImpexpBeanDataControlIterator"/>
+    <iterator Binds="Impexp_SoCnfTpdipartimentaleView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfTpdipartimentaleView1Iterator"/>
+    <iterator Binds="Impexp_SoCnfCentriImpexpView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfCentriImpexpView1Iterator"/>
+    <iterator Binds="Impexp_SoCentroPrelView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCentroPrelView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dtimport">
+      <AttrNames>
+        <Item Value="Dtimport"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="tpdip" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Impexp_SoCnfTpdipartimentaleView1Iterator">
+      <AttrNames>
+        <Item Value="tpdip"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Tpdip"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="DescrTpdip"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="idcentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Impexp_SoCnfCentriImpexpView1Iterator">
+      <AttrNames>
+        <Item Value="idcentro"/>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentroref"/>
+        <Item Value="Suffisso"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="data">
+      <AttrNames>
+        <Item Value="data"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="data_max">
+      <AttrNames>
+        <Item Value="data_max"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="centro_prel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Impexp_SoCentroPrelView1Iterator">
+      <AttrNames>
+        <Item Value="centro_prel"/>
+        <Item Value="livello"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Tipocentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="livello" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="livello"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="2"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="inviti_hpv">
+      <AttrNames>
+        <Item Value="inviti_hpv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Test">
+      <AttrNames>
+        <Item Value="Test"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="op_type">
+      <AttrNames>
+        <Item Value="op_type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Tipo">
+      <AttrNames>
+        <Item Value="Tipo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="codts">
+      <AttrNames>
+        <Item Value="codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="LogFile">
+      <AttrNames>
+        <Item Value="LogFile"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,399 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUReferti1livMAView"
+   Version="11.1.2.62.76"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUReferti1livMAViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT
+    R.IDREFERTO,
+    r.idinvito,
+    r.codts,
+    r.ulss,
+    r.tpscr,
+    r.completo,
+    R.dtmammo,
+    R.DTREFERTO,
+    R.DTINSERIMENTO,
+    R.DTCREAZIONE dtcreazionelettera,
+    R.DTSPEDIZIONE dtstampa,
+    R.l1_radiologo,
+    C1.codreg L1_ESITO,
+    S1.codregionale l1_sugg,
+    R.l2_radiologo,
+    C2.codreg L2_ESITO,
+    S2.codregionale l2_sugg,
+    r.revisione,
+    r.r_radiologo,
+    C3.codreg r_ESITO,
+    S3.codregionale r_sugg,
+    C.codreg ESITO,
+    s.codregionale idsugg
+
+
+ FROM SO_REFERTOMAMMO1LIV R,
+ SO_CNF_SUGG_1LIV S,SO_CNF_SUGG_1LIV S1,SO_CNF_SUGG_1LIV S2,SO_CNF_SUGG_1LIV S3,
+ SO_CNF_REF1LIV C,SO_CNF_REF1LIV C1,SO_CNF_REF1LIV C2,SO_CNF_REF1LIV C3
+
+WHERE  R.TPREFERTO=0
+AND (R.idsugg=S.idsugg AND R.ulss=S.ulss AND R.tpscr=S.tpscr)
+AND (R.l1_sugg=S1.idsugg AND R.ulss=S1.ulss AND R.tpscr=S1.tpscr)
+AND (R.l2_sugg=S2.idsugg(+) AND R.ulss=S2.ulss(+) AND R.tpscr=S2.tpscr(+))
+AND (R.r_sugg=S3.idsugg(+) AND R.ulss=s3.ulss(+) AND R.tpscr=S3.tpscr(+))
+AND (R.esito=C.idcnfref1l AND R.gr_esito=C.gruppo AND R.ulss=C.ulss AND R.tpscr=C.tpscr)
+AND (R.L1_esito=C1.idcnfref1l AND R.gr_esito=C1.gruppo AND R.ulss=C1.ulss AND R.tpscr=C1.tpscr)
+AND (R.L2_esito=C2.idcnfref1l(+) AND R.gr_esito=C2.gruppo(+) AND R.ulss=C2.ulss(+) AND R.tpscr=C2.tpscr(+))
+AND (R.r_esito=C3.idcnfref1l(+) AND R.gr_esito=C3.gruppo(+) AND R.ulss=C3.ulss(+) AND R.tpscr=C3.tpscr(+))
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLETO"
+      Expression="COMPLETO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtmammo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTMAMMO"
+      Expression="DTMAMMO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtreferto"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFERTO"
+      Expression="DTREFERTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinserimento"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINSERIMENTO"
+      Expression="DTINSERIMENTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazionelettera"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONELETTERA"
+      Expression="DTCREAZIONELETTERA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L1Radiologo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L1_RADIOLOGO"
+      Expression="L1_RADIOLOGO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L1Esito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L1_ESITO"
+      Expression="L1_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L1Sugg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L1_SUGG"
+      Expression="L1_SUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L2Radiologo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L2_RADIOLOGO"
+      Expression="L2_RADIOLOGO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L2Esito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L2_ESITO"
+      Expression="L2_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="L2Sugg"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="L2_SUGG"
+      Expression="L2_SUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Revisione"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="REVISIONE"
+      Expression="REVISIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RRadiologo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="R_RADIOLOGO"
+      Expression="R_RADIOLOGO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="REsito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="R_ESITO"
+      Expression="R_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RSugg"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="R_SUGG"
+      Expression="R_SUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ESITO"
+      Expression="ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG"
+      Expression="IDSUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idreferto" />
+   </AttrArray>
+</ViewObject>

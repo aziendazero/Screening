@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_lettereCentri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_docsAction.letteraForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempDocs.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <!--af:button actionListener="#{bindings.setCurrentRowWithKeyValue.execute}"
+                                               text="Modifica" disabled="#{!bindings.setCurrentRowWithKeyValue.enabled}" id="b1"
+                                               action="creatEditLettera">
+                                               <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button-->
+                                    <af:button text="Modifica" disabled="#{!bindings.setCurrentRowWithKeyValue.enabled}" id="b1"
+                                               action="creatEditLettera" actionListener="#{Cnf_docsAction.onDettLettera}"
+                                               rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                               <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button actionListener="#{bindings.setCurrentRowWithKeyValue.execute}"
+                                               text="Cancella"
+                                               disabled="#{!bindings.setCurrentRowWithKeyValue.enabled}" id="b2"
+                                               rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                               action="creatEditLettera">
+                                               <af:setPropertyListener from="delete" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                    </af:button>
+                                    <af:button text="Anteprima" id="b3">
+                                        <af:fileDownloadActionListener filename="Anteprima_#{bindings.Descrizione.inputValue}.pdf"
+                                                                       method="#{Cnf_TemplateLetteraBean.downloadPreviewListener}"/>
+                                    </af:button>
+                                </af:group>
+                                <af:button text="Nuovo" id="b4" action="creatEditLettera"
+                                            rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                           actionListener="#{Cnf_docsAction.templatesFilter}">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedLettere}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}"
+                                    valueChangeListener="#{Cnf_docsAction.onChangeLettera}" autoSubmit="true"
+                                    binding="#{Cnf_docsAction.selectedLettera}" id="soc1">
+                                    <af:selectItem label="Tutte" id="si1"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.collectionModel.makeCurrent}"
+                                  rowSelection="single"
+                                  fetchSize="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.rangeSize}" id="t1"
+                                  columnStretching="last" scrollPolicy="page" binding="#{Cnf_docsAction.tabLettera}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Ulss.label}"
+                                       rendered="${sessionScope.regionale?true:false}" id="c6" width="50">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Ulss.tooltip}"
+                                               id="ot6"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Descrizione.label}"
+                                       id="c22" width="250">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Descrizione.tooltip}"
+                                               id="ot22"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.TpinvitoDesc.label}"
+                                       id="c10" width="250">
+                                <af:outputText value="#{row.TpinvitoDesc}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.TpinvitoDesc.tooltip}"
+                                               id="ot10"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg1lDesc.label}"
+                                       id="c13" width="180">
+                                <af:outputText value="#{row.Sugg1lDesc}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg1lDesc.tooltip}"
+                                               id="ot13"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg2lDesc.label}"
+                                       id="c16" width="180">
+                                <af:outputText value="#{row.Sugg2lDesc}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg2lDesc.tooltip}"
+                                               id="ot16"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg3lDesc.label}"
+                                       id="c19" width="180">
+                                <af:outputText value="#{row.Sugg3lDesc}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Sugg3lDesc.tooltip}"
+                                               id="ot19"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.TestProposto.label}"
+                                       rendered="${sessionScope.HPV}" id="c3">
+                                <af:outputText value="#{row.TestProposto}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.TestProposto.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column id="c2" headerText="Età" width="70">
+                                <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaDa.label}"
+                                           id="c23" width="35">
+                                    <af:outputText value="#{row.EtaDa}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaDa.tooltip}"
+                                                   id="ot23">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaDa.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaA.label}"
+                                           id="c24" width="35">
+                                    <af:outputText value="#{row.EtaA}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaA.tooltip}"
+                                                   id="ot24">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.EtaA.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Descrbreve.label}"
+                                       id="c1" width="70">
+                                <af:outputText value="#{row.Descrbreve}"
+                                               shortDesc="#{bindings.Cnf_SoCnfLetteracentroExtendedView1.hints.Descrbreve.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Utilizzo template"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

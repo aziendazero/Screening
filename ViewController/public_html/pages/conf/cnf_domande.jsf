@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_domande.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempQuestionari.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t3" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" action="creatEditDomanda">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{Cnf_questionarioBean.deleteDomanda}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente la seguente domanda?" id="ot2"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditDomanda">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfDomandeView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfDomandeView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfDomandeView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfDomandeView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfDomandeView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfDomandeView1.rangeSize}" id="t1"
+                                  autoHeightRows="20">
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Domanda.label}" id="c1"
+                                       width="300">
+                                <af:outputText value="#{row.Domanda}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Domanda.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Modificabile.label}" id="c2">
+                                <af:selectBooleanCheckbox id="sbc1" readOnly="true" selected="#{row.Modificabile}"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Tipo.label}" id="c3">
+                                <af:outputText value="#{row.Tipo}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Tipo.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Lunghezza.label}" id="c4">
+                                <af:outputText value="#{row.Lunghezza}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Lunghezza.tooltip}"
+                                               id="ot4">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfDomandeView1.hints.Lunghezza.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Gruppo.label}" id="c5">
+                                <af:outputText value="#{row.Gruppo}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Gruppo.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Minval.label}" id="c6">
+                                <af:outputText value="#{row.Minval}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Minval.tooltip}"
+                                               id="ot6"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Maxval.label}" id="c7">
+                                <af:outputText value="#{row.Maxval}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Maxval.tooltip}"
+                                               id="ot7"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.Note.label}" id="c8"
+                                       width="250">
+                                <af:outputText value="#{row.Note}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.Note.tooltip}"
+                                               id="ot8"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfDomandeView1.hints.DtFineVal.label}" id="c9">
+                                <af:outputText value="#{row.DtFineVal}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDomandeView1.hints.DtFineVal.tooltip}"
+                                               id="ot9">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfDomandeView1.hints.DtFineVal.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Domande"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,400 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_SoInterventocolonStoricoView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;N_INT&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_SoInterventocolonStoricoViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT
+    SO_INTERVENTOCOLON.IDINT,
+    so_interventocolon.n_int,
+    SO_INTERVENTOCOLON.idreferto,
+     SO_INTERVENTOCOLON.ULSS,
+    SO_INTERVENTOCOLON.TPSCR,
+     SO_INTERVENTOCOLON.COMPLETO,
+    ESEC.DESCRIZIONE ESECUZIONE,
+    MOTIVO.DESCRIZIONE MOTIVO_INESEC,
+    SO_INTERVENTOCOLON.DTINTERVENTO,
+    DECODE(INTERV_MEDICO.TITOLO,NULL,'',INTERV_MEDICO.TITOLO)||' '||
+    INTERV_MEDICO.COGNOME||' ' ||
+    INTERV_MEDICO.NOME INTERV_MED,
+    TPINT.DESCRIZIONE TIPO_INTERVENTO,
+    DECODE(SO_INTERVENTOCOLON.ISTOLOGIA,1,'Eseguita','Non eseguita') ISTCHIRURGICA,
+    SO_INTERVENTOCOLON.DTISTOLOGIA,
+    DECODE(ISTOCHIR_MEDICO.TITOLO,NULL,'',ISTOCHIR_MEDICO.TITOLO)||' '||
+    ISTOCHIR_MEDICO.COGNOME||' ' ||
+    ISTOCHIR_MEDICO.NOME ISTOCHIR_MED,
+    ISTDIAGN.DESCRIZIONE DIAGNOSI_ISTCHIR,
+    SO_INTERVENTOCOLON.DTCONCL,
+    DECODE(RACC_MEDICO.TITOLO,NULL,'',RACC_MEDICO.TITOLO)||' '||
+    RACC_MEDICO.COGNOME||' ' ||
+    RACC_MEDICO.NOME RACC_MED,
+    SO_CNF_SUGG_3LIV.DESCRIZIONE SUGGERIMENTO
+    
+ FROM SO_INTERVENTOCOLON, SO_CNF_REF2LIV ESEC,
+  SO_CNF_REF2LIV TPINT,  SO_CNF_REF2LIV ISTDIAGN,
+   SO_CNF_REF2LIV MOTIVO, SO_CNF_SUGG_3LIV,
+   SO_OPMEDICO ISTOCHIR_MEDICO,
+   SO_OPMEDICO INTERV_MEDICO,
+   SO_OPMEDICO RACC_MEDICO
+   
+ WHERE(SO_INTERVENTOCOLON.OPZIONEESEC=ESEC.IDCNFREF2L(+) AND 
+ SO_INTERVENTOCOLON.GR_OPZIONE=ESEC.GRUPPO(+) AND 
+ SO_INTERVENTOCOLON.ULSS=ESEC.ULSS(+) AND 
+ SO_INTERVENTOCOLON.TPSCR=ESEC.TPSCR(+))
+AND (SO_INTERVENTOCOLON.TPINTERVENTO=TPINT.IDCNFREF2L(+) AND 
+ SO_INTERVENTOCOLON.GR_TPINTERVENTO=TPINT.GRUPPO(+) AND 
+ SO_INTERVENTOCOLON.ULSS=TPINT.ULSS(+) AND 
+ SO_INTERVENTOCOLON.TPSCR=TPINT.TPSCR(+))
+ AND (SO_INTERVENTOCOLON.DIAGNOSI=ISTDIAGN.IDCNFREF2L(+) AND 
+ SO_INTERVENTOCOLON.GR_DIAGNOSI=ISTDIAGN.GRUPPO(+) AND 
+ SO_INTERVENTOCOLON.ULSS=ISTDIAGN.ULSS(+) AND 
+ SO_INTERVENTOCOLON.TPSCR=ISTDIAGN.TPSCR(+))
+AND (SO_INTERVENTOCOLON.MOTIVOESEC=MOTIVO.IDCNFREF2L(+) AND 
+ SO_INTERVENTOCOLON.GR_MOTIVO=MOTIVO.GRUPPO(+) AND 
+ SO_INTERVENTOCOLON.ULSS=MOTIVO.ULSS(+) AND 
+ SO_INTERVENTOCOLON.TPSCR=MOTIVO.TPSCR(+))
+ AND (SO_INTERVENTOCOLON.IDSUGG3L=SO_CNF_SUGG_3LIV.IDSUGG3L(+) AND
+ SO_INTERVENTOCOLON.ULSS=SO_CNF_SUGG_3LIV.ULSS(+) AND
+ SO_INTERVENTOCOLON.TPSCR=SO_CNF_SUGG_3LIV.TPSCR(+))
+ AND SO_INTERVENTOCOLON.IDPATOLOGO=ISTOCHIR_MEDICO.IDOP(+)
+ AND SO_INTERVENTOCOLON.IDCHIRURGO=INTERV_MEDICO.IDOP(+)
+ AND SO_INTERVENTOCOLON.IDMEDCONCL=RACC_MEDICO.IDOP(+)
+ ORDER BY SO_INTERVENTOCOLON.N_INT
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idint"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINT"
+      Expression="IDINT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idint_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NInt"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_INT"
+      Expression="N_INT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NInt_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLETO"
+      Expression="COMPLETO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esecuzione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESECUZIONE"
+      Expression="ESECUZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MotivoInesec"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MOTIVO_INESEC"
+      Expression="MOTIVO_INESEC"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtintervento"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINTERVENTO"
+      Expression="DTINTERVENTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtintervento_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtintervento_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtintervento_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IntervMed"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INTERV_MED"
+      Expression="INTERV_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IntervMed_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoIntervento"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPO_INTERVENTO"
+      Expression="TIPO_INTERVENTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TipoIntervento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Istchirurgica"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ISTCHIRURGICA"
+      Expression="ISTCHIRURGICA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Istchirurgica_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtistologia"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTISTOLOGIA"
+      Expression="DTISTOLOGIA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtistologia_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtistologia_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtistologia_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IstochirMed"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ISTOCHIR_MED"
+      Expression="ISTOCHIR_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IstochirMed_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DiagnosiIstchir"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DIAGNOSI_ISTCHIR"
+      Expression="DIAGNOSI_ISTCHIR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DiagnosiIstchir_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtconcl"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCONCL"
+      Expression="DTCONCL"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtconcl_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtconcl_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtconcl_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccMed"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RACC_MED"
+      Expression="RACC_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RaccMed_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Suggerimento"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SUGGERIMENTO"
+      Expression="SUGGERIMENTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Suggerimento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_SoInterventocolonStoricoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

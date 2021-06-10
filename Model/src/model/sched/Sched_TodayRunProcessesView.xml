@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sched_TodayRunProcessesView"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  SelectList="Sched_SoCodaProcessi.INIZIO_ESECUZIONE, 
+       Sched_SoCodaProcessi.PID, 
+       Sched_SoCodaProcessi.PRIORITA, 
+       Sched_SoCodaProcessi.STATO, 
+       Sched_SoCodaProcessi.TIPO_PROCESSO, 
+       Sched_SoCodaProcessi.TPSCR, 
+       Sched_SoCodaProcessi.ULSS"
+  FromList="SO_CODA_PROCESSI Sched_SoCodaProcessi"
+  Where="stato IN ('R', 'C') 
+  AND TRUNC(inizio_esecuzione) = TRUNC(SYSDATE)">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="Sched_TodayRunProcessesView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="Sched_SoCodaProcessi"
+    Entity="model.sched.Sched_SoCodaProcessi"/>
+  <ViewAttribute
+    Name="InizioEsecuzione"
+    PrecisionRule="true"
+    EntityAttrName="InizioEsecuzione"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="INIZIO_ESECUZIONE"/>
+  <ViewAttribute
+    Name="Pid"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Pid"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="PID"/>
+  <ViewAttribute
+    Name="Priorita"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Priorita"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="PRIORITA"/>
+  <ViewAttribute
+    Name="Stato"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Stato"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="STATO"/>
+  <ViewAttribute
+    Name="TipoProcesso"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="TipoProcesso"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="TIPO_PROCESSO"/>
+  <ViewAttribute
+    Name="Tpscr"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="TPSCR"/>
+  <ViewAttribute
+    Name="Ulss"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="Sched_SoCodaProcessi"
+    AliasName="ULSS"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.sched.common.Sched_TodayRunProcessesViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

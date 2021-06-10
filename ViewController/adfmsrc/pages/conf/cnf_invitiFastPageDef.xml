@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_invitiFastPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfInvitiFastView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfInvitiFastView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroPrelView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroPrelView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfEsitoinvitoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfEsitoinvitoView1Iterator"/>
+    <iterator Binds="Sogg_TipoInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_TipoInvitoView1Iterator"/>
+    <iterator Binds="Sogg_CprelInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_CprelInvitoView1Iterator"/>
+    <iterator Binds="Sogg_EsitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_EsitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Cnf_SoCnfInvitiFastView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfInvitiFastView" Name="Cnf_SoCnfInvitiFastView10">
+        <AttrNames>
+          <Item Value="NomeConf"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Idcentro"/>
+          <Item Value="DataCorrente"/>
+          <Item Value="Data"/>
+          <Item Value="Codesitoinvito"/>
+          <Item Value="StampaEtichetta"/>
+          <Item Value="Note"/>
+          <Item Value="Utilizza"/>
+          <Item Value="Ordine"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="Cnf_AppModuleDataControl"/>
+    <tree IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Cnf_SoCnfInvitiFastView11">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfInvitiFastView" Name="Cnf_SoCnfInvitiFastView110">
+        <AttrNames>
+          <Item Value="NomeConf"/>
+          <Item Value="Idtpinvito" Binds="Idtpinvito"/>
+          <Item Value="Idcentro" Binds="Idcentro"/>
+          <Item Value="DataCorrente" Binds="DataCorrente"/>
+          <Item Value="Data"/>
+          <Item Value="Codesitoinvito" Binds="Codesitoinvito"/>
+          <Item Value="StampaEtichetta" Binds="StampaEtichetta"/>
+          <Item Value="Utilizza" Binds="Utilizza"/>
+          <Item Value="Ordine"/>
+          <Item Value="Note"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Delete" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Idtpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_TipoInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Idcentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_CprelInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="DataCorrente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DataCorrente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="StampaEtichetta" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="StampaEtichetta"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Utilizza" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Utilizza"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Codesitoinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_EsitoView1Iterator">
+      <AttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

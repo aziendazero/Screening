@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="aur_searchPageDef"
+                Package="pages.soggetto.aur">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AURRequestDataControl" id="AURRequestDataControlIterator"/>
+    <accessorIterator MasterBinding="AURRequestDataControlIterator" Binds="AURFilter" RangeSize="25"
+                      DataControl="AURRequestDataControl" BeanClass="model.datacontrol.aur.AURFilter"
+                      id="AURFilterIterator"/>
+    <methodIterator Binds="findAnag.result" DataControl="AURRequestDataControl" RangeSize="25"
+                    BeanClass="model.datacontrol.aur.AURResponse" id="findAnagIterator"/>
+    <accessorIterator MasterBinding="findAnagIterator" Binds="persons" RangeSize="25"
+                      DataControl="AURRequestDataControl" BeanClass="model.datacontrol.aur.Person"
+                      id="personsIterator"/>
+    <iterator id="Sogg_RicercaViewAURCheckIterator" Binds="Sogg_RicercaViewAURCheck"
+              DataControl="Sogg_AppModuleDataControl" RangeSize="25"/>
+    <iterator id="Sogg_SoSoggettoView1Iterator" Binds="Sogg_SoSoggettoView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Sogg_ComuneAURView1Iterator" Binds="Sogg_ComuneAURView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator Binds="Sogg_SoStatoAURView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_StatoView1Iterator"/>
+    <iterator id="Sogg_SoMedicoAURView1Iterator" Binds="Sogg_SoMedicoAURView1" DataControl="AurAppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Sogg_CategoriaView1Iterator" Binds="Sogg_CategoriaView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Sogg_SoCnfTipiDocView1Iterator" Binds="Sogg_SoCnfTipiDocView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AURFilterIterator" id="fiscalCode">
+      <AttrNames>
+        <Item Value="fiscalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="cs">
+      <AttrNames>
+        <Item Value="cs"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="mpi">
+      <AttrNames>
+        <Item Value="mpi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="nameFam">
+      <AttrNames>
+        <Item Value="nameFam"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="nameGiv">
+      <AttrNames>
+        <Item Value="nameGiv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="birthTime">
+      <AttrNames>
+        <Item Value="birthTime"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="findAnag" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findAnag"
+                  IsViewObjectMethod="false" DataControl="AURRequestDataControl"
+                  InstanceName="data.AURRequestDataControl.dataProvider"
+                  ReturnName="data.AURRequestDataControl.methodResults.findAnag_AURRequestDataControl_dataProvider_findAnag_result"/>
+    <methodAction IterBinding="AURFilterIterator" id="reset" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reset" IsViewObjectMethod="false" DataControl="AURRequestDataControl"
+                  InstanceName="bindings.AURFilterIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="AURFilterIterator" id="birthTimeDate">
+      <AttrNames>
+        <Item Value="birthTimeDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="rollback" RequiresUpdateModel="true" Action="invokeMethod" MethodName="rollback"
+                  IsViewObjectMethod="false" DataControl="AURRequestDataControl"
+                  InstanceName="data.AURRequestDataControl.dataProvider"
+                  ReturnName="data.AURRequestDataControl.methodResults.rollback_AURRequestDataControl_dataProvider_rollback_result">
+      <NamedData NDName="actionToGo" NDValue="rbSogg" NDType="java.lang.String"/>
+    </methodAction>
+    <tree IterBinding="personsIterator" id="persons">
+      <nodeDefinition DefName="model.datacontrol.aur.Person" Name="persons0">
+        <AttrNames>
+          <Item Value="teamInst"/>
+          <Item Value="addrBnr"/>
+          <Item Value="addrCode"/>
+          <Item Value="addrStr"/>
+          <Item Value="birthplaceCode"/>
+          <Item Value="birthTime"/>
+          <Item Value="birthTimeDate"/>
+          <Item Value="countryOfAddr"/>
+          <Item Value="countryOfBirth"/>
+          <Item Value="countryOfDom"/>
+          <Item Value="cs"/>
+          <Item Value="csDateBegin"/>
+          <Item Value="csDateBeginDate"/>
+          <Item Value="csDateEnd"/>
+          <Item Value="csDateEndDate"/>
+          <Item Value="csRegion"/>
+          <Item Value="deathDate"/>
+          <Item Value="deathDateDate"/>
+          <Item Value="domAddrBnr"/>
+          <Item Value="domAddrCode"/>
+          <Item Value="domAddrStr"/>
+          <Item Value="eni"/>
+          <Item Value="eniDateBegin"/>
+          <Item Value="eniDateBeginDate"/>
+          <Item Value="eniDateEnd"/>
+          <Item Value="eniDateEndDate"/>
+          <Item Value="fiscalCode"/>
+          <Item Value="genderCode"/>
+          <Item Value="mmgDateBegin"/>
+          <Item Value="mmgDateBeginDate"/>
+          <Item Value="mmgDateEnd"/>
+          <Item Value="mmgDateEndDate"/>
+          <Item Value="mmgNameFam"/>
+          <Item Value="mmgNameGiv"/>
+          <Item Value="mmgRegionalCode"/>
+          <Item Value="mpi"/>
+          <Item Value="nameFam"/>
+          <Item Value="nameGiv"/>
+          <Item Value="reliability"/>
+          <Item Value="stp"/>
+          <Item Value="stpDateBegin"/>
+          <Item Value="stpDateBeginDate"/>
+          <Item Value="stpDateEnd"/>
+          <Item Value="stpDateEndDate"/>
+          <Item Value="teamCode"/>
+          <Item Value="teamDateEnd"/>
+          <Item Value="teamDateEndDate"/>
+          <Item Value="teamIdent"/>
+          <Item Value="teamPers"/>
+          <Item Value="telecomBad"/>
+          <Item Value="telecomEc"/>
+          <Item Value="telecomH"/>
+          <Item Value="telecomHp"/>
+          <Item Value="telecomMail"/>
+          <Item Value="telecomMc"/>
+          <Item Value="telecomPg"/>
+          <Item Value="telecomTmp"/>
+          <Item Value="birthplaceCodeRow"/>
+          <Item Value="addrCodeRow"/>
+          <Item Value="countryOfAddrRow"/>
+          <Item Value="countryOfBirthRow"/>
+          <Item Value="countryOfDomRow"/>
+          <Item Value="domAddrCodeRow"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction IterBinding="personsIterator" id="importAnagrafe1" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="importAnagrafe" IsViewObjectMethod="false" DataControl="AURRequestDataControl"
+                  InstanceName="bindings.personsIterator.currentRow.dataProvider" IsLocalObjectReference="true"
+                  ReturnName="data.AURRequestDataControl.methodResults.importAnagrafe_importAnagrafe_importAnagrafe_result"/>
+  </bindings>
+</pageDefinition>

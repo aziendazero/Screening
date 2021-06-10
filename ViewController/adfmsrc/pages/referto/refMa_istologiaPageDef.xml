@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refMa_istologiaPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoRefertomammo2livView1" RangeSize="25" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoRefertomammo2livView1Iterator"/>
+    <iterator Binds="Ref_SoInterventomammoView1" RangeSize="25" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoInterventomammoView1Iterator"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiMAView1" RangeSize="25" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiMAView1Iterator"/>
+    <iterator Binds="Ref_SoOpmedicoView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoOpmedicoView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTDIAView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTDIAView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTOPTView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTOPTView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTOLMView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTOLMView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livSTADIOView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livSTADIOView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTODMView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTODMView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTORXView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTORXView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTOPNView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTOPNView1Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg3livView4" RangeSize="25" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfSugg3livView4Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg2livView2" RangeSize="10" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfSugg2livView2Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoRefertomammo2livView1Iterator" id="Completo">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Completo1">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="NInt">
+      <AttrNames>
+        <Item Value="NInt"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="Ref_SoInterventomammoView1Iterator" id="Next"
+            InstanceName="RefMa_AppModuleDataControl.Ref_SoInterventomammoView1"
+            DataControl="RefMa_AppModuleDataControl" RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="Ref_SoInterventomammoView1Iterator" id="Previous"
+            InstanceName="RefMa_AppModuleDataControl.Ref_SoInterventomammoView1"
+            DataControl="RefMa_AppModuleDataControl" RequiresUpdateModel="true" Action="previous"/>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Idint">
+      <AttrNames>
+        <Item Value="Idint"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Istologia">
+      <AttrNames>
+        <Item Value="Istologia"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Dtistologia">
+      <AttrNames>
+        <Item Value="Dtistologia"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Idpatologo1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView1Iterator">
+      <AttrNames>
+        <Item Value="Idpatologo1"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Idpatologo2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView1Iterator">
+      <AttrNames>
+        <Item Value="Idpatologo2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="NLinfonodi">
+      <AttrNames>
+        <Item Value="NLinfonodi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="NPositivi">
+      <AttrNames>
+        <Item Value="NPositivi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="NoteIstologia">
+      <AttrNames>
+        <Item Value="NoteIstologia"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Diagnosi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTDIAView1Iterator">
+      <AttrNames>
+        <Item Value="Diagnosi"/>
+        <Item Value="GrDiagnosi"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="AltraDiagnosi">
+      <AttrNames>
+        <Item Value="AltraDiagnosi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Grading">
+      <AttrNames>
+        <Item Value="Grading"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="StadioPt" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTOPTView1Iterator">
+      <AttrNames>
+        <Item Value="StadioPt"/>
+        <Item Value="GruppoPt"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="StadioPn" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTOPNView1Iterator">
+      <AttrNames>
+        <Item Value="StadioPn"/>
+        <Item Value="GruppoPn"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="StadioM" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTOLMView1Iterator">
+      <AttrNames>
+        <Item Value="StadioM"/>
+        <Item Value="GruppoM"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Stadiazione" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livSTADIOView1Iterator">
+      <AttrNames>
+        <Item Value="Stadiazione"/>
+        <Item Value="GrStadiazione"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Diametro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTODMView1Iterator">
+      <AttrNames>
+        <Item Value="Diametro"/>
+        <Item Value="GrDiametro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInterventomammoView1Iterator" id="Residui" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTORXView1Iterator">
+      <AttrNames>
+        <Item Value="Residui"/>
+        <Item Value="GrResidui"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoRefertomammo2livView1Iterator" id="Idallegato">
+      <AttrNames>
+        <Item Value="Idallegato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertomammo2livView1Iterator" id="Dtspedizione">
+      <AttrNames>
+        <Item Value="Dtspedizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Tipoinvitodesc">
+      <AttrNames>
+        <Item Value="Tipoinvitodesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfSugg2livView2Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Attivo">
+      <AttrNames>
+        <Item Value="Attivo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfSugg3livView4Iterator" id="Descrizione1">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertomammo2livView1Iterator" id="Intchiusi">
+      <AttrNames>
+        <Item Value="Intchiusi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInterventomammoView1Iterator" id="Idint1">
+      <AttrNames>
+        <Item Value="Idint"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertomammo2livView1Iterator" id="Idreferto">
+      <AttrNames>
+        <Item Value="Idreferto"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

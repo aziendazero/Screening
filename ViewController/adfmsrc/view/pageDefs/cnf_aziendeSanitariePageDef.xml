@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_aziendeSanitariePageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoAziendaView1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator" RangeSize="10"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoAziendaView1Iterator" id="Cnf_SoAziendaView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoAziendaView" Name="Cnf_SoAziendaView10">
+        <AttrNames>
+          <Item Value="Codaz"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Codipa"/>
+          <Item Value="GgChiusuraRound"/>
+          <Item Value="DurataMsgChiusuraRound"/>
+          <Item Value="Dtultagganag"/>
+          <Item Value="Logo"/>
+          <Item Value="DataHpv"/>
+          <Item Value="Etacitomin"/>
+          <Item Value="Etacitomax"/>
+          <Item Value="Etamammomin"/>
+          <Item Value="Etamammomax"/>
+          <Item Value="Etacolonmin"/>
+          <Item Value="Etacolonmax"/>
+          <Item Value="Etahpvmax"/>
+          <Item Value="Etahpvmin"/>
+          <Item Value="Etapfasmax"/>
+          <Item Value="Etapfasmin"/>
+          <Item Value="Etacardiomax"/>
+          <Item Value="Etacardiomin"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView11" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

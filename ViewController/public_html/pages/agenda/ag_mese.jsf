@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.agenda.ag_meseBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.AGENDA}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Ag_preMeseAction.frmagenda}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="60px" bottomHeight="0">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl4">
+                                <af:link text="Configurazione" id="l8" action="#{Ag_meseAction.onConfigurazione}"/>
+                                <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal"
+                                                     halign="right">
+                                    <af:toolbar id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                        <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b41" action="rb_daAgenda"
+                                                   immediate="true"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll">
+                                <af:showDetailHeader messageType="info" text="#{viewcontrollerBundle.INFORMAZIONE}"
+                                                     disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                     inlineStyle="font-weight:bold; background-color:InfoBackground;"
+                                                     rendered="#{sessionScope.appSel}">
+                                    <af:outputFormatted value="#{sessionScope.pazSel}" id="of1" styleUsage="instruction"
+                                                        rendered="true" inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>                   
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s9" rendered="#{sessionScope.appSel}"/>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                                    <af:selectOneChoice value="#{bindings.idCentro.inputValue}"
+                                                        label="#{bindings.idCentro.label}"
+                                                        required="#{bindings.idCentro.hints.mandatory}"
+                                                        styleClass="choiceInTable"
+                                                        autoSubmit="true"
+                                                        shortDesc="#{bindings.idCentro.hints.tooltip}" id="centro"
+                                                        valueChangeListener="#{Ag_meseAction.onCerca}">
+                                        <f:selectItems value="#{bindings.idCentro.items}" id="si7"/>
+                                        <f:validator binding="#{bindings.idCentro.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s1"/>
+                                    <af:spacer width="10" height="10" id="s3"/>
+                                    <af:button text="#{viewcontrollerBundle.PREV}" id="btprev"
+                                               actionListener="#{Ag_meseAction.onPrev}"/>
+                                    <af:spacer width="10" height="10" id="s5"/>
+                                    <af:button text="#{viewcontrollerBundle.NEXT}" id="btnext"
+                                               actionListener="#{Ag_meseAction.onNext}"/>
+                                    <af:spacer width="10" height="10" id="s6"/>
+                                    <af:spacer width="10" height="10" id="s73"/>
+                                    <af:selectOneChoice label="#{viewcontrollerBundle.Mese}" id="soc2" value="#{bindings.mese.inputValue}" autoSubmit="true"
+                                                        valueChangeListener="#{Ag_meseAction.onCerca}"
+                                                        partialTriggers="btprev btnext">
+                                        <af:selectItem label="Gennaio" value="0" id="si2"/>
+                                        <af:selectItem label="Febbraio" value="1" id="si3"/>
+                                        <af:selectItem label="Marzo" value="2" id="si4"/>
+                                        <af:selectItem label="Aprile" value="3" id="si5"/>
+                                        <af:selectItem label="Maggio" value="4" id="si6"/>
+                                        <af:selectItem label="Giugno" value="5" id="si72"/>
+                                        <af:selectItem label="Luglio" value="6" id="si8"/>
+                                        <af:selectItem label="Agosto" value="7" id="si9"/>
+                                        <af:selectItem label="Settembre" value="8" id="si10"/>
+                                        <af:selectItem label="Ottobre" value="9" id="si11"/>
+                                        <af:selectItem label="Novembre" value="10" id="si12"/>
+                                        <af:selectItem label="Dicembre" value="11" id="si13"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s62"/>
+                                    <af:spacer width="10" height="10" id="s732"/>
+                                    <af:inputNumberSpinbox label="#{viewcontrollerBundle.Anno}" id="ins1" minimum="2000" maximum="2100" value="#{bindings.anno.inputValue}" columns="4" autoSubmit="true"
+                                                           valueChangeListener="#{Ag_meseAction.onCerca}"
+                                                           partialTriggers="btprev btnext"/>
+                                </af:panelGroupLayout>                                
+                                <af:spacer width="10" height="10" id="s2"/>
+                                <af:panelSplitter id="ps2" orientation="horizontal" splitterPosition="810">
+                                    <f:facet name="first">
+                                        <af:panelHeader text="#{viewcontrollerBundle.APPUNTAMENTI} #{AgendaUtils.formatDate(AgendaUtils.getDataGMA(1, bindings.mese.inputValue, bindings.anno.inputValue), 'MMMMM yyyy').toUpperCase()}" id="ph1"
+                                                        styleClass="AFStretchWidth"
+                                                        partialTriggers="btprev btnext centro">
+                                            <af:panelCollection id="pc1"
+                                                                featuresOff="detach freeze wrap columnsMenuItem"
+                                                                styleClass="AFStretchWidth">
+                                                <af:table var="row" rowBandingInterval="0" id="t1"
+                                                          summary="#{viewcontrollerBundle.CALENDARIO}" value="#{bindings.Agenda_VisMensView1.collectionModel}"
+                                                          columnStretching="last" columnResizing="disabled"
+                                                          disableColumnReordering="true" width="800">
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.LUNED_U00EC}" id="c1"
+                                                               inlineStyle="background-color:##{'e8f3fd'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled"
+                                                               styleClass="#{row.ggLun != null &amp;&amp; row.dispLun > 0 ? (row.occLun >row.dispLun ? 'SlotOver' : ( row.occLun ==row.dispLun ? 'SlotPieno' : 'SlotLibero') ) : ''}">
+                                                        <af:panelGroupLayout id="pgl" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l1" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispLun == null || row.dispLun == 0}">
+                                                                <af:outputText value="#{row.ggLun}" id="ot1" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggLun}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s10"/>
+                                                            <af:outputText value="#{row.occLun} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispLun}" id="ot10" visible="#{row.ggLun != null &amp;&amp; row.dispLun > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.MARTED_U00EC}" id="c2"
+                                                               styleClass="#{row.ggMar != null &amp;&amp; row.dispMar > 0 ? (row.occMar >row.dispMar ? 'SlotOver' : ( row.occMar ==row.dispMar ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'e8f3fd'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg2" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l2" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispMar == null || row.dispMar == 0}">
+                                                                <af:outputText value="#{row.ggMar}" id="ot2" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggMar}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s11"/>
+                                                            <af:outputText value="#{row.occMar} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispMar}" id="ot11" visible="#{row.ggMar != null &amp;&amp; row.dispMar > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.MERCOLED_U00EC}" id="c3"
+                                                               styleClass="#{row.ggMer != null &amp;&amp; row.dispMer > 0 ? (row.occMer >row.dispMer ? 'SlotOver' : ( row.occMer ==row.dispMer ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'e8f3fd'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg3" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l3" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispMer == null || row.dispMer == 0}">
+                                                                <af:outputText value="#{row.ggMer}" id="ot3" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggMer}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s113"/>
+                                                            <af:outputText value="#{row.occMer} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispMer}" id="ot13" visible="#{row.ggMer != null &amp;&amp; row.dispMer > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.GIOVED_U00EC}" id="c4"
+                                                               styleClass="#{row.ggGio != null &amp;&amp; row.dispGio > 0 ? (row.occGio >row.dispGio ? 'SlotOver' : ( row.occGio ==row.dispGio ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'e8f3fd'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg4" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l4" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispGio == null || row.dispGio == 0}">
+                                                                <af:outputText value="#{row.ggGio}" id="ot4" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggGio}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s14"/>
+                                                            <af:outputText value="#{row.occGio} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispGio}" id="ot14" visible="#{row.ggGio != null &amp;&amp; row.dispGio > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.VENERD_U00EC}" id="c5"
+                                                               styleClass="#{row.ggVen != null &amp;&amp; row.dispVen > 0 ? (row.occVen >row.dispVen ? 'SlotOver' : ( row.occVen ==row.dispVen ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'e8f3fd'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg5" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l5" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispVen == null || row.dispVen == 0}">
+                                                                <af:outputText value="#{row.ggVen}" id="ot5" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggVen}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s15"/>
+                                                            <af:outputText value="#{row.occVen} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispVen}" id="ot15" visible="#{row.ggVen != null &amp;&amp; row.dispVen > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.SABATO}" id="c6"
+                                                               styleClass="#{row.ggSab != null &amp;&amp; row.dispSab > 0 ? (row.occSab >row.dispSab ? 'SlotOver' : ( row.occSab ==row.dispSab ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'cccccc'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg6" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l6" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispSab == null || row.dispSab == 0}">
+                                                                <af:outputText value="#{row.ggSab}" id="ot6" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggSab}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s16"/>
+                                                            <af:outputText value="#{row.occSab} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispSab}" id="ot16" visible="#{row.ggSab != null &amp;&amp; row.dispSab > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                    <af:column sortable="false"
+                                                               headerText="#{viewcontrollerBundle.DOMENICA}" id="c7"
+                                                               styleClass="#{row.ggDom != null &amp;&amp; row.dispDom > 0 ? (row.occDom >row.dispDom ? 'SlotOver' : ( row.occDom ==row.dispDom ? 'SlotPieno' : 'SlotLibero') ) : ''}"
+                                                               inlineStyle="background-color:##{'cccccc'}; vertical-align:top; color:#{'black'};"
+                                                               rowHeader="unstyled">
+                                                        <af:panelGroupLayout id="pg7" halign="start" layout="vertical" valign="top">
+                                                            <af:link id="l7" action="#{Ag_meseAction.onSelgg}" disabled="#{row.dispDom == null || row.dispDom == 0}">
+                                                                <af:outputText value="#{row.ggDom}" id="ot7" inlineStyle="font-size:150%; font-weight:bold;"/>
+                                                                <af:setPropertyListener from="#{null}" to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                                <af:setPropertyListener from="#{row.ggDom}" to="#{requestScope.giorno}" type="action"/>
+                                                            </af:link>
+                                                            <af:spacer width="10" height="6" id="s17"/>
+                                                            <af:outputText value="#{row.occDom} #{viewcontrollerBundle.OCCUPATI_SU} #{row.dispDom}" id="ot17" visible="#{row.ggDom != null &amp;&amp; row.dispDom > 0}"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:panelHeader>
+                                    </f:facet>
+                                        <f:facet name="second">
+                                            <af:panelHeader text="#{viewcontrollerBundle.SINTESI_DEL_MESE}" id="ph3"
+                                                            styleClass="AFStretchWidth"
+                                                            partialTriggers="btprev btnext centro"
+                                                            rendered="#{bindings.idCentro.inputValue != null ? true : false}">
+                                                <af:listView value="#{bindings.Agenda_SintesiView1.collectionModel}"
+                                                             var="item"
+                                                             emptyText="#{bindings.Agenda_SintesiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                             fetchSize="#{bindings.Agenda_SintesiView1.rangeSize}"
+                                                             id="lv1" inlineStyle="border:none">
+                                                    <af:listItem id="li1">
+                                                        <af:panelGroupLayout layout="horizontal" id="pgl6">
+                                                            <f:facet name="separator">
+                                                                <af:spacer width="10" id="s8"/>
+                                                                <af:outputLabel value="-" id="ol1"/>
+                                                                <af:spacer width="10" height="10" id="s7"/>
+                                                            </f:facet>
+                                                            <af:outputFormatted value="#{item.bindings.Messaggio.inputValue}"
+                                                                                id="of2"/>
+                                                        </af:panelGroupLayout>
+                                                    </af:listItem>
+                                                </af:listView>
+                                            </af:panelHeader>
+                                        </f:facet>
+                                </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.AGENDA}"/>
+                <f:attribute name="navigation" value="#{Ag_meseAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

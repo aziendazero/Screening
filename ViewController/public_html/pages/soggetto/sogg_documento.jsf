@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_documentoBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GESTIONE_DOCUMENTO}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOption('pt1:IdTipoDoc')" type="load"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="50px" bottomHeight="0">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal"
+                                                 halign="right">
+                                <af:toolbar rendered="#{sessionScope.sogg_documento_mode=='delete'?false:true}" id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                    <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b2"
+                                               action="#{Sogg_documentoAction.onConfirm}"/>
+                                    <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b4"
+                                               action="#{Sogg_documentoAction.onRollback}" immediate="true"/>
+                                    <af:button text="#{viewcontrollerBundle.APPLICA}" id="b7"
+                                               action="#{Sogg_documentoAction.onApply}"/>
+                                </af:toolbar>
+                                <af:toolbar rendered="#{sessionScope.sogg_documento_mode=='delete'?true:false}" id="t3" inlineStyle="padding: 5px 20px 5px 5px;">
+                                    <af:button text="#{viewcontrollerBundle.STORICIZZA}" id="b8"
+                                               action="#{Sogg_documentoAction.onDelete}"/>
+                                    <af:button text="#{viewcontrollerBundle.ANNULLA}" immediate="true" id="b9"
+                                               action="back">
+                                        <af:setPropertyListener from='#{""}' to="#{sessionScope.sogg_documento_mode}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll">
+                                <af:showDetailHeader messageType="info" text="#{viewcontrollerBundle.INFORMAZIONE}"
+                                                     disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                     inlineStyle="font-weight:bold; background-color:InfoBackground;"
+                                                     rendered="#{sessionScope.sogg_documento_mode=='delete'?true:false}">
+                                    <af:outputFormatted value="#{viewcontrollerBundle.INFO}" id="of1" inlineStyle="font-size: 14px; font-stretch: ultra-expanded;" styleUsage="instruction"/>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s1"/>
+                                <af:panelFormLayout id="pfl1">
+                                    <af:selectOneChoice value="#{bindings.IdTipoDoc.inputValue}"
+                                                        label="#{bindings.IdTipoDoc.label}"
+                                                        styleClass="choiceInTable"
+                                                        required="#{bindings.IdTipoDoc.hints.mandatory}"
+                                                        shortDesc="#{bindings.IdTipoDoc.hints.tooltip}" id="IdTipoDoc"
+                                                        autoSubmit="true"
+                                                        readOnly="#{sessionScope.sogg_documento_mode=='delete'?true:false or sessionScope.sogg_documento_mode=='edit'?true:false}">
+                                        <f:selectItems value="#{bindings.IdTipoDoc.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.IdTipoDoc.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{bindings.DocIdent.inputValue}"
+                                                  label="#{bindings.DocIdent.hints.label}"
+                                                  required="#{bindings.DocIdent.hints.mandatory}"
+                                                  columns="40"
+                                                  maximumLength="#{bindings.DocIdent.hints.precision}"
+                                                  shortDesc="#{bindings.DocIdent.hints.tooltip}" id="it1"
+                                                  readOnly="#{sessionScope.sogg_documento_mode=='delete'?true:false or sessionScope.sogg_documento_mode=='edit'?true:false}">
+                                        <f:validator binding="#{bindings.DocIdent.validator}"/>
+                                    </af:inputText>
+                                    <af:inputDate value="#{bindings.Dtrilascio.inputValue}"
+                                                  label="#{bindings.Dtrilascio.hints.label}"
+                                                  required="#{bindings.Dtrilascio.hints.mandatory}"
+                                                  columns="#{bindings.Dtrilascio.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dtrilascio.hints.tooltip}" id="id1"
+                                                  readOnly="#{sessionScope.sogg_documento_mode=='delete'?true:false}">
+                                        <f:validator binding="#{bindings.Dtrilascio.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.Dtrilascio.format}"/>
+                                    </af:inputDate>
+                                    <af:inputDate value="#{bindings.Dtfinevalidita.inputValue}"
+                                                  label="#{bindings.Dtfinevalidita.hints.label}"
+                                                  required="#{bindings.Dtfinevalidita.hints.mandatory}"
+                                                  columns="#{bindings.Dtfinevalidita.hints.displayWidth}"
+                                                  readOnly="#{sessionScope.sogg_documento_mode=='delete'?true:false}"
+                                                  shortDesc="#{bindings.Dtfinevalidita.hints.tooltip}" id="id2">
+                                        <f:validator binding="#{bindings.Dtfinevalidita.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.Dtfinevalidita.format}"/>
+                                    </af:inputDate>
+                                    <af:inputText value="#{bindings.DocIdentAnag.inputValue}"
+                                                  label="#{bindings.DocIdentAnag.hints.label}"
+                                                  required="#{bindings.DocIdentAnag.hints.mandatory}"
+                                                  columns="#{bindings.DocIdentAnag.hints.displayWidth}"
+                                                  maximumLength="#{bindings.DocIdentAnag.hints.precision}"
+                                                  shortDesc="#{bindings.DocIdentAnag.hints.tooltip}" id="it2"
+                                                  readOnly="#{bindings.IdTipoDoc.attributeValue!='TEAM'?true:false or sessionScope.sogg_documento_mode=='delete'?true:false}"
+                                                  partialTriggers="IdTipoDoc">
+                                        <f:validator binding="#{bindings.DocIdentAnag.validator}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.IdIstComp.inputValue}"
+                                                  label="#{bindings.IdIstComp.hints.label}"
+                                                  required="#{bindings.IdIstComp.hints.mandatory}"
+                                                  columns="#{bindings.IdIstComp.hints.displayWidth}"
+                                                  maximumLength="#{bindings.IdIstComp.hints.precision}"
+                                                  readOnly="#{bindings.IdTipoDoc.attributeValue!='TEAM'?true:false or sessionScope.sogg_documento_mode=='delete'?true:false}"
+                                                  shortDesc="#{bindings.IdIstComp.hints.tooltip}" id="it3"
+                                                  partialTriggers="IdTipoDoc">
+                                        <f:validator binding="#{bindings.IdIstComp.validator}"/>
+                                    </af:inputText>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_DOCUMENTO}"/>
+                <f:attribute name="viewSubmenu"
+                             value="#{sessionScope.showTabs and !sessionScope.LINK_ACC and !sessionScope.LINK_REF}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="navigation" value="#{Sogg_documentoAction}"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue, bindings.Nome.inputValue, bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoComuniSenzaRound"
+   Version="12.2.1.11.57"
+   SelectList="Round_SoComune.CODCOM, 
+       Round_SoComune.DESCRIZIONE, 
+       Round_SoComune.ULSS, 
+       Round_SoRoundorg.CODSCR, 
+       Round_SoRoundorg.CODCOM AS CODCOM1, 
+       Round_SoRoundorg.NUMROUND, 
+       Round_SoRoundorg.DTINIZIO, 
+       Round_SoRoundorg.DTFINE, 
+       Round_SoRoundorg.DTPRIMOINVITO, 
+       Round_SoRoundorg.DTULTINVITO, 
+       Round_SoRoundorg.DTULTSOLLECITO, 
+       Round_SoComune.RELEASE_CODE, 
+       Round_SoRoundorg.RELEASE_CODE_COM"
+   FromList="SO_ROUNDORG Round_SoRoundorg, SO_COMUNE Round_SoComune"
+   Where="Round_SoRoundorg.RELEASE_CODE_COM(+) = Round_SoComune.RELEASE_CODE and NOT EXISTS (SELECT 1 FROM SO_ROUNDORG R WHERE R.RELEASE_CODE_COM= Round_SoComune.RELEASE_CODE AND  R.codscr=Round_SoRoundorg.CODSCR AND R.numround>Round_SoRoundorg.NUMROUND) and (Round_SoRoundorg.DTFINE is not null OR Round_SoRoundorg.NUMROUND IS NULL)"
+   OrderBy="Round_SoComune.DESCRIZIONE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.round.Round_SoComuniSenzaRoundImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.round.common.Round_SoComuniSenzaRoundRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Round_SoRoundorg"
+      Entity="model.round.Round_SoRoundorg" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoComune"
+      Entity="model.round.Round_SoComune"
+      SourceUsage="model.round.Round_SoComuniSenzaRound.Round_SoRoundorg"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoComune"
+      AliasName="CODCOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoComune"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoComune"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codscr"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numround"
+      IsNotNull="true"
+      EntityAttrName="Numround"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="NUMROUND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinizio"
+      IsNotNull="true"
+      EntityAttrName="Dtinizio"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTINIZIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfine"
+      EntityAttrName="Dtfine"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTFINE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprimoinvito"
+      EntityAttrName="Dtprimoinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTPRIMOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultinvito"
+      EntityAttrName="Dtultinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultsollecito"
+      EntityAttrName="Dtultsollecito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune"
+      AliasName="RELEASE_CODE"/>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeCom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="RELEASE_CODE_COM"/>
+</ViewObject>

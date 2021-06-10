@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_festivita1PageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSimplePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfFestivitaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfFestivitaView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfFestivitaView1Iterator" id="Giorno">
+      <AttrNames>
+        <Item Value="Giorno"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfFestivitaView1Iterator" id="Mese">
+      <AttrNames>
+        <Item Value="Mese"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfFestivitaView1Iterator" id="Anno">
+      <AttrNames>
+        <Item Value="Anno"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfFestivitaView1Iterator" id="Annuale">
+      <AttrNames>
+        <Item Value="Annuale"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfFestivitaView1Iterator" id="Ulss" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

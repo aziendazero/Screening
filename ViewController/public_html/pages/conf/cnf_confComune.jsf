@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_confComune.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start">
+                            
+                        </f:facet>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneChoice value="#{bindings.Idcentro1liv.inputValue}"
+                                                    label="#{bindings.Idcentro1liv.label}"
+                                                    required="#{bindings.Idcentro1liv.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro1liv.hints.tooltip}" id="soc1"
+                                                    valueChangeListener="#{Cnf_comuneBean.setSecondoLivello}"
+                                                    autoSubmit="true" valuePassThru="true" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentro1liv.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idcentro1liv.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentro2liv.inputValue}"
+                                                    label="#{bindings.Idcentro2liv.label}"
+                                                    required="#{bindings.Idcentro2liv.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro2liv.hints.tooltip}" id="soc2"
+                                                    partialTriggers="soc1" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentro2liv.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idcentro2liv.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita"
+                             value="Configurazione di screening per il comune di #{bindings.Descrizione.inputValue}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

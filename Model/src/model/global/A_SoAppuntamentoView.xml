@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="A_SoAppuntamentoView"
+   Version="11.1.2.62.76"
+   OrderBy="DTAPP,ORAAPP,MINAPP"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   RowClass="model.global.A_SoAppuntamentoViewRowImpl"
+   ComponentClass="model.global.A_SoAppuntamentoViewImpl"
+   RowInterface="model.common.A_SoAppuntamentoViewRow"
+   ClientRowProxyName="model.client.A_SoAppuntamentoViewRowClient"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT A_SoAppuntamento.IDAPP, 
+       A_SoAppuntamento.IDCENTRO, 
+       A_SoAppuntamento.DTAPP, 
+       A_SoAppuntamento.ORAAPP, 
+       A_SoAppuntamento.MINAPP, 
+       A_SoAppuntamento.DISPSLOT, 
+       A_SoAppuntamento.TPSRC, 
+       A_SoCentroPrelRef.IDCENTRO AS IDCENTRO1, 
+       A_SoCentroPrelRef.IDCENTROREF,
+A_SoCentroPrelRef.DESCRIZIONE,
+A_SoCentroPrelRef.INDIRIZZO_RES,
+A_SoCentroPrelRef.SEDE,
+A_SoCentroPrelRef.ORARITEL,
+A_SoCentroPrelRef.TEL
+FROM SO_APPUNTAMENTO A_SoAppuntamento, SO_CENTRO_PREL_REF A_SoCentroPrelRef
+WHERE A_SoAppuntamento.IDCENTRO = A_SoCentroPrelRef.IDCENTRO
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Prog" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <EntityUsage
+      Name="_SoAppuntamento"
+      Entity="model.global.A_SoAppuntamento" >
+   </EntityUsage>
+   <EntityUsage
+      Name="_SoCentroPrelRef"
+      Entity="model.global.A_SoCentroPrelRef"
+      SourceUsage="model.global.A_SoAppuntamentoView._SoAppuntamento"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idapp"
+      IsNotNull="true"
+      EntityAttrName="Idapp"
+      EntityUsage="_SoAppuntamento"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="_SoAppuntamento"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      IsNotNull="true"
+      EntityAttrName="Dtapp"
+      EntityUsage="_SoAppuntamento"
+      AliasName="DTAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      IsNotNull="true"
+      EntityAttrName="Oraapp"
+      EntityUsage="_SoAppuntamento"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="_SoAppuntamento"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dispslot"
+      IsNotNull="true"
+      EntityAttrName="Dispslot"
+      EntityUsage="_SoAppuntamento"
+      AliasName="DISPSLOT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpsrc"
+      IsNotNull="true"
+      EntityAttrName="Tpsrc"
+      EntityUsage="_SoAppuntamento"
+      AliasName="TPSRC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="IDCENTRO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref"
+      EntityAttrName="Idcentroref"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="IDCENTROREF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      EntityAttrName="Descrizione"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      IsNotNull="true"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sede"
+      EntityAttrName="Sede"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="SEDE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraritel"
+      EntityAttrName="Oraritel"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="ORARITEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel"
+      IsNotNull="true"
+      EntityAttrName="Tel"
+      EntityUsage="_SoCentroPrelRef"
+      AliasName="TEL" >
+   </ViewAttribute>
+</ViewObject>

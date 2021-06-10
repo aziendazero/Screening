@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="cnf_createEditTpInt">
+    <default-activity>CreateOrEdit</default-activity>
+    <transaction>
+      <requires-transaction/>
+    </transaction>
+    <router id="CreateOrEdit">
+      <case id="__13">
+        <expression>#{requestScope.action=='create'}</expression>
+        <outcome>create</outcome>
+      </case>
+      <case id="__14">
+        <expression>#{requestScope.action=='edit'}</expression>
+        <outcome>edit</outcome>
+      </case>
+      <default-outcome>inValidAction</default-outcome>
+    </router>
+    <task-flow-return id="cancel">
+      <outcome>
+        <name>cancel</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="commit">
+      <outcome>
+        <name>commit</name>
+        <commit/>
+      </outcome>
+    </task-flow-return>
+    <view id="cnf_TpInt">
+      <page>/pages/conf/cnf_editTpInt.jsf</page>
+    </view>
+    <method-call id="CreateWithParam">
+      <method>#{bindings.CreateWithParams.execute}</method>
+      <outcome>
+        <fixed-outcome>CreateWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Commit">
+      <method>#{bindings.Commit.execute}</method>
+      <outcome>
+        <fixed-outcome>commit</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__1">
+      <from-activity-id>*</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome>cancel</from-outcome>
+        <to-activity-id>cancel</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__2">
+      <from-activity-id>CreateOrEdit</from-activity-id>
+      <control-flow-case id="__3">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>cnf_TpInt</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__4">
+        <from-outcome>create</from-outcome>
+        <to-activity-id>CreateWithParam</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__5">
+      <from-activity-id>CreateWithParam</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome>CreateWithParams</from-outcome>
+        <to-activity-id>cnf_TpInt</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id>cnf_TpInt</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome>Apply</from-outcome>
+        <to-activity-id>Commit</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__11">
+        <from-outcome>confirm</from-outcome>
+        <to-activity-id>commit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__9">
+      <from-activity-id>Commit</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome>commit</from-outcome>
+        <to-activity-id>cnf_TpInt</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

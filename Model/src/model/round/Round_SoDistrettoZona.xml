@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoDistrettoZona"
+   Version="11.1.2.62.76"
+   DBObjectType="table"
+   DBObjectName="SO_DISTRETTO_ZONA"
+   AliasName="Round_SoDistrettoZona"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="model.round.Round_SoDistrettoZonaImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="CODDISTRZONA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_DISTRETTO_ZONA"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Descrizione"
+      IsNotNull="true"
+      Precision="100"
+      ColumnName="DESCRIZIONE"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_DISTRETTO_ZONA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_DISTRETTO_ZONA"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true"
+      PrimaryKey="true">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Cnf_SoCnfDistrzona"
+      Association="model.FkSoCnfDFkCnfDzSoDistrAssoc"
+      AssociationEnd="model.FkSoCnfDFkCnfDzSoDistrAssoc.Cnf_SoCnfDistrzona"
+      AssociationOtherEnd="model.FkSoCnfDFkCnfDzSoDistrAssoc.Round_SoDistrettoZona"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="PkSoDistrettoZona"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_DISTRETTO_ZONA"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoDistrettoZona.Coddistrzona" />
+         <Item Value="model.round.Round_SoDistrettoZona.Ulss"/>
+      </AttrArray>
+   </Key>
+</Entity>

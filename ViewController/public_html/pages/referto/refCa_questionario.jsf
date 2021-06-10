@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle"
+           value="#{adfBundle['viewcontroller.pages.questionario.refCa_questionarioBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.REFERTAZIONE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{RefCa_questionarioAction.frmRef}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="130px" bottomHeight="0">
+                        <f:facet name="top">
+                            <af:panelBox text="#{viewcontrollerBundle.ANAGRAFE}" id="pt_pb1"
+                                        inlineStyle="font-weight:bold; background-color:#3a76cb;" 
+                                        styleClass="no_border"  showDisclosure="false">
+                                <af:panelFormLayout id="pfl1" rows="2" maxColumns="3" inlineStyle="background-color:#3a76cb; padding-left:20px;">
+                                    <af:panelLabelAndMessage label="#{bindings.Cognome.hints.label}" id="plam1"
+                                                             labelStyle="font-size:14px; color:White; font-weight:lighter;">
+                                        <af:outputFormatted value="#{bindings.Cognome.inputValue}" id="of2" inlineStyle="font-size:14px; color:White; font-weight:bold;"/>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="#{bindings.Nome.hints.label}" id="plam2" labelStyle="font-size:14px; color:White; font-weight:lighter;">
+                                        <af:outputFormatted value="#{bindings.Nome.inputValue}" id="of3" inlineStyle="font-size:14px; color:White; font-weight:bold;"/>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="#{bindings.Sesso.hints.label}" id="plam3" labelStyle="font-size:14px; color:White; font-weight:lighter;">
+                                        <af:outputFormatted value="#{bindings.Sesso.inputValue}" id="of4" inlineStyle="font-size:14px; color:White; font-weight:bold;"/>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="#{bindings.DataNascita.hints.label}" id="plam4" labelStyle="font-size:14px; color:White; font-weight:lighter;">
+                                        <af:outputFormatted value="#{bindings.DataNascita.inputValue}" id="of5" inlineStyle="font-size:14px; color:White; font-weight:bold;">
+                                            <af:convertDateTime pattern="#{bindings.DataNascita.format}"/>
+                                        </af:outputFormatted>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="#{bindings.Cf.hints.label}" id="plam5" labelStyle="font-size:14px; color:White; font-weight:lighter;">
+                                        <af:outputFormatted value="#{bindings.Cf.inputValue}" id="of6" inlineStyle="font-size:14px; color:White; font-weight:bold;"/>
+                                    </af:panelLabelAndMessage>
+                                </af:panelFormLayout>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t1">
+                                        <af:button text="#{viewcontrollerBundle.Visualizzaanagrafica}" id="b1"
+                                                   action="#{MenuUtilBean.doAction('goAnag', RefCa_questionarioAction, null)}">
+                                            <af:setPropertyListener from="#{1==1}" to="#{sessionScope.anagEsiste}"
+                                                                    type="action"/>
+                                        </af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:panelBox>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelStretchLayout id="psl2" startWidth="0" endWidth="0" topHeight="#{bindings.Idreferto.inputValue!=null ? '50px' : '0px'}" bottomHeight="0">
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal" rendered="#{bindings.Idreferto.inputValue!=null}"
+                                                         halign="right">
+                                        <af:toolbar id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                            <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b7"
+                                                       action="#{RefCa_questionarioAction.onConfirm}"
+                                                       disabled="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                            <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b41"
+                                                       action="#{RefCa_questionarioAction.onRollback}"
+                                                       immediate="true"/>
+                                            <af:button text="#{viewcontrollerBundle.APPLICA}" id="btappl"
+                                                       disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                       action="#{RefCa_questionarioAction.onApply}"/>
+                                            <af:button text="#{viewcontrollerBundle.CANCELLA_REFERTO}" id="btcancref"
+                                                       action="#{RefCa_questionarioAction.onDeleteReferto}"
+                                                       rendered="#{bindings.Completo.inputValue!='1'?true:false}">
+                                                <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il referto selezionato?')"
+                                                                   type="action"/>
+                                            </af:button>
+                                            <af:button text="#{viewcontrollerBundle.CHIUDI_REFERTO}" id="btcloseref"
+                                                       rendered="#{bindings.Completo.inputValue=='1'?false:true}">
+                                                <af:clientListener method="#{'closeReferto(\''.concat(0).concat('\',\' ').concat(bindings.Dtspedizione.attributeValue).concat('\', \'').concat(bindings.Idallegato.inputValue).concat('\')')}"
+                                                                       type="action"/>
+                                                <af:serverListener type="onChiudi"
+                                                                       method="#{RefCa_questionarioAction.onChiudi}"/>
+                                            </af:button>
+                                            <af:button text="#{viewcontrollerBundle.RIAPRI_REFERTO}" id="btreopenref"
+                                                       action="#{RefCa_questionarioAction.onRiapriReferto}"
+                                                       rendered="#{bindings.Completo.inputValue!='1'?false:sessionScope.SORiaperturaReferti1Liv==true?true:false}">
+                                                <af:clientListener method="#{bindings.Dtspedizione.inputValue != null ? 'askBeforeGoingOn(\'Questo referto ha una lettera che risulta già stampata.\\n Procedere ugualmente con la riapertura?\')': true}"
+                                                                   type="action"/>
+                                            </af:button>
+                                            <af:button text="#{viewcontrollerBundle.RECUPERA_LETTERA}" id="btlett"
+                                                       rendered="#{bindings.Completo.inputValue!='1'?false:bindings.Idallegato.attributeValue==null?false:true}">
+                                                <af:clientListener method="#{bindings.Dtspedizione.inputValue == null ? 'askBeforeGoingOn(\'Dopo la visualizzazione la lettera risulterà stampata.\\n Visualizzare ugualmente la lettera?\')': true}"
+                                                                   type="action"/> 
+                                                <af:setPropertyListener from="#{bindings.Idreferto.inputValue}" to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                <af:setPropertyListener from="#{'1'}" to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}" filename="Referto#{bindings.Idreferto.inputValue}.pdf"/>
+                                            </af:button>
+                                            <af:button text="#{viewcontrollerBundle.STAMPA_QUESTIONARIO}" id="btprintques">
+                                                <af:fileDownloadActionListener method="#{Print_questionarioAction.stampaQuestionario}" filename="Questionario.pdf"/>
+                                            </af:button>
+                                        </af:toolbar>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="center">
+                                    <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll"
+                                                         partialTriggers="btcloseref btreopenref">
+                                        <af:switcher id="s11"
+                                                 facetName="#{bindings.Idreferto.inputValue == null?'da_creare':'esiste'}">
+                                        <f:facet name="da_creare">
+                                            <af:showDetailHeader messageType="info"
+                                                                 text="#{viewcontrollerBundle.NESSUN_REFERTO_INSERITO}"
+                                                                 disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                                 inlineStyle="font-weight:bold; background-color:InfoBackground;">
+                                                <af:outputFormatted value="#{viewcontrollerBundle.MSG1}" id="of1" styleUsage="instruction"
+                                                                    rendered="true" inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t3">
+                                                            <af:button text="#{viewcontrollerBundle.NUOVO_REFERTO}" id="bcreateref"
+                                                                       actionListener="#{RefCa_questionarioAction.onCreateReferto}"/>
+                                                            <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b2"
+                                                                       action="#{RefCa_questionarioAction.onRef_back}"/>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                </af:showDetailHeader>
+                                        </f:facet>
+                                        <f:facet name="esiste">
+                                                <af:panelGroupLayout id="pgl3" layout="vertical"
+                                                                     partialTriggers="btcloseref btreopenref">
+                                                    <af:panelGroupLayout id="pgl4" layout="horizontal">
+                                                        <af:inputDate value="#{bindings.DataRilevazione.inputValue}"
+                                                                        label="#{bindings.DataRilevazione.label}"
+                                                                      required="false"
+                                                                      columns="#{bindings.DataRilevazione.hints.displayWidth}"
+                                                                      shortDesc="#{bindings.DataRilevazione.hints.tooltip}"
+                                                                      id="DataRilevazione"
+                                                                      readOnly="#{bindings.Completo.inputValue=='1'}"
+                                                                      valueChangeListener="#{RefCa_questionarioAction.onFiltraMedici}"
+                                                                      autoSubmit="true">
+                                                            <f:validator binding="#{bindings.DataRilevazione.validator}"/>
+                                                            <af:convertDateTime pattern="#{bindings.DataRilevazione.format}"/>
+                                                        </af:inputDate>
+                                                        <af:spacer width="10" height="10" id="s1"/>
+                                                        <af:selectOneChoice value="#{bindings.Oprilevazione.inputValue}"
+                                                                            label="#{bindings.Oprilevazione.label}"
+                                                                            required="#{bindings.Oprilevazione.hints.mandatory}"
+                                                                            unselectedLabel="#{''}"
+                                                                            styleClass="choiceInTable"
+                                                                            readOnly="#{bindings.Completo.inputValue=='1'}"
+                                                                            shortDesc="#{bindings.Oprilevazione.hints.tooltip}"
+                                                                            id="soc1" partialTriggers="DataRilevazione"
+                                                                            autoSubmit="true" valuePassThru="true">
+                                                            <f:selectItems value="#{bindings.Oprilevazione.items}"
+                                                                           id="si1"/>
+                                                            <f:validator binding="#{bindings.Oprilevazione.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:spacer width="10" height="10" id="s3"/>
+                                                        <af:selectOneChoice value="#{bindings.Idsugg.inputValue}"
+                                                                            label="#{bindings.Idsugg.label}"
+                                                                            required="#{bindings.Idsugg.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Idsugg.hints.tooltip}"
+                                                                            readOnly="true"
+                                                                            rendered="#{bindings.Completo.inputValue=='1'}"
+                                                                            id="soc2">
+                                                            <f:selectItems value="#{bindings.Idsugg.items}" id="si2"/>
+                                                            <f:validator binding="#{bindings.Idsugg.validator}"/>
+                                                        </af:selectOneChoice>
+                                                    </af:panelGroupLayout>
+                                                    <af:spacer width="10" height="10" id="s2"/>
+                                                    <af:panelHeader text="#{bindings.descrizioneQuestionario.inputValue}" id="ph1"
+                                                                    partialTriggers="btcloseref btreopenref">
+                                                        <af:panelGroupLayout id="pgl5" layout="scroll"
+                                                                             binding="#{RefCa_questionarioAction.node}"
+                                                                             partialTriggers="btcloseref btreopenref"/>
+                                                    </af:panelHeader>
+                                                </af:panelGroupLayout>
+                                            </f:facet>
+                                    </af:switcher>      
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.REFERTAZIONE}"/>
+                <f:attribute name="navigation" value="#{RefCa_questionarioAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

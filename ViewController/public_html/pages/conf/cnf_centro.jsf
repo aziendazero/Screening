@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_centro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1" partialTriggers="sbc1">
+                                <af:inputText value="#{bindings.Idcentro.inputValue}"
+                                              label="#{bindings.Idcentro.hints.label}"
+                                              required="#{bindings.Idcentro.hints.mandatory}"
+                                              columns="#{bindings.Idcentro.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idcentro.hints.precision}"
+                                              shortDesc="#{bindings.Idcentro.hints.tooltip}" id="it1" rendered="false">
+                                    <f:validator binding="#{bindings.Idcentro.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idcentro.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="40"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2" rows="2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrbreve.inputValue}"
+                                              label="#{bindings.Descrbreve.hints.label}"
+                                              required="#{bindings.Descrbreve.hints.mandatory}"
+                                              columns="#{bindings.Descrbreve.hints.displayWidth}"
+                                              maximumLength="15"
+                                              shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Descrbreve.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice label="Tipo di centro" id="soc1" value="#{bindings.Tipocentro.inputValue}"
+                                                    required="true" styleClass="choiceInTable">
+                                    <af:selectItem label="" id="si1"/>
+                                    <af:selectItem label="prelievo di 1° livello" value="1" id="si2"/>
+                                    <af:selectItem label="prelievo di 2° livello" value="2" id="si3"/>
+                                    <af:selectItem label="refertazione" value="3" id="si4"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentro2liv.inputValue}"
+                                                    label="#{bindings.Idcentro2liv.label}"
+                                                    required="#{bindings.Idcentro2liv.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro2liv.hints.tooltip}" id="soc4"
+                                                    partialTriggers="b2" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentro2liv.items}" id="si7"/>
+                                    <f:validator binding="#{bindings.Idcentro2liv.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentroref.inputValue}"
+                                                    label="#{bindings.Idcentroref.label}"
+                                                    required="#{bindings.Idcentroref.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentroref.hints.tooltip}" id="soc3"
+                                                    partialTriggers="b2" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentroref.items}" id="si6"/>
+                                    <f:validator binding="#{bindings.Idcentroref.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.IndirizzoRes.inputValue}"
+                                              label="#{bindings.IndirizzoRes.hints.label}"
+                                              required="#{bindings.IndirizzoRes.hints.mandatory}"
+                                              columns="40"
+                                              maximumLength="#{bindings.IndirizzoRes.hints.precision}"
+                                              shortDesc="#{bindings.IndirizzoRes.hints.tooltip}" id="it8">
+                                    <f:validator binding="#{bindings.IndirizzoRes.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Sede.inputValue}" label="#{bindings.Sede.hints.label}"
+                                              required="#{bindings.Sede.hints.mandatory}"
+                                              columns="40"
+                                              maximumLength="#{bindings.Sede.hints.precision}"
+                                              shortDesc="#{bindings.Sede.hints.tooltip}" id="it9">
+                                    <f:validator binding="#{bindings.Sede.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Tel.inputValue}" label="#{bindings.Tel.hints.label}"
+                                              required="#{bindings.Tel.hints.mandatory}"
+                                              columns="40"
+                                              maximumLength="#{bindings.Tel.hints.precision}"
+                                              shortDesc="#{bindings.Tel.hints.tooltip}" id="it10">
+                                    <f:validator binding="#{bindings.Tel.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Oraritel.inputValue}"
+                                              label="#{bindings.Oraritel.hints.label}"
+                                              required="#{bindings.Oraritel.hints.mandatory}"
+                                              columns="40"
+                                              maximumLength="#{bindings.Oraritel.hints.precision}"
+                                              shortDesc="#{bindings.Oraritel.hints.tooltip}" id="it11">
+                                    <f:validator binding="#{bindings.Oraritel.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.Dtchiusuracentro.inputValue}"
+                                              label="#{bindings.Dtchiusuracentro.hints.label}"
+                                              required="#{bindings.Dtchiusuracentro.hints.mandatory}"
+                                              columns="#{bindings.Dtchiusuracentro.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtchiusuracentro.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.Dtchiusuracentro.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Dtchiusuracentro.format}"/>
+                                </af:inputDate>
+                                <af:selectBooleanCheckbox value="#{bindings.Portale.inputValue}" autoSubmit="true"                                
+                                                          label="#{bindings.Portale.label}"
+                                                          shortDesc="#{bindings.Portale.hints.tooltip}" id="sbc1"
+                                                          rendered="#{sessionScope.otp==true}"
+                                                          valueChangeListener="#{Cnf_centriAction.onChangePortale}"
+                                                          binding="#{Cnf_centriAction.centro}"/>
+                                <af:inputText value="#{bindings.DescrPortale.inputValue}"
+                                              label="#{bindings.DescrPortale.hints.label}"
+                                              required="#{bindings.DescrPortale.hints.mandatory}"
+                                              columns="#{bindings.DescrPortale.hints.displayWidth}"
+                                              maximumLength="#{bindings.DescrPortale.hints.precision}"
+                                              shortDesc="#{bindings.DescrPortale.hints.tooltip}" id="it4"
+                                              rendered="#{sessionScope.otp==true and sessionScope.portale==true}">
+                                    <f:validator binding="#{bindings.DescrPortale.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.IndirizzoPortale.inputValue}"
+                                              label="#{bindings.IndirizzoPortale.hints.label}"
+                                              required="#{bindings.IndirizzoPortale.hints.mandatory}"
+                                              columns="#{bindings.IndirizzoPortale.hints.displayWidth}"
+                                              maximumLength="#{bindings.IndirizzoPortale.hints.precision}"
+                                              shortDesc="#{bindings.IndirizzoPortale.hints.tooltip}" id="it5"
+                                              rendered="#{sessionScope.otp==true and sessionScope.portale==true}"
+                                              partialTriggers="sbc1">
+                                    <f:validator binding="#{bindings.IndirizzoPortale.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Centro di prelievo o di refertazione"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

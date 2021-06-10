@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_domanda.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Domanda.inputValue}"
+                                              label="#{bindings.Domanda.hints.label}"
+                                              required="#{bindings.Domanda.hints.mandatory}"
+                                              columns="#{bindings.Domanda.hints.displayWidth}"
+                                              maximumLength="#{bindings.Domanda.hints.precision}"
+                                              shortDesc="#{bindings.Domanda.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Domanda.validator}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox value="#{bindings.Modificabile.inputValue}"
+                                                          label="#{bindings.Modificabile.hints.label}"
+                                                          required="#{bindings.Modificabile.hints.mandatory}"
+                                                          shortDesc="#{bindings.Modificabile.hints.tooltip}" id="it2">
+                                </af:selectBooleanCheckbox>
+                                <af:selectOneChoice value="#{bindings.Tipo.inputValue}" label="#{bindings.Tipo.label}"
+                                                    required="#{bindings.Tipo.hints.mandatory}"
+                                                    shortDesc="#{bindings.Tipo.hints.tooltip}" id="soc1"
+                                                    valueChangeListener="#{Cnf_questionarioBean.changeTipoListener}"
+                                                    valuePassThru="true" autoSubmit="true" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Tipo.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Tipo.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Lunghezza.inputValue}"
+                                              label="#{bindings.Lunghezza.hints.label}"
+                                              required="#{bindings.Lunghezza.hints.mandatory}"
+                                              columns="#{bindings.Lunghezza.hints.displayWidth}"
+                                              maximumLength="#{bindings.Lunghezza.hints.precision}"
+                                              shortDesc="#{bindings.Lunghezza.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Lunghezza.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Lunghezza.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Minval.inputValue}"
+                                              label="#{bindings.Minval.hints.label}"
+                                              required="#{bindings.Minval.hints.mandatory}"
+                                              columns="#{bindings.Minval.hints.displayWidth}"
+                                              maximumLength="#{bindings.Minval.hints.precision}"
+                                              shortDesc="#{bindings.Minval.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Minval.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Maxval.inputValue}"
+                                              label="#{bindings.Maxval.hints.label}"
+                                              required="#{bindings.Maxval.hints.mandatory}"
+                                              columns="#{bindings.Maxval.hints.displayWidth}"
+                                              maximumLength="#{bindings.Maxval.hints.precision}"
+                                              shortDesc="#{bindings.Maxval.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Maxval.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Gruppo.inputValue}"
+                                                    label="#{bindings.Gruppo.label}"
+                                                    disabled="#{bindings.Tipo.inputValue!='SEL' and bindings.Tipo.inputValue!='MUL'}"
+                                                    required="#{bindings.Gruppo.hints.mandatory}"
+                                                    shortDesc="#{bindings.Gruppo.hints.tooltip}" id="soc2"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Gruppo.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Gruppo.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Note.inputValue}" label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              columns="#{bindings.Note.hints.displayWidth}"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it8">
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.DtFineVal.inputValue}"
+                                              label="#{bindings.DtFineVal.hints.label}"
+                                              required="#{bindings.DtFineVal.hints.mandatory}"
+                                              columns="#{bindings.DtFineVal.hints.displayWidth}"
+                                              shortDesc="#{bindings.DtFineVal.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.DtFineVal.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.DtFineVal.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Domanda"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

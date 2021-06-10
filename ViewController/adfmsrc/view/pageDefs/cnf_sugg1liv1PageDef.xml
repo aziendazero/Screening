@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_sugg1liv1PageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfSugg1livView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSugg1livView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef1livGIUDIAView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Ref_SoCnfRef1livGIUDIAView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSugg1livRegionaleView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSugg1livRegionaleView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Idsugg">
+      <AttrNames>
+        <Item Value="Idsugg"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Esitosugg">
+      <AttrNames>
+        <Item Value="Esitosugg"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Ggrichiamo">
+      <AttrNames>
+        <Item Value="Ggrichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Invia2liv">
+      <AttrNames>
+        <Item Value="Invia2liv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Inviaintervento">
+      <AttrNames>
+        <Item Value="Inviaintervento"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Codregionale">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Ordine">
+      <AttrNames>
+        <Item Value="Ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Dtfinevalidita">
+      <AttrNames>
+        <Item Value="Dtfinevalidita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Idtpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoView1Iterator"
+          NullValueFlag="start" NullValueId="Idtpinvito_null">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Tipoesame" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="Tipoesame"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Non specificato"/>
+        <Item Value="Inadeguato"/>
+        <Item Value="Negativo"/>
+        <Item Value="Positivo"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Giuddiagnostico" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef1livGIUDIAView1Iterator">
+      <AttrNames>
+        <Item Value="Giuddiagnostico"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Codregionale1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfSugg1livRegionaleView1Iterator"
+          NullValueId="Idtpinvito_null"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSugg1livView1Iterator" id="Ulss" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="view.pageDefs.common.cnf_sugg1liv1PageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

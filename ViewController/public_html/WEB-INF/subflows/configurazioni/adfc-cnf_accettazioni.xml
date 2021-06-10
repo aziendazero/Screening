@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_motivi_int">
+    <page>/pages/conf/cnf_motivi_int.jsf</page>
+  </view>
+  <view id="cnf_tpinterventi">
+    <page>/pages/conf/cnf_tpinterventi.jsf</page>
+  </view>
+  <view id="cnf_tpprelievi">
+    <page>/pages/conf/cnf_tpprelievi.jsf</page>
+  </view>
+  <task-flow-call id="cnf_creatEditMotInt">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_creatEditMotInt.xml</document>
+      <id>cnf_createEditMotInt</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_creatEditTpInt">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_creatEditTpInt.xml</document>
+      <id>cnf_createEditTpInt</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_creatEditTpPrel">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_createEditTpPrelievi.xml</document>
+      <id>cnf_createEditTpPrelievi</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>motivi_int</from-outcome>
+      <to-activity-id>cnf_motivi_int</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>tpinterventi</from-outcome>
+      <to-activity-id>cnf_tpinterventi</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>tpprelievi</from-outcome>
+      <to-activity-id>cnf_tpprelievi</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__8">
+    <from-activity-id>cnf_motivi_int</from-activity-id>
+    <control-flow-case id="__9">
+      <from-outcome>creatEditMotInt</from-outcome>
+      <to-activity-id>cnf_creatEditMotInt</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__10">
+    <from-activity-id>cnf_tpinterventi</from-activity-id>
+    <control-flow-case id="__11">
+      <from-outcome>creatEditTpInt</from-outcome>
+      <to-activity-id>cnf_creatEditTpInt</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__12">
+    <from-activity-id>cnf_tpprelievi</from-activity-id>
+    <control-flow-case id="__13">
+      <from-outcome>creatEditTpPrel</from-outcome>
+      <to-activity-id>cnf_creatEditTpPrel</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__5">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_accettazioni_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__6">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__7">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_accettazioni_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__14">
+    <managed-bean-name>Cnf_accettAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_accettAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

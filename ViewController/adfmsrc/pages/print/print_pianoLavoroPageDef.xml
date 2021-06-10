@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="print_pianoLavoroPageDef"
+                Package="pages.print">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PL_BeanDataControl" id="PL_BeanDataControlIterator"/>
+    <iterator Binds="PL_SoCentroPrelRefView1" RangeSize="-1" DataControl="PL_AppModuleDataControl"
+              id="PL_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="PL_SoTemplateView1" RangeSize="-1" DataControl="PL_AppModuleDataControl"
+              id="PL_SoTemplateView1Iterator"/>
+    <iterator Binds="Sogg_SoCnfClassePopView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfClassePopView1Iterator"/>
+    <iterator Binds="Sogg_TipoInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_TipoInvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="PL_BeanDataControlIterator" id="centro" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="PL_SoCentroPrelRefView1Iterator">
+      <AttrNames>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="data">
+      <AttrNames>
+        <Item Value="data"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="type">
+      <AttrNames>
+        <Item Value="type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="data_al">
+      <AttrNames>
+        <Item Value="data_al"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="ordine">
+      <AttrNames>
+        <Item Value="ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="codts">
+      <AttrNames>
+        <Item Value="codts"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PL_BeanDataControlIterator" id="template" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="PL_SoTemplateView1Iterator">
+      <AttrNames>
+        <Item Value="template"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="alle_ore">
+      <AttrNames>
+        <Item Value="alle_ore"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="dalle_ore">
+      <AttrNames>
+        <Item Value="dalle_ore"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PL_BeanDataControlIterator" id="codClassePop" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfClassePopView1Iterator"
+          NullValueFlag="start" NullValueId="codClassePop_null">
+      <AttrNames>
+        <Item Value="codClassePop"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codclasse"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="PL_BeanDataControlIterator" id="idtpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_TipoInvitoView1Iterator"
+          NullValueFlag="start" NullValueId="idtpinvito_null">
+      <AttrNames>
+        <Item Value="idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_TipoInvitoView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="pages.print.common.print_pianoLavoroPageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

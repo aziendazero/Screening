@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfSdosps_SelCodView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.conf.Cnf_SoCnfSdosps_SelCodViewImpl"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <Variable
+      Name="bndTipoFlusso"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <SQLQuery><![CDATA[
+SELECT a.codsdosps, a.descrizione, a.tipo_flusso
+  FROM so_cnf_sdosps a
+  where a.data_inizio_validita <= trunc(sysdate)
+  and (a.data_fine_validita is null or a.data_fine_validita >= trunc(sysdate))
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Codsdosps"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="7"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODSDOSPS"
+      Expression="CODSDOSPS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codsdosps_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1000" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoFlusso"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPO_FLUSSO"
+      Expression="TIPO_FLUSSO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TipoFlusso_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="Cnf_SoCnfSdosps_SelCodViewCriteria"
+      ViewObjectName="model.conf.Cnf_SoCnfSdosps_SelCodView"
+      Conjunction="AND">
+      <Properties Name="_Props">
+         <CustomProperties>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="Cnf_SoCnfSdosps_SelCodViewCriteria_row_0"
+         UpperColumns="1"
+         Conjunction="AND">
+         <ViewCriteriaItem
+            Name="TipoFlusso"
+            ViewAttribute="TipoFlusso"
+            Operator="="
+            Conjunction="AND"
+            Value=":bndTipoFlusso"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfSdosps_SelCodViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

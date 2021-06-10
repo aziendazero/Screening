@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="med_dett.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="#{Med_dettAction.onConf}"/>
+                                    <af:button text="Annulla" id="b1" action="#{Med_dettAction.onCancel}" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="#{Med_dettAction.onAppl}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelFormLayout id="pfl1" rows="3">
+                                    <af:inputText value="#{bindings.Codiceregmedico.inputValue}"
+                                                  label="#{bindings.Codiceregmedico.hints.label}"
+                                                  required="#{bindings.Codiceregmedico.hints.mandatory}"
+                                                  columns="#{bindings.Codiceregmedico.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Codiceregmedico.hints.precision}"
+                                                  shortDesc="#{bindings.Codiceregmedico.hints.tooltip}" id="it1"
+                                                  disabled="#{sessionScope.modMedico}">
+                                        <f:validator binding="#{bindings.Codiceregmedico.validator}"/>
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Codiceregmedico.format}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.Cognome.inputValue}"
+                                                  label="#{bindings.Cognome.hints.label}"
+                                                  required="#{bindings.Cognome.hints.mandatory}"
+                                                  columns="#{bindings.Cognome.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Cognome.hints.precision}"
+                                                  shortDesc="#{bindings.Cognome.hints.tooltip}" id="it3">
+                                        <f:validator binding="#{bindings.Cognome.validator}"/>
+                                        <af:clientListener type="keyUp" method="toUppercase"/>
+                                    </af:inputText>
+                                    <af:inputDate value="#{bindings.Dtadesione.inputValue}"
+                                                  label="#{bindings.Dtadesione.hints.label}"
+                                                  rendered="#{sessionScope.scr eq 'CI'}"
+                                                  required="#{bindings.Dtadesione.hints.mandatory}"
+                                                  columns="#{bindings.Dtadesione.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dtadesione.hints.tooltip}" id="id1">
+                                        <f:validator binding="#{bindings.Dtadesione.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.Dtadesione.format}"/>
+                                    </af:inputDate>
+                                    <af:inputDate value="#{bindings.DtadesCo.inputValue}"
+                                                  label="#{bindings.DtadesCo.hints.label}"
+                                                  rendered="#{sessionScope.scr eq 'CO'}"
+                                                  required="#{bindings.DtadesCo.hints.mandatory}"
+                                                  columns="#{bindings.DtadesCo.hints.displayWidth}"
+                                                  shortDesc="#{bindings.DtadesCo.hints.tooltip}" id="id2">
+                                        <f:validator binding="#{bindings.DtadesCo.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.DtadesCo.format}"/>
+                                    </af:inputDate>
+                                    <af:inputDate value="#{bindings.DtadesMa.inputValue}"
+                                                  label="#{bindings.DtadesMa.hints.label}"
+                                                  rendered="#{sessionScope.scr eq 'MA'}"
+                                                  required="#{bindings.DtadesMa.hints.mandatory}"
+                                                  columns="#{bindings.DtadesMa.hints.displayWidth}"
+                                                  shortDesc="#{bindings.DtadesMa.hints.tooltip}" id="id3">
+                                        <f:validator binding="#{bindings.DtadesMa.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.DtadesMa.format}"/>
+                                    </af:inputDate>
+                                    <af:inputDate value="#{bindings.DtadesCa.inputValue}"
+                                                  label="#{bindings.DtadesCa.hints.label}"
+                                                  rendered="#{sessionScope.scr eq 'CA'}"
+                                                  required="#{bindings.DtadesCa.hints.mandatory}"
+                                                  columns="#{bindings.DtadesCa.hints.displayWidth}"
+                                                  shortDesc="#{bindings.DtadesCa.hints.tooltip}" id="id5">
+                                        <f:validator binding="#{bindings.DtadesCa.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.DtadesCa.format}"/>
+                                    </af:inputDate>
+                                    <af:inputText value="#{bindings.Codicefiscale.inputValue}"
+                                                  label="#{bindings.Codicefiscale.hints.label}"
+                                                  required="#{bindings.Codicefiscale.hints.mandatory}"
+                                                  columns="#{bindings.Codicefiscale.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Codicefiscale.hints.precision}"
+                                                  shortDesc="#{bindings.Codicefiscale.hints.tooltip}" id="it2">
+                                        <f:validator binding="#{bindings.Codicefiscale.validator}"/>
+                                        <af:clientListener type="keyUp" method="toUppercase"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.Nome.inputValue}"
+                                                  label="#{bindings.Nome.hints.label}"
+                                                  required="#{bindings.Nome.hints.mandatory}"
+                                                  columns="#{bindings.Nome.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Nome.hints.precision}"
+                                                  shortDesc="#{bindings.Nome.hints.tooltip}" id="it4">
+                                        <f:validator binding="#{bindings.Nome.validator}"/>
+                                        <af:clientListener type="keyUp" method="toUppercase"/>
+                                    </af:inputText>
+                                    <af:inputDate value="#{bindings.Dtfinevalop.inputValue}"
+                                                  label="#{bindings.Dtfinevalop.hints.label}"
+                                                  required="#{bindings.Dtfinevalop.hints.mandatory}"
+                                                  columns="#{bindings.Dtfinevalop.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dtfinevalop.hints.tooltip}" id="id4">
+                                        <f:validator binding="#{bindings.Dtfinevalop.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.Dtfinevalop.format}"/>
+                                    </af:inputDate>
+                                </af:panelFormLayout>
+                                <af:panelHeader text="Ambulatorio" id="ph1" size="2">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:panelFormLayout id="pfl2" rows="4">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.Codpr.inputValue}"
+                                                            label="#{bindings.Codpr.label}"
+                                                            required="#{bindings.Codpr.hints.mandatory}"
+                                                            shortDesc="#{bindings.Codpr.hints.tooltip}" id="soc1"
+                                                            valueChangeListener="#{Med_dettAction.onChProv}"
+                                                            styleClass="choiceInTable">
+                                            <f:selectItems value="#{bindings.Codpr.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.Codpr.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:panelLabelAndMessage label="Descrizione comune" id="plam1">
+                                            <af:inputText value="#{bindings.Descom.inputValue}"
+                                                          label="#{bindings.Descom.hints.label}"
+                                                          columns="60"
+                                                          maximumLength="#{bindings.Descom.hints.precision}"
+                                                          shortDesc="#{bindings.Descom.hints.tooltip}" id="it7"
+                                                          simple="true" binding="#{Med_dettAction.descom}"
+                                                          partialTriggers="soc1" clientComponent="true">
+                                                <f:validator binding="#{bindings.Descom.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l1911" icon="../images/search_16.png"
+                                                         iconPosition="leading" action="#{Med_dettAction.onChCom}"
+                                                         inlineStyle="padding: 1px;" useWindow="true" windowHeight="650"
+                                                         windowWidth="800"
+                                                         returnListener="#{Med_dettAction.lovComuneReturnListener}">
+                                                    <af:setPropertyListener from="#{bindings.Descom.inputValue != null ? bindings.Descom.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Descom" to="#{requestScope.source}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Med_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.Tel.inputValue}"
+                                                      label="#{bindings.Tel.hints.label}"
+                                                      required="#{bindings.Tel.hints.mandatory}"
+                                                      columns="#{bindings.Tel.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Tel.hints.precision}"
+                                                      shortDesc="#{bindings.Tel.hints.tooltip}" id="it9">
+                                            <f:validator binding="#{bindings.Tel.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Desaz.inputValue}"
+                                                      label="#{bindings.Desaz.hints.label}"
+                                                      required="#{bindings.Desaz.hints.mandatory}"
+                                                      columns="60"
+                                                      maximumLength="#{bindings.Desaz.hints.precision}"
+                                                      shortDesc="#{bindings.Desaz.hints.tooltip}" id="it11"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Desaz.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Codcom.inputValue}"
+                                                      label="#{bindings.Codcom.hints.label}"
+                                                      shortDesc="#{bindings.Codcom.hints.tooltip}" id="it6"
+                                                      disabled="true" binding="#{Med_dettAction.codcom}">
+                                            <f:validator binding="#{bindings.Codcom.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.IndirizzoRes.inputValue}"
+                                                      label="#{bindings.IndirizzoRes.hints.label}"
+                                                      required="#{bindings.IndirizzoRes.hints.mandatory}"
+                                                      columns="#{bindings.IndirizzoRes.hints.displayWidth}"
+                                                      maximumLength="#{bindings.IndirizzoRes.hints.precision}"
+                                                      shortDesc="#{bindings.IndirizzoRes.hints.tooltip}" id="it8">
+                                            <f:validator binding="#{bindings.IndirizzoRes.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Cell.inputValue}"
+                                                      label="#{bindings.Cell.hints.label}"
+                                                      required="#{bindings.Cell.hints.mandatory}"
+                                                      columns="#{bindings.Cell.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Cell.hints.precision}"
+                                                      shortDesc="#{bindings.Cell.hints.tooltip}" id="it10">
+                                            <f:validator binding="#{bindings.Cell.validator}"/>
+                                            <af:convertNumber groupingUsed="false" pattern="#{bindings.Cell.format}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Dettaglio medico"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="navigation" value="#{Med_dettAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

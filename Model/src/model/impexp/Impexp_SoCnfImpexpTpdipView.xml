@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_SoCnfImpexpTpdipView"
+   Version="12.2.1.11.57"
+   OrderBy="&quot;ORDINE&quot;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_SoCnfImpexpTpdipViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[select DISTINCT p.tpdip, 
+p.ulss, 
+p.tpscr, 
+p.impexp, 
+decode(p.tpdip,'AP','Anatomia patologica','LA','Laboratorio analisi','RA','RIS', 
+	'R2','Radiologia-2 livello','A2','Anatomia Patologica-2 livello','AC','Accettazione', 
+	'G2','Ginecologia-2 livello','E2','Endoscopia-2 livello', 
+	p.tpdip) destinazione, 
+p.modalita, 
+p.ordine 
+from so_cnf_impexp p]]></SQLQuery>
+   <ViewAttribute
+      Name="Tpdip"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPDIP"
+      Expression="TPDIP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Impexp"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="IMPEXP"
+      Expression="IMPEXP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Destinazione"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESTINAZIONE"
+      Expression="DESTINAZIONE"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Modalita"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MODALITA"
+      Expression="MODALITA"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="Ordine"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ORDINE"
+      Expression="ORDINE"
+      SQLType="NUMERIC"/>
+</ViewObject>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_aziendeSanitarie">
+    <page>/pages/conf/cnf_aziendeSanitarie.jsf</page>
+  </view>
+  <task-flow-call id="editAzienda">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editAzienda.xml</document>
+      <id>editAzienda</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <view id="cnf_ambistrics">
+    <page>/pages/conf/cnf_ambistrics.jsf</page>
+  </view>
+  <view id="cnf_festivita">
+    <page>/pages/conf/cnf_festivita.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editIstituto">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editIstituto.xml</document>
+      <id>cnf_editIstituto</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editFestivita">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editFestivita.xml</document>
+      <id>cnf_editFestivita</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>aziendeSanitarie</from-outcome>
+      <to-activity-id>cnf_aziendeSanitarie</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__8">
+      <from-outcome>istituti</from-outcome>
+      <to-activity-id>cnf_ambistrics</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__9">
+      <from-outcome>festivita</from-outcome>
+      <to-activity-id>cnf_festivita</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__3">
+    <from-activity-id>cnf_aziendeSanitarie</from-activity-id>
+    <control-flow-case id="__4">
+      <from-outcome>createEditAzienda</from-outcome>
+      <to-activity-id>editAzienda</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__13">
+    <from-activity-id>cnf_ambistrics</from-activity-id>
+    <control-flow-case id="__14">
+      <from-outcome>creatEditIstituto</from-outcome>
+      <to-activity-id>cnf_editIstituto</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__5">
+    <from-activity-id>cnf_festivita</from-activity-id>
+    <control-flow-case id="__6">
+      <from-outcome>creatEditFestivita</from-outcome>
+      <to-activity-id>cnf_editFestivita</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__10">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>global_configuration_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__11">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__12">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/menu/global_configuration_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__7">
+    <managed-bean-name>Cnf_festivitaBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_festivitaBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__15">
+    <managed-bean-name>Cnf_aziendAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_aziendAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__16">
+    <managed-bean-name>Cnf_istitutiAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_istitutiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__17">
+    <managed-bean-name>Cnf_festivitaAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_festivitaAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

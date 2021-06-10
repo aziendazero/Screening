@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCo_intermedio_dettPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoEndoscopiaIntermView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoEndoscopiaIntermView1Iterator"/>
+    <iterator Binds="Ref_SoOpmedicoView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoOpmedicoView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDQLTView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDQLTView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDREGView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDREGView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDMOTView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDMOTView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDCOMView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDCOMView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDINDView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDINDView1Iterator"/>
+    <iterator Binds="Ref_SoOpmedicoView2" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoOpmedicoView2Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDDIMView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDDIMView1Iterator"/>
+    <iterator Binds="Ref_SoPolipiIntermView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoPolipiIntermView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livPOLASPView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livPOLASPView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livDISPCOView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livDISPCOView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTOCOView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTOCOView1Iterator"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiCOView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiCOView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Importata">
+      <AttrNames>
+        <Item Value="Importata"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Ref_SoEndoscopiaIntermView1">
+      <nodeDefinition DefName="model.referto.Ref_SoEndoscopiaIntermView" Name="Ref_SoEndoscopiaIntermView10">
+        <AttrNames>
+          <Item Value="Dtendo"/>
+          <Item Value="Dtrefisto"/>
+          <Item Value="NPolipiPrelevati"/>
+          <Item Value="Completa"/>
+          <Item Value="Importata"/>
+          <Item Value="Dtimport"/>
+          <Item Value="Errore"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Dtendo">
+      <AttrNames>
+        <Item Value="Dtendo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Idmedico" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idmedico"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Qualita" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDQLTView1Iterator">
+      <AttrNames>
+        <Item Value="Qualita"/>
+        <Item Value="GrQualita"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Regione" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDREGView1Iterator">
+      <AttrNames>
+        <Item Value="Regione"/>
+        <Item Value="GrRegione"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Estensione">
+      <AttrNames>
+        <Item Value="Estensione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Motivo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDMOTView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Motivo"/>
+        <Item Value="GrMotivo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="AltroMotivo">
+      <AttrNames>
+        <Item Value="AltroMotivo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="NPolipiPrelevati">
+      <AttrNames>
+        <Item Value="NPolipiPrelevati"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="NoteEndo">
+      <AttrNames>
+        <Item Value="NoteEndo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Sedazione">
+      <AttrNames>
+        <Item Value="Sedazione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="FarmaciDosi">
+      <AttrNames>
+        <Item Value="FarmaciDosi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Procedura">
+      <AttrNames>
+        <Item Value="Procedura"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Complicanze" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDCOMView1Iterator">
+      <AttrNames>
+        <Item Value="Complicanze"/>
+        <Item Value="GrComplicanze"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="AltreComplicanze">
+      <AttrNames>
+        <Item Value="AltreComplicanze"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Indicazioni" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDINDView1Iterator">
+      <AttrNames>
+        <Item Value="Indicazioni"/>
+        <Item Value="GrIndicazioni"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Controindicazioni">
+      <AttrNames>
+        <Item Value="Controindicazioni"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Dtrefisto">
+      <AttrNames>
+        <Item Value="Dtrefisto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Patologo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView2Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Patologo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="NPolipi">
+      <AttrNames>
+        <Item Value="NPolipi"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="DiametroMax" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDDIMView1Iterator">
+      <AttrNames>
+        <Item Value="DiametroMax"/>
+        <Item Value="GrDiametro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="NoteIsto">
+      <AttrNames>
+        <Item Value="NoteIsto"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Ref_SoPolipiIntermView1Iterator" id="Ref_SoPolipiIntermView1">
+      <nodeDefinition DefName="model.referto.Ref_SoPolipiIntermView" Name="Ref_SoPolipiIntermView10">
+        <AttrNames>
+          <Item Value="IdPolipo"/>
+          <Item Value="DataPrelievo"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Diametro"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Descrizione2"/>
+          <Item Value="Descrizione3"/>
+          <Item Value="Note"/>
+          <Item Value="Selezione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Ref_SoPolipiIntermView1Iterator" id="IdPolipo">
+      <AttrNames>
+        <Item Value="IdPolipo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoPolipiIntermView1Iterator" id="DataPrelievo">
+      <AttrNames>
+        <Item Value="DataPrelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoPolipiIntermView1Iterator" id="Sede" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Ref_SoCnfRef2livENDREGView1Iterator">
+      <AttrNames>
+        <Item Value="Sede"/>
+        <Item Value="GrRegione"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoPolipiIntermView1Iterator" id="Diametro">
+      <AttrNames>
+        <Item Value="Diametro"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoPolipiIntermView1Iterator" id="Aspetto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livPOLASPView1Iterator">
+      <AttrNames>
+        <Item Value="Aspetto"/>
+        <Item Value="GrAspetto"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoPolipiIntermView1Iterator" id="Displasia" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livDISPCOView1Iterator">
+      <AttrNames>
+        <Item Value="Displasia"/>
+        <Item Value="GrDisplasia"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoPolipiIntermView1Iterator" id="Istologia" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTOCOView1Iterator">
+      <AttrNames>
+        <Item Value="Istologia"/>
+        <Item Value="GrIstologia"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoPolipiIntermView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Completa">
+      <AttrNames>
+        <Item Value="Completa"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" DataControl="RefCo_AppModuleDataControl" RequiresUpdateModel="false"
+            Action="rollbackTransaction"/>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

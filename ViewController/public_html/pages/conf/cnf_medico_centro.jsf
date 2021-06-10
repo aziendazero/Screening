@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_medico_centro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:panelLabelAndMessage label="Centro" id="plam1">
+                                    <af:outputText value="#{bindings.Descrbreve.inputValue}"
+                                                   shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="ot1"/>
+                                </af:panelLabelAndMessage>
+                                <af:selectOneChoice value="#{bindings.Codiceregmedico.inputValue}"
+                                                    label="#{bindings.Codiceregmedico.label}"
+                                                    required="#{bindings.Codiceregmedico.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codiceregmedico.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Codiceregmedico.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codiceregmedico.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Associazione Medico Centro"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

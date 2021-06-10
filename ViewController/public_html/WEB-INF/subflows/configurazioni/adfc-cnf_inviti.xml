@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_tpinviti">
+    <page>/pages/conf/cnf_tpinviti.jsf</page>
+  </view>
+  <view id="cnf_catsTpInvito">
+    <page>/pages/conf/cnf_catsTpInvito.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editTpinvito">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editTpinvito.xml</document>
+      <id>cnf_editTpinvito</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editCatTpinvito">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editCatTpinvito.xml</document>
+      <id>cnf_editCatTpinvito</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <view id="cnf_periodicitaInviti">
+    <page>/pages/conf/cnf_periodicitaInviti.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editPeriodicitaInvito">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editPeriodicitaInvito.xml</document>
+      <id>cnf_editPeriodicitaInvito</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <view id="cnf_invitiFast">
+    <page>/pages/conf/cnf_invitiFast.jsf</page>
+  </view>
+  <method-call id="Commit">
+    <method>#{bindings.Commit.execute}</method>
+    <outcome>
+      <fixed-outcome>Commit</fixed-outcome>
+    </outcome>
+  </method-call>
+  <task-flow-call id="cnf_editInvitiFast">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editInvitiFast.xml</document>
+      <id>cnf_editInvitiFast</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>tpinviti</from-outcome>
+      <to-activity-id>cnf_tpinviti</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>categorieinviti</from-outcome>
+      <to-activity-id>cnf_catsTpInvito</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__17">
+      <from-outcome>periodicitaInviti</from-outcome>
+      <to-activity-id>cnf_periodicitaInviti</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__12">
+      <from-outcome>invitiFast</from-outcome>
+      <to-activity-id>cnf_invitiFast</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__7">
+    <from-activity-id>cnf_tpinviti</from-activity-id>
+    <control-flow-case id="__8">
+      <from-outcome>creatEditTpinvito</from-outcome>
+      <to-activity-id>cnf_editTpinvito</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__9">
+    <from-activity-id>cnf_catsTpInvito</from-activity-id>
+    <control-flow-case id="__10">
+      <from-outcome>creatEditCatTpinvito</from-outcome>
+      <to-activity-id>cnf_editCatTpinvito</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__13">
+    <from-activity-id>cnf_periodicitaInviti</from-activity-id>
+    <control-flow-case id="__15">
+      <from-outcome>creatEditPerInv</from-outcome>
+      <to-activity-id>cnf_editPeriodicitaInvito</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__14">
+    <from-activity-id>cnf_invitiFast</from-activity-id>
+    <control-flow-case id="__18">
+      <from-outcome>creatEditInvFast</from-outcome>
+      <to-activity-id>cnf_editInvitiFast</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__4">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_inviti_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__5">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__6">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_inviti_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__11">
+    <managed-bean-name>Cnf_tpInvitiAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_tpInvitiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__16">
+    <managed-bean-name>Cnf_periodicitaInviti</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_periodicitaInviti</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__19">
+    <managed-bean-name>Cnf_invitiFastAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_invitiFastAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="AccMa_SelCprelView"
+   Version="11.1.2.62.76"
+   OrderBy="&#34;DESCRBREVE&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.accettazione.AccMa_SelCprelViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT
+    IDCENTRO,
+    DESCRBREVE,
+    ULSS,
+    TPSCR,
+    TIPOCENTRO,
+    DTCHPERIODO,
+    decode(DTCHPERIODO,null,null,'- ' || to_char(DTCHPERIODO,'dd/mm/yyyy')) chapp
+ FROM SO_CENTRO_PREL_REF
+where tipocentro in (1,2)
+and ulss=:1 and tpscr=:2
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idcentro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO"
+      Expression="IDCENTRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsPersistent="false"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRBREVE"
+      Expression="DESCRBREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipocentro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="TIPOCENTRO"
+      Expression="TIPOCENTRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtchperiodo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCHPERIODO"
+      Expression="DTCHPERIODO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chapp"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CHAPP"
+      Expression="CHAPP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

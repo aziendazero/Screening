@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_esenzioni_patologiePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfEsclEsenzioniView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfEsclEsenzioniView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfEsclEsenzioniView1Iterator" id="Cnf_SoCnfEsclEsenzioniView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfEsclEsenzioniView" Name="Cnf_SoCnfEsclEsenzioniView10">
+        <AttrNames>
+          <Item Value="CodEsenzione"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Idcnfescl"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfEsclEsenzioniView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfEsclEsenzioniView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

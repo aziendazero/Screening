@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_tpLetterePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfTpletteraView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpletteraView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfTpletteraView1Iterator" id="Cnf_SoCnfTpletteraView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfTpletteraView" Name="Cnf_SoCnfTpletteraView10">
+        <AttrNames>
+          <Item Value="Idtplettera"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfTpletteraView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfTpletteraView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="Cnf_SoCnfTpletteraView1Iterator" id="Idtplettera">
+      <AttrNames>
+        <Item Value="Idtplettera"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpletteraView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

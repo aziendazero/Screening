@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_stati.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_geog.statiForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempGeo.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1" rendered="#{sessionScope.SOGestioneConfigurazioniRegionali==true}">
+                                    <af:button text="Modifica" id="b1" action="creatEditStato" actionListener="#{Cnf_geog.onDettStati}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                              partialTriggers="t1">
+                                                        <af:dialog id="d2" title="Cancella stato"
+                                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                                   affirmativeTextAndAccessKey="Cancella"
+                                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente stato?" id="ot5"/>
+                                            </f:facet>
+                                                            
+                                                        </af:dialog>
+                                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3"
+                                           rendered="#{sessionScope.SOGestioneConfigurazioniRegionali==true}"
+                                           action="creatEditStato">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoStatoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoStatoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoStatoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoStatoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoStatoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoStatoView1.rangeSize}" id="t1"
+                                  autoHeightRows="0" scrollPolicy="page" binding="#{Cnf_geog.tabStati}">
+                            <af:column headerText="#{bindings.Cnf_SoStatoView1.hints.Codst.label}" id="c1"
+                                       sortable="true" sortProperty="#{bindings.Cnf_SoStatoView1.hints.Codst.name}">
+                                <af:outputText value="#{row.Codst}"
+                                               shortDesc="#{bindings.Cnf_SoStatoView1.hints.Codst.tooltip}" id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoStatoView1.hints.Descrizione.label}" id="c2"
+                                       width="400" sortable="true" sortProperty="#{bindings.Cnf_SoStatoView1.hints.Descrizione.name}">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoStatoView1.hints.Descrizione.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoStatoView1.hints.Dtiniziovalidita.label}" id="c3"
+                                sortable="true" sortProperty="#{bindings.Cnf_SoStatoView1.hints.Dtiniziovalidita.name}">
+                                <af:outputText value="#{row.Dtiniziovalidita}"
+                                               shortDesc="#{bindings.Cnf_SoStatoView1.hints.Dtiniziovalidita.tooltip}"
+                                               id="ot3">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoStatoView1.hints.Dtiniziovalidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoStatoView1.hints.Dtfinevalidita.label}" id="c4"
+                                sortable="true" sortProperty="#{bindings.Cnf_SoStatoView1.hints.Dtfinevalidita.name}">
+                                <af:outputText value="#{row.Dtfinevalidita}"
+                                               shortDesc="#{bindings.Cnf_SoStatoView1.hints.Dtfinevalidita.tooltip}"
+                                               id="ot4">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoStatoView1.hints.Dtfinevalidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Stati"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

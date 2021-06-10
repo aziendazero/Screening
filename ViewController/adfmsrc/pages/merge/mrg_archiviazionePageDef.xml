@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="mrg_archiviazionePageDef"
+                Package="pages.merge">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Mrg_SoMergeProposteView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Mrg_SoMergeProposteView1Iterator"/>
+  </executables>
+  <bindings>
+    <button IterBinding="Mrg_SoMergeProposteView1Iterator" id="Evasione" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Evasione"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Mrg_SoMergeProposteView1Iterator" id="Notearchiv">
+      <AttrNames>
+        <Item Value="Notearchiv"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="Sogg_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

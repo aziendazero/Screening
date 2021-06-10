@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="ag_mesePageDef"
+                Package="pages.agenda">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Agenda_ServizioDataControl"
+              id="Agenda_ServizioDataControlIterator"/>
+    <iterator Binds="Agenda_SelCprelView1" RangeSize="-1" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SelCprelView1Iterator"/>
+    <iterator Binds="Agenda_VisMensView1" RangeSize="10" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_VisMensView1Iterator"/>
+    <iterator Binds="Agenda_SintesiView1" RangeSize="10" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SintesiView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Agenda_ServizioDataControlIterator" id="idCentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Agenda_SelCprelView1Iterator">
+      <AttrNames>
+        <Item Value="idCentro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Agenda_VisMensView1Iterator" id="Agenda_VisMensView1">
+      <nodeDefinition DefName="model.agenda.Agenda_VisMensView" Name="Agenda_VisMensView10">
+        <AttrNames>
+          <Item Value="ggLun"/>
+          <Item Value="dispDom"/>
+          <Item Value="dispGio"/>
+          <Item Value="dispLun"/>
+          <Item Value="dispMar"/>
+          <Item Value="dispMer"/>
+          <Item Value="dispSab"/>
+          <Item Value="dispVen"/>
+          <Item Value="ggDom"/>
+          <Item Value="ggGio"/>
+          <Item Value="ggMar"/>
+          <Item Value="ggMer"/>
+          <Item Value="ggSab"/>
+          <Item Value="ggVen"/>
+          <Item Value="occDom"/>
+          <Item Value="occGio"/>
+          <Item Value="occLun"/>
+          <Item Value="occMar"/>
+          <Item Value="occMer"/>
+          <Item Value="occSab"/>
+          <Item Value="occVen"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Agenda_SintesiView1Iterator" id="Agenda_SintesiView1">
+      <nodeDefinition DefName="model.agenda.Agenda_SintesiView" Name="Agenda_SintesiView10">
+        <AttrNames>
+          <Item Value="Messaggio"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Agenda_ServizioDataControlIterator" id="mese">
+      <AttrNames>
+        <Item Value="mese"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Agenda_ServizioDataControlIterator" id="anno">
+      <AttrNames>
+        <Item Value="anno"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

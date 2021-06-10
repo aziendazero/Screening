@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_sdosps_filtro">
+    <page>/pages/conf/cnf_sdosps_filtro.jsf</page>
+  </view>
+  <view id="cnf_sdosps_associazione">
+    <page>/pages/conf/cnf_sdosps_associazione.jsf</page>
+  </view>
+  <view id="cnf_dwhcentri">
+    <page>/pages/conf/cnf_dwhcentri.jsf</page>
+  </view>
+  <view id="cnf_esenzioni_patologie">
+    <page>/pages/conf/cnf_esenzioni_patologie.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editEsenzione">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editEsenzione.xml</document>
+      <id>cnf_editEsenzione</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <method-call id="Execute">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <task-flow-call id="cnf_editSdospsFiltro">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editSdospsFiltro.xml</document>
+      <id>cnf_editSdospsFiltro</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editSdospsAssociazione">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editSdospsAssociazione.xml</document>
+      <id>cnf_editSdospsAssociazione</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editDwhCentri">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editDwhCentri.xml</document>
+      <id>cnf_editDwhCentri</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>sdospsfiltro</from-outcome>
+      <to-activity-id>cnf_sdosps_filtro</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>sdospsassociazione</from-outcome>
+      <to-activity-id>cnf_sdosps_associazione</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>dwhcentri</from-outcome>
+      <to-activity-id>cnf_dwhcentri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>esenzionipatologie</from-outcome>
+      <to-activity-id>cnf_esenzioni_patologie</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__9">
+    <from-activity-id>cnf_esenzioni_patologie</from-activity-id>
+    <control-flow-case id="__10">
+      <from-outcome>creatEditEsenzione</from-outcome>
+      <to-activity-id>cnf_editEsenzione</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__11">
+    <from-activity-id>cnf_editEsenzione</from-activity-id>
+    <control-flow-case id="__12">
+      <to-activity-id>Execute</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__13">
+    <from-activity-id>Execute</from-activity-id>
+    <control-flow-case id="__14">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_esenzioni_patologie</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__15">
+    <from-activity-id>cnf_sdosps_filtro</from-activity-id>
+    <control-flow-case id="__16">
+      <from-outcome>creatEditSdospsFiltro</from-outcome>
+      <to-activity-id>cnf_editSdospsFiltro</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__17">
+    <from-activity-id>cnf_sdosps_associazione</from-activity-id>
+    <control-flow-case id="__18">
+      <from-outcome>creatEditSdospsAssoc</from-outcome>
+      <to-activity-id>cnf_editSdospsAssociazione</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__19">
+    <from-activity-id>cnf_dwhcentri</from-activity-id>
+    <control-flow-case id="__20">
+      <from-outcome>creatEditDwhCentri</from-outcome>
+      <to-activity-id>cnf_editDwhCentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__21">
+    <from-activity-id>cnf_editSdospsFiltro</from-activity-id>
+    <control-flow-case id="__23">
+      <to-activity-id>cnf_sdosps_filtro</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__24">
+    <from-activity-id>cnf_editSdospsAssociazione</from-activity-id>
+    <control-flow-case id="__25">
+      <to-activity-id>cnf_sdosps_associazione</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__26">
+    <from-activity-id>cnf_editDwhCentri</from-activity-id>
+    <control-flow-case id="__27">
+      <to-activity-id>cnf_dwhcentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__6">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_flussiregionali_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__7">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__8">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_flussiregionali_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  
+  <managed-bean id="__22">
+    <managed-bean-name>FiltroSdoSpsAction</managed-bean-name>
+    <managed-bean-class>FiltroSdoSpsAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__28">
+    <managed-bean-name>Cnf_flussiRegionaliAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_flussiRegionaliAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

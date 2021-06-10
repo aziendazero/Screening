@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Acc_SoSoggScrView"
+   Version="12.2.1.11.57"
+   SelectList="Acc_SoSoggScr.CODTS, 
+       Acc_SoSoggScr.ULSS, 
+       Acc_SoSoggScr.TPSCR, 
+       Acc_SoSoggScr.ROUNDINDIV, 
+       Acc_SoSoggScr.NUMANATOMIA, 
+       Acc_SoSoggScr.NUMRADIOLOGIA, 
+       Acc_SoSoggScr.NUMLAB, 
+       Acc_SoSoggScr.ROUNDINVITI, 
+       Acc_SoSoggScr.ALTORISCHIO, 
+       Acc_SoSoggScr.CODIDSOGG_MX, 
+       Acc_SoSoggScr.TPRICHIAMO, 
+       Acc_SoSoggScr.IDCENTRORICHIAMO, 
+       Acc_SoSoggScr.DTRICHIAMO, 
+       Acc_SoSoggScr.IDCENTRO1LIV, 
+       Acc_SoSoggScr.IDCENTRO2LIV, 
+       Acc_SoSoggScr.VACCINATO_HPV, 
+       Acc_SoSoggScr.IDTRIAL, 
+       Acc_SoSoggScr.IDSTATO_TRIAL, 
+       Acc_SoSoggScr.IDBRACCIO_TRIAL, 
+       Acc_SoSoggScr.CONSENSO_COND, 
+       Acc_SoSoggScr.CONSENSO, 
+       Sogg_SoStoricoConsenso.INIZIO_VAL, 
+       Sogg_SoStoricoConsenso.IDSTORICO, 
+       Sogg_SoStoricoConsensoCond.INIZIO_VAL AS INIZIO_VAL1, 
+       Sogg_SoStoricoConsensoCond.IDSTORICO AS IDSTORICO1"
+   FromList="SO_SOGG_SCR Acc_SoSoggScr, SO_STORICO_CONSENSO Sogg_SoStoricoConsenso, SO_STORICO_CONSENSO Sogg_SoStoricoConsensoCond"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.accettazione.Acc_SoSoggScrViewImpl"
+   PageIterMode="Partial"
+   MsgBundleClass="model.accettazione.common.Acc_SoSoggScrViewRowImplMsgBundle"
+   Where="Acc_SoSoggScr.CODTS =  Sogg_SoStoricoConsenso.CODTS (+)  AND Acc_SoSoggScr.ULSS = Sogg_SoStoricoConsenso.ULSS (+)   AND Acc_SoSoggScr.TPSCR =  Sogg_SoStoricoConsenso.TPSCR (+)  AND Sogg_SoStoricoConsenso.FINE_VAL is null  AND Sogg_SoStoricoConsenso.TIPO (+) = 'GEN'  AND Acc_SoSoggScr.CODTS =  Sogg_SoStoricoConsensoCond.CODTS (+)  AND Acc_SoSoggScr.ULSS = Sogg_SoStoricoConsensoCond.ULSS (+)   AND Acc_SoSoggScr.TPSCR =  Sogg_SoStoricoConsensoCond.TPSCR (+)  AND Sogg_SoStoricoConsensoCond.FINE_VAL is null  AND Sogg_SoStoricoConsensoCond.TIPO (+) = 'COND'">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Acc_SoSoggScr"
+      Entity="model.accettazione.Acc_SoSoggScr" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Sogg_SoStoricoConsenso"
+      Entity="model.soggetto.Sogg_SoStoricoConsenso"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Sogg_SoStoricoConsensoCond"
+      Entity="model.soggetto.Sogg_SoStoricoConsenso"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      EntityAttrName="Roundindiv"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="ROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numanatomia"
+      EntityAttrName="Numanatomia"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="NUMANATOMIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numradiologia"
+      EntityAttrName="Numradiologia"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="NUMRADIOLOGIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numlab"
+      EntityAttrName="Numlab"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="NUMLAB" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      EntityAttrName="Roundinviti"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="ROUNDINVITI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Altorischio"
+      EntityAttrName="Altorischio"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="ALTORISCHIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodidsoggMx"
+      EntityAttrName="CodidsoggMx"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="CODIDSOGG_MX" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      EntityAttrName="Tprichiamo"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="TPRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      EntityAttrName="Idcentrorichiamo"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDCENTRORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="DTRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      EntityAttrName="Idcentro1liv"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDCENTRO1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      EntityAttrName="Idcentro2liv"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDCENTRO2LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VaccinatoHpv"
+      IsNotNull="true"
+      EntityAttrName="VaccinatoHpv"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="VACCINATO_HPV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="VaccinatoHpv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtrial"
+      PrecisionRule="true"
+      EntityAttrName="Idtrial"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDTRIAL"/>
+   <ViewAttribute
+      Name="IdstatoTrial"
+      PrecisionRule="true"
+      EntityAttrName="IdstatoTrial"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDSTATO_TRIAL">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IdstatoTrial_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdbraccioTrial"
+      PrecisionRule="true"
+      EntityAttrName="IdbraccioTrial"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="IDBRACCIO_TRIAL"/>
+   <ViewAttribute
+      Name="ConsensoCond"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ConsensoCond"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="CONSENSO_COND"/>
+   <ViewAttribute
+      Name="Consenso"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Consenso"
+      EntityUsage="Acc_SoSoggScr"
+      AliasName="CONSENSO"/>
+   <ViewAttribute
+      Name="InizioVal"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="InizioVal"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="INIZIO_VAL">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="InizioVal_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idstorico"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idstorico"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="IDSTORICO"/>
+   <ViewAttribute
+      Name="InizioVal1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="InizioVal"
+      EntityUsage="Sogg_SoStoricoConsensoCond"
+      AliasName="INIZIO_VAL1">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="InizioVal1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idstorico1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idstorico"
+      EntityUsage="Sogg_SoStoricoConsensoCond"
+      AliasName="IDSTORICO1"/>
+   <ViewLinkAccessor
+      Name="Acc_SoInvitoView1"
+      ViewLink="model.accettazione.Acc_SoInvitoSoSoggScrLink"
+      Type="oracle.jbo.RowIterator"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.accettazione.common.Acc_SoSoggScrViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

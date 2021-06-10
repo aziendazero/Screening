@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCa_questionarioPageDef"
+                Package="pages.questionario">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiCAView1" RangeSize="25" DataControl="RefCa_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiCAView1Iterator"/>
+    <iterator Binds="RefCa_SoRefertocardioView1" RangeSize="10" DataControl="RefCa_AppModuleDataControl"
+              id="RefCa_SoRefertocardioView1Iterator"/>
+    <iterator Binds="RefCa_SoCnfQuestionarioView1" RangeSize="10" DataControl="RefCa_AppModuleDataControl"
+              id="RefCa_SoCnfQuestionarioView1Iterator"/>
+    <iterator Binds="RefCa_SoOpmedicoRilevatoreView1" RangeSize="-1" DataControl="RefCa_AppModuleDataControl"
+              id="RefCa_SoOpmedicoRilevatoreView1Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg1livView1" RangeSize="-1" DataControl="RefCa_AppModuleDataControl"
+              id="Ref_SoCnfSugg1livView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Sesso">
+      <AttrNames>
+        <Item Value="Sesso"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Cf">
+      <AttrNames>
+        <Item Value="Cf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoRefertocardioView1Iterator" id="Idreferto">
+      <AttrNames>
+        <Item Value="Idreferto"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoRefertocardioView1Iterator" id="Completo">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoRefertocardioView1Iterator" id="Idallegato">
+      <AttrNames>
+        <Item Value="Idallegato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Ulss">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCAView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoCnfQuestionarioView1Iterator" id="Algoritmo">
+      <AttrNames>
+        <Item Value="Algoritmo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoRefertocardioView1Iterator" id="DataRilevazione">
+      <AttrNames>
+        <Item Value="DataRilevazione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="RefCa_SoRefertocardioView1Iterator" id="Oprilevazione" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="RefCa_SoOpmedicoRilevatoreView1Iterator">
+      <AttrNames>
+        <Item Value="Oprilevazione"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Titolo"/>
+        <Item Value="Nome"/>
+        <Item Value="Cognome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="RefCa_SoRefertocardioView1Iterator" id="Idsugg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfSugg1livView1Iterator">
+      <AttrNames>
+        <Item Value="Idsugg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="RefCa_SoCnfQuestionarioView1Iterator" id="descrizioneQuestionario">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RefCa_SoRefertocardioView1Iterator" id="Dtspedizione">
+      <AttrNames>
+        <Item Value="Dtspedizione"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_catTpInvito.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.NomeConf.inputValue}" 
+                                    contentStyle="width:250px;"
+                                    label="#{bindings.NomeConf.hints.label}"
+                                    required="#{bindings.NomeConf.hints.mandatory}"
+                                    columns="#{bindings.NomeConf.hints.displayWidth}"
+                                    maximumLength="#{bindings.NomeConf.hints.precision}"
+                                    shortDesc="#{bindings.NomeConf.hints.tooltip}" id="it2" autoSubmit="true">
+                                    <f:validator binding="#{bindings.NomeConf.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito1.inputValue}"
+                                                    label="#{bindings.Idtpinvito1.label}"
+                                                    required="#{bindings.Idtpinvito1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito1.hints.tooltip}" id="soc1"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.Idtpinvito1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idtpinvito1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentro1.inputValue}"
+                                                    label="#{bindings.Idcentro1.label}"
+                                                    required="#{bindings.Idcentro1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro1.hints.tooltip}" id="soc2"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.Idcentro1.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idcentro1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectBooleanCheckbox value="#{bindings.DataCorrente1.inputValue}"
+                                                          label="#{bindings.DataCorrente1.label}"
+                                                          shortDesc="#{bindings.DataCorrente1.hints.tooltip}" id="sbc1"
+                                                          autoSubmit="true"/>
+                                <af:inputDate value="#{bindings.Data.inputValue}" label="#{bindings.Data.hints.label}"
+                                              required="#{bindings.Data.hints.mandatory}"
+                                              columns="#{bindings.Data.hints.displayWidth}"
+                                              shortDesc="#{bindings.Data.hints.tooltip}" id="id1" partialTriggers="sbc1"
+                                              rendered="#{bindings.DataCorrente1.inputValue=='0'}"
+                                              autoSubmit="true">
+                                    <f:validator binding="#{bindings.Data.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Data.format}"/>
+                                </af:inputDate>
+                                <af:selectOneChoice value="#{bindings.Codesitoinvito1.inputValue}"
+                                                    label="#{bindings.Codesitoinvito1.label}"
+                                                    required="#{bindings.Codesitoinvito1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codesitoinvito1.hints.tooltip}" id="soc3"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.Codesitoinvito1.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Codesitoinvito1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectBooleanCheckbox value="#{bindings.StampaEtichetta1.inputValue}"
+                                                          label="#{bindings.StampaEtichetta1.label}"
+                                                          shortDesc="#{bindings.StampaEtichetta1.hints.tooltip}"
+                                                          id="sbc2" autoSubmit="true"/>
+                                <af:selectBooleanCheckbox value="#{bindings.Utilizza1.inputValue}"
+                                                          label="#{bindings.Utilizza1.label}"
+                                                          shortDesc="#{bindings.Utilizza1.hints.tooltip}" id="sbc3"
+                                                          autoSubmit="true"/>
+                                <af:inputText value="#{bindings.Ordine.inputValue}"
+                                              label="#{bindings.Ordine.hints.label}"
+                                              required="#{bindings.Ordine.hints.mandatory}"
+                                              columns="#{bindings.Ordine.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ordine.hints.precision}"
+                                              shortDesc="#{bindings.Ordine.hints.tooltip}" id="it13"
+                                              autoSubmit="true">
+                                    <f:validator binding="#{bindings.Ordine.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ordine.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Note.inputValue}" label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              columns="#{bindings.Note.hints.displayWidth}"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it10"
+                                              autoSubmit="true">
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Invito fast"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

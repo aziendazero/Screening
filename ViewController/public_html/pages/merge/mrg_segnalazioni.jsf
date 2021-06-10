@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="mrg_segnalazioni.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Mrg_segnalazioniAction.segnalazioniForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelHeader text="Ricerca segnalazioni" id="ph1">
+                        <af:panelGroupLayout id="pgl3" layout="scroll">
+                            <af:panelFormLayout id="pfl1" maxColumns="3" rows="4" styleClass="AFStretchWidth">
+                                <f:facet name="footer">
+                                    <af:panelGroupLayout id="pgl2" layout="horizontal" halign="start">
+                                        <af:toolbar id="t1">
+                                            <af:button text="Cerca" id="b1"
+                                                       actionListener="#{Mrg_segnalazioniAction.cerca}"/>
+                                        </af:toolbar>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <af:panelLabelAndMessage label="Proposta di" id="plam1">
+                                    <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                        <af:selectBooleanCheckbox text="Merge" id="sbc1"
+                                                                  value="#{Mrg_segnalazioniAction.sgMerge}"/>
+                                        <af:spacer width="20" height="10" id="s1"/>
+                                        <af:selectBooleanCheckbox text="Unmerge" id="sbc2"
+                                                                  value="#{Mrg_segnalazioniAction.sgUnmerge}"/>
+                                    </af:panelGroupLayout>
+                                </af:panelLabelAndMessage>
+                                <af:inputText label="Anagrafica valida: MPI" id="it1"
+                                              value="#{Mrg_segnalazioniAction.sgMpiVal}"/>
+                                <af:inputText label="Anagrafica deprecata: MPI" id="it2"
+                                              value="#{Mrg_segnalazioniAction.sgMpiDepr}"/>
+                                <af:selectOneChoice label="Evase" id="soc1" styleClass="choiceInTable"
+                                                    value="#{Mrg_segnalazioniAction.sgEvase}">
+                                    <af:selectItem label="" value="" id="si3"/>
+                                    <af:selectItem label="No" value="NO" id="si1"/>
+                                    <af:selectItem label="Si" value="SI" id="si2"/>
+                                </af:selectOneChoice>
+                                <af:inputDate label="Dal" id="id1" value="#{Mrg_segnalazioniAction.sgDal}"/>
+                                <af:inputText label="Tessera sanitaria" id="it3"
+                                              value="#{Mrg_segnalazioniAction.sgCodtsVal}"/>
+                                <af:inputText label="Tessera sanitaria" id="it4"
+                                              value="#{Mrg_segnalazioniAction.sgCodtsDepr}"/>
+                                <af:selectBooleanCheckbox text="Segnalazioni archiviate" id="sbc3"
+                                                          value="#{Mrg_segnalazioniAction.sgArchiviate}"/>
+                                <af:inputDate label="Al" id="id2" value="#{Mrg_segnalazioniAction.sgAl}"/>
+                                <af:inputText label="Codice fiscale" id="it5"
+                                              value="#{Mrg_segnalazioniAction.sgCfVal}"/>
+                                <af:inputText label="Codice fiscale" id="it6"
+                                              value="#{Mrg_segnalazioniAction.sgCfDepr}"/>
+                            </af:panelFormLayout>
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:button text="Archivia" id="b2"
+                                                   rendered="#{bindings.Archiviato.inputValue=='1'?'false':'true'}"
+                                                   action="dialog:toArchiviazione" useWindow="true" windowHeight="400"
+                                                   windowWidth="800" windowEmbedStyle="inlineDocument"/>
+                                        <af:button text="Rielabora" id="b3" rendered="#{bindings.Evasione.inputValue=='1'?'false':'true'}"
+                                                   actionListener="#{Mrg_segnalazioniAction.rielabora}"/>
+                                        <af:button text="Vai a scheda" id="b4"
+                                                   action="#{Mrg_segnalazioniAction.goScheda}" partialSubmit="false">
+                                            <af:setPropertyListener from="#{bindings.ValCodts.attributeValue}"
+                                                                    to="#{pageFlowScope.merge_codts_val}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.DepCodts.attributeValue}"
+                                                                    to="#{pageFlowScope.merge_codts_depr}"
+                                                                    type="action"/>
+                                        </af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Mrg_SoMergeProposteView1.collectionModel}" var="row"
+                                          rows="#{bindings.Mrg_SoMergeProposteView1.rangeSize}"
+                                          emptyText="#{bindings.Mrg_SoMergeProposteView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Mrg_SoMergeProposteView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Mrg_SoMergeProposteView1.collectionModel.makeCurrent}"
+                                          rowSelection="single"
+                                          fetchSize="#{bindings.Mrg_SoMergeProposteView1.rangeSize}" id="t2"
+                                          columnStretching="column:c11" autoHeightRows="5" scrollPolicy="page">
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Dtinsert.label}"
+                                               id="c1">
+                                        <af:outputText value="#{row.Dtinsert}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Dtinsert.tooltip}"
+                                                       id="ot1">
+                                            <af:convertDateTime pattern="#{bindings.Mrg_SoMergeProposteView1.hints.Dtinsert.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Tipo.label}"
+                                               id="c2" width="60">
+                                        <af:outputText value="#{row.Tipo eq 'M' ? 'Merge' : 'Unmerge'}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Tipo.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="Anagrafica valida" id="c3" width="200">
+                                        <af:outputText value="#{row.Cognome} #{row.Nome} #{row.DocIdent}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.ValCodts.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="Anagrafica deprecata" id="c7" width="200">
+                                        <af:outputText value="#{row.Cognome1} #{row.Nome1} #{row.DocIdent1}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.DepCodts.tooltip}"
+                                                       id="ot7"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Testo.label}"
+                                               id="c11" width="250" noWrap="false">
+                                        <af:outputText value="#{row.Testo}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Testo.tooltip}"
+                                                       id="ot11"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Evasione.label}"
+                                               id="c12" width="60">
+                                        <af:selectBooleanCheckbox selected="#{row.Evasione eq 1}" readOnly="true"
+                                                                  id="sbc4"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Dtarchiv.label}"
+                                               id="c13">
+                                        <af:outputText value="#{row.Dtarchiv}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Dtarchiv.tooltip}"
+                                                       id="ot13">
+                                            <af:convertDateTime pattern="#{bindings.Mrg_SoMergeProposteView1.hints.Dtarchiv.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Oparchiv.label}"
+                                               id="c14">
+                                        <af:outputText value="#{row.Oparchiv}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Oparchiv.tooltip}"
+                                                       id="ot14"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeProposteView1.hints.Notearchiv.label}"
+                                               id="c15" width="250">
+                                        <af:outputText value="#{row.Notearchiv}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeProposteView1.hints.Notearchiv.tooltip}"
+                                                       id="ot15"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                            <af:panelGridLayout id="pgl4">
+                                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                    <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                        <af:panelHeader text="Anagrafica valida" id="ph2">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:panelFormLayout id="pfl2">
+                                                <f:facet name="footer"/>
+                                                <af:panelLabelAndMessage label="#{bindings.Cognome.hints.label}"
+                                                                         id="plam2">
+                                                    <af:outputText value="#{bindings.Cognome.inputValue}"
+                                                                   shortDesc="#{bindings.Cognome.hints.tooltip}"
+                                                                   id="ot4"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.Nome.hints.label}"
+                                                                         id="plam3">
+                                                    <af:outputText value="#{bindings.Nome.inputValue}"
+                                                                   shortDesc="#{bindings.Nome.hints.tooltip}" id="ot5"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.DocIdent.hints.label}"
+                                                                         id="plam4">
+                                                    <af:outputText value="#{bindings.DocIdent.inputValue}"
+                                                                   shortDesc="#{bindings.DocIdent.hints.tooltip}"
+                                                                   id="ot6"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.DataNascita.hints.label}"
+                                                                         id="plam5">
+                                                    <af:outputText value="#{bindings.DataNascita.inputValue}"
+                                                                   shortDesc="#{bindings.DataNascita.hints.tooltip}"
+                                                                   id="ot8">
+                                                        <af:convertDateTime pattern="#{bindings.DataNascita.format}"/>
+                                                    </af:outputText>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.Idinterno.hints.label}"
+                                                                         id="plam6">
+                                                    <af:outputText value="#{bindings.Idinterno.inputValue}"
+                                                                   shortDesc="#{bindings.Idinterno.hints.tooltip}"
+                                                                   id="ot9"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.Cf.hints.label}" id="plam7">
+                                                    <af:outputText value="#{bindings.Cf.inputValue}"
+                                                                   shortDesc="#{bindings.Cf.hints.tooltip}" id="ot10"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.Sesso.hints.label}"
+                                                                         id="plam8">
+                                                    <af:outputText value="#{bindings.Sesso.inputValue}"
+                                                                   shortDesc="#{bindings.Sesso.hints.tooltip}"
+                                                                   id="ot12"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="#{bindings.Sigla.hints.label}"
+                                                                         id="plam9">
+                                                    <af:outputText value="#{bindings.Sigla.inputValue}"
+                                                                   shortDesc="#{bindings.Sigla.hints.tooltip}"
+                                                                   id="ot16"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="Medico"
+                                                                         id="plam10">
+                                                    <af:outputText value="#{bindings.CognomeMed.inputValue} #{bindings.NomeMed.inputValue}"
+                                                                   shortDesc="#{bindings.CognomeMed.hints.tooltip}"
+                                                                   id="ot17"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:outputText value="#{bindings.ValCodts.inputValue}"
+                                                               shortDesc="#{bindings.ValCodts.hints.tooltip}"
+                                                               id="ot18" rendered="false"/>
+                                            </af:panelFormLayout>
+                                        </af:panelHeader>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                        <af:panelHeader text="Anagrafica deprecata / da deprecare" id="ph3">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:panelFormLayout id="pfl3">
+                                                <af:inputText value="#{bindings.Cognome1.inputValue}"
+                                                              label="#{bindings.Cognome1.hints.label}"
+                                                              required="#{bindings.Cognome1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.Cognome1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Cognome1.hints.precision}"
+                                                              shortDesc="#{bindings.Cognome1.hints.tooltip}" id="it7">
+                                                    <f:validator binding="#{bindings.Cognome1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.Nome1.inputValue}"
+                                                              label="#{bindings.Nome1.hints.label}"
+                                                              required="#{bindings.Nome1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.Nome1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Nome1.hints.precision}"
+                                                              shortDesc="#{bindings.Nome1.hints.tooltip}" id="it8">
+                                                    <f:validator binding="#{bindings.Nome1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.DocIdent1.inputValue}"
+                                                              label="#{bindings.DocIdent1.hints.label}"
+                                                              required="#{bindings.DocIdent1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.DocIdent1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.DocIdent1.hints.precision}"
+                                                              shortDesc="#{bindings.DocIdent1.hints.tooltip}" id="it9">
+                                                    <f:validator binding="#{bindings.DocIdent1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputDate value="#{bindings.DataNascita1.inputValue}"
+                                                              readOnly="true"
+                                                              label="#{bindings.DataNascita1.hints.label}"
+                                                              required="#{bindings.DataNascita1.hints.mandatory}"
+                                                              columns="#{bindings.DataNascita1.hints.displayWidth}"
+                                                              shortDesc="#{bindings.DataNascita1.hints.tooltip}"
+                                                              id="id3">
+                                                    <f:validator binding="#{bindings.DataNascita1.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.DataNascita1.format}"/>
+                                                </af:inputDate>
+                                                <af:inputText value="#{bindings.Idinterno1.inputValue}"
+                                                              label="#{bindings.Idinterno1.hints.label}"
+                                                              required="#{bindings.Idinterno1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.Idinterno1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Idinterno1.hints.precision}"
+                                                              shortDesc="#{bindings.Idinterno1.hints.tooltip}"
+                                                              id="it10">
+                                                    <f:validator binding="#{bindings.Idinterno1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.Cf1.inputValue}"
+                                                              label="#{bindings.Cf1.hints.label}"
+                                                              required="#{bindings.Cf1.hints.mandatory}" readOnly="true"
+                                                              columns="#{bindings.Cf1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Cf1.hints.precision}"
+                                                              shortDesc="#{bindings.Cf1.hints.tooltip}" id="it11">
+                                                    <f:validator binding="#{bindings.Cf1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.Sesso1.inputValue}"
+                                                              label="#{bindings.Sesso1.hints.label}"
+                                                              required="#{bindings.Sesso1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.Sesso1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Sesso1.hints.precision}"
+                                                              shortDesc="#{bindings.Sesso1.hints.tooltip}" id="it12">
+                                                    <f:validator binding="#{bindings.Sesso1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.Sigla1.inputValue}"
+                                                              label="#{bindings.Sigla1.hints.label}"
+                                                              required="#{bindings.Sigla1.hints.mandatory}"
+                                                              readOnly="true"
+                                                              columns="#{bindings.Sigla1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Sigla1.hints.precision}"
+                                                              shortDesc="#{bindings.Sigla1.hints.tooltip}" id="it13">
+                                                    <f:validator binding="#{bindings.Sigla1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.CognomeMed1.inputValue} #{bindings.NomeMed1.inputValue}"
+                                                              label="Medico"
+                                                              readOnly="true"
+                                                              id="it14">
+                                                    <f:validator binding="#{bindings.CognomeMed1.validator}"/>
+                                                </af:inputText>
+                                                <af:outputText value="#{bindings.DepCodts.inputValue}"
+                                                               shortDesc="#{bindings.DepCodts.hints.tooltip}"
+                                                               id="ot19" rendered="false"/>
+                                            </af:panelFormLayout>
+                                        </af:panelHeader>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                        </af:panelGroupLayout>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Merge anagrafico"/>
+                <f:attribute name="navigation" value="#{Mrg_segnalazioniAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

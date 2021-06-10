@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfSugg1livView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfSugg1liv.IDSUGG, 
+       Cnf_SoCnfSugg1liv.IDTPINVITO, 
+       Cnf_SoCnfSugg1liv.ESITOSUGG, 
+       Cnf_SoCnfSugg1liv.DESCRIZIONE, 
+       Cnf_SoCnfSugg1liv.GGRICHIAMO, 
+       Cnf_SoCnfSugg1liv.INVIAINTERVENTO, 
+       Cnf_SoCnfSugg1liv.TIPOESAME, 
+       Cnf_SoCnfSugg1liv.INVIA2LIV, 
+       Cnf_SoCnfSugg1liv.CODDIP, 
+       Cnf_SoCnfSugg1liv.GIUDDIAGNOSTICO, 
+       Cnf_SoCnfSugg1liv.CODREGIONALE, 
+       Cnf_SoCnfSugg1liv.ORDINE, 
+       Cnf_SoCnfSugg1liv.ULSS, 
+       Cnf_SoCnfSugg1liv.TPSCR, 
+       Cnf_SoCnfTpinvito.DESCRBREVE, 
+       Cnf_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Cnf_SoCnfTpinvito.ULSS AS ULSS1, 
+       Cnf_SoCnfTpinvito.TPSCR AS TPSCR1, 
+       Ref_SoCnfRef1liv.IDCNFREF1L, 
+       Ref_SoCnfRef1liv.GRUPPO, 
+       Ref_SoCnfRef1liv.ULSS AS ULSS2, 
+       Ref_SoCnfRef1liv.TPSCR AS TPSCR2, 
+       Ref_SoCnfRef1liv.DESCRIZIONE AS DESCRIZIONE1, 
+       Cnf_SoCnfSugg1liv.DTFINEVALIDITA"
+   FromList="SO_CNF_SUGG_1LIV Cnf_SoCnfSugg1liv, SO_CNF_TPINVITO Cnf_SoCnfTpinvito, SO_CNF_REF1LIV Ref_SoCnfRef1liv"
+   Where="((Cnf_SoCnfSugg1liv.IDTPINVITO = Cnf_SoCnfTpinvito.IDTPINVITO(+))AND (Cnf_SoCnfSugg1liv.ULSS = Cnf_SoCnfTpinvito.ULSS(+)))AND (Cnf_SoCnfSugg1liv.TPSCR = Cnf_SoCnfTpinvito.TPSCR(+)) AND ( Cnf_SoCnfSugg1liv.GIUDDIAGNOSTICO=Ref_SoCnfRef1liv.IDCNFREF1L(+) AND Cnf_SoCnfSugg1liv.ULSS=Ref_SoCnfRef1liv.ULSS(+) AND Cnf_SoCnfSugg1liv.TPSCR=Ref_SoCnfRef1liv.TPSCR(+) AND Ref_SoCnfRef1liv.GRUPPO(+)=&#39;GIUDIA&#39; )"
+   OrderBy="Cnf_SoCnfSugg1liv.ORDINE,Cnf_SoCnfSugg1liv.IDSUGG"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfSugg1livViewImpl"
+   PageIterMode="Partial"
+   >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfSugg1liv"
+      Entity="model.conf.Cnf_SoCnfSugg1liv" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTpinvito"
+      Entity="model.conf.Cnf_SoCnfTpinvito"
+      Association="model.FkSoCnfSHaTpri2lSoCnfTAssoc"
+      AssociationEnd="model.FkSoCnfSHaTpri2lSoCnfTAssoc.Cnf_SoCnfTpinvito"
+      SourceUsage="model.conf.Cnf_SoCnfSugg1livView.Cnf_SoCnfSugg1liv"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Idtpinvito" />
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Ulss" />
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Tpscr" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Idtpinvito" />
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Ulss" />
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Tpscr" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef1liv"
+      Entity="model.referto.Ref_SoCnfRef1liv"
+      SourceUsage="model.conf.Cnf_SoCnfSugg1livView.Cnf_SoCnfTpinvito"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idsugg"
+      IsNotNull="true"
+      EntityAttrName="Idsugg"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="IDSUGG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="IDTPINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsNotNull="true"
+      EntityAttrName="Esitosugg"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="ESITOSUGG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitosugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggrichiamo"
+      EntityAttrName="Ggrichiamo"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="GGRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ggrichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Inviaintervento"
+      EntityAttrName="Inviaintervento"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="INVIAINTERVENTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Inviaintervento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoesame"
+      EntityAttrName="Tipoesame"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="TIPOESAME" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tipoesame_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Invia2liv"
+      EntityAttrName="Invia2liv"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="INVIA2LIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Invia2liv_LABEL"/>
+            <CONTROLTYPE
+               Value="check_box"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddip"
+      EntityAttrName="Coddip"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="CODDIP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Coddip_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Giuddiagnostico"
+      EntityAttrName="Giuddiagnostico"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="GIUDDIAGNOSTICO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Giuddiagnostico_LABEL"/>
+            <AUTOSUBMIT
+               Value="true"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale"
+      EntityAttrName="Codregionale"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="CODREGIONALE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codregionale_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      EntityAttrName="Ordine"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="ORDINE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ordine_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref1l"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref1l"
+      EntityUsage="Ref_SoCnfRef1liv"
+      AliasName="IDCNFREF1L" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef1liv"
+      AliasName="GRUPPO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef1liv"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr2"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef1liv"
+      AliasName="TPSCR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef1liv"
+      AliasName="DESCRIZIONE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalidita"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="DTFINEVALIDITA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevalidita_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtfinevalidita_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevalidita_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfSugg1livViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

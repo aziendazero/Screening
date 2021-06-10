@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_festivita1.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Giorno.inputValue}"
+                                              label="#{bindings.Giorno.hints.label}"
+                                              required="#{bindings.Giorno.hints.mandatory}"
+                                              columns="#{bindings.Giorno.hints.displayWidth}"
+                                              maximumLength="#{bindings.Giorno.hints.precision}"
+                                              shortDesc="#{bindings.Giorno.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Giorno.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Giorno.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Mese.inputValue}" label="#{bindings.Mese.hints.label}"
+                                              required="#{bindings.Mese.hints.mandatory}"
+                                              columns="#{bindings.Mese.hints.displayWidth}"
+                                              maximumLength="#{bindings.Mese.hints.precision}"
+                                              shortDesc="#{bindings.Mese.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Mese.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Mese.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Anno.inputValue}" label="#{bindings.Anno.hints.label}"
+                                              required="#{bindings.Anno.hints.mandatory}"
+                                              columns="#{bindings.Anno.hints.displayWidth}"
+                                              maximumLength="#{bindings.Anno.hints.precision}"
+                                              shortDesc="#{bindings.Anno.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Anno.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Anno.format}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox value="#{bindings.Annuale.inputValue}"
+                                                          label="#{bindings.Annuale.hints.label}"
+                                                          required="#{bindings.Annuale.hints.mandatory}"
+                                                          shortDesc="#{bindings.Annuale.hints.tooltip}" id="it4">
+                                </af:selectBooleanCheckbox>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Festività"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

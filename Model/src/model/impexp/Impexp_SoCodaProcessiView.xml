@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_SoCodaProcessiView"
+   Version="11.1.2.62.76"
+   SelectList="Impexp_SoCodaProcessi.PID, 
+       Impexp_SoCodaProcessi.TIPO_PROCESSO, 
+       Impexp_SoCodaProcessi.STATO, 
+       Impexp_SoCodaProcessi.PRIORITA, 
+       Impexp_SoCodaProcessi.ULSS, 
+       Impexp_SoCodaProcessi.TPSCR, 
+       Impexp_SoCodaProcessi.ERROR_MESSAGE, 
+       Impexp_SoCodaProcessi.DATA_SCHEDULAZIONE, 
+       Impexp_SoCodaProcessi.UTENTE_SCHEDULAZIONE, 
+       Impexp_SoCodaProcessi.INIZIO_ESECUZIONE, 
+       Impexp_SoCodaProcessi.FINE_ESECUZIONE, 
+       Impexp_SoCodaProcessi.LINK_LOG"
+   FromList="SO_CODA_PROCESSI Impexp_SoCodaProcessi"
+   OrderBy="Impexp_SoCodaProcessi.PID"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.impexp.Impexp_SoCodaProcessiViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   RowClass="model.impexp.Impexp_SoCodaProcessiViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <Variable
+      Name="PidNew"
+      Kind="viewcriteria"
+      Type="java.lang.Integer"/>
+   <EntityUsage
+      Name="Impexp_SoCodaProcessi"
+      Entity="model.sched.Sched_SoCodaProcessi" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Pid"
+      IsNotNull="true"
+      EntityAttrName="Pid"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="PID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoProcesso"
+      IsNotNull="true"
+      EntityAttrName="TipoProcesso"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="TIPO_PROCESSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stato"
+      IsNotNull="true"
+      EntityAttrName="Stato"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="STATO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Priorita"
+      IsNotNull="true"
+      EntityAttrName="Priorita"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="PRIORITA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ErrorMessage"
+      EntityAttrName="ErrorMessage"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="ERROR_MESSAGE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataSchedulazione"
+      IsNotNull="true"
+      EntityAttrName="DataSchedulazione"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="DATA_SCHEDULAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UtenteSchedulazione"
+      IsNotNull="true"
+      EntityAttrName="UtenteSchedulazione"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="UTENTE_SCHEDULAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="InizioEsecuzione"
+      EntityAttrName="InizioEsecuzione"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="INIZIO_ESECUZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FineEsecuzione"
+      EntityAttrName="FineEsecuzione"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="FINE_ESECUZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LinkLog"
+      EntityAttrName="LinkLog"
+      EntityUsage="Impexp_SoCodaProcessi"
+      AliasName="LINK_LOG" >
+   </ViewAttribute>
+   <ViewCriteria
+      Name="SingleRowCriteria"
+      ViewObjectName="model.impexp.Impexp_SoCodaProcessiView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="Impexp_SoCodaProcessiViewCriteria_row_0"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Pid"
+            ViewAttribute="Pid"
+            Operator="="
+            Conjunction="AND"
+            Value=":PidNew"
+            GenerateIsNullClauseForBindVars="false"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+</ViewObject>

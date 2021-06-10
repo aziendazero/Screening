@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoCnfTpinvitoSollecitiView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.round.Round_SoCnfTpinvitoSollecitiViewImpl"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT DISTINCT Round_SoCnfTpinvito1.IDTPINVITO,  
+  Round_SoCnfTpinvito1.IDCATEG,
+  Round_SoCnfTpinvito1.DESCRIZIONE,
+  Round_SoCnfTpinvito1.DESCRBREVE,
+  Round_SoCnfTpinvito1.ULSS,
+  Round_SoCnfTpinvito1.TPSCR,
+  Round_SoCnfTpinvito1.LIVELLO
+FROM SO_CNF_TPINVITO Round_SoCnfTpinvito,
+  SO_CNF_TPINVITO Round_SoCnfTpinvito1
+WHERE Round_SoCnfTpinvito.IDTPINV_SOLL = Round_SoCnfTpinvito1.IDTPINVITO
+AND Round_SoCnfTpinvito.ULSS            = Round_SoCnfTpinvito1.ULSS
+AND Round_SoCnfTpinvito.TPSCR           = Round_SoCnfTpinvito1.TPSCR
+AND Round_SoCnfTpinvito1.ULSS = :1
+AND Round_SoCnfTpinvito1.TPSCR = :2
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="IDTPINVITO"
+      Expression="IDTPINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcateg"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCATEG"
+      Expression="IDCATEG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRBREVE"
+      Expression="DESCRBREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="LIVELLO"
+      Expression="LIVELLO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="Aziende sanitarie" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_aziendAction.aziendeForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSingle.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t2">
+                                        <af:group id="g1">
+                                            <af:button text="Modifica" id="b1" action="createEditAzienda"
+                                                       actionListener="#{Cnf_aziendAction.onDett}" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                                <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Parametri" id="b2" action="createEditAzienda" actionListener="#{Cnf_aziendAction.onDett}">
+                                                <af:setPropertyListener from="goParams" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                        </af:group>
+                                        <af:selectOneChoice value="#{pageFlowScope.ulssSelected}" label="Azienda sanitaria"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Cnf_SoAziendaView11.hints.tooltip}" id="soc2"
+                                                    valueChangeListener="#{Cnf_aziendAction.onChange}" autoSubmit="true"
+                                                    binding="#{Cnf_aziendAction.selectedUlss}">
+                                            <f:selectItem itemLabel="Tutte" itemValue="Tutte"/>
+                                            <f:selectItem itemLabel="050000" itemValue="050000"/>
+                                            <f:selectItem itemLabel="050101" itemValue="050101"/>
+                                            <f:selectItem itemLabel="050102" itemValue="050102"/>
+                                            <f:selectItem itemLabel="050103" itemValue="050103"/>
+                                            <f:selectItem itemLabel="050104" itemValue="050104"/>
+                                            <f:selectItem itemLabel="050106" itemValue="050106"/>
+                                            <f:selectItem itemLabel="050108" itemValue="050108"/>
+                                            <f:selectItem itemLabel="050109" itemValue="050109"/>
+                                            <f:selectItem itemLabel="050110" itemValue="050110"/>
+                                            <f:selectItem itemLabel="050112" itemValue="050112"/>
+                                            <f:selectItem itemLabel="050113" itemValue="050113"/>
+                                            <f:selectItem itemLabel="050114" itemValue="050114"/>
+                                            <f:selectItem itemLabel="050116" itemValue="050116"/>
+                                            <f:selectItem itemLabel="050117" itemValue="050117"/>
+                                            <f:selectItem itemLabel="050118" itemValue="050118"/>
+                                            <f:selectItem itemLabel="050119" itemValue="050119"/>
+                                            <f:selectItem itemLabel="050120" itemValue="050120"/>
+                                            <f:selectItem itemLabel="050122" itemValue="050122"/>
+                                            <f:selectItem itemLabel="050501" itemValue="050501"/>
+                                            <f:selectItem itemLabel="050502" itemValue="050502"/>
+                                            <f:selectItem itemLabel="050503" itemValue="050503"/>
+                                            <f:selectItem itemLabel="050504" itemValue="050504"/>
+                                            <f:selectItem itemLabel="050505" itemValue="050505"/>
+                                            <f:selectItem itemLabel="050506" itemValue="050506"/>
+                                            <f:selectItem itemLabel="050507" itemValue="050507"/>
+                                            <f:selectItem itemLabel="050508" itemValue="050508"/>
+                                            <f:selectItem itemLabel="050509" itemValue="050509"/>
+                                            <f:selectItem itemLabel="999120" itemValue="999120"/>
+                                        </af:selectOneChoice>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:table value="#{bindings.Cnf_SoAziendaView1.collectionModel}" var="row"
+                                          rows="#{bindings.Cnf_SoAziendaView1.rangeSize}"
+                                          emptyText="#{bindings.Cnf_SoAziendaView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0" scrollPolicy="page"
+                                          selectedRowKeys="#{bindings.Cnf_SoAziendaView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Cnf_SoAziendaView1.collectionModel.makeCurrent}"
+                                          rowSelection="single" fetchSize="#{bindings.Cnf_SoAziendaView1.rangeSize}"
+                                          id="t1" filterVisible="true" binding="#{Cnf_aziendAction.tabAziende}">
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.Codaz.label}" id="c1" rendered="#{sessionScope.regionale?true:false}">
+                                        <af:outputText value="#{row.Codaz}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Codaz.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.Descrizione.label}"
+                                               id="c2" width="200">
+                                        <af:outputText value="#{row.Descrizione}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Descrizione.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.Codipa.label}" id="c3">
+                                        <af:outputText value="#{row.Codipa}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Codipa.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column id="c21" headerText="Età cervicale" width="100"
+                                               rendered="${sessionScope.scr!='CA' &amp;&amp; sessionScope.scr!='PF'}">
+                                        <af:column headerText="da" id="c9" width="50">
+                                            <af:outputText value="#{row.Etacitomin}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacitomin.tooltip}"
+                                                           id="ot9">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacitomin.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="a" id="c10" width="50">
+                                            <af:outputText value="#{row.Etacitomax}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacitomax.tooltip}"
+                                                           id="ot10">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacitomax.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column id="c22" headerText="Età mammografico" width="100"
+                                               rendered="${sessionScope.scr!='CA' &amp;&amp; sessionScope.scr!='PF'}">
+                                        <af:column headerText="da" id="c11" width="50">
+                                            <af:outputText value="#{row.Etamammomin}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etamammomin.tooltip}"
+                                                           id="ot11">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etamammomin.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="a" id="c12" width="50">
+                                            <af:outputText value="#{row.Etamammomax}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etamammomax.tooltip}"
+                                                           id="ot12">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etamammomax.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column id="c23" headerText="Età colon-retto" width="100">
+                                               rendered="${sessionScope.scr!='CA' &amp;&amp; sessionScope.scr!='PF'}">
+                                        <af:column headerText="da" id="c13" width="50">
+                                            <af:outputText value="#{row.Etacolonmin}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacolonmin.tooltip}"
+                                                           id="ot13">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacolonmin.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="a" id="c14" width="50">
+                                            <af:outputText value="#{row.Etacolonmax}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacolonmax.tooltip}"
+                                                           id="ot14">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacolonmax.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column id="c24" headerText="Età cardiovascolare"
+                                               rendered="${sessionScope.scr=='CA'}">
+                                        <af:column headerText="da" id="c20">
+                                            <af:outputText value="#{row.Etacardiomin}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacardiomin.tooltip}"
+                                                           id="ot20">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacardiomin.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="a" id="c19">
+                                            <af:outputText value="#{row.Etacardiomax}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etacardiomax.tooltip}"
+                                                           id="ot19">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.Etacardiomax.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column id="c15" headerText="Età PFAS" rendered="${sessionScope.scr=='PF'}">
+                                        <af:column headerText="da" id="c18">
+                                            <af:outputText value="#{row.Etapfasmin}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etapfasmin.tooltip}"
+                                                           id="ot18">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.Etapfasmin.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="a" id="c17">
+                                            <af:outputText value="#{row.Etapfasmax}"
+                                                           shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Etapfasmax.tooltip}"
+                                                           id="ot17">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.Etapfasmax.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.GgChiusuraRound.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.GgChiusuraRound}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.GgChiusuraRound.tooltip}"
+                                                       id="ot4">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Cnf_SoAziendaView1.hints.GgChiusuraRound.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.DurataMsgChiusuraRound.label}"
+                                               id="c5">
+                                        <af:outputText value="#{row.DurataMsgChiusuraRound}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.DurataMsgChiusuraRound.tooltip}"
+                                                       id="ot5">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Cnf_SoAziendaView1.hints.DurataMsgChiusuraRound.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.Dtultagganag.label}"
+                                               id="c6">
+                                        <af:outputText value="#{row.Dtultagganag}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.Dtultagganag.tooltip}"
+                                                       id="ot6">
+                                            <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.Dtultagganag.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.Logo.label}" id="c7">
+                                        <af:selectBooleanCheckbox selected="#{row.Logo!=null?true:false}" id="sbc1"
+                                                                  readOnly="true"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoAziendaView1.hints.DataHpv.label}" id="c8"
+                                               rendered="${sessionScope.HPV==true and sessionScope.scr!='CA' and sessionScope.scr!='PF'}">
+                                        <af:outputText value="#{row.DataHpv}"
+                                                       shortDesc="#{bindings.Cnf_SoAziendaView1.hints.DataHpv.tooltip}"
+                                                       id="ot8">
+                                            <af:convertDateTime pattern="#{bindings.Cnf_SoAziendaView1.hints.DataHpv.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Aziende sanitarie"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

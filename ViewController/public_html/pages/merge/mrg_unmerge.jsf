@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="mrg_unmerge.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Mrg_unmergeAction.unmergeForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelHeader text="Ricerca merge" id="ph1">
+                        <f:facet name="context"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"/>
+                        <af:panelGroupLayout id="pgl2" layout="scroll">
+                            <af:panelFormLayout id="pfl1" maxColumns="3" rows="3" partialTriggers="b2">
+                                <f:facet name="footer">
+                                    <af:panelGroupLayout id="pgl1" layout="horizontal" halign="start">
+                                        <af:toolbar id="t1">
+                                            <af:button text="Cerca" id="b1"
+                                                       actionListener="#{Mrg_unmergeAction.cerca}"/>
+                                            <af:button text="Reimposta" id="b2"
+                                                       actionListener="#{Mrg_unmergeAction.reimposta}"/>
+                                        </af:toolbar>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <af:inputText label="Anagrafica valida: MPI" id="it1"
+                                              value="#{Mrg_unmergeAction.unMpiVal}"/>
+                                <af:inputText label="Anagrafica deprecata: MPI" id="it4"
+                                              value="#{Mrg_unmergeAction.unMpiDepr}"/>
+                                <af:inputDate label="Data merge dal" id="id1"
+                                              value="#{Mrg_unmergeAction.unMrgDal}"/>
+                                <af:inputText label="Tessera sanitaria" id="it2"
+                                              value="#{Mrg_unmergeAction.unCodtsVal}"/>
+                                <af:inputText label="Tessera sanitaria" id="it5"
+                                              value="#{Mrg_unmergeAction.unCodtsDepr}"/>
+                                <af:inputDate label="Al" id="id2" value="#{Mrg_unmergeAction.unMrgAl}"/>
+                                <af:inputText label="Codice fiscale" id="it3"
+                                              value="#{Mrg_unmergeAction.unCfVal}"/>
+                                <af:inputText label="Codice fiscale" id="it6"
+                                              value="#{Mrg_unmergeAction.unCfDepr}"/>
+                                <af:selectBooleanCheckbox text="" label="Visualizza anche unmerge effettuati" id="sbc1"
+                                                          value="#{Mrg_unmergeAction.unMrgEffettuato}"/>
+                            </af:panelFormLayout>
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:button text="Dettaglio" id="b3" action="goDettaglio"/>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Mrg_SoMergeView1.collectionModel}" var="row"
+                                          rows="#{bindings.Mrg_SoMergeView1.rangeSize}"
+                                          emptyText="#{bindings.Mrg_SoMergeView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Mrg_SoMergeView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Mrg_SoMergeView1.collectionModel.makeCurrent}"
+                                          rowSelection="single" fetchSize="#{bindings.Mrg_SoMergeView1.rangeSize}"
+                                          id="t2">
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Dtinsert.label}" id="c1"
+                                               width="80">
+                                        <af:outputText value="#{row.Dtinsert}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Dtinsert.tooltip}"
+                                                       id="ot1">
+                                            <af:convertDateTime pattern="#{bindings.Mrg_SoMergeView1.hints.Dtinsert.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Opinsert.label}" id="c2"
+                                               width="120">
+                                        <af:outputText value="#{row.Opinsert}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Opinsert.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.ValCodts.label}" id="c3"
+                                               width="250">
+                                        <af:outputText value="#{row.Cognome} #{row.Nome} #{row.DocIdent}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.ValCodts.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.DepCodts.label}" id="c4"
+                                               width="250">
+                                        <af:outputText value="#{row.Cognome1} #{row.Nome1} #{row.DocIdent1}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.DepCodts.tooltip}"
+                                                       id="ot4"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Note.label}" id="c5"
+                                               width="250">
+                                        <af:outputText value="#{row.Note}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Note.tooltip}"
+                                                       id="ot5"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Unmerge.label}" id="c6"
+                                               width="70">
+                                        <af:selectBooleanCheckbox selected="#{row.Unmerge eq 1}" id="sbc2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Opunmerge.label}" id="c7"
+                                               width="120">
+                                        <af:outputText value="#{row.Opunmerge}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Opunmerge.tooltip}"
+                                                       id="ot7"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Dtunmerge.label}" id="c8"
+                                               width="80">
+                                        <af:outputText value="#{row.Dtunmerge}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Dtunmerge.tooltip}"
+                                                       id="ot8">
+                                            <af:convertDateTime pattern="#{bindings.Mrg_SoMergeView1.hints.Dtunmerge.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Mrg_SoMergeView1.hints.Noteunmerge.label}" id="c9"
+                                               width="200">
+                                        <af:outputText value="#{row.Noteunmerge}"
+                                                       shortDesc="#{bindings.Mrg_SoMergeView1.hints.Noteunmerge.tooltip}"
+                                                       id="ot9"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </af:panelGroupLayout>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Merge anagrafico"/>
+                <f:attribute name="navigation" value="#{Mrg_unmergeAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

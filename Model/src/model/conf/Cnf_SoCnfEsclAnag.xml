@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfEsclAnag"
+   Version="11.1.2.62.76"
+   DBObjectType="table"
+   DBObjectName="SO_CNF_ESCL_ANAG"
+   AliasName="Cnf_SoCnfEsclAnag"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="model.conf.Cnf_SoCnfEsclAnagImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      ColumnName="CODANAGREG"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_ESCL_ANAG"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_ESCL_ANAG"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_ESCL_ANAG"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcnfescl"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCNFESCL"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_ESCL_ANAG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Cnf_SoCnfAnagReg"
+      Association="model.FkEsclAnagAnagRegAssoc"
+      AssociationEnd="model.FkEsclAnagAnagRegAssoc.Cnf_SoCnfAnagReg"
+      AssociationOtherEnd="model.FkEsclAnagAnagRegAssoc.Cnf_SoCnfEsclAnag"
+      Type="model.conf.Cnf_SoCnfAnagRegImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoCnfEsclusione"
+      Association="model.FkEsclAnagEsclAssoc"
+      AssociationEnd="model.FkEsclAnagEsclAssoc.Cnf_SoCnfEsclusione"
+      AssociationOtherEnd="model.FkEsclAnagEsclAssoc.Cnf_SoCnfEsclAnag"
+      Type="model.conf.Cnf_SoCnfEsclusioneImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <Key
+      Name="PkSoCnfEsclAnag"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_CNF_ESCL_ANAG"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Codanagreg" />
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Ulss" />
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Tpscr" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkEsclAnagAnagReg" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CNF_ANAG_REG"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_ESCL_ANAG_ANAG_REG"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Codanagreg" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkEsclAnagEscl" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CNF_ESCLUSIONE"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_ESCL_ANAG_ESCL"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Idcnfescl" />
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Ulss" />
+         <Item Value="model.conf.Cnf_SoCnfEsclAnag.Tpscr" />
+      </AttrArray>
+   </Key>
+</Entity>

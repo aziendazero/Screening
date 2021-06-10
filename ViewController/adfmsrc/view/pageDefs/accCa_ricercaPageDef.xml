@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="accCa_ricercaPageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AccCa_RicParamDataControl"
+              id="AccCa_RicParamDataControlIterator"/>
+    <iterator Binds="AccCa_SelCentriView1" RangeSize="-1" DataControl="AccCa_AppModuleDataControl"
+              id="AccCa_SelCentriView1Iterator"/>
+    <iterator Binds="Acc_SelTipiDocView1" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SelTipiDocView1Iterator"/>
+    <iterator Binds="AccCa_RicInvitiView1" RangeSize="10" DataControl="AccCa_AppModuleDataControl"
+              id="AccCa_RicInvitiView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="AccCa_RicParamDataControlIterator" id="idCprel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccCa_SelCentriView1Iterator">
+      <AttrNames>
+        <Item Value="idCprel"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+        <Item Value="Chapp"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="codFisc">
+      <AttrNames>
+        <Item Value="codFisc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="tessSan">
+      <AttrNames>
+        <Item Value="tessSan"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="codIdSogg">
+      <AttrNames>
+        <Item Value="codIdSogg"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccCa_RicParamDataControlIterator" id="tipoDocumento" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_SelTipiDocView1Iterator">
+      <AttrNames>
+        <Item Value="tipoDocumento"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdTipoDoc"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="codiceDocumento">
+      <AttrNames>
+        <Item Value="codiceDocumento"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccCa_RicParamDataControlIterator" id="soloStorico" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="soloStorico"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <tree IterBinding="AccCa_RicInvitiView1Iterator" id="AccCa_RicInvitiView1">
+      <nodeDefinition DefName="model.accettazione.AccCa_RicInvitiView" Name="AccCa_RicInvitiView10">
+        <AttrNames>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Escl"/>
+          <Item Value="Dtapp"/>
+          <Item Value="DescTpinv"/>
+          <Item Value="DescEsito"/>
+          <Item Value="Consenso"/>
+          <Item Value="Idcentroprelievo"/>
+          <Item Value="Cf"/>
+          <Item Value="Codts"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Ulss"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Eta"/>
+          <Item Value="Idcref"/>
+          <Item Value="Dtoraapp"/>
+          <Item Value="Codesitoinvito"/>
+          <Item Value="Livello"/>
+          <Item Value="Altorischio"/>
+          <Item Value="CentroPrel"/>
+          <Item Value="CodidsoggMx"/>
+          <Item Value="Idcentro1liv"/>
+          <Item Value="Idcentro2liv"/>
+          <Item Value="Sollecitare" Binds="Sollecitare"/>
+          <Item Value="Anno"/>
+          <Item Value="Confermato"/>
+          <Item Value="Selezionato"/>
+          <Item Value="Chiave"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="AccCa_RicInvitiView1Iterator" id="Sollecitare" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccCa_RicInvitiView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicInvitiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicInvitiView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicParamDataControlIterator" id="chiave">
+      <AttrNames>
+        <Item Value="chiave"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCa_RicInvitiView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

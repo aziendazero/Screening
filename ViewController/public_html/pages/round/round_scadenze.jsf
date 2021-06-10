@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="round_scadenze.jsf" id="d1">
+        <af:form id="f1">
+            <af:panelStretchLayout id="pt_psl1" bottomHeight="50px" topHeight="85px"
+                                   inlineStyle="margin:5px 5px 5px 5px;">
+                <f:facet name="center">
+                    <af:panelSplitter id="pt_ps1" orientation="vertical" positionedFromEnd="true" splitterPosition="20">
+                        <f:facet name="first">
+                            <af:decorativeBox id="pt_db2" theme="light" topHeight="50px">
+                                <f:facet name="center">
+                                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                                        <af:panelHeader text="Comuni con round in scadenza" id="ph1" rendered="#{bindings.Round_SoRoundInScadenzaView1Iterator.estimatedRowCount>0}">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:table value="#{bindings.Round_SoRoundInScadenzaView1.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.Round_SoRoundInScadenzaView1.rangeSize}"
+                                                      emptyText="#{bindings.Round_SoRoundInScadenzaView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Round_SoRoundInScadenzaView1.rangeSize}"
+                                                      id="t1" summary="Comuni con round in scadenza">
+                                                <af:column sortProperty="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.name}"
+                                                           sortable="true"
+                                                           headerText="Codice comune"
+                                                           id="c1">
+                                                    <af:inputText value="#{row.bindings.Codcom.inputValue}"
+                                                                  label="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.label}"
+                                                                  required="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.mandatory}"
+                                                                  columns="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.displayWidth}"
+                                                                  maximumLength="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.precision}"
+                                                                  shortDesc="#{bindings.Round_SoRoundInScadenzaView1.hints.Codcom.tooltip}"
+                                                                  id="it1">
+                                                        <f:validator binding="#{row.bindings.Codcom.validator}"/>
+                                                    </af:inputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.name}"
+                                                           sortable="true"
+                                                           headerText="Comune"
+                                                           id="c2" width="200">
+                                                    <af:inputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                  label="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.label}"
+                                                                  required="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.mandatory}"
+                                                                  columns="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.displayWidth}"
+                                                                  maximumLength="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.precision}"
+                                                                  shortDesc="#{bindings.Round_SoRoundInScadenzaView1.hints.Descrizione.tooltip}"
+                                                                  id="it2">
+                                                        <f:validator binding="#{row.bindings.Descrizione.validator}"/>
+                                                    </af:inputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoRoundInScadenzaView1.hints.Numround.name}"
+                                                           sortable="true"
+                                                           headerText="Round"
+                                                           id="c3">
+                                                    <af:outputText value="#{row.bindings.Numround.inputValue}"
+                                                                   shortDesc="#{bindings.Round_SoRoundInScadenzaView1.hints.Numround.tooltip}"
+                                                                   id="it3">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Round_SoRoundInScadenzaView1.hints.Numround.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoRoundInScadenzaView1.hints.Scadenza.name}"
+                                                           sortable="true"
+                                                           headerText="Scadenza"
+                                                           id="c4">
+                                                    <af:outputText value="#{row.bindings.Scadenza.inputValue}"
+                                                                   shortDesc="#{bindings.Round_SoRoundInScadenzaView1.hints.Scadenza.tooltip}"
+                                                                   id="id1">
+                                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundInScadenzaView1.hints.Scadenza.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                        <af:panelHeader text="Comuni privi di round attivo" id="ph2" rendered="#{bindings.Round_SoComuniSenzaRound1Iterator.estimatedRowCount>0}">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:table value="#{bindings.Round_SoComuniSenzaRound1.collectionModel}"
+                                                      var="row" rows="#{bindings.Round_SoComuniSenzaRound1.rangeSize}"
+                                                      emptyText="#{bindings.Round_SoComuniSenzaRound1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Round_SoComuniSenzaRound1.rangeSize}"
+                                                      id="t2">
+                                                <af:column sortProperty="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.name}"
+                                                           sortable="true"
+                                                           headerText="Codice comune"
+                                                           id="c5">
+                                                    <af:inputText value="#{row.bindings.Codcom.inputValue}"
+                                                                  label="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.label}"
+                                                                  required="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.mandatory}"
+                                                                  columns="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.displayWidth}"
+                                                                  maximumLength="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.precision}"
+                                                                  shortDesc="#{bindings.Round_SoComuniSenzaRound1.hints.Codcom.tooltip}"
+                                                                  id="it4">
+                                                        <f:validator binding="#{row.bindings.Codcom.validator}"/>
+                                                    </af:inputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.name}"
+                                                           sortable="true"
+                                                           headerText="Comune"
+                                                           id="c6" width="200">
+                                                    <af:inputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                  label="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.label}"
+                                                                  required="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.mandatory}"
+                                                                  columns="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.displayWidth}"
+                                                                  maximumLength="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.precision}"
+                                                                  shortDesc="#{bindings.Round_SoComuniSenzaRound1.hints.Descrizione.tooltip}"
+                                                                  id="it5">
+                                                        <f:validator binding="#{row.bindings.Descrizione.validator}"/>
+                                                    </af:inputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoComuniSenzaRound1.hints.Numround.name}"
+                                                           sortable="true"
+                                                           headerText="Round"
+                                                           id="c7">
+                                                    <af:outputText value="#{row.bindings.Numround.inputValue}"
+                                                                   shortDesc="#{bindings.Round_SoComuniSenzaRound1.hints.Numround.tooltip}"
+                                                                   id="it6">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Round_SoComuniSenzaRound1.hints.Numround.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoComuniSenzaRound1.hints.Dtinizio.name}"
+                                                           sortable="true"
+                                                           headerText="Inizio round"
+                                                           id="c8">
+                                                    <af:outputText value="#{row.bindings.Dtinizio.inputValue}"
+                                                                   shortDesc="#{bindings.Round_SoComuniSenzaRound1.hints.Dtinizio.tooltip}"
+                                                                   id="id2">
+                                                        <af:convertDateTime pattern="#{bindings.Round_SoComuniSenzaRound1.hints.Dtinizio.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column sortProperty="#{bindings.Round_SoComuniSenzaRound1.hints.Dtfine.name}"
+                                                           sortable="true"
+                                                           headerText="Fine round"
+                                                           id="c9">
+                                                    <af:outputText value="#{row.bindings.Dtfine.inputValue}"
+                                                                   shortDesc="#{bindings.Round_SoComuniSenzaRound1.hints.Dtfine.tooltip}"
+                                                                   id="id3">
+                                                        <af:convertDateTime pattern="#{bindings.Round_SoComuniSenzaRound1.hints.Dtfine.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                                        <h1>Round organizzativi: avvisi</h1>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:decorativeBox>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelGroupLayout id="pt_pgl2" halign="start" layout="horizontal">
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="infoPopup">
+                                    <af:dialog id="pt_d1" title="Info" type="ok">
+                                        <f:facet name="buttonBar"/>
+                                        <af:panelGroupLayout id="pt_pgl3" halign="center" layout="vertical">
+                                            <af:outputText value="Screening" id="pt_ot2"/>
+                                            <af:outputText value="Versione #{initParam.VERSIONE}" id="pt_ot3"/>
+                                            <af:outputText value="Versione base dati #{initParam.VERSIONE_DATABASE}"
+                                                           id="pt_ot5"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                <af:outputFormatted value="info" id="pt_of1" styleUsage="pageStamp"
+                                                    inlineStyle="text-align:right;">
+                                    <af:showPopupBehavior popupId="infoPopup" triggerType="click"/>
+                                </af:outputFormatted>
+                                <af:spacer width="20" height="10" id="pt_s2"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+                <f:facet name="top">
+                    <af:decorativeBox id="pt_db1" theme="medium">
+                        <f:facet name="center">
+                            <af:panelStretchLayout id="pt_psl2" startWidth="460px" endWidth="120px" bottomHeight="20px">
+                                <f:facet name="center"></f:facet>
+                                <f:facet name="bottom">
+                                    <af:panelGroupLayout id="pt_pgl1" layout="vertical" valign="baseline" halign="end">
+                                        <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                        <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                            id="pt_of2" styleUsage="instruction"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="end"></f:facet>
+                                <f:facet name="start">
+                                    <af:panelGroupLayout id="pt_pgl5" layout="horizontal">
+                                        <af:image source="/images/logo-regione.png"
+                                                  shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                                  inlineStyle="height:25px;"/>
+                                        <af:spacer width="20" height="10" id="pt_s1"/>
+                                        <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                                       id="pt_ot1" inlineStyle="font-size:medium;"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+</f:view>

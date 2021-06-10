@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_centrifisici.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.centriFisiciForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1">
+                        <af:link text="Agenda" id="l2" action="#{Cnf_centriAction.onAgendaGiorno}"/>
+                        <af:separator id="s1"/>
+                        <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                            <f:facet name="menus"/>
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}">
+                                    <af:group id="g1">
+                                        <af:button text="Modifica" id="b1" action="creatEditCentroFisico"
+                                                   actionListener="#{Cnf_centriAction.onDettCentriFisici}">
+                                            <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Cancella" id="b2"
+                                                   rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                            <af:showPopupBehavior popupId="p1"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                  partialTriggers="t1">
+                                            <af:dialog id="d2" title="Cancella centro" cancelTextAndAccessKey="Annulla"
+                                                       partialTriggers="t1" affirmativeTextAndAccessKey="Cancella"
+                                                       dialogListener="#{Cnf_centriAction.onDelete}">
+                                                <h:outputText value="Cancellare definitivamente il seguente centro fisico?"
+                                                              id="ot7"/>
+                                                <f:facet name="buttonBar"/>
+                                            </af:dialog>
+                                        </af:popup>
+                                    </af:group>
+                                    <af:button text="Nuovo" id="b3" action="creatEditCentroFisico"
+                                               rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:setPropertyListener to="#{requestScope.action}" from="create"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <f:facet name="statusbar"/>
+                            <af:table value="#{bindings.Cnf_SoCentroFisicoExtendedView1.collectionModel}" var="row"
+                                      rows="#{bindings.Cnf_SoCentroFisicoExtendedView1.rangeSize}"
+                                      emptyText="#{bindings.Cnf_SoCentroFisicoExtendedView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0" scrollPolicy="page"
+                                      selectedRowKeys="#{bindings.Cnf_SoCentroFisicoExtendedView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Cnf_SoCentroFisicoExtendedView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Cnf_SoCentroFisicoExtendedView1.rangeSize}" id="t1"
+                                      binding="#{Cnf_centriAction.tabCentriFisici}">
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Idcentro.label}"
+                                           id="c1">
+                                    <af:outputText value="#{row.Idcentro}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Idcentro.tooltip}"
+                                                   id="ot1">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Idcentro.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.DescrBreve.label}"
+                                           id="c2" width="200">
+                                    <af:outputText value="#{row.DescrBreve}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.DescrBreve.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Descrizione.label}"
+                                           id="c3" width="200">
+                                    <af:outputText value="#{row.Descrizione}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Descrizione.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Centro1.label}"
+                                           id="c4">
+                                    <af:outputText value="#{row.Centro1}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Centro1.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Centro2.label}"
+                                           id="c5">
+                                    <af:outputText value="#{row.Centro2}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Centro2.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Ulss.label}"
+                                           id="c6" rendered="#{sessionScope.regionale?true:false}">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Cnf_SoCentroFisicoExtendedView1.hints.Ulss.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Centri fisici"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

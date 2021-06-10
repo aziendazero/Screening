@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCo_primoLivRelativoPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Ref_SoInvito1LivCOView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoInvito1LivCOView1Iterator"/>
+    <iterator Binds="Ref_SoCentroRefertoView2" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCentroRefertoView2Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg1livView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfSugg1livView1Iterator"/>
+    <iterator Binds="Ref_SoOpmedicoView3" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoOpmedicoView3Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Roundindiv">
+      <AttrNames>
+        <Item Value="Roundindiv"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Idcentroref1liv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCentroRefertoView2Iterator">
+      <AttrNames>
+        <Item Value="Idcentroref1liv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Idsugg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfSugg1livView1Iterator">
+      <AttrNames>
+        <Item Value="Idsugg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Descrizione2">
+      <AttrNames>
+        <Item Value="Descrizione2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Oraapp">
+      <AttrNames>
+        <Item Value="Oraapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Minapp">
+      <AttrNames>
+        <Item Value="Minapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Dtreferto">
+      <AttrNames>
+        <Item Value="Dtreferto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoInvito1LivCOView1Iterator" id="Idlettore" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView3Iterator">
+      <AttrNames>
+        <Item Value="Idlettore"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

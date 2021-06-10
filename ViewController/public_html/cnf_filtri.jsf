@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_filtri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_docsAction.filtroForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempDocs.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" disabled="#{bindings.Cnf_SoFiltriTemplateView1Iterator.estimatedRowCount>0?false:true}"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                               action="createEditFiltro" actionListener="#{Cnf_docsAction.onDettFiltro}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2" disabled="#{bindings.Cnf_SoFiltriTemplateView1Iterator.estimatedRowCount>0?false:true}"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" partialTriggers="t1" affirmativeTextAndAccessKey="Cancella"
+                                                   cancelTextAndAccessKey="Annulla" title="Cancella chiusura"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar"/>
+                                            <af:outputText value="Cancellare definitivamente il seguente filtro?"
+                                                           id="ot40"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b4"
+                                           rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                           action="createEditFiltro">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoFiltriTemplateView11.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoFiltriTemplateView11.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoFiltriTemplateView11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoFiltriTemplateView11.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoFiltriTemplateView11.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoFiltriTemplateView11.rangeSize}"
+                                  columnStretching="last" scrollPolicy="page"  id="t1">
+                            <af:column headerText="#{bindings.Cnf_SoFiltriTemplateView11.hints.Descrizione.label}"
+                                width="300" id="c1" sortable="true">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoFiltriTemplateView11.hints.Descrizione.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoFiltriTemplateView11.hints.Nomefile.label}" 
+                                width="300" id="c2" sortable="true">
+                                <af:outputText value="#{row.Nomefile}"
+                                               shortDesc="#{bindings.Cnf_SoFiltriTemplateView11.hints.Nomefile.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoFiltriTemplateView11.hints.Centro.label}" 
+                                id="c4" sortable="true">
+                                <af:outputText value="#{row.Centro}"
+                                               shortDesc="#{bindings.Cnf_SoFiltriTemplateView11.hints.Centro.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoFiltriTemplateView11.hints.Tipoinvito.label}"
+                                       id="c3" width="200px" sortable="true">
+                                <af:outputText value="#{row.Tipoinvito!=null?row.Tipoinvito:'Tutti'}"
+                                               shortDesc="#{bindings.Cnf_SoFiltriTemplateView11.hints.Tipoinvito.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Filtri"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

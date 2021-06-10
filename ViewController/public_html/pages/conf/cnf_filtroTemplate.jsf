@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_filtroTemplate.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b4" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b5" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneChoice value="#{bindings.Codtempl1.inputValue}"
+                                                    label="#{bindings.Codtempl1.label}"
+                                                    required="#{bindings.Codtempl1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codtempl1.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Codtempl1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codtempl1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentro1.inputValue}"
+                                                    label="#{bindings.Idcentro1.label}"
+                                                    required="#{bindings.Idcentro1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro1.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Idcentro1.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idcentro1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito1.inputValue}"
+                                                    label="#{bindings.Idtpinvito1.label}"
+                                                    required="#{bindings.Idtpinvito1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito1.hints.tooltip}" id="soc3">
+                                    <f:selectItems value="#{bindings.Idtpinvito1.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Idtpinvito1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Tpscr.inputValue}" label="#{bindings.Tpscr.hints.label}"
+                                              rendered="false"
+                                              required="#{bindings.Tpscr.hints.mandatory}"
+                                              columns="#{bindings.Tpscr.hints.displayWidth}"
+                                              maximumLength="#{bindings.Tpscr.hints.precision}"
+                                              shortDesc="#{bindings.Tpscr.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Tpscr.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.hints.label}"
+                                              rendered="false"
+                                              required="#{bindings.Ulss.hints.mandatory}"
+                                              columns="#{bindings.Ulss.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ulss.hints.precision}"
+                                              shortDesc="#{bindings.Ulss.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Filtri"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

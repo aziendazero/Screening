@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="OReferto_Conclusivo2LIV_subendo"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="595"
+		 pageHeight="230"
+		 columnWidth="537"
+		 columnSpacing="0"
+		 leftMargin="28"
+		 rightMargin="30"
+		 topMargin="5"
+		 bottomMargin="5"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_referto" isForPrompting="true" class="java.lang.Double">
+		<defaultValueExpression ><![CDATA[new Double(36449)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    NULL patologia,
+    NULL sede_desc,
+    NULL diametro,
+    NULL aspetto_desc,
+    NULL displasia_desc,
+    NULL istologia_desc,
+    NULL note,
+    '0' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+    SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+    SO_OPMEDICO ENDO_MED
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND SO_ENDOSCOPIA.polipo_1 = 0
+    AND SO_ENDOSCOPIA.polipo_2 = 0
+    AND SO_ENDOSCOPIA.polipo_3 = 0
+    AND SO_ENDOSCOPIA.cancro = 0
+    AND (SO_ENDOSCOPIA.altre_lesioni IS NULL OR SO_ENDOSCOPIA.altre_lesioni = 0)
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+	
+UNION
+	
+SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    'Polipo 1' patologia,
+    p1sede.descrizione sede_desc,
+    SO_ENDOSCOPIA.p1_diametro diametro,
+    p1aspetto.descrizione aspetto_desc,
+    p1displasia.descrizione displasia_desc,
+    p1istologia.descrizione istologia_desc,
+    SO_ENDOSCOPIA.p1_note note,
+    '1' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+	SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+	SO_OPMEDICO ENDO_MED,
+    SO_CNF_REF2LIV P1SEDE,
+	SO_CNF_REF2LIV P1ASPETTO,
+	SO_CNF_REF2LIV P1DISPLASIA,
+	SO_CNF_REF2LIV P1ISTOLOGIA
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p1_sede = P1SEDE.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_regione = P1SEDE.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = P1SEDE.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = P1SEDE.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p1_aspetto = P1ASPETTO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_aspetto = P1ASPETTO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = P1ASPETTO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = P1ASPETTO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p1_DISPLASIA = P1DISPLASIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_displasia = P1DISPLASIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = P1DISPLASIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = P1DISPLASIA.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p1_istologia = P1ISTOLOGIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_istologia = P1ISTOLOGIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = P1ISTOLOGIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = P1ISTOLOGIA.TPSCR(+))
+    AND SO_ENDOSCOPIA.polipo_1 = 1
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+	
+UNION
+	
+SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    'Polipo 2' patologia,
+    sede.descrizione sede_desc,
+    SO_ENDOSCOPIA.p2_diametro diametro,
+    aspetto.descrizione aspetto_desc,
+    displasia.descrizione displasia_desc,
+    istologia.descrizione istologia_desc,
+    SO_ENDOSCOPIA.p2_note note,
+    '1' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+	SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+	SO_OPMEDICO ENDO_MED,
+    SO_CNF_REF2LIV SEDE,
+	SO_CNF_REF2LIV ASPETTO,
+	SO_CNF_REF2LIV DISPLASIA,
+	SO_CNF_REF2LIV ISTOLOGIA
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p2_sede = SEDE.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_regione = SEDE.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = SEDE.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = SEDE.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p2_aspetto = ASPETTO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_aspetto = ASPETTO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ASPETTO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ASPETTO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p2_DISPLASIA = DISPLASIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_displasia = DISPLASIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = DISPLASIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = DISPLASIA.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p2_istologia = ISTOLOGIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_istologia = ISTOLOGIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ISTOLOGIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ISTOLOGIA.TPSCR(+))
+    AND SO_ENDOSCOPIA.polipo_2 = 1
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+	
+	UNION
+	
+SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    'Polipo 3' patologia,
+    sede.descrizione sede_desc,
+    SO_ENDOSCOPIA.p3_diametro diametro,
+    aspetto.descrizione aspetto_desc,
+    displasia.descrizione displasia_desc,
+    istologia.descrizione istologia_desc,
+    SO_ENDOSCOPIA.p3_note note,
+    '1' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+	SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+	SO_OPMEDICO ENDO_MED,
+    SO_CNF_REF2LIV SEDE,
+	SO_CNF_REF2LIV ASPETTO,
+	SO_CNF_REF2LIV DISPLASIA,
+	SO_CNF_REF2LIV ISTOLOGIA
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p3_sede = SEDE.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_regione = SEDE.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = SEDE.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = SEDE.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p3_aspetto = ASPETTO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_aspetto = ASPETTO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ASPETTO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ASPETTO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p3_DISPLASIA = DISPLASIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_displasia = DISPLASIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = DISPLASIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = DISPLASIA.TPSCR(+))
+    AND (SO_ENDOSCOPIA.p3_istologia = ISTOLOGIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_istologia = ISTOLOGIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ISTOLOGIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ISTOLOGIA.TPSCR(+))
+    AND SO_ENDOSCOPIA.polipo_3 = 1
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+	
+	UNION
+	
+SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    'Cancro' patologia,
+    sede.descrizione sede_desc,
+    SO_ENDOSCOPIA.c_dimensioni,
+    aspetto.descrizione aspetto_desc,
+    NULL displasia_desc,
+    istologia.descrizione istologia_desc,
+    SO_ENDOSCOPIA.c_note note,
+    '1' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+	SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+	SO_OPMEDICO ENDO_MED,
+    SO_CNF_REF2LIV SEDE,
+	SO_CNF_REF2LIV ASPETTO,
+	SO_CNF_REF2LIV ISTOLOGIA
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND (SO_ENDOSCOPIA.c_sede = SEDE.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_regione = SEDE.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = SEDE.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = SEDE.TPSCR(+))
+    AND (SO_ENDOSCOPIA.c_aspetto = ASPETTO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_aspetto = ASPETTO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ASPETTO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ASPETTO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.c_istologia = ISTOLOGIA.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_c_istologia = ISTOLOGIA.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = ISTOLOGIA.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = ISTOLOGIA.TPSCR(+))
+    AND SO_ENDOSCOPIA.cancro = 1
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+	
+	UNION
+	
+SELECT
+    SO_ENDOSCOPIA.idendo,
+    SO_ENDOSCOPIA.n_endo,
+    SO_ENDOSCOPIA.dtendo,
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+    SO_ENDOSCOPIA.estensione,
+    MOTIVO.descrizione MOTIVO,
+    SO_ENDOSCOPIA.altro_motivo,
+    DECODE(SO_ENDOSCOPIA.procedura,1,'eseguita',2,'biopsia',3,'polipectomia','non eseguita') PROCEDURA,
+    INDICAZ.descrizione INDICAZIONE,
+    SO_ENDOSCOPIA.NOTE_ENDO,
+    'Altre lesioni' patologia,
+    NULL sede_desc,
+    NULL dimensioni,
+    LESIONI.descrizione aspetto_desc,
+    NULL displasia_desc,
+    SO_ENDOSCOPIA.altre_lesioni_altro istologia_desc,
+    NULL note,
+    '2' tipo_info
+FROM
+    SO_ENDOSCOPIA,
+	SO_CNF_REF2LIV MOTIVO,
+    SO_CNF_REF2LIV INDICAZ,
+	SO_OPMEDICO ENDO_MED,
+	SO_CNF_REF2LIV LESIONI
+WHERE (SO_ENDOSCOPIA.motivo = MOTIVO.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_motivo = MOTIVO.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = MOTIVO.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = MOTIVO.TPSCR(+))
+    AND (SO_ENDOSCOPIA.indicazioni = INDICAZ.idcnfref2l(+)
+    AND SO_ENDOSCOPIA.gr_indicazioni = INDICAZ.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = INDICAZ.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = INDICAZ.TPSCR(+))
+    AND (SO_ENDOSCOPIA.altre_lesioni = LESIONI.idcnfref2l(+)
+    AND 'ENDLES' = LESIONI.gruppo(+)
+    AND SO_ENDOSCOPIA.ULSS = LESIONI.ULSS(+)
+    AND SO_ENDOSCOPIA.TPSCR = LESIONI.TPSCR(+))
+    AND SO_ENDOSCOPIA.altre_lesioni <> 0
+    AND SO_ENDOSCOPIA.IDMEDICO = ENDO_MED.idop(+)
+    AND IDREFERTO=$P{id_referto}
+ORDER BY N_ENDO, TIPO_INFO, PATOLOGIA]]></queryString>
+
+	<field name="IDENDO" class="java.math.BigDecimal"/>
+	<field name="N_ENDO" class="java.math.BigDecimal"/>
+	<field name="DTENDO" class="java.sql.Timestamp"/>
+	<field name="MEDICO_ENDO" class="java.lang.String"/>
+	<field name="ESTENSIONE" class="java.math.BigDecimal"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<field name="ALTRO_MOTIVO" class="java.lang.String"/>
+	<field name="PROCEDURA" class="java.lang.String"/>
+	<field name="INDICAZIONE" class="java.lang.String"/>
+	<field name="NOTE_ENDO" class="java.lang.String"/>
+	<field name="PATOLOGIA" class="java.lang.String"/>
+	<field name="SEDE_DESC" class="java.lang.String"/>
+	<field name="DIAMETRO" class="java.math.BigDecimal"/>
+	<field name="ASPETTO_DESC" class="java.lang.String"/>
+	<field name="DISPLASIA_DESC" class="java.lang.String"/>
+	<field name="ISTOLOGIA_DESC" class="java.lang.String"/>
+	<field name="NOTE" class="java.lang.String"/>
+	<field name="TIPO_INFO" class="java.lang.String"/>
+
+	<variable name="date_pattern" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA["dd/MM/yyyy"]]></variableExpression>
+	</variable>
+
+		<group  name="Endoscopia" >
+			<groupExpression><![CDATA[$F{N_ENDO}]]></groupExpression>
+			<groupHeader>
+			<band height="104"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="4"
+						width="102"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-17"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Endoscopia n°:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="104"
+						y="4"
+						width="75"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-28"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{N_ENDO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="280"
+						y="4"
+						width="43"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-18"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="325"
+						y="4"
+						width="116"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-29"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTENDO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="24"
+						width="124"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-19"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Procedura operativa:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="126"
+						y="24"
+						width="118"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-30"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PROCEDURA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="280"
+						y="24"
+						width="70"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-20"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Specialista:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="351"
+						y="24"
+						width="184"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-31"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{MEDICO_ENDO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="44"
+						width="71"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-21"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Estensione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="44"
+						width="463"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-32"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ESTENSIONE}.intValue()==1?"completa":"incompleta per "+$F{MOTIVO}+new String($F{ALTRO_MOTIVO}==null?"":$F{ALTRO_MOTIVO})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="64"
+						width="77"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-22"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Indicazioni:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="78"
+						y="64"
+						width="456"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-33"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{INDICAZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="84"
+						width="535"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-34"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{NOTE_ENDO}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" topPadding="3" leftBorder="None" leftBorderColor="#000000" leftPadding="5" rightBorder="None" rightBorderColor="#000000" rightPadding="5" bottomBorder="None" bottomBorderColor="#000000" bottomPadding="3"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Oblique" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["NOTE: "+$F{NOTE_ENDO}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="130"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="0"
+						width="122"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-46"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{PATOLOGIA} != null)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{PATOLOGIA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="18"
+						width="71"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-25"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Sede:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="18"
+						width="461"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-36"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SEDE_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="36"
+						width="94"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-26"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Diametro in mm:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="96"
+						y="36"
+						width="437"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-37"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{DIAMETRO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="54"
+						width="71"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-27"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Aspetto:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="54"
+						width="461"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-38"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASPETTO_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="72"
+						width="71"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-28"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Istologia:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="72"
+						width="461"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-39"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ISTOLOGIA_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="108"
+						width="71"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-29"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Note:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="108"
+						width="461"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-40"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("1".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NOTE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="90"
+						width="71"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-35"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[("1".equals($F{TIPO_INFO}) && $F{PATOLOGIA}.startsWith("Polipo")) ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Displasia:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="72"
+						y="90"
+						width="461"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-45"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[("1".equals($F{TIPO_INFO}) && $F{PATOLOGIA}.startsWith("Polipo")) ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DISPLASIA_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="18"
+						width="534"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-47"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean("2".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ASPETTO_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="35"
+						width="533"
+						height="34"
+						key="textField-48">
+							<printWhenExpression><![CDATA[new Boolean("2".equals($F{TIPO_INFO}))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ISTOLOGIA_DESC}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

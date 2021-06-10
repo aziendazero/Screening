@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+    <view id="sogg_ricerca">
+        <page>/pages/soggetto/sogg_ricerca.jsf</page>
+    </view>
+    <task-flow-call id="adfc-lovComune">
+        <task-flow-reference>
+            <document>/WEB-INF/subflows/comune/adfc-lovComune.xml</document>
+            <id>adfc-lovComune</id>
+        </task-flow-reference>
+        <input-parameter id="__8">
+            <name>searchText</name>
+            <value>#{requestScope.searchText}</value>
+        </input-parameter>
+        <input-parameter id="__11">
+            <name>source</name>
+            <value>#{requestScope.source}</value>
+        </input-parameter>
+        <input-parameter id="__16">
+            <name>iteratorBinding</name>
+            <value>#{requestScope.iteratorBinding}</value>
+        </input-parameter>
+        <input-parameter id="__43">
+            <name>onOneReturn</name>
+            <value>#{requestScope.onOneReturn}</value>
+        </input-parameter>
+        <run-as-dialog>
+            <display-type>
+                <inline-popup/>
+            </display-type>
+        </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="adfc-lovMedico">
+        <task-flow-reference>
+            <document>/WEB-INF/subflows/medico/adfc-lovMedico.xml</document>
+            <id>adfc-lovMedico</id>
+        </task-flow-reference>
+        <input-parameter id="__12">
+            <name>searchText</name>
+            <value>#{requestScope.searchText}</value>
+        </input-parameter>
+        <input-parameter id="__15">
+            <name>source</name>
+            <value>#{requestScope.source}</value>
+        </input-parameter>
+        <run-as-dialog>
+            <display-type>
+                <inline-popup/>
+            </display-type>
+        </run-as-dialog>
+    </task-flow-call>
+    <view id="refCa_ricerca">
+        <page>/pages/referto/refCa_ricerca.jsf</page>
+    </view>
+    <view id="accCa_ricerca">
+        <page>/pages/accettazione/accCa_ricerca.jsf</page>
+    </view>
+    <view id="sogg_Nuovo">
+        <page>/pages/soggetto/sogg_Nuovo.jsf</page>
+    </view>
+    <view id="sogg_invCorr">
+        <page>/pages/soggetto/sogg_invCorr.jsf</page>
+    </view>
+    <view id="sogg_anag">
+        <page>/pages/soggetto/sogg_anag.jsf</page>
+    </view>
+    <view id="sogg_escl">
+        <page>/pages/soggetto/sogg_escl.jsf</page>
+    </view>
+    <view id="sogg_storia">
+        <page>/pages/soggetto/sogg_storia.jsf</page>
+    </view>
+    <task-flow-call id="adfc-lovCittadinanza">
+        <task-flow-reference>
+            <document>/WEB-INF/subflows/cittadinanza/adfc-lovCittadinanza.xml</document>
+            <id>adfc-lovCittadinanza</id>
+        </task-flow-reference>
+        <input-parameter id="__39">
+            <name>searchText</name>
+            <value>#{requestScope.searchText}</value>
+        </input-parameter>
+        <input-parameter id="__42">
+            <name>onOneReturn</name>
+            <value>#{requestScope.onOneReturn}</value>
+        </input-parameter>
+        <run-as-dialog>
+            <display-type>
+                <inline-popup/>
+            </display-type>
+        </run-as-dialog>
+    </task-flow-call>
+    <task-flow-call id="adfc-lovStato">
+        <task-flow-reference>
+            <document>/WEB-INF/subflows/stato/adfc-lovStato.xml</document>
+            <id>adfc-lovStato</id>
+        </task-flow-reference>
+        <input-parameter id="__41">
+            <name>searchText</name>
+            <value>#{requestScope.searchText}</value>
+        </input-parameter>
+        <input-parameter id="__58">
+            <name>onOneReturn</name>
+            <value>#{requestScope.onOneReturn}</value>
+        </input-parameter>
+        <run-as-dialog>
+            <display-type>
+                <inline-popup/>
+            </display-type>
+        </run-as-dialog>
+    </task-flow-call>
+    <method-call id="rbSogg">
+        <method>#{RbSoggAction.findForward}</method>
+        <outcome>
+            <to-string/>
+        </outcome>
+    </method-call>
+    <view id="sogg_documento">
+        <page>/pages/soggetto/sogg_documento.jsf</page>
+    </view>
+    <method-call id="CreateInsert">
+        <method>#{bindings.CreateInsert.execute}</method>
+        <outcome>
+            <fixed-outcome>Create</fixed-outcome>
+        </outcome>
+    </method-call>
+    <view id="sogg_consenso">
+        <page>/pages/soggetto/sogg_consenso.jsf</page>
+    </view>
+    <method-call id="rbNuovoInvito">
+        <method>#{RbNuovoInvitoAction.findForward}</method>
+        <outcome>
+            <to-string/>
+        </outcome>
+    </method-call>
+    <method-call id="sogg_query">
+        <method>#{Sogg_queryAction.findForward}</method>
+        <outcome>
+            <to-string/>
+        </outcome>
+    </method-call>
+    <view id="refCa_questionario">
+        <page>/pages/referto/refCa_questionario.jsf</page>
+    </view>
+    <view id="mrg_merge">
+        <page>/pages/merge/mrg_merge.jsf</page>
+    </view>
+    <view id="mrg_unmerge">
+        <page>/pages/merge/mrg_unmerge.jsf</page>
+    </view>
+    <view id="mrg_segnalazioni">
+        <page>/pages/merge/mrg_segnalazioni.jsf</page>
+    </view>
+    <view id="mrg_unmrg_detail">
+        <page>/pages/merge/mrg_unmrg_detail.jsf</page>
+    </view>
+    <view id="mrg_archiviazione">
+        <page>/pages/merge/mrg_archiviazione.jsf</page>
+    </view>
+    <view id="med_gestione">
+        <page>/pages/medico/med_gestione.jsf</page>
+    </view>
+    <view id="med_dett">
+        <page>/pages/medico/med_dett.jsf</page>
+    </view>
+    <view id="med_critStampa">
+        <page>/pages/medico/med_critStampa.jsf</page>
+    </view>
+    <view id="accMa_ricerca">
+        <page>/pages/accettazione/accMa_ricerca.jsf</page>
+    </view>
+    <view id="accMa_esito">
+        <page>/pages/accettazione/accMa_esito.jsf</page>
+    </view>
+    <view id="accMa_anam">
+        <page>/pages/accettazione/accMa_anam.jsf</page>
+    </view>
+    <view id="refCo_ricerca">
+        <page>/pages/referto/refCo_ricerca.jsf</page>
+    </view>
+    <view id="refMa_ricerca">
+        <page>/pages/referto/refMa_ricerca.jsf</page>
+    </view>
+    <view id="print_ElencoSoggetti">
+        <page>/pages/print/print_elencoSoggetti.jsf</page>
+    </view>
+    <view id="print_pianoLavoro">
+        <page>/pages/print/print_pianoLavoro.jsf</page>
+    </view>
+    <view id="refMa_lettura1">
+        <page>/pages/referto/refMa_lettura1.jsf</page>
+    </view>
+    <view id="refMa_radiologia">
+        <page>/pages/referto/refMa_radiologia.jsf</page>
+    </view>
+    <view id="refMa_citologia">
+        <page>/pages/referto/refMa_citologia.jsf</page>
+    </view>
+    <view id="refMa_1LivRelativo">
+        <page>/pages/referto/refMa_1LivRelativo.jsf</page>
+    </view>
+    <view id="refMa_agobiopsia">
+        <page>/pages/referto/refMa_agobiopsia.jsf</page>
+    </view>
+    <view id="refMa_conclusioni">
+        <page>/pages/referto/refMa_conclusioni.jsf</page>
+    </view>
+    <view id="refMa_intervento">
+        <page>/pages/referto/refMa_intervento.jsf</page>
+    </view>
+    <view id="refMa_istologia">
+        <page>/pages/referto/refMa_istologia.jsf</page>
+    </view>
+    <view id="refMa_diagnosi">
+        <page>/pages/referto/refMa_diagnosi.jsf</page>
+    </view>
+    <view id="refMa_lettura2">
+        <page>/pages/referto/refMa_lettura2.jsf</page>
+    </view>
+    <view id="refMa_revisione">
+        <page>/pages/referto/refMa_revisione.jsf</page>
+    </view>
+    <view id="refMa_refertoC">
+        <page>/pages/referto/refMa_refertoC.jsf</page>
+    </view>
+    <view id="refCo_referto1liv">
+        <page>/pages/referto/refCo_referto1liv.jsf</page>
+    </view>
+    <view id="refCo_endoscopia">
+        <page>/pages/referto/refCo_endoscopia.jsf</page>
+    </view>
+    <view id="refCo_primoLivRelativo">
+        <page>/pages/referto/refCo_primoLivRelativo.jsf</page>
+    </view>
+    <view id="refCo_istologia">
+        <page>/pages/referto/refCo_istologia.jsf</page>
+    </view>
+    <view id="refCo_rxcolon">
+        <page>/pages/referto/refCo_rxcolon.jsf</page>
+    </view>
+    <view id="refCo_conclusioni">
+        <page>/pages/referto/refCo_conclusioni.jsf</page>
+    </view>
+    <view id="refCo_intervento">
+        <page>/pages/referto/refCo_intervento.jsf</page>
+    </view>
+    <view id="refCo_istchir">
+        <page>/pages/referto/refCo_istchir.jsf</page>
+    </view>
+    <view id="refCo_diagnosi">
+        <page>/pages/referto/refCo_diagnosi.jsf</page>
+    </view>
+    <view id="refCo_intermedi_ricerca">
+        <page>/pages/referto/refCo_intermedi_ricerca.jsf</page>
+    </view>
+    <view id="refCo_intermedio_dett">
+        <page>/pages/referto/refCo_intermedio_dett.jsf</page>
+    </view>
+    <view id="ref_ricerca">
+        <page>/pages/referto/ref_ricerca.jsf</page>
+    </view>
+    <view id="ref_referto1liv">
+        <page>/pages/referto/ref_referto1liv.jsf</page>
+    </view>
+    <view id="ref_colpo2liv">
+        <page>/pages/referto/ref_colpo2liv.jsf</page>
+    </view>
+    <view id="ref_istobio2liv">
+        <page>/pages/referto/ref_istobio2liv.jsf</page>
+    </view>
+    <view id="ref_conclusioni2liv">
+        <page>/pages/referto/ref_conclusioni2liv.jsf</page>
+    </view>
+    <view id="ref_intervento3liv">
+        <page>/pages/referto/ref_intervento3liv.jsf</page>
+    </view>
+    <view id="ref_istochir3liv">
+        <page>/pages/referto/ref_istochir3liv.jsf</page>
+    </view>
+    <view id="ref_diagnosiPeggiore">
+        <page>/pages/referto/ref_diagnosiPeggiore.jsf</page>
+    </view>
+    <view id="ref_primolivRelativo">
+        <page>/pages/referto/ref_primolivRelativo.jsf</page>
+    </view>
+    <view id="print_inviti">
+        <page>/pages/print/print_inviti.jsf</page>
+    </view>
+    <view id="print_referti">
+        <page>/pages/print/print_referti.jsf</page>
+    </view>
+    <method-call id="toReferto">
+        <method>#{RefMa_ricercaAction.onReferto}</method>
+        <outcome>
+            <to-string/>
+        </outcome>
+    </method-call>
+    <method-call id="to_accMA_Anamnesi">
+        <method>#{AccMa_ricercaAction.onAnam}</method>
+        <outcome>
+            <to-string/>
+        </outcome>
+    </method-call>
+    <view id="print_elencoAnamnesi">
+        <page>/pages/print/print_elencoAnamnesi.jsf</page>
+    </view>
+    <view id="accCo_ricerca">
+        <page>/pages/accettazione/accCo_ricerca.jsf</page>
+    </view>
+    <view id="accCo_esito">
+        <page>/pages/accettazione/accCo_esito.jsf</page>
+    </view>
+    <view id="accCo_anam">
+        <page>/pages/accettazione/accCo_anam.jsf</page>
+    </view>
+    <view id="acc_ricerca">
+        <page>/pages/accettazione/acc_ricerca.jsf</page>
+    </view>
+    <view id="acc_esitoInvito">
+        <page>/pages/accettazione/acc_esitoInvito.jsf</page>
+    </view>
+    <view id="acc_anam">
+        <page>/pages/accettazione/acc_anam.jsf</page>
+    </view>
+    <view id="acc_prelievo">
+        <page>/pages/accettazione/acc_prelievo.jsf</page>
+    </view>
+    <view id="acc_intPrec">
+        <page>/pages/accettazione/acc_intPrec.jsf</page>
+    </view>
+    <view id="aur_search">
+        <page>/pages/soggetto/aur/aur_search.jsf</page>
+    </view>
+    <view id="print_elencoSoggettiRowNum">
+        <page>/pages/print/print_elencoSoggettiRowNum.jsf</page>
+    </view>
+    <control-flow-rule id="__1">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__23">
+            <from-outcome>iniSogg</from-outcome>
+            <to-activity-id>sogg_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__45">
+            <from-outcome>rbSogg</from-outcome>
+            <to-activity-id>rbSogg</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__60">
+            <from-outcome>rbNuovoInvito</from-outcome>
+            <to-activity-id>rbNuovoInvito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__62">
+            <from-outcome>goRic</from-outcome>
+            <to-activity-id>sogg_query</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__35">
+            <from-outcome>goStoria</from-outcome>
+            <to-activity-id>sogg_storia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__67">
+            <from-outcome>goEscl</from-outcome>
+            <to-activity-id>sogg_escl</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__68">
+            <from-outcome>goInvCorr</from-outcome>
+            <to-activity-id>sogg_invCorr</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__69">
+            <from-outcome>goNuovoInv</from-outcome>
+            <to-activity-id>sogg_Nuovo</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__70">
+            <from-outcome>goAnag</from-outcome>
+            <to-activity-id>sogg_anag</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__54">
+            <from-outcome>goConsenso</from-outcome>
+            <to-activity-id>sogg_consenso</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__65">
+            <from-outcome>aurSearch</from-outcome>
+            <to-activity-id>aur_search</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__9">
+            <from-outcome>lovComune</from-outcome>
+            <to-activity-id>adfc-lovComune</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__10">
+            <from-outcome>lovMedico</from-outcome>
+            <to-activity-id>adfc-lovMedico</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__38">
+            <from-outcome>lovCittadinanza</from-outcome>
+            <to-activity-id>adfc-lovCittadinanza</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__40">
+            <from-outcome>lovStato</from-outcome>
+            <to-activity-id>adfc-lovStato</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__46">
+        <from-activity-id>sogg_anag</from-activity-id>
+        <control-flow-case id="__47">
+            <from-outcome>goDocumento</from-outcome>
+            <to-activity-id>CreateInsert</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__53">
+            <from-outcome>goDocumentoEdit</from-outcome>
+            <to-activity-id>sogg_documento</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__48">
+        <from-activity-id>CreateInsert</from-activity-id>
+        <control-flow-case id="__49">
+            <from-outcome>Create</from-outcome>
+            <to-activity-id>sogg_documento</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__51">
+        <from-activity-id>sogg_documento</from-activity-id>
+        <control-flow-case id="__52">
+            <from-outcome>back</from-outcome>
+            <to-activity-id>sogg_anag</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__55">
+        <from-activity-id>sogg_consenso</from-activity-id>
+        <control-flow-case id="__56">
+            <from-outcome>back</from-outcome>
+            <to-activity-id>sogg_anag</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__27">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__30">
+            <from-outcome>to_refCa_ricerca</from-outcome>
+            <to-activity-id>refCa_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__97">
+            <from-outcome>to_refCa_questionario</from-outcome>
+            <to-activity-id>refCa_questionario</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__71">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__73">
+            <from-outcome>mrg_toMerge</from-outcome>
+            <to-activity-id>mrg_merge</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__74">
+            <from-outcome>mrg_toUnmerge</from-outcome>
+            <to-activity-id>mrg_unmerge</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__75">
+            <from-outcome>mrg_toSegnalazioni</from-outcome>
+            <to-activity-id>mrg_segnalazioni</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__78">
+        <from-activity-id>mrg_unmerge</from-activity-id>
+        <control-flow-case id="__79">
+            <from-outcome>goDettaglio</from-outcome>
+            <to-activity-id>mrg_unmrg_detail</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__80">
+        <from-activity-id>mrg_unmrg_detail</from-activity-id>
+        <control-flow-case id="__81">
+            <from-outcome>back</from-outcome>
+            <to-activity-id>mrg_unmerge</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__86">
+        <from-activity-id>mrg_segnalazioni</from-activity-id>
+        <control-flow-case id="__87">
+            <from-outcome>dialog:toArchiviazione</from-outcome>
+            <to-activity-id>mrg_archiviazione</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__82">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__83">
+            <from-outcome>med_ini</from-outcome>
+            <to-activity-id>med_gestione</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__84">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__101">
+            <from-outcome>acc_toMammo</from-outcome>
+            <to-activity-id>accMa_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__190">
+            <from-outcome>to_accMa_preEsito</from-outcome>
+            <to-activity-id>accMa_esito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__91">
+            <from-outcome>goEsito</from-outcome>
+            <to-activity-id>accMa_esito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__100">
+            <from-outcome>goAnam</from-outcome>
+            <to-activity-id>accMa_anam</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+        <from-activity-id>med_gestione</from-activity-id>
+        <control-flow-case id="__25">
+            <from-outcome>toDettMed</from-outcome>
+            <to-activity-id>med_dett</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__93">
+            <from-outcome>toCritStampa</from-outcome>
+            <to-activity-id>med_critStampa</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__111">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__112">
+            <from-outcome>dialog:printElencoSoggetti</from-outcome>
+            <to-activity-id>print_ElencoSoggetti</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__113">
+            <from-outcome>dialog:printPianoLavoro</from-outcome>
+            <to-activity-id>print_pianoLavoro</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__184">
+            <from-outcome>print_toInviti</from-outcome>
+            <to-activity-id>print_inviti</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__169">
+            <from-outcome>print_referti</from-outcome>
+            <to-activity-id>print_referti</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__191">
+            <from-outcome>dialog:print_elencoAnamnesi</from-outcome>
+            <to-activity-id>print_elencoAnamnesi</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__217">
+            <from-outcome>dialog:printElencoSoggettiRowNum</from-outcome>
+            <to-activity-id>print_elencoSoggettiRowNum</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__120">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__121">
+            <from-outcome>to_refMa_ricerca</from-outcome>
+            <to-activity-id>refMa_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__122">
+            <from-outcome>livello2Ma</from-outcome>
+            <to-activity-id>refMa_radiologia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__123">
+            <from-outcome>livello1Ma</from-outcome>
+            <to-activity-id>refMa_lettura1</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__124">
+            <from-outcome>to_refMa_citologia</from-outcome>
+            <to-activity-id>refMa_citologia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__116">
+            <from-outcome>dialog:ref1relativoMa</from-outcome>
+            <to-activity-id>refMa_1LivRelativo</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__118">
+            <from-outcome>to_refMa_agobiopsia</from-outcome>
+            <to-activity-id>refMa_agobiopsia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__127">
+            <from-outcome>to_refMa_conclusioni</from-outcome>
+            <to-activity-id>refMa_conclusioni</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__129">
+            <from-outcome>to_refMa_intervento</from-outcome>
+            <to-activity-id>refMa_intervento</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__131">
+            <from-outcome>to_refMa_istologia</from-outcome>
+            <to-activity-id>refMa_istologia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__133">
+            <from-outcome>to_refMa_diagnosi</from-outcome>
+            <to-activity-id>refMa_diagnosi</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__135">
+            <from-outcome>to_refMa_lettura2</from-outcome>
+            <to-activity-id>refMa_lettura2</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__138">
+            <from-outcome>to_refMa_revisione</from-outcome>
+            <to-activity-id>refMa_revisione</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__140">
+            <from-outcome>to_refMa_refertoC</from-outcome>
+            <to-activity-id>refMa_refertoC</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__90">
+            <from-outcome>acc_toMA_Anamnesi</from-outcome>
+            <to-activity-id>to_accMA_Anamnesi</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__142">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__145">
+            <from-outcome>to_refCo_ricerca</from-outcome>
+            <to-activity-id>refCo_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__107">
+            <from-outcome>livello1Co</from-outcome>
+            <to-activity-id>refCo_referto1liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__147">
+            <from-outcome>livello2Co</from-outcome>
+            <to-activity-id>refCo_endoscopia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__149">
+            <from-outcome>dialog:ref1relativoCo</from-outcome>
+            <to-activity-id>refCo_primoLivRelativo</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__150">
+            <from-outcome>to_refCo_istologia</from-outcome>
+            <to-activity-id>refCo_istologia</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__143">
+            <from-outcome>to_refCo_rxcolon</from-outcome>
+            <to-activity-id>refCo_rxcolon</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__152">
+            <from-outcome>to_refCo_conclusioni</from-outcome>
+            <to-activity-id>refCo_conclusioni</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__154">
+            <from-outcome>to_refCo_intervento</from-outcome>
+            <to-activity-id>refCo_intervento</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__156">
+            <from-outcome>to_refCo_istchir</from-outcome>
+            <to-activity-id>refCo_istchir</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__158">
+            <from-outcome>to_refCo_diagnosi</from-outcome>
+            <to-activity-id>refCo_diagnosi</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__160">
+            <from-outcome>intermediCo</from-outcome>
+            <to-activity-id>refCo_intermedi_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__32">
+            <from-outcome>to_refCo_intermedio_dett</from-outcome>
+            <to-activity-id>refCo_intermedio_dett</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__162">
+        <from-activity-id>refCo_intermedi_ricerca</from-activity-id>
+        <control-flow-case id="__163">
+            <from-outcome>goIntermedio</from-outcome>
+            <to-activity-id>refCo_intermedio_dett</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__165">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__166">
+            <from-outcome>to_ref_ricerca</from-outcome>
+            <to-activity-id>ref_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__175">
+            <from-outcome>toRefIstobio2liv</from-outcome>
+            <to-activity-id>ref_istobio2liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__176">
+            <from-outcome>toRefConclusioni2liv</from-outcome>
+            <to-activity-id>ref_conclusioni2liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__177">
+            <from-outcome>toRefIntervento3liv</from-outcome>
+            <to-activity-id>ref_intervento3liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__178">
+            <from-outcome>toRefIstochir3liv</from-outcome>
+            <to-activity-id>ref_istochir3liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__179">
+            <from-outcome>toRefDiagnosiPeggiore</from-outcome>
+            <to-activity-id>ref_diagnosiPeggiore</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__180">
+            <from-outcome>dialog:ref_primolivRelativo</from-outcome>
+            <to-activity-id>ref_primolivRelativo</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__170">
+            <from-outcome>to_ref_livello2</from-outcome>
+            <to-activity-id>ref_colpo2liv</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__183">
+            <from-outcome>to_ref_livello1</from-outcome>
+            <to-activity-id>ref_referto1liv</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__192">
+        <from-activity-id>accMa_anam</from-activity-id>
+        <control-flow-case id="__193">
+            <from-outcome>to_refMa_Anam</from-outcome>
+            <to-activity-id>toReferto</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__195">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__89">
+            <from-outcome>acc_toCardio</from-outcome>
+            <to-activity-id>accCa_ricerca</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__196">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__197">
+            <from-outcome>acc_toColon</from-outcome>
+            <to-activity-id>accCo_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__201">
+            <from-outcome>goEsitoCo</from-outcome>
+            <to-activity-id>accCo_esito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__203">
+            <from-outcome>to_accCo_preEsito</from-outcome>
+            <to-activity-id>accCo_esito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__204">
+            <from-outcome>goAnamCo</from-outcome>
+            <to-activity-id>accCo_anam</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__206">
+        <from-activity-id>*</from-activity-id>
+        <control-flow-case id="__207">
+            <from-outcome>acc_to</from-outcome>
+            <to-activity-id>acc_ricerca</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__211">
+            <from-outcome>goEsitoCI</from-outcome>
+            <to-activity-id>acc_esitoInvito</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__212">
+            <from-outcome>goAnamCI</from-outcome>
+            <to-activity-id>acc_anam</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__213">
+            <from-outcome>goPrel</from-outcome>
+            <to-activity-id>acc_prelievo</to-activity-id>
+        </control-flow-case>
+        <control-flow-case id="__214">
+            <from-outcome>goInt</from-outcome>
+            <to-activity-id>acc_intPrec</to-activity-id>
+        </control-flow-case>
+    </control-flow-rule>
+    <managed-bean id="__4">
+        <description>Menu Model Managed Bean</description>
+        <managed-bean-name>op_function_menu</managed-bean-name>
+        <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__5">
+            <property-name>createHiddenNodes</property-name>
+            <value>false</value>
+        </managed-property>
+        <managed-property id="__6">
+            <property-name>source</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>/WEB-INF/menu/op_function_menu.xml</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__13">
+        <managed-bean-name>Sogg_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__14">
+        <managed-bean-name>IniSoggAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.IniSoggAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__17">
+        <managed-bean-name>ToRoundInvitiAction</managed-bean-name>
+        <managed-bean-class>view.round.ToRoundInvitiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__3">
+            <property-name>Round_invitiAction</property-name>
+            <property-class>view.round.Round_invitiAction</property-class>
+            <value>#{pageFlowScope.Round_invitiAction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__18">
+        <managed-bean-name>Round_invitiAction</managed-bean-name>
+        <managed-bean-class>view.round.Round_invitiAction</managed-bean-class>
+        <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__20">
+        <managed-bean-name>RefCa_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCa_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__28">
+        <managed-bean-name>AccCa_iniAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cardio.AccCa_iniAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__19">
+            <property-name>AccCa_ricercaAction</property-name>
+            <property-class>view.accettazione.cardio.AccCa_ricercaAction</property-class>
+            <value>#{pageFlowScope.AccCa_ricercaAction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__2">
+        <managed-bean-name>AccCa_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cardio.AccCa_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__29">
+        <managed-bean-name>Sogg_preNuovoAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_preNuovoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__24">
+        <managed-bean-name>Sogg_preInvCorrAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_preInvCorrAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__31">
+        <managed-bean-name>Sogg_preanagAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_preanagAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__37">
+            <property-name>Sogg_anagAction</property-name>
+            <property-class>view.soggetto.Sogg_anagAction</property-class>
+            <value>#{Sogg_anagAction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+        <managed-bean-name>Sogg_preEsclAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_preEsclAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__36">
+        <managed-bean-name>Sogg_preStoriaAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_preStoriaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__34">
+        <managed-bean-name>Sogg_anagAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_anagAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__44">
+        <managed-bean-name>RbSoggAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.RbSoggAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__50">
+        <managed-bean-name>Sogg_documentoAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_documentoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__57">
+        <managed-bean-name>Sogg_consensoAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_consensoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__59">
+        <managed-bean-name>Sogg_NuovoAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_NuovoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__61">
+        <managed-bean-name>RbNuovoInvitoAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.RbNuovoInvitoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__63">
+        <managed-bean-name>Sogg_queryAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_queryAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__64">
+        <managed-bean-name>Sogg_invCorrAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_invCorrAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__26">
+        <managed-bean-name>Print_storicoAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_storicoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__22">
+        <managed-bean-name>Print_invitoAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_invitoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__66">
+        <managed-bean-name>RefCa_questionarioAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCa_questionarioAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__106">
+            <property-name>QuestionarioProvider</property-name>
+            <property-class>view.providers.QuestionarioProvider</property-class>
+            <value>#{QuestionarioProvider}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__76">
+        <managed-bean-name>Mrg_mergeAction</managed-bean-name>
+        <managed-bean-class>view.merge.Mrg_mergeAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__77">
+        <managed-bean-name>Mrg_unmergeAction</managed-bean-name>
+        <managed-bean-class>view.merge.Mrg_unmergeAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__85">
+        <managed-bean-name>Mrg_segnalazioniAction</managed-bean-name>
+        <managed-bean-class>view.merge.Mrg_segnalazioniAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__92">
+        <managed-bean-name>Med_gestioneAction</managed-bean-name>
+        <managed-bean-class>view.medico.Med_gestioneAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__88">
+        <managed-bean-name>Med_dettAction</managed-bean-name>
+        <managed-bean-class>view.medico.Med_dettAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__94">
+        <managed-bean-name>Med_critStampaAction</managed-bean-name>
+        <managed-bean-class>view.medico.Med_critStampaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__95">
+        <managed-bean-name>Sogg_storiaAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_storiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__96">
+        <managed-bean-name>Print_refertoAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_refertoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__98">
+        <managed-bean-name>AccMa_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.mammo.AccMa_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__99">
+        <managed-bean-name>AccMa_iniAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.mammo.AccMa_iniAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__102">
+        <managed-bean-name>AccMa_anamAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.mammo.AccMa_anamAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__205">
+            <property-name>AccMa_ricercaAction</property-name>
+            <property-class>view.accettazione.mammo.AccMa_ricercaAction</property-class>
+            <value>#{AccMa_ricercaAction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__103">
+    <managed-bean-name>QuestionarioProvider</managed-bean-name>
+    <managed-bean-class>view.providers.QuestionarioProvider</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+    <managed-bean id="__104">
+        <managed-bean-name>AccMa_esitoAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.mammo.AccMa_esitoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__105">
+        <managed-bean-name>Print_questionarioAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_questionarioAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__108">
+        <managed-bean-name>RefCo_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__110">
+        <managed-bean-name>RefMa_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__114">
+        <managed-bean-name>Print_PLAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_PLAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__115">
+        <managed-bean-name>Print_anamnesiAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_anamnesiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__119">
+        <managed-bean-name>RefMa_radiologiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_radiologiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__125">
+        <managed-bean-name>ConstantsBean</managed-bean-name>
+        <managed-bean-class>view.backing.ConstantsBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__109">
+        <managed-bean-name>RefMa_citologiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_citologiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__117">
+        <managed-bean-name>RefMa_1LivRelativoAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_1LivRelativoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__126">
+        <managed-bean-name>RefMa_agobiopsiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_agobiopsiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__128">
+        <managed-bean-name>RefMa_conclusioniAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_conclusioniAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__130">
+        <managed-bean-name>RefMa_interventoAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_interventoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__132">
+        <managed-bean-name>RefMa_istologiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_istologiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__134">
+        <managed-bean-name>RefMa_diagnosiAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_diagnosiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__136">
+        <managed-bean-name>RefMa_lettura1Action</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_lettura1Action</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__137">
+        <managed-bean-name>RefMa_lettura2Action</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_lettura2Action</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__139">
+        <managed-bean-name>RefMa_revisioneAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_revisioneAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__141">
+        <managed-bean-name>RefMa_refertoCAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefMa_refertoCAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__146">
+        <managed-bean-name>RefCo_referto1livAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_referto1livAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__148">
+        <managed-bean-name>RefCo_endoscopiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_endoscopiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__151">
+        <managed-bean-name>RefCo_istologiaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_istologiaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__144">
+        <managed-bean-name>RefCo_rxcolonAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_rxcolonAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__153">
+        <managed-bean-name>RefCo_conclusioniAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_conclusioniAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__155">
+        <managed-bean-name>RefCo_interventoAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_interventoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__157">
+        <managed-bean-name>RefCo_istchirAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_istchirAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__159">
+        <managed-bean-name>RefCo_diagnosiAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_diagnosiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__161">
+        <managed-bean-name>RefCo_intermediRicercaAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_intermediRicercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__164">
+        <managed-bean-name>RefCo_intermediDettAction</managed-bean-name>
+        <managed-bean-class>view.referto.RefCo_intermediDettAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__167">
+        <managed-bean-name>Ref_referto1livAction</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_referto1livAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__171">
+        <managed-bean-name>Ref_colpo2livAction</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_colpo2livAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__172">
+        <managed-bean-name>Ref_istobio2livAction</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_istobio2livAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__173">
+        <managed-bean-name>Ref_conclusioni2liv</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_conclusioni2liv</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__174">
+        <managed-bean-name>Ref_intervento3liv</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_intervento3liv</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__181">
+        <managed-bean-name>Ref_istochir3livAction</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_istochir3livAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__182">
+        <managed-bean-name>Ref_diagnosiPeggioreAction</managed-bean-name>
+        <managed-bean-class>view.referto.Ref_diagnosiPeggioreAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__185">
+        <managed-bean-name>Print_invitiAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_invitiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__168">
+        <managed-bean-name>Print_DataAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_DataAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__186">
+        <managed-bean-name>Print_refertiAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_refertiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__187">
+        <managed-bean-name>Print_refStampaAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_refStampaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__188">
+        <managed-bean-name>Print_elencoSoggetti</managed-bean-name>
+        <managed-bean-class>view.print.Print_elencoSoggettiAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__189">
+        <managed-bean-name>Sogg_esclAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_esclAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__194">
+        <managed-bean-name>Print_elencoAnamStampaAction</managed-bean-name>
+        <managed-bean-class>view.print.Print_elencoAnamStampaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__198">
+        <managed-bean-name>AccCo_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.colon.AccCo_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__202">
+        <managed-bean-name>AccCo_esitoAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.colon.AccCo_esitoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__199">
+        <managed-bean-name>AccCo_anamAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.colon.AccCo_anamAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property id="__200">
+            <property-name>AccCo_ricercaAction</property-name>
+            <property-class>view.accettazione.colon.AccCo_ricercaAction</property-class>
+            <value>#{AccCo_ricercaAction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean id="__208">
+        <managed-bean-name>Acc_ricercaAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cito.Acc_ricercaAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__215">
+        <managed-bean-name>Acc_esitoInvitoAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cito.Acc_esitoInvitoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__209">
+        <managed-bean-name>Acc_anamAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cito.Acc_anamAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__210">
+        <managed-bean-name>Acc_intPrecAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cito.Acc_intPrecAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__216">
+        <managed-bean-name>Acc_prelievoAction</managed-bean-name>
+        <managed-bean-class>view.accettazione.cito.Acc_prelievoAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__72">
+        <managed-bean-name>Sogg_AurAction</managed-bean-name>
+        <managed-bean-class>view.soggetto.Sogg_AurAction</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__218">
+        <managed-bean-name>Print_elencoSoggettiRowNum</managed-bean-name>
+        <managed-bean-class>view.print.Print_elencoSoggettiRowNum</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+</adfc-config>

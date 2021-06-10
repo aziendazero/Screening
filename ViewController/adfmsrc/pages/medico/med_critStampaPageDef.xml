@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="med_critStampaPageDef"
+                Package="pages.medico">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PL_BeanDataControl" id="PL_BeanDataControlIterator"/>
+    <iterator Binds="Med_TemplateView1" RangeSize="-1" DataControl="Med_AppModuleDataControl"
+              id="Med_TemplateView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Med_RicParamDataControl" id="Med_RicParamDataControlIterator"/>
+    <iterator Binds="Med_ElencoMediciView1" RangeSize="25" DataControl="Med_AppModuleDataControl"
+              id="Med_ElencoMediciView1Iterator"/>
+    <iterator id="Med_ComuneView1Iterator" Binds="Med_ComuneView1" DataControl="Med_AppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <list IterBinding="PL_BeanDataControlIterator" id="template" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Med_TemplateView1Iterator">
+      <AttrNames>
+        <Item Value="template"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="roundCom">
+      <AttrNames>
+        <Item Value="roundCom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="codComu">
+      <AttrNames>
+        <Item Value="codComu"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="dtIni">
+      <AttrNames>
+        <Item Value="dtIni"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="dtFin">
+      <AttrNames>
+        <Item Value="dtFin"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="etaMin">
+      <AttrNames>
+        <Item Value="etaMin"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="etaMax">
+      <AttrNames>
+        <Item Value="etaMax"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="dtRif">
+      <AttrNames>
+        <Item Value="dtRif"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="sesso">
+      <AttrNames>
+        <Item Value="sesso"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_ElencoMediciView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_ElencoMediciView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="desComu">
+      <AttrNames>
+        <Item Value="desComu"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

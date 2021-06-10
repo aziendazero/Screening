@@ -1,0 +1,599 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUInterventiMAView"
+   Version="11.1.2.62.76"
+   OrderBy="&#34;N_INT&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUInterventiMAViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT a.idint, 
+a.idreferto, 
+a.codts, 
+a.ulss, 
+a.tpscr, 
+a.completo,
+a.n_int,
+a.radioterapia,
+a.chemioterapia,
+a.data_pre,
+a.medico_pre,
+exe.codreg esecuzione,
+mot.codreg motivo,
+a.dtintervento, 
+a.idchirurgo, 
+t.codreg tpintervento, 
+a.reparto,
+a.lesione, a.gr_lesione,
+a.istologia, 
+a.dtistologia,
+a.idpatologo1, 
+a.idpatologo2, 
+r4.codreg diagnosi,
+rm.codreg stadiom, 
+rpn.codreg stadiopn,
+rpt.codreg stadiopt,
+d.codreg diametro,
+st.codreg stadiazione,
+rx.codreg residui, 
+a.grading,
+a.n_linfonodi,
+a.n_positivi, 
+a.dtconcl, 
+a.idmedconcl, 
+s.codregionale idsugg
+  FROM so_interventomammo a, so_cnf_sugg_3liv s,
+  so_cnf_ref2liv exe,so_cnf_ref2liv mot,so_cnf_ref2liv t,
+  so_cnf_ref2liv d, so_cnf_ref2liv rM,
+  so_cnf_ref2liv rPN, so_cnf_ref2liv rPT,
+  so_cnf_ref2liv r4, so_cnf_ref2liv st,
+  so_cnf_ref2liv rx
+  where (a.idsugg3l=s.idsugg3l and a.ulss=s.ulss and a.tpscr=s.tpscr)
+  and (a.opzioneesec=exe.idcnfref2l(+) and a.gr_opzione=exe.gruppo(+)
+  and a.ulss=exe.ulss(+) and a.tpscr=exe.tpscr)
+  and (a.motivoesec=mot.idcnfref2l(+) and a.gr_motivo=mot.gruppo(+)
+  and a.ulss=mot.ulss(+) and a.tpscr=mot.tpscr)
+  and (a.tpintervento=t.idcnfref2l(+) and a.gr_tpintervento=t.gruppo(+)
+  and a.ulss=t.ulss(+) and a.tpscr=t.tpscr)
+  and (a.diametro=d.idcnfref2l(+) and a.gr_diametro=d.gruppo(+)
+  and a.ulss=d.ulss(+) and a.tpscr=d.tpscr)
+  and (a.stadio_m=rM.idcnfref2l(+) and a.gruppo_m=rM.gruppo(+)
+  and a.ulss=rM.ulss(+) and a.tpscr=rM.tpscr(+))
+  and (a.stadio_pn=rPN.idcnfref2l(+) and a.gruppo_pn=rPN.gruppo(+)
+  and a.ulss=rPN.ulss(+) and a.tpscr=rPN.tpscr(+))
+  and (a.stadio_pt=rPT.idcnfref2l(+) and a.gruppo_pt=rPT.gruppo(+)
+  and a.ulss=rPT.ulss(+) and a.tpscr=rPT.tpscr(+))
+  and (a.diagnosi=r4.idcnfref2l(+) and a.gr_diagnosi=r4.gruppo(+)
+  and a.ulss=r4.ulss(+) and a.tpscr=r4.tpscr(+))
+  and (a.stadiazione=st.idcnfref2l(+) and a.gr_stadiazione=st.gruppo(+)
+  and a.ulss=st.ulss(+) and a.tpscr=st.tpscr(+))
+  and (a.residui=rx.idcnfref2l(+) and a.gr_residui=rx.gruppo(+)
+  and a.ulss=rx.ulss(+) and a.tpscr=rx.tpscr(+))
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idint"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINT"
+      Expression="IDINT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLETO"
+      Expression="COMPLETO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NInt"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_INT"
+      Expression="N_INT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Radioterapia"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RADIOTERAPIA"
+      Expression="RADIOTERAPIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chemioterapia"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CHEMIOTERAPIA"
+      Expression="CHEMIOTERAPIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataPre"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DATA_PRE"
+      Expression="DATA_PRE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MedicoPre"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MEDICO_PRE"
+      Expression="MEDICO_PRE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esecuzione"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ESECUZIONE"
+      Expression="ESECUZIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Motivo"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MOTIVO"
+      Expression="MOTIVO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtintervento"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINTERVENTO"
+      Expression="DTINTERVENTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idchirurgo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCHIRURGO"
+      Expression="IDCHIRURGO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpintervento"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="TPINTERVENTO"
+      Expression="TPINTERVENTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Reparto"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="REPARTO"
+      Expression="REPARTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Lesione"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="LESIONE"
+      Expression="LESIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GrLesione"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="GR_LESIONE"
+      Expression="GR_LESIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Istologia"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ISTOLOGIA"
+      Expression="ISTOLOGIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtistologia"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTISTOLOGIA"
+      Expression="DTISTOLOGIA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idpatologo1"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDPATOLOGO1"
+      Expression="IDPATOLOGO1"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idpatologo2"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDPATOLOGO2"
+      Expression="IDPATOLOGO2"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Diagnosi"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DIAGNOSI"
+      Expression="DIAGNOSI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stadiom"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="STADIOM"
+      Expression="STADIOM"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stadiopn"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="STADIOPN"
+      Expression="STADIOPN"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stadiopt"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="STADIOPT"
+      Expression="STADIOPT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Diametro"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DIAMETRO"
+      Expression="DIAMETRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stadiazione"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="STADIAZIONE"
+      Expression="STADIAZIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Residui"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RESIDUI"
+      Expression="RESIDUI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Grading"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="GRADING"
+      Expression="GRADING"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NLinfonodi"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_LINFONODI"
+      Expression="N_LINFONODI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NPositivi"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_POSITIVI"
+      Expression="N_POSITIVI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtconcl"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCONCL"
+      Expression="DTCONCL"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idmedconcl"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDMEDCONCL"
+      Expression="IDMEDCONCL"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG"
+      Expression="IDSUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idint" />
+   </AttrArray>
+</ViewObject>

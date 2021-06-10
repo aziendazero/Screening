@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUSoggettoView"
+   Version="11.1.2.62.76"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUSoggettoViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT SOGG.codts, 
+    SOGG.cf,
+    SOGG.ulss,
+    SOGG.sesso,
+    SOGG.codanagreg, 
+    SOGG.tpscr,
+    SOGG.roundindiv,
+    SOGG.roundinviti, R.numround
+FROM(
+SELECT A.*,S.roundindiv,S.roundinviti,S.altorischio,S.tpscr
+     
+  FROM so_soggetto a, SO_SOGG_SCR S
+  WHERE A.codts=S.codts AND A.ulss=S.ulss
+  ) sogg,  SO_ROUNDORG R
+  WHERE DECODE(SOGG.codanagreg,3,SOGG.codcomdom, SOGG.codcomres)=R.codcom(+)
+  AND r.codscr(+)=SOGG.tpscr
+  AND NOT EXISTS(SELECT 1 FROM SO_ROUNDORG R1 
+  WHERE R1.CODSCR=R.CODSCR AND R1.codcom=R.CODCOM AND R1.numround>R.NUMROUND)
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CF"
+      Expression="CF"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="SESSO"
+      Expression="SESSO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CODANAGREG"
+      Expression="CODANAGREG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINDIV"
+      Expression="ROUNDINDIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINVITI"
+      Expression="ROUNDINVITI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numround"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="NUMROUND"
+      Expression="NUMROUND"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Codts" />
+      <Item Value="Ulss" />
+      <Item Value="Tpscr" />
+   </AttrArray>
+</ViewObject>

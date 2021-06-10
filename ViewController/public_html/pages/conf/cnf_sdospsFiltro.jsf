@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_sdospsFiltro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl2">
+                                <af:selectOneChoice value="#{bindings.TipoFlusso1.inputValue}"
+                                                    label="#{bindings.TipoFlusso1.label}"
+                                                    required="#{bindings.TipoFlusso1.hints.mandatory}"
+                                                    shortDesc="#{bindings.TipoFlusso1.hints.tooltip}" id="soc1"
+                                                    disabled="#{sessionScope.sdoSpsEdit}">
+                                    <f:selectItems value="#{bindings.TipoFlusso1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.TipoFlusso1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Codsdosps.inputValue}"
+                                              label="#{bindings.Codsdosps.hints.label}"
+                                              required="#{bindings.Codsdosps.hints.mandatory}"
+                                              columns="#{bindings.Codsdosps.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codsdosps.hints.precision}"
+                                              shortDesc="#{bindings.Codsdosps.hints.tooltip}" id="it1"
+                                              disabled="#{sessionScope.sdoSpsEdit}">
+                                    <f:validator binding="#{bindings.Codsdosps.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.DataInizioValidita.inputValue}"
+                                              label="#{bindings.DataInizioValidita.hints.label}"
+                                              required="#{bindings.DataInizioValidita.hints.mandatory}"
+                                              columns="#{bindings.DataInizioValidita.hints.displayWidth}"
+                                              shortDesc="#{bindings.DataInizioValidita.hints.tooltip}" id="id1"
+                                              disabled="#{sessionScope.sdoSpsEdit}">
+                                    <f:validator binding="#{bindings.DataInizioValidita.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.DataInizioValidita.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.DataFineValidita.inputValue}"
+                                              label="#{bindings.DataFineValidita.hints.label}"
+                                              required="#{bindings.DataFineValidita.hints.mandatory}"
+                                              columns="#{bindings.DataFineValidita.hints.displayWidth}"
+                                              shortDesc="#{bindings.DataFineValidita.hints.tooltip}" id="id2">
+                                    <f:validator binding="#{bindings.DataFineValidita.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.DataFineValidita.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Filtro SDO-SPS"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_usersCentri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.userCentriForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1">
+                        <af:panelHeader text="Utenti" id="ph1">
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}">
+                                        <af:group id="g1">
+                                        <af:button text="Modifica" id="b1" action="creatEditUsercentro"
+                                                   actionListener="#{Cnf_centriAction.onDettUserCentri}">
+                                            <af:setPropertyListener from="edit" to="#{sessionScope.action}" type="action"/>
+                                        </af:button>
+                                        <af:button text="Cancella" id="b2"
+                                                   rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                            <af:showPopupBehavior popupId="p1"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                  partialTriggers="md1">
+                                            <af:dialog id="d2" title="Cancella centro" cancelTextAndAccessKey="Annulla"
+                                                       partialTriggers="md1" affirmativeTextAndAccessKey="Cancella"
+                                                       dialogListener="#{Cnf_centriAction.onDeleteUserCentri}">
+                                                    <h:outputText value="Cancellare definitivamente la seguente associazione?"
+                                                                  id="ot1"/>
+                                                    <f:facet name="buttonBar"/>
+                                                </af:dialog>
+                                        </af:popup>
+                                    </af:group>
+                                    <af:button text="Nuovo" id="b3" action="creatEditUsercentro"
+                                               rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                               actionListener="#{Cnf_centriAction.onNewUserCentri}">
+                                        <af:setPropertyListener to="#{sessionScope.action}" from="create" type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table id="md1" rows="#{bindings.Cnf_SecCnfUsersView1.rangeSize}"
+                                          fetchSize="#{bindings.Cnf_SecCnfUsersView1.rangeSize}"
+                                          emptyText="#{bindings.Cnf_SecCnfUsersView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          var="row" value="#{bindings.Cnf_SecCnfUsersView1.collectionModel}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Cnf_SecCnfUsersView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Cnf_SecCnfUsersView1.collectionModel.makeCurrent}"
+                                          rowSelection="single">
+                                    <af:column headerText="#{bindings.Cnf_SecCnfUsersView1.hints.LdapUserId.label}"
+                                               sortProperty="#{bindings.Cnf_SecCnfUsersView1.hints.LdapUserId.name}"
+                                               sortable="false" id="c5">
+                                        <af:outputText value="#{row.LdapUserId}"
+                                                       shortDesc="#{bindings.Cnf_SecCnfUsersView1.hints.LdapUserId.tooltip}"
+                                                       id="ot5"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SecCnfUsersView1.hints.Cognome.label}"
+                                               sortProperty="#{bindings.Cnf_SecCnfUsersView1.hints.Cognome.name}"
+                                               sortable="false" id="c7" width="150">
+                                        <af:outputText value="#{row.Cognome}"
+                                                       shortDesc="#{bindings.Cnf_SecCnfUsersView1.hints.Cognome.tooltip}"
+                                                       id="ot7"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SecCnfUsersView1.hints.Nome.label}"
+                                               sortProperty="#{bindings.Cnf_SecCnfUsersView1.hints.Nome.name}"
+                                               sortable="false" id="c6" width="150">
+                                        <af:outputText value="#{row.Nome}"
+                                                       shortDesc="#{bindings.Cnf_SecCnfUsersView1.hints.Nome.tooltip}"
+                                                       id="ot6"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SecCnfUsersView1.hints.CodiceFiscale.label}"
+                                               sortProperty="#{bindings.Cnf_SecCnfUsersView1.hints.CodiceFiscale.name}"
+                                               sortable="false" id="c8" width="150">
+                                        <af:outputText value="#{row.CodiceFiscale}"
+                                                       shortDesc="#{bindings.Cnf_SecCnfUsersView1.hints.CodiceFiscale.tooltip}"
+                                                       id="ot8"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </af:panelHeader>
+                        <af:panelHeader text="Centri autorizzati" id="ph2">
+                            <af:table rows="#{bindings.Cnf_SoCnfUsersCentriView1.rangeSize}"
+                                      fetchSize="#{bindings.Cnf_SoCnfUsersCentriView1.rangeSize}"
+                                      emptyText="#{bindings.Cnf_SoCnfUsersCentriView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      var="row" value="#{bindings.Cnf_SoCnfUsersCentriView1.collectionModel}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Cnf_SoCnfUsersCentriView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Cnf_SoCnfUsersCentriView1.collectionModel.makeCurrent}"
+                                      rowSelection="single" id="t1">
+                                <af:column headerText="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Idcentro.label}"
+                                           sortProperty="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Idcentro.name}"
+                                           sortable="false" id="c14">
+                                    <af:outputText value="#{row.Idcentro}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Idcentro.tooltip}"
+                                                   id="ot14">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Idcentro.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Descrbreve.label}"
+                                           sortProperty="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Descrbreve.name}"
+                                           sortable="false" id="c17" width="200">
+                                    <af:outputText value="#{row.Descrbreve}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfUsersCentriView1.hints.Descrbreve.tooltip}"
+                                                   id="ot17"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelHeader>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Regole di visibilità sui centri"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

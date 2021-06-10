@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_sdosps_associazione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_flussiRegionaliAction.sdoAssociazioniForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempFlussiReg.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" actionListener="#{Cnf_flussiRegionaliAction.onDettAssociazioni}" action="creatEditSdospsAssoc"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                        <af:setPropertyListener from="#{'true'}" to="#{sessionScope.editSdo}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella causale"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{Cnf_flussiRegionaliAction.onDeleteAssociazione}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente la seguente causale?" id="ot14"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditSdospsAssoc"
+                                           rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                           actionListener="#{Cnf_flussiRegionaliAction.onNewAssociazione}">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                    <af:setPropertyListener from="#{'false'}" to="#{sessionScope.editSdo}" type="action"/>
+                                     
+                                </af:button>
+                            <af:selectOneChoice value="#{pageFlowScope.ulssSelectedAssoc}" label="Azienda sanitaria"
+                                shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                valueChangeListener="#{Cnf_flussiRegionaliAction.onChangeSdoSps}" autoSubmit="true"
+                                binding="#{Cnf_flussiRegionaliAction.selectedSdoSps}" rendered="#{sessionScope.ulss == '050000'}">
+                                <af:selectItem label="Tutte" id="si22"/>
+                                <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                            </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_flussiRegionaliAction.tabAssociazioni}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Ulss.label}" id="c1" rendered="#{sessionScope.ulss == '050000'}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Ulss.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Tpscr.label}"
+                                       id="c2" rendered="false">
+                                <af:outputText value="#{row.Tpscr}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Tpscr.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.TipoFlusso.label}"
+                                       id="c3">
+                                <af:outputText value="#{row.TipoFlusso}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.TipoFlusso.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Codsdosps.label}"
+                                       id="c4">
+                                <af:outputText value="#{row.Codsdosps}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.Codsdosps.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.DescIdp.label}"
+                                       id="c5" width="400">
+                                <af:outputText value="#{row.DescIdp}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.DescIdp.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.DescEscl.label}"
+                                       id="c6" width="350">
+                                <af:outputText value="#{row.DescEscl}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdospsEsclElencoView1.hints.DescEscl.tooltip}"
+                                               id="ot6"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Elenco causali"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

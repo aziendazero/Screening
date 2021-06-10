@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_errore.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b4" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b5" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Coderrore.inputValue}"
+                                              label="#{bindings.Coderrore.hints.label}"
+                                              required="#{bindings.Coderrore.hints.mandatory}"
+                                              columns="#{bindings.Coderrore.hints.displayWidth}"
+                                              maximumLength="#{bindings.Coderrore.hints.precision}"
+                                              readOnly="#{sessionScope.SOGestioneRiservata?false:true}"
+                                              shortDesc="#{bindings.Coderrore.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Coderrore.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Gruppo.inputValue}"
+                                              label="#{bindings.Gruppo.hints.label}" id="soc1"
+                                              readOnly="#{sessionScope.SOGestioneRiservata?false:true}"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="Anagrafe" value="AN" id="si1"/>
+                                    <af:selectItem label="Anatomia Patologica" value="AP" id="si2"/>
+                                    <af:selectItem label="Radiologia" value="RA" id="si3"/>
+                                    <af:selectItem label="Laboratorio" value="LA" id="si4"/>
+                                    <af:selectItem label="Tracciato Unico" value="RT" id="si5"/>
+                                    <af:selectItem label="SDO" value="SD" id="si6"/>
+                                    <af:selectItem label="SPS" value="SP" id="si7"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              readOnly="#{sessionScope.SOGestioneRiservata?false:true}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox value="#{bindings.Vedi.inputValue}" label="#{bindings.Vedi.hints.label}"
+                                              required="#{bindings.Vedi.hints.mandatory}"
+                                              shortDesc="#{bindings.Vedi.hints.tooltip}" id="it4"> 
+                                </af:selectBooleanCheckbox>
+                                <af:inputText value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.hints.label}"
+                                              required="#{bindings.Ulss.hints.mandatory}"
+                                              columns="#{bindings.Ulss.hints.displayWidth}"
+                                              readOnly="#{sessionScope.SOGestioneRiservata?false:true}"
+                                              maximumLength="#{bindings.Ulss.hints.precision}"
+                                              shortDesc="#{bindings.Ulss.hints.tooltip}" id="it5"
+                                              rendered="#{sessionScope.regionale?true:false}">
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Errore di import/export"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

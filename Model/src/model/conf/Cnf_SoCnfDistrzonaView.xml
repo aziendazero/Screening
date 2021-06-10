@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfDistrzonaView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfDistrzona.IDCNF, 
+       Cnf_SoCnfDistrzona.CODDISTRZONA, 
+       Cnf_SoCnfDistrzona.IDCENTRO1LIV, 
+       Cnf_SoCnfDistrzona.IDCENTRO2LIV, 
+       Cnf_SoCnfDistrzona.TPSCR, 
+       Cnf_SoCnfDistrzona.ULSS, 
+       Cnf_SoCentroPrelRef.DESCRBREVE, 
+       Cnf_SoCentroPrelRef.IDCENTRO, 
+       Cnf_SoCentroPrelRef1.DESCRBREVE AS DESCRBREVE1, 
+       Cnf_SoCentroPrelRef1.IDCENTRO AS IDCENTRO1"
+   FromList="SO_CNF_DISTRZONA Cnf_SoCnfDistrzona, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef1"
+   Where="(Cnf_SoCentroPrelRef.IDCENTRO (+)=Cnf_SoCnfDistrzona.IDCENTRO1LIV) AND ( Cnf_SoCentroPrelRef.TPSCR (+)=Cnf_SoCnfDistrzona.TPSCR) AND (Cnf_SoCentroPrelRef1.IDCENTRO (+)= Cnf_SoCnfDistrzona.IDCENTRO2LIV ) AND (Cnf_SoCentroPrelRef.TPSCR (+)= Cnf_SoCnfDistrzona.TPSCR)"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfDistrzonaViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfDistrzona"
+      Entity="model.conf.Cnf_SoCnfDistrzona" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoCnfDistrzonaView.Cnf_SoCnfDistrzona"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef1"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      Association="model.FkSoCentrRifCrefeSoCentrAssoc"
+      AssociationEnd="model.FkSoCentrRifCrefeSoCentrAssoc.Idcentro2livCnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoCnfDistrzonaView.Cnf_SoCentroPrelRef"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCentroPrelRef.Idcentro2liv" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCentroPrelRef.Idcentro" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idcnf"
+      IsNotNull="true"
+      EntityAttrName="Idcnf"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="IDCNF" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcnf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      EntityAttrName="Coddistrzona"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="CODDISTRZONA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Coddistrzona_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      IsNotNull="true"
+      EntityAttrName="Idcentro1liv"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="IDCENTRO1LIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro1liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      IsNotNull="true"
+      EntityAttrName="Idcentro2liv"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="IDCENTRO2LIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro2liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfDistrzona"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsNotNull="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="IDCENTRO"
+      IsUpdateable="while_insert">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve1"
+      IsNotNull="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef1"
+      AliasName="DESCRBREVE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef1"
+      AliasName="IDCENTRO1"
+      IsUpdateable="while_insert">
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfDistrzonaViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

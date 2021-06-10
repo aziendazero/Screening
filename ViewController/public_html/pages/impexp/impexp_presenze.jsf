@@ -1,0 +1,386 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="impexp_presenze.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:message id="m2" messageType="warning" rendered="#{sessionScope.impexp_modalita != 1}"
+                                message="Impossibile utilizzare la funzionalità. Modalità non ancora implementata"/>
+                    <af:panelStretchLayout id="psl1" rendered="#{sessionScope.impexp_modalita == 1}">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Carica file" id="b5" useWindow="true"
+                                                   windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="200"
+                                                   windowWidth="400" action="dialog:uploadFile"
+                                            returnListener="#{Impexp_presenzeAction.handlePopupReturn}"/>
+                                    <af:button text="Chiudi operazione" id="b3"
+                                               rendered="#{sessionScope.renderChiudiOp &amp;&amp; sessionScope.impexp_lock != true}" partialSubmit="false"
+                                               partialTriggers="pc1:t2:b2 pc2:t7:b4"
+                                               action="#{Impexp_presenzeAction.chiudiOperazione('chiudi')}">
+                                       <af:clientListener method="askBeforeGoingOn('L\'operazione potrebbe essere stata aperta da un altro utente. Chiudere ugualmente?')"
+                                                               type="action"/> 
+                                    </af:button>
+                                    <af:button text="Chiudi operazione" id="b33"
+                                               rendered="#{sessionScope.renderChiudiOp &amp;&amp; sessionScope.impexp_lock == true}" partialSubmit="false"
+                                               partialTriggers="pc1:t2:b2 pc2:t7:b4"
+                                               action="#{Impexp_presenzeAction.chiudiOperazione('chiudi')}">
+                                    </af:button>
+                                    <af:button text="Ultimo log" id="b8"
+                                               disabled="#{bindings.LogFile.inputValue==null}">
+                                        <af:fileDownloadActionListener filename="LogImportPresenze_#{sessionScope.scr}.pdf"
+                                                                       method="#{Impexp_presenzeAction.downloadLogListener}"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll" halign="center" styleClass="AFStretchWidth">
+                                <af:panelFormLayout id="pfl1">
+                                    <f:facet name="footer"/>
+                                    <af:inputDate value="#{bindings.Dttransfer.inputValue}"
+                                                  label="Data ultimo trasferimento"
+                                                  required="#{bindings.Dttransfer.hints.mandatory}"
+                                                  columns="#{bindings.Dttransfer.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dttransfer.hints.tooltip}" id="id1"
+                                                  readOnly="true">
+                                        <f:validator binding="#{bindings.Dttransfer.validator}"/>
+                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                    </af:inputDate>
+                                    <af:inputDate value="#{bindings.Dtimport.inputValue}" label="Data ultimo import"
+                                                  required="#{bindings.Dtimport.hints.mandatory}"
+                                                  columns="#{bindings.Dtimport.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dtimport.hints.tooltip}" id="id2"
+                                                  readOnly="true">
+                                        <f:validator binding="#{bindings.Dtimport.validator}"/>
+                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                    </af:inputDate>
+                                    <af:spacer width="10" height="20" id="s1"/>
+                                    <af:outputText value="#{bindings.inClause.inputValue}" rendered="false"
+                                                   shortDesc="#{bindings.inClause.hints.tooltip}" id="ot20"/>
+                                </af:panelFormLayout>
+                                <af:panelGridLayout id="pgl2">
+                                    <af:gridRow id="gr4" rendered="#{sessionScope.impexp_presenze_mode!='dati'}">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc6"
+                                                     halign="center">
+                                            <af:panelFormLayout id="pfl2">
+                                                <f:facet name="footer"/>
+                                                <af:selectOneChoice value="#{bindings.tpdip.inputValue}"
+                                                                    label="Import da"
+                                                                    required="#{bindings.tpdip.hints.mandatory}"
+                                                                    shortDesc="#{bindings.tpdip.hints.tooltip}"
+                                                                    id="soc1" styleClass="choiceInTable"
+                                                                    disabled="#{bindings.Impexp_SoCnfImpexpTpdipView1Iterator.estimatedRowCount gt 1 ? false : true}"
+                                                                    valueChangeListener="#{Impexp_presenzeAction.selectTpdip}"
+                                                                    valuePassThru="true" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.tpdip.items}" id="si1"/>
+                                                    <f:validator binding="#{bindings.tpdip.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                                    label="Centro di refertazione"
+                                                                    required="#{bindings.centro.hints.mandatory}"
+                                                                    shortDesc="#{bindings.centro.hints.tooltip}"
+                                                                    id="soc2" styleClass="choiceInTable"
+                                                                    rendered="#{bindings.Impexp_SoCnfCentriImpexpView1Iterator.estimatedRowCount gt 0 ? true: false}"
+                                                                    valueChangeListener="#{Impexp_presenzeAction.selectCentro}"
+                                                                    valuePassThru="true" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.centro.items}" id="si2"/>
+                                                    <f:validator binding="#{bindings.centro.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:inputDate value="#{bindings.data.inputValue}" label="Data file"
+                                                              required="#{bindings.data.hints.mandatory}"
+                                                              columns="#{bindings.data.hints.displayWidth}"
+                                                              shortDesc="#{bindings.data.hints.tooltip}" id="id3">
+                                                    <f:validator binding="#{bindings.data.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.data.format}"/>
+                                                </af:inputDate>
+                                                <af:button text="Filtra" id="b1"
+                                                           actionListener="#{Impexp_presenzeAction.filter}"/>
+                                                <af:spacer width="10" height="10" id="s2"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" id="gr2"
+                                                rendered="#{sessionScope.impexp_presenze_mode!='dati'}">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc2">
+                                            <af:outputText value="File da importare" id="ot21"
+                                                           inlineStyle="font-size:large; font-weight:bold;"/>
+                                            <af:panelCollection id="pc1" featuresOff="detach freeze wrap">
+                                                <f:facet name="menus"/>
+                                                <f:facet name="toolbar">
+                                                    <af:toolbar id="t3" rendered="#{sessionScope.SOImportPresenze}">
+                                                    </af:toolbar>
+                                                </f:facet>
+                                                <f:facet name="statusbar"/>
+                                                <af:table value="#{bindings.ImpexpFile.collectionModel}" var="row"
+                                                          rows="#{bindings.ImpexpFile.rangeSize}"
+                                                          emptyText="#{bindings.ImpexpFile.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          binding="#{Impexp_presenzeAction._table}"
+                                                          rowSelection="single"
+                                                          fetchSize="#{bindings.ImpexpFile.rangeSize}" id="t2"
+                                                          columnStretching="multiple" partialTriggers=":::soc2 :::b1">
+                                                    <af:column headerText=""
+                                                               id="c1" width="40%">
+                                                        <af:outputText value="#{row.viewName}"
+                                                                       shortDesc="#{bindings.ImpexpFile.hints.viewName.tooltip}"
+                                                                       id="ot1"/>
+                                                    </af:column>
+                                                    <af:column id="c1001" width="30%" rendered="#{sessionScope.SOImportPresenze}">
+                                                        <af:button text="Visualizza dati" id="b2"
+                                                                   actionListener="#{Impexp_presenzeAction.copyToDB}"
+                                                                   partialSubmit="false">
+                                                            <af:setPropertyListener from="new" type="action"
+                                                                                    to="#{requestScope.type}"/>
+                                                        </af:button>
+                                                    </af:column>    
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc3">
+                                            <af:outputText value="File già visualizzati/importati" id="ot22"
+                                                           inlineStyle="font-size:large; font-weight:bold;"/>
+                                            <af:panelCollection id="pc2" featuresOff="detach freeze wrap">
+                                                <f:facet name="menus"/>
+                                                <f:facet name="toolbar">
+                                                    <af:toolbar id="t4">
+                                                       
+                                                    </af:toolbar>
+                                                </f:facet>
+                                                <f:facet name="statusbar"/>
+                                                <af:table value="#{bindings.ImpexpFile1.collectionModel}" var="row"
+                                                          rows="#{bindings.ImpexpFile1.rangeSize}"
+                                                          emptyText="#{bindings.ImpexpFile1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          binding="#{Impexp_presenzeAction._tableOld}"
+                                                          rowSelection="single"
+                                                          fetchSize="#{bindings.ImpexpFile1.rangeSize}" id="t7"
+                                                          columnStretching="multiple" partialTriggers=":::soc2 :::b1">
+                                                    <af:column headerText=""
+                                                               id="c2" width="60%">
+                                                        <af:outputText value="#{row.viewName}"
+                                                                       shortDesc="#{bindings.ImpexpFile1.hints.viewName.tooltip}"
+                                                                       id="ot2"/>
+                                                    </af:column>
+                                                    <af:column headerText=""
+                                                               id="c3" width="40%">
+                                                        <af:outputText value="#{row.status}"
+                                                                       shortDesc="#{bindings.ImpexpFile1.hints.status.tooltip}"
+                                                                       id="ot3"/>
+                                                    </af:column>
+                                                    <af:column id="c100" width="30%">
+                                                         <af:button text="Visualizza dati" id="b4"
+                                                                   actionListener="#{Impexp_presenzeAction.copyToDB}"
+                                                                   partialSubmit="false">
+                                                            <af:setPropertyListener from="old" type="action"
+                                                                                    to="#{requestScope.type}"/>
+                                                        </af:button>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                                <af:panelSplitter id="ps1" orientation="vertical" rendered="#{sessionScope.impexp_presenze_mode=='dati'}"
+                                                  splitterPosition="350">
+                                    <f:facet name="first">
+                                        <af:panelCollection id="pc3" styleClass="AFStretchWidth"
+                                                            rendered="#{sessionScope.impexp_presenze_mode=='dati'}"
+                                                            featuresOff="detach freeze wrap">
+                                            <f:facet name="menus"/>
+                                            <f:facet name="toolbar">
+                                                <af:toolbar id="t6">
+                                                    <af:button text="Importa presenze" id="b6"
+                                                               actionListener="#{Impexp_presenzeAction.importPresenze}"/>
+                                                    <af:button text="Stampa elenco" id="b7" useWindow="true"
+                                                               immediate="true" windowEmbedStyle="inlineDocument"
+                                                               windowModalityType="applicationModal" windowHeight="300"
+                                                               windowWidth="600" action="dialog:printElencoSoggetti"/>
+                                                </af:toolbar>
+                                            </f:facet>
+                                            <f:facet name="statusbar"/>
+                                            <af:table value="#{bindings.Impexp_SoImportPresenzeView1.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.Impexp_SoImportPresenzeView1.rangeSize}"
+                                                      emptyText="#{bindings.Impexp_SoImportPresenzeView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Impexp_SoImportPresenzeView1.rangeSize}"
+                                                      id="t5" columnStretching="last" scrollPolicy="page">
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Codts.label}"
+                                                           id="c4">
+                                                    <af:outputText value="#{row.Codts}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Codts.tooltip}"
+                                                                   id="ot4"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Cognome.label}"
+                                                           id="c5">
+                                                    <af:outputText value="#{row.Cognome}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Cognome.tooltip}"
+                                                                   id="ot5"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Nome.label}"
+                                                           id="c6">
+                                                    <af:outputText value="#{row.Nome}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Nome.tooltip}"
+                                                                   id="ot6"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Cf.label}"
+                                                           id="c7">
+                                                    <af:outputText value="#{row.Cf}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Cf.tooltip}"
+                                                                   id="ot7"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.DataNascita.label}"
+                                                           id="c8">
+                                                    <af:outputText value="#{row.DataNascita}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.DataNascita.tooltip}"
+                                                                   id="ot8"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Sesso.label}"
+                                                           id="c9" width="50">
+                                                    <af:outputText value="#{row.Sesso}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Sesso.tooltip}"
+                                                                   id="ot9"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Mpi.label}"
+                                                           id="c10">
+                                                    <af:outputText value="#{row.Mpi}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Mpi.tooltip}"
+                                                                   id="ot10"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Tel1.label}"
+                                                           id="c11">
+                                                    <af:outputText value="#{row.Tel1}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Tel1.tooltip}"
+                                                                   id="ot11"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Tel2.label}"
+                                                           id="c12">
+                                                    <af:outputText value="#{row.Tel2}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Tel2.tooltip}"
+                                                                   id="ot12"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Tipo.label}"
+                                                           id="c13" width="50">
+                                                    <af:outputText value="#{row.Tipo}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Tipo.tooltip}"
+                                                                   id="ot13"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Centro.label}"
+                                                           id="c14" width="50">
+                                                    <af:outputText value="#{row.Centro}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Centro.tooltip}"
+                                                                   id="ot14"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.DataApp.label}"
+                                                           id="c15">
+                                                    <af:outputText value="#{row.DataApp}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.DataApp.tooltip}"
+                                                                   id="ot15"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.OraApp.label}"
+                                                           id="c16">
+                                                    <af:outputText value="#{row.OraApp}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.OraApp.tooltip}"
+                                                                   id="ot16"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Presenza.label}"
+                                                           id="c17" width="50">
+                                                    <af:outputText value="#{row.Presenza}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Presenza.tooltip}"
+                                                                   id="ot17"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.Livello.label}"
+                                                           id="c18" width="50">
+                                                    <af:outputText value="#{row.Livello}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.Livello.tooltip}"
+                                                                   id="ot18"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Impexp_SoImportPresenzeView1.hints.AnamnesiRilevata.label}"
+                                                           id="c19">
+                                                    <af:outputText value="#{row.AnamnesiRilevata}"
+                                                                   shortDesc="#{bindings.Impexp_SoImportPresenzeView1.hints.AnamnesiRilevata.tooltip}"
+                                                                   id="ot19"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelCollection>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <af:panelStretchLayout id="psl2">
+                                            <f:facet name="start"/>
+                                            <f:facet name="end"/>
+                                            <f:facet name="top">
+                                                <af:outputText value="Storico Import Presenze" id="ot221"
+                                                               inlineStyle="font-size:large; font-weight:bold;"/>
+                                            </f:facet>
+                                            <f:facet name="bottom"/>
+                                            <f:facet name="center">
+                                                <af:table value="#{bindings.Impexp_SoCnfImpExpLogView1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Impexp_SoCnfImpExpLogView1.rangeSize}"
+                                                          emptyText="#{bindings.Impexp_SoCnfImpExpLogView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Impexp_SoCnfImpExpLogView1.collectionModel.selectedRow}"
+                                                          selectionListener="#{bindings.Impexp_SoCnfImpExpLogView1.collectionModel.makeCurrent}"
+                                                          rowSelection="single"
+                                                          fetchSize="#{bindings.Impexp_SoCnfImpExpLogView1.rangeSize}"
+                                                          id="t8" columnStretching="last">
+                                                    <af:column headerText="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Id.label}"
+                                                               id="c20">
+                                                        <af:outputText value="#{row.Id}"
+                                                                       shortDesc="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Id.tooltip}"
+                                                                       id="ot23">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Id.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Dtinizioelab.label}"
+                                                               id="c27">
+                                                        <af:outputText value="#{row.Dtinizioelab}"
+                                                                       shortDesc="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Dtinizioelab.tooltip}"
+                                                                       id="ot31">
+                                                            <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Op.label}"
+                                                               id="c28">
+                                                        <af:outputText value="#{row.Op}"
+                                                                       shortDesc="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Op.tooltip}"
+                                                                       id="ot32"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Dtfineelab.label}"
+                                                               id="c30">
+                                                        <af:outputText value="#{row.Dtfineelab}"
+                                                                       shortDesc="#{bindings.Impexp_SoCnfImpExpLogView1.hints.Dtfineelab.tooltip}"
+                                                                       id="ot34">
+                                                            <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Download" id="c311" align="center">
+                                                        <af:button text="#{row.Nomefilelog}" id="b89" rendered="#{row.Nomefilelog!=null}">
+                                                            <af:fileDownloadActionListener filename="#{row.Nomefilelog}"
+                                                                                           method="#{Impexp_presenzeAction.downloadLogListenerStory}"/>
+                                                        </af:button>
+                                                    </af:column>
+                                                </af:table>
+                                            </f:facet>
+                                        </af:panelStretchLayout>
+                                    </f:facet>
+                                </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Import presenze"/>
+                <f:attribute name="navigation" value="#{Impexp_presenzeAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

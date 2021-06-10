@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Cnf_SoCnfCentriMedici"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SO_CNF_CENTRI_MEDICI"
+  AliasName="Cnf_SoCnfCentriMedici"
+  BindingStyle="OracleName">
+  <Attribute
+    Name="Idcentro"
+    IsNotNull="true"
+    Precision="4"
+    Scale="0"
+    ColumnName="IDCENTRO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Codiceregmedico"
+    IsNotNull="true"
+    Precision="6"
+    Scale="0"
+    ColumnName="CODICEREGMEDICO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Ulss"
+    IsNotNull="true"
+    Precision="6"
+    ColumnName="ULSS"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    PrimaryKey="true"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="6"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tpscr"
+    IsNotNull="true"
+    Precision="3"
+    ColumnName="TPSCR"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="3"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtinserimento"
+    IsNotNull="true"
+    ColumnName="DTINSERIMENTO"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    IsUpdateable="while_insert"/>
+  <Attribute
+    Name="Opinserimento"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="OPINSERIMENTO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    IsUpdateable="while_insert">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtultimamodifica"
+    ColumnName="DTULTIMAMODIFICA"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="Opultmodifica"
+    Precision="100"
+    ColumnName="OPULTMODIFICA"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_CENTRI_MEDICI"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="CkCnfCentriMediciTpscr">
+    <DesignTime>
+      <Attr Name="_checkCondition" Value="Tpscr In ('CI', 'MA', 'CO', 'CA','PF')"/>
+      <Attr Name="_isCheck" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CK_CNF_CENTRI_MEDICI_TPSCR"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="PkSoCnfCentriMedici"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SO_CNF_CENTRI_MEDICI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Idcentro"/>
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Codiceregmedico"/>
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Ulss"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkCnfCentriMediciCodregmed">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_MEDICO"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CNF_CENTRI_MEDICI_CODREGMED"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Codiceregmedico"/>
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Ulss"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkCnfCentriMediciIdcentro">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CNF_CENTRI_MEDICI_IDCENTRO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Idcentro"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkCnfCentriMediciUlss">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_AZIENDA"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CNF_CENTRI_MEDICI_ULSS"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfCentriMedici.Ulss"/>
+    </AttrArray>
+  </Key>
+</Entity>

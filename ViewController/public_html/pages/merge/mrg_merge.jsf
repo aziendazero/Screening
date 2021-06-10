@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="mrg_merge.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Mrg_mergeAction.mergeForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Merge" id="b1">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Merge" cancelTextAndAccessKey="Annulla"
+                                                   partialTriggers="t1" affirmativeTextAndAccessKey="Ok"
+                                                   dialogListener="#{Mrg_mergeAction.merge}">
+                                            <f:facet name="buttonBar"/>
+                                            <af:outputText value="Si conferma l'operazione di merge?" id="ot21"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p12"
+                                              binding="#{Mrg_mergeAction.mergeMPIWarnigPopup}">
+                                        <af:dialog id="d22" title="Merge" type="none">
+                                            <f:facet name="buttonBar">
+                                                <af:panelGroupLayout id="pgl38" halign="end" layout="horizontal">
+                                                    <af:toolbar id="t7">
+                                                        <af:button text="OK" id="b10"
+                                                                  actionListener="#{Mrg_mergeAction.mergeAnag}"> 
+                                                             <af:clientListener method="showHidePopup('p12', false)"
+                                                                               type="action"/>
+                                                               <af:setPropertyListener from="#{1==1}"
+                                                                                                     to="#{requestScope.bypassControlMPI}"
+                                                                                                     type="action"/>                                                       
+                                                        </af:button>
+                                                        <af:button text="Annulla" id="b11">
+                                                            <af:clientListener method="showHidePopup('p12', false)"
+                                                                               type="action"/>
+                                                        </af:button>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </f:facet>
+                                            <af:outputText value="Attenzione, si sta chiedendo il merge di due posizioni anagrafiche con diverso MPI. Verificare che anche su AUR le posizioni siano state unificate, altrimenti l'anagrafica deprecata potrebbe tornare attiva a seguito di aggiornamento anagrafico. Proseguire ugualmente con l'operazione di merge?" id="ot212"/>
+                                        </af:dialog>
+                                        
+                                        
+                                    </af:popup>
+                                    <af:button text="Scambia anagrafiche" id="b2"
+                                               actionListener="#{Mrg_mergeAction.scambiaAnag}" partialSubmit="false"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" layout="scroll">
+                                <af:panelBox text="Anagrafica valida" id="pb1">
+                                    <f:facet name="toolbar"/>
+                                    <af:panelGroupLayout id="pgl2" layout="scroll">
+                                        <af:panelFormLayout id="pfl1" rows="1" maxColumns="5">
+                                            <f:facet name="footer"/>
+                                            <af:inputText label="MPI" id="it1"
+                                                          value="#{Mrg_mergeAction.idInterno_val}"/>
+                                            <af:inputText label="Tessera sanitaria" id="it2"
+                                                          value="#{Mrg_mergeAction.tessera_val}"/>
+                                            <af:inputText label="Codice fiscale" id="it3"
+                                                          value="#{Mrg_mergeAction.codiceFiscale_val}"/>
+                                            <af:button text="Cerca" id="b3"
+                                                       actionListener="#{Mrg_mergeAction.cercaVal}"/>
+                                        </af:panelFormLayout>
+                                        <af:spacer width="10" height="20" id="s2"/>
+                                        <af:table value="#{bindings.Mrg_SoggValidoView.collectionModel}" var="row"
+                                                  rows="#{bindings.Mrg_SoggValidoView.rangeSize}"
+                                                  emptyText="#{bindings.Mrg_SoggValidoView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Mrg_SoggValidoView.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Mrg_SoggValidoView.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Mrg_SoggValidoView.rangeSize}" id="t2">
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Idinterno.label}"
+                                                       id="c1" width="80" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Idinterno}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Idinterno.tooltip}"
+                                                               id="ot1"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Cognome.label}"
+                                                       id="c2" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cognome}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Cognome.tooltip}"
+                                                               id="ot2"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Nome.label}"
+                                                       id="c3" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Nome}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Nome.tooltip}"
+                                                               id="ot3"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.DataNascita.label}"
+                                                       id="c4" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.DataNascita}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.DataNascita.tooltip}"
+                                                               id="ot4">
+                                                    <af:convertDateTime pattern="#{bindings.Mrg_SoggValidoView.hints.DataNascita.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Sesso.label}"
+                                                       id="c5" width="50" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Sesso}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Sesso.tooltip}"
+                                                               id="ot5"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Sigla.label}"
+                                                       id="c6" width="60" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Sigla}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Sigla.tooltip}"
+                                                               id="ot6"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.DocIdent.label}"
+                                                       id="c7" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.DocIdent}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.DocIdent.tooltip}"
+                                                               id="ot7"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Cf.label}"
+                                                       id="c8" width="150" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cf}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Cf.tooltip}"
+                                                               id="ot8"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggValidoView.hints.Cognmed.label}"
+                                                       id="c9" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cognmed} #{row.Nomemed}"
+                                                               shortDesc="#{bindings.Mrg_SoggValidoView.hints.Cognmed.tooltip}"
+                                                               id="ot9"/>
+                                            </af:column>
+                                            <af:column id="c10">
+                                                <af:link text="Storico" id="l1">
+                                                    <af:setPropertyListener from="#{row.Codts}" to="#{requestScope.storico_codts}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{row.Ulss}" to="#{requestScope.storico_ulss}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_storicoAction.stampaPDF}"
+                                                                                   filename="RefertoRiassuntivo#{row.Codts}.pdf"/>
+                                                </af:link>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                                <af:spacer width="10" height="20" id="s1"/>
+                                <af:panelBox text="Anagrafica da deprecare" id="pb2">
+                                    <f:facet name="toolbar"/>
+                                    <af:panelGroupLayout id="pgl3">
+                                        <af:panelFormLayout id="pfl2" rows="1" maxColumns="5">
+                                            <f:facet name="footer"/>
+                                            <af:inputText label="MPI" id="it4"
+                                                          value="#{Mrg_mergeAction.idInterno_depr}"/>
+                                            <af:inputText label="Tessera sanitaria" id="it5"
+                                                          value="#{Mrg_mergeAction.tessera_depr}"/>
+                                            <af:inputText label="Codice fiscale" id="it6"
+                                                          value="#{Mrg_mergeAction.codiceFiscale_depr}"/>
+                                            <af:button text="Cerca" id="b4"
+                                                       actionListener="#{Mrg_mergeAction.cercaDepr}"/>
+                                        </af:panelFormLayout>
+                                        <af:spacer width="10" height="20" id="s3"/>
+                                        <af:table value="#{bindings.Mrg_SoggDeprecatoView.collectionModel}" var="row"
+                                                  rows="#{bindings.Mrg_SoggDeprecatoView.rangeSize}"
+                                                  emptyText="#{bindings.Mrg_SoggDeprecatoView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Mrg_SoggDeprecatoView.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Mrg_SoggDeprecatoView.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Mrg_SoggDeprecatoView.rangeSize}" id="t3">
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Idinterno.label}"
+                                                       id="c11" width="80" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Idinterno}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Idinterno.tooltip}"
+                                                               id="ot11"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Cognome.label}"
+                                                       id="c12" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cognome}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Cognome.tooltip}"
+                                                               id="ot12"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Nome.label}"
+                                                       id="c13" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Nome}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Nome.tooltip}"
+                                                               id="ot13"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.DataNascita.label}"
+                                                       id="c14" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.DataNascita}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.DataNascita.tooltip}"
+                                                               id="ot14">
+                                                    <af:convertDateTime pattern="#{bindings.Mrg_SoggDeprecatoView.hints.DataNascita.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Sesso.label}"
+                                                       id="c15" width="50" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Sesso}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Sesso.tooltip}"
+                                                               id="ot15"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Sigla.label}"
+                                                       id="c16" width="60" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Sigla}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Sigla.tooltip}"
+                                                               id="ot16"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.DocIdent.label}"
+                                                       id="c17" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.DocIdent}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.DocIdent.tooltip}"
+                                                               id="ot17"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Cf.label}"
+                                                       id="c18" width="150" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cf}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Cf.tooltip}"
+                                                               id="ot18"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Mrg_SoggDeprecatoView.hints.Cognmed.label}"
+                                                       id="c19" width="180" noWrap="false" styleClass="#{row.Sigla=='ME'?'CellaDeprecata':null}">
+                                                <af:outputText value="#{row.Cognmed} #{row.Nomemed}"
+                                                               shortDesc="#{bindings.Mrg_SoggDeprecatoView.hints.Cognmed.tooltip}"
+                                                               id="ot19"/>
+                                            </af:column>
+                                            <af:column id="c20">
+                                                <af:link text="Storico" id="l2">
+                                                    <af:setPropertyListener from="#{row.Codts}"
+                                                                            to="#{requestScope.storico_codts}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{row.Ulss}"
+                                                                            to="#{requestScope.storico_ulss}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_storicoAction.stampaPDF}"
+                                                                                   filename="RefertoRiassuntivo#{row.Codts}.pdf"/>
+                                                </af:link>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Merge anagrafico"/>
+                <f:attribute name="navigation" value="#{Mrg_mergeAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.cittadinanza.lovCittadinanzaBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.CERCA_E_SELEZIONA___CITTADINANZA}" id="d1">
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:resource type="javascript" source="#{resource['js:jquery-3.2.1.min.js']}"/>
+        <af:resource type="javascript">
+            function onClearFilter(){
+                var button = AdfPage.PAGE.findComponentByAbsoluteId('bcerca');
+                var inputText = AdfPage.PAGE.findComponentByAbsoluteId("itsearch");
+                inputText.setValue("");
+                
+                if(button!=null)
+                    AdfActionEvent.queue(button, button.getPartialSubmit());
+            }
+            
+            $( document ).ready(function() {
+                        if (window.addEventListener) {
+                            /* Modern  browsers */
+                            window.addEventListener("load", checkOnLoadOneReturn, false)
+                        }
+                        else if (window.attachEvent) {
+                            /* IE */
+                            window.detachEvent("onload", checkOnLoadOneReturn)
+                            window.attachEvent("onload", checkOnLoadOneReturn)
+                        }
+                        else {
+                            window.onload = checkOnLoadOneReturn
+                        }
+                    });
+                    
+            function checkOnLoadOneReturn(){
+                var d = $("input[name='onOneReturn']").val();
+                if(d!=null &amp;&amp; d=='true')
+                    onBdlClickSelect();
+        }
+                    
+            function onBdlClickSelect(){
+                var button = AdfPage.PAGE.findComponentByAbsoluteId('pc1:bselect');
+                var isOk = button != null &amp;&amp; button.getProperty("visible") == true &amp;&amp; button.getProperty("disabled") == false;
+                if(isOk)
+                    AdfActionEvent.queue(button, button.getPartialSubmit());
+                
+            }
+        </af:resource>
+        <af:messages id="m1"/>
+        <af:form id="f1" defaultCommand="bcerca">
+            <af:inputText label="Label 1" id="onOneReturn" value="#{requestScope.onOneReturn}"
+                          inlineStyle="visibility:hidden"/>
+            <af:panelHeader text="#{viewcontrollerBundle.RICERCA}" id="ph1">
+                <f:facet name="toolbar">
+                    <af:panelGroupLayout id="pgl4" layout="horizontal" halign="start" inlineStyle="padding-top:5px">
+                        <af:button action="#{LovCittadinanzaAction.onLovFilter}" text="#{viewcontrollerBundle.CERCA}"
+                                   id="bcerca" clientComponent="true">
+                        </af:button>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:button text="#{viewcontrollerBundle.CANCELLA_FILTRI}" action="reset" id="breset">
+                            <af:setPropertyListener from="#{''}" to="#{requestScope.searchText}" type="action"/>
+                            <af:clientListener method="onClearFilter" type="action"/>
+                        </af:button>
+                        <af:spacer width="10" height="10" id="s2"/>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <af:inputText label="#{viewcontrollerBundle.CERCA}" id="itsearch" value="#{requestScope.searchText}"
+                              partialTriggers="breset" clientComponent="true" contentStyle="text-transform: uppercase;">
+                      <af:clientListener type="keyUp" method="toUppercase"/>
+                </af:inputText>
+                <af:spacer width="10" height="10" id="s3"/>
+                <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                    <f:facet name="toolbar">
+                        <af:toolbar id="t2">
+                            <af:group id="g1">
+                                <af:button text="#{viewcontrollerBundle.SELEZIONA}" id="bselect"
+                                           action="selected"
+                                           disabled="#{bindings.Sogg_SoCittadinanzaView1Iterator.currentRow == null}"
+                                           partialTriggers="t4 ::bcerca ::breset">
+                                    <af:setPropertyListener from="#{bindings.Descrizione.inputValue}"
+                                                            to="#{bindings.Cittadinanza.inputValue}" type="action"/>
+                                    <af:setPropertyListener from="#{bindings.ReleaseCode.inputValue}" to="#{bindings.ReleaseCodeCit.inputValue}" type="action"/>
+                                </af:button>
+                            </af:group>
+                        </af:toolbar>
+                    </f:facet>
+                    <af:table value="#{bindings.Sogg_SoCittadinanzaView1.collectionModel}" var="row"
+                              rows="#{bindings.Sogg_SoCittadinanzaView1.rangeSize}"
+                              emptyText="#{bindings.Sogg_SoCittadinanzaView1.viewable ? viewcontrollerBundle.NESSUN_DATO_TROVATO : 'Access Denied.'}"
+                              rowBandingInterval="0"
+                              columnStretching="last" summary='#{""}' scrollPolicy="page"
+                              selectedRowKeys="#{bindings.Sogg_SoCittadinanzaView1.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.Sogg_SoCittadinanzaView1.collectionModel.makeCurrent}"
+                              rowSelection="single" fetchSize="#{bindings.Sogg_SoCittadinanzaView1.rangeSize}" id="t4">
+                        <af:clientListener type="dblClick" method="onBdlClickSelect"/>      
+                        <af:column sortProperty="#{bindings.Sogg_SoCittadinanzaView1.hints.CodCitt.name}" rowHeader="unstyled"
+                                   sortable="true" headerText="#{bindings.Sogg_SoCittadinanzaView1.hints.CodCitt.label}"
+                                   id="c6">
+                            <af:outputText value="#{row.CodCitt}"
+                                           shortDesc="#{bindings.Sogg_SoCittadinanzaView1.hints.CodCitt.tooltip}"
+                                           id="ot6"/>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.Sogg_SoCittadinanzaView1.hints.Descrizione.name}"
+                                   sortable="true"
+                                   headerText="#{bindings.Sogg_SoCittadinanzaView1.hints.Descrizione.label}" id="c7">
+                            <af:outputText value="#{row.Descrizione}"
+                                           shortDesc="#{bindings.Sogg_SoCittadinanzaView1.hints.Descrizione.tooltip}"
+                                           id="ot7"/>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtinizioval.name}"
+                                   sortable="true"
+                                   headerText="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtinizioval.label}" id="c8">
+                            <af:outputText value="#{row.Dtinizioval}"
+                                           shortDesc="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtinizioval.tooltip}"
+                                           id="ot8">
+                                <af:convertDateTime pattern="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtinizioval.format}"/>
+                            </af:outputText>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtfineval.name}"
+                                   sortable="true"
+                                   headerText="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtfineval.label}" id="c9">
+                            <af:outputText value="#{row.Dtfineval}"
+                                           shortDesc="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtfineval.tooltip}"
+                                           id="ot9">
+                                <af:convertDateTime pattern="#{bindings.Sogg_SoCittadinanzaView1.hints.Dtfineval.format}"/>
+                            </af:outputText>
+                        </af:column>
+                    </af:table>
+                    <f:facet name="statusbar">
+                        <af:toolbar id="t3" styleClass="AFStretchWidth">
+                            <af:group id="g2">
+                                <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b4" action="annulla"></af:button>
+                            </af:group>
+                        </af:toolbar>
+                    </f:facet>                  
+                </af:panelCollection>
+            </af:panelHeader>
+        </af:form>
+    </af:document>
+</f:view>

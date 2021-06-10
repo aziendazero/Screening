@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_medico_centroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCentroPrelRefView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentriMediciView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentriMediciView2Iterator"/>
+    <iterator Binds="A_SoMedicoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="A_SoMedicoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCentroPrelRefView1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfCentriMediciView2Iterator" id="Codiceregmedico" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SoMedicoView1Iterator">
+      <AttrNames>
+        <Item Value="Codiceregmedico"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codiceregmedico"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+        <Item Value="Codiceregmedico"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

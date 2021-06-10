@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_utentiOperatoriPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfUtentiOperatoriView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfUtentiOperatoriView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfUtentiOperatoriView1Iterator" id="Cnf_SoCnfUtentiOperatoriView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfUtentiOperatoriView" Name="Cnf_SoCnfUtentiOperatoriView10">
+        <AttrNames>
+          <Item Value="Username"/>
+          <Item Value="DataIns"/>
+          <Item Value="DataMod"/>
+          <Item Value="OpIns"/>
+          <Item Value="OpMod"/>
+          <Item Value="Ulss"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="Dtfinevalopmedico"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfUtentiOperatoriView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfUtentiOperatoriView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

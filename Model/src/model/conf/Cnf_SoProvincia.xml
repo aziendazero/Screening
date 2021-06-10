@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoProvincia"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_PROVINCIA"
+   AliasName="Cnf_SoProvincia"
+   BindingStyle="Oracle"
+   RowClass="model.conf.Cnf_SoProvinciaImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Codpr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="CODPR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_PROVINCIA"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Descrizione"
+      IsNotNull="true"
+      Precision="100"
+      ColumnName="DESCRIZIONE"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_PROVINCIA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReleaseCode"
+      ColumnName="RELEASE_CODE"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_PROVINCIA"
+      PrimaryKey="true"/>
+   <Attribute
+      Name="Dtiniziovalidita"
+      ColumnName="DTINIZIOVALIDITA"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_PROVINCIA"/>
+   <Attribute
+      Name="Dtfinevalidita"
+      ColumnName="DTFINEVALIDITA"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_PROVINCIA"/>
+   <AccessorAttribute
+      Name="Cnf_SoComune"
+      Association="model.FkSoComunHaProvSoProviAssoc"
+      AssociationEnd="model.FkSoComunHaProvSoProviAssoc.Cnf_SoComune"
+      AssociationOtherEnd="model.FkSoComunHaProvSoProviAssoc.Cnf_SoProvincia"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="PkSoProvincia"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_PROVINCIA"/>
+      </DesignTime>
+   </Key>
+</Entity>

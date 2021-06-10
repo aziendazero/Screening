@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_editTpPrel.jsf" id="d1">
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Idtpprelievo.inputValue}"
+                                              label="#{bindings.Idtpprelievo.hints.label}"
+                                              required="#{bindings.Idtpprelievo.hints.mandatory}"
+                                              columns="#{bindings.Idtpprelievo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idtpprelievo.hints.precision}"
+                                              shortDesc="#{bindings.Idtpprelievo.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idtpprelievo.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idtpprelievo.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Tipo prelievo"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

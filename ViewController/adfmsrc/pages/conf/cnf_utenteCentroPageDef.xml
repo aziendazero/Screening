@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_utenteCentroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoUtentiCentriView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoUtentiCentriView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroFisicoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroFisicoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoUtentiCentriView1Iterator" id="Utente">
+      <AttrNames>
+        <Item Value="Utente"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoUtentiCentriView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoUtentiCentriView1Iterator" id="DescrBreve1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroFisicoView1Iterator">
+      <AttrNames>
+        <Item Value="DescrBreve"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="DescrBreve"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoUtentiCentriView1Iterator" id="Idcentrof" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroFisicoView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentrof"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="DescrBreve"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

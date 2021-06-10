@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_lettereCentriPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfLetteracentroExtendedView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfLetteracentroExtendedView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfLetteracentroView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfLetteracentroView2Iterator"/>
+    <iterator id="Cnf_SoTemplateView2Iterator" Binds="Cnf_SoTemplateView2" DataControl="Cnf_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfLetteracentroExtendedView1Iterator" id="Cnf_SoCnfLetteracentroExtendedView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfLetteracentroExtendedView"
+                      Name="Cnf_SoCnfLetteracentroExtendedView10">
+        <AttrNames>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Codtempl"/>
+          <Item Value="Idsugg"/>
+          <Item Value="Idsugg2l"/>
+          <Item Value="Idsugg3l"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Idrow"/>
+          <Item Value="Idtpinvito1"/>
+          <Item Value="TpinvitoDesc"/>
+          <Item Value="TpinvitoDbreve"/>
+          <Item Value="Sugg1"/>
+          <Item Value="Sugg1lDesc"/>
+          <Item Value="Esito1l"/>
+          <Item Value="Sugg2"/>
+          <Item Value="Sugg2lDesc"/>
+          <Item Value="Esito2l"/>
+          <Item Value="Sugg3"/>
+          <Item Value="Sugg3lDesc"/>
+          <Item Value="Esito3l"/>
+          <Item Value="Codtempl1"/>
+          <Item Value="Descrizione"/>
+          <Item Value="EtaDa"/>
+          <Item Value="EtaA"/>
+          <Item Value="Idcentro"/>
+          <Item Value="Descrbreve"/>
+          <Item Value="TestProposto"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Cnf_SoCnfLetteracentroExtendedView1Iterator" id="Idrow">
+      <AttrNames>
+        <Item Value="Idrow"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{bindings.Idrow.inputValue}" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="Cnf_SoCnfLetteracentroExtendedView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

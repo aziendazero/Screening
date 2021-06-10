@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_filtroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page id="ptb1"/>
+    <iterator Binds="Cnf_SoFiltriTemplateView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoFiltriTemplateView1Iterator"/>
+    <iterator Binds="Cnf_SoTemplateView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoTemplateView1Iterator"/>
+    <iterator Binds="A_SoCentroPrelRefView1" RangeSize="-1" DataControl="A_AppModuleDataControl"
+              id="A_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroRefView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroRefView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Idriga">
+      <AttrNames>
+        <Item Value="Idriga"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Ulss">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Codtempl">
+      <AttrNames>
+        <Item Value="Codtempl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Idcentro">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Dtins">
+      <AttrNames>
+        <Item Value="Dtins"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Opins">
+      <AttrNames>
+        <Item Value="Opins"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Dtmod">
+      <AttrNames>
+        <Item Value="Dtmod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Opmod">
+      <AttrNames>
+        <Item Value="Opmod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Nomefile">
+      <AttrNames>
+        <Item Value="Nomefile"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Tipoinvito">
+      <AttrNames>
+        <Item Value="Tipoinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Centro">
+      <AttrNames>
+        <Item Value="Centro"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Codtempl1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoTemplateView1Iterator">
+      <AttrNames>
+        <Item Value="Codtempl"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+        <Item Value="Nomefile"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Idcentro1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroRefView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Idtpinvito1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoView1Iterator"
+          NullValueFlag="start" NullValueId="Idtpinvito1_null">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="Cnf_AppModuleDataControl"/>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="pages.conf.common.cnf_filtroPageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

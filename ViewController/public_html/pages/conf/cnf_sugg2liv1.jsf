@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_sugg2liv1.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Idsugg2l.inputValue}"
+                                              label="#{bindings.Idsugg2l.hints.label}"
+                                              required="#{bindings.Idsugg2l.hints.mandatory}"
+                                              columns="#{bindings.Idsugg2l.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idsugg2l.hints.precision}"
+                                              shortDesc="#{bindings.Idsugg2l.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idsugg2l.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idsugg2l.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Esitosugg.inputValue}"
+                                              label="#{bindings.Esitosugg.hints.label}"
+                                              required="#{bindings.Esitosugg.hints.mandatory}"
+                                              columns="#{bindings.Esitosugg.hints.displayWidth}"
+                                              maximumLength="#{bindings.Esitosugg.hints.precision}"
+                                              shortDesc="#{bindings.Esitosugg.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Esitosugg.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it4" rows="3">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Ggrichiamo.inputValue}"
+                                              label="#{bindings.Ggrichiamo.hints.label}"
+                                              required="#{bindings.Ggrichiamo.hints.mandatory}"
+                                              columns="#{bindings.Ggrichiamo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ggrichiamo.hints.precision}"
+                                              shortDesc="#{bindings.Ggrichiamo.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Ggrichiamo.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ggrichiamo.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito.inputValue}"
+                                                    label="#{bindings.Idtpinvito.label}"
+                                                    required="#{bindings.Idtpinvito.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Idtpinvito.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idtpinvito.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectBooleanCheckbox value="#{bindings.Invia2liv.inputValue}"
+                                                          label="#{bindings.Invia2liv.hints.label}"
+                                                          required="#{bindings.Invia2liv.hints.mandatory}"
+                                                          shortDesc="#{bindings.Invia2liv.hints.tooltip}" id="it2">
+                                </af:selectBooleanCheckbox>
+                                <af:selectBooleanCheckbox value="#{bindings.Inviaintervento.inputValue}"
+                                                          label="#{bindings.Inviaintervento.hints.label}"
+                                                          required="#{bindings.Inviaintervento.hints.mandatory}"
+                                                          shortDesc="#{bindings.Inviaintervento.hints.tooltip}" id="it7">
+                                    <f:validator binding="#{bindings.Inviaintervento.validator}"/>
+                                </af:selectBooleanCheckbox>
+                                <af:selectOneChoice value="#{bindings.Codregionale.inputValue}"
+                                                    label="#{bindings.Codregionale.label}"
+                                                    required="#{bindings.Codregionale.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codregionale.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Codregionale.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codregionale.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Ordine.inputValue}"
+                                              label="#{bindings.Ordine.hints.label}"
+                                              required="#{bindings.Ordine.hints.mandatory}"
+                                              columns="#{bindings.Ordine.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ordine.hints.precision}"
+                                              shortDesc="#{bindings.Ordine.hints.tooltip}" id="it11">
+                                    <f:validator binding="#{bindings.Ordine.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ordine.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Ulss2.inputValue}" label="#{bindings.Ulss2.label}"
+                                                    required="#{bindings.Ulss2.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss2.hints.tooltip}" id="soc3">
+                                    <f:selectItems value="#{bindings.Ulss2.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Ulss2.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputDate value="#{bindings.Dtfinevalidita.inputValue}"
+                                              label="#{bindings.Dtfinevalidita.hints.label}"
+                                              required="#{bindings.Dtfinevalidita.hints.mandatory}"
+                                              columns="#{bindings.Dtfinevalidita.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtfinevalidita.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.Dtfinevalidita.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Dtfinevalidita.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Suggerimento di secondo livello"/>
+            </af:pageTemplate>
+        
+        
+        </af:form>
+    </af:document>
+</f:view>

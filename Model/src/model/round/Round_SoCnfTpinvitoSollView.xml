@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoCnfTpinvitoSollView"
+   Version="12.2.1.11.57"
+   SelectList="Round_SoCnfTpinvito.IDTPINVITO, 
+       Round_SoCnfTpinvito.IDCATEG, 
+       Round_SoCnfTpinvito.DESCRIZIONE, 
+       Round_SoCnfTpinvito.DESCRBREVE, 
+       Round_SoCnfTpinvito.APPUNTAMENTO, 
+       Round_SoCnfTpinvito.INVIO2LIV, 
+       Round_SoCnfTpinvito.CODREGIONALE, 
+       Round_SoCnfTpinvito.ULSS, 
+       Round_SoCnfTpinvito.TPSCR, 
+       Round_SoCnfTpinvito.GGSOLLECITO, 
+       Round_SoCnfTpinvito.IDTPINV_SOLL, 
+       Round_SoCnfTpinvito.ORDINE, 
+       Round_SoCnfTpinvito1.IDTPINVITO AS IDTPINVITO1, 
+       Round_SoCnfTpinvito1.IDCATEG AS IDCATEG1, 
+       Round_SoCnfTpinvito1.DESCRIZIONE AS DESCRIZIONE1, 
+       Round_SoCnfTpinvito1.DESCRBREVE AS DESCRBREVE1, 
+       Round_SoCnfTpinvito1.APPUNTAMENTO AS APPUNTAMENTO1, 
+       Round_SoCnfTpinvito1.INVIO2LIV AS INVIO2LIV1, 
+       Round_SoCnfTpinvito1.CODREGIONALE AS CODREGIONALE1, 
+       Round_SoCnfTpinvito1.ULSS AS ULSS1, 
+       Round_SoCnfTpinvito1.TPSCR AS TPSCR1, 
+       Round_SoCnfTpinvito1.GGSOLLECITO AS GGSOLLECITO1, 
+       Round_SoCnfTpinvito1.IDTPINV_SOLL AS IDTPINV_SOLL1, 
+       Round_SoCnfTpinvito1.LIVELLO"
+   FromList="SO_CNF_TPINVITO Round_SoCnfTpinvito, SO_CNF_TPINVITO Round_SoCnfTpinvito1"
+   Where="((Round_SoCnfTpinvito.IDTPINV_SOLL = Round_SoCnfTpinvito1.IDTPINVITO)AND (Round_SoCnfTpinvito.ULSS = Round_SoCnfTpinvito1.ULSS))AND (Round_SoCnfTpinvito.TPSCR = Round_SoCnfTpinvito1.TPSCR)"
+   OrderBy="Round_SoCnfTpinvito.ORDINE"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.round.Round_SoCnfTpinvitoSollViewImpl"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+   </DesignTime>
+   <EntityUsage
+      Name="Round_SoCnfTpinvito"
+      Entity="model.round.Round_SoCnfTpinvito" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoCnfTpinvito1"
+      Entity="model.round.Round_SoCnfTpinvito"
+      Association="model.FkTpinvitoTpinvsollAssoc"
+      AssociationEnd="model.FkTpinvitoTpinvsollAssoc.IdtpinvSollRound_SoCnfTpinvito"
+      SourceUsage="model.round.Round_SoCnfTpinvitoSollView.Round_SoCnfTpinvito"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.round.Round_SoCnfTpinvito.IdtpinvSoll" />
+            <Item Value="model.round.Round_SoCnfTpinvito.Ulss" />
+            <Item Value="model.round.Round_SoCnfTpinvito.Tpscr" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.round.Round_SoCnfTpinvito.Idtpinvito" />
+            <Item Value="model.round.Round_SoCnfTpinvito.Ulss" />
+            <Item Value="model.round.Round_SoCnfTpinvito.Tpscr" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="IDTPINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcateg"
+      IsNotNull="true"
+      EntityAttrName="Idcateg"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="IDCATEG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="DESCRBREVE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Appuntamento"
+      EntityAttrName="Appuntamento"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="APPUNTAMENTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Invio2liv"
+      EntityAttrName="Invio2liv"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="INVIO2LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale"
+      IsNotNull="true"
+      EntityAttrName="Codregionale"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="CODREGIONALE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggsollecito"
+      EntityAttrName="Ggsollecito"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="GGSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdtpinvSoll"
+      EntityAttrName="IdtpinvSoll"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="IDTPINV_SOLL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      IsNotNull="true"
+      EntityAttrName="Ordine"
+      EntityUsage="Round_SoCnfTpinvito"
+      AliasName="ORDINE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcateg1"
+      IsNotNull="true"
+      EntityAttrName="Idcateg"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="IDCATEG1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve1"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="DESCRBREVE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Appuntamento1"
+      EntityAttrName="Appuntamento"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="APPUNTAMENTO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Invio2liv1"
+      EntityAttrName="Invio2liv"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="INVIO2LIV1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale1"
+      IsNotNull="true"
+      EntityAttrName="Codregionale"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="CODREGIONALE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggsollecito1"
+      EntityAttrName="Ggsollecito"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="GGSOLLECITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdtpinvSoll1"
+      EntityAttrName="IdtpinvSoll"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="IDTPINV_SOLL1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Livello"
+      EntityUsage="Round_SoCnfTpinvito1"
+      AliasName="LIVELLO"/>
+</ViewObject>

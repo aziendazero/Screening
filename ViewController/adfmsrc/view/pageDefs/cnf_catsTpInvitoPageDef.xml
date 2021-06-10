@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_catsTpInvitoPageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfCategTpinvitoView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCategTpinvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfCategTpinvitoView1Iterator" id="Cnf_SoCnfCategTpinvitoView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfCategTpinvitoView" Name="Cnf_SoCnfCategTpinvitoView10">
+        <AttrNames>
+          <Item Value="Idcateg"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfCategTpinvitoView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfCategTpinvitoView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

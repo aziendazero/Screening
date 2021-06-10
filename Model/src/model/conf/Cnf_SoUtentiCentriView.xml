@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoUtentiCentriView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoUtentiCentri.UTENTE, 
+       Cnf_SoUtentiCentri.IDCENTROF, 
+       Cnf_SoUtentiCentri.ULSS, 
+       Cnf_SoUtentiCentri.TPSCR, 
+       Cnf_SoUtentiCentri.NOTE, 
+       Cnf_SoCnfCentroFisico.IDCENTRO, 
+       Cnf_SoCnfCentroFisico.DESCR_BREVE, 
+       Cnf_SoCnfCentroFisico.IDCENTRO1LIV, 
+       Cnf_SoCnfCentroFisico.IDCENTRO2LIV"
+   FromList="SO_UTENTI_CENTRI Cnf_SoUtentiCentri, SO_CNF_CENTRO_FISICO Cnf_SoCnfCentroFisico"
+   Where="Cnf_SoUtentiCentri.IDCENTROF = Cnf_SoCnfCentroFisico.IDCENTRO"
+   OrderBy="Cnf_SoCnfCentroFisico.DESCR_BREVE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoUtentiCentriViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.conf.common.Cnf_SoUtentiCentriViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoUtentiCentri"
+      Entity="model.conf.Cnf_SoUtentiCentri" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfCentroFisico"
+      Entity="model.conf.Cnf_SoCnfCentroFisico"
+      Association="model.FkUtentiCentriCentrofAssoc"
+      AssociationEnd="model.FkUtentiCentriCentrofAssoc.Cnf_SoCnfCentroFisico"
+      SourceUsage="model.conf.Cnf_SoUtentiCentriView.Cnf_SoUtentiCentri"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoUtentiCentri.Idcentrof" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfCentroFisico.Idcentro" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Utente"
+      IsNotNull="true"
+      EntityAttrName="Utente"
+      EntityUsage="Cnf_SoUtentiCentri"
+      AliasName="UTENTE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Utente_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrof"
+      IsNotNull="true"
+      EntityAttrName="Idcentrof"
+      EntityUsage="Cnf_SoUtentiCentri"
+      AliasName="IDCENTROF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoUtentiCentri"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoUtentiCentri"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Note"
+      EntityAttrName="Note"
+      EntityUsage="Cnf_SoUtentiCentri"
+      AliasName="NOTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCnfCentroFisico"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescrBreve"
+      IsNotNull="true"
+      EntityAttrName="DescrBreve"
+      EntityUsage="Cnf_SoCnfCentroFisico"
+      AliasName="DESCR_BREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DescrBreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      EntityAttrName="Idcentro1liv"
+      EntityUsage="Cnf_SoCnfCentroFisico"
+      AliasName="IDCENTRO1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      EntityAttrName="Idcentro2liv"
+      EntityUsage="Cnf_SoCnfCentroFisico"
+      AliasName="IDCENTRO2LIV" >
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoUtentiCentriViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,1978 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_storiaBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GESTIONE_SOGGETTO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Sogg_preStoriaAction.frmstory}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="35px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t99">
+                                    <af:link id="l2" icon="../images/fascicolo_paziente_48.png" iconPosition="leading"
+                                                rendered="#{sessionScope.SORefertazione and sessionScope.SOLimiteCentri == null and !sessionScope.SONoDatiSensibili==true}"
+                                                 shortDesc="#{viewcontrollerBundle.STORICO}" styleClass="img32">
+                                                <af:setPropertyListener from="#{bindings.Codts.attributeValue}" to="#{requestScope.storico_codts}"
+                                                                            type="action"/>
+                                                <af:setPropertyListener from="#{bindings.Ulss.attributeValue}" to="#{requestScope.storico_ulss}"
+                                                                            type="action"/>
+                                                 <af:fileDownloadActionListener filename="Storico#{bindings.Codts.inputValue}.pdf"
+                                                                                method="#{Print_storicoAction.stampaPDF}"/>
+                                    </af:link>    
+                                    <af:button text="Chiudi" id="b3" action="goRic" partialSubmit="false"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelTabbed position="above" id="pt2">
+                                <af:showDetailItem id="tab1" text="Storico inviti">
+                                    <af:panelGroupLayout id="pgl12" layout="scroll">
+                                        <af:table value="#{bindings.Sogg_StInvitiView1.collectionModel}" var="row"
+                                                  rows="#{bindings.Sogg_StInvitiView1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_StInvitiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Sogg_StInvitiView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_StInvitiView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_StInvitiView1.rangeSize}" id="t1"
+                                                  partialTriggers="::t1">
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Dtapp.label}"
+                                                       id="c1">
+                                                <af:outputText value="#{row.Dtapp}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Dtapp.tooltip}"
+                                                               id="ot1">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StInvitiView1.hints.Dtapp.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Tpinvito.label}"
+                                                       id="c2">
+                                                <af:outputText value="#{row.Tpinvito}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Tpinvito.tooltip}"
+                                                               id="ot2"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.DescEsito.label}"
+                                                       id="c3">
+                                                <af:outputText value="#{row.DescEsito}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.DescEsito.tooltip}"
+                                                               id="ot3"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.DescCprel.label}"
+                                                       id="c4">
+                                                <af:outputText value="#{row.DescCprel}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.DescCprel.tooltip}"
+                                                               id="ot4"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Roundindiv.label}"
+                                                       id="c5">
+                                                <af:outputText value="#{row.Roundindiv}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Roundindiv.tooltip}"
+                                                               id="ot5">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.Roundindiv.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.RoundindivHpv.label}"
+                                                       id="c18" rendered="#{sessionScope.HPV}">
+                                                <af:outputText value="#{row.RoundindivHpv}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.RoundindivHpv.tooltip}"
+                                                               id="ot18">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.RoundindivHpv.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Roundinviti.label}"
+                                                       id="c6">
+                                                <af:outputText value="#{row.Roundinviti}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Roundinviti.tooltip}"
+                                                               id="ot6">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.Roundinviti.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.RichiestaCi.label}"
+                                                       id="c7" rendered="#{sessionScope.scr=='CI'}">
+                                                <af:outputText value="#{row.RichiestaCi}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.RichiestaCi.tooltip}"
+                                                               id="ot7">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.RichiestaCi.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.RichiestaMa.label}"
+                                                       id="c8" rendered="#{sessionScope.scr=='MA'}">
+                                                <af:outputText value="#{row.RichiestaMa}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.RichiestaMa.tooltip}"
+                                                               id="ot8">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.RichiestaMa.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.RichiestaCo.label}"
+                                                       id="c9" rendered="#{sessionScope.scr=='CO'}">
+                                                <af:outputText value="#{row.RichiestaCo}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.RichiestaCo.tooltip}"
+                                                               id="ot9">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Sogg_StInvitiView1.hints.RichiestaCo.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Noteinvito.label}"
+                                                       id="c10">
+                                                <af:outputText value="#{row.Noteinvito}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Noteinvito.tooltip}"
+                                                               id="ot10"/>
+                                            </af:column>
+                                            <af:column sortable="false"
+                                                       headerText="#{bindings.Sogg_StInvitiView1.hints.Attivo.label}"
+                                                       id="c785" noWrap="false" align="center">
+                                                <af:icon name="Attivo" id="i3" rendered="#{row.Attivo==1}"
+                                                         styleClass="#{row.Attivo==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                                <af:button text="#{viewcontrollerBundle.Rendiattivo}" id="b321" rendered="#{row.Attivo!=1 and sessionScope.SOFunzHD}"
+                                                           actionListener="#{Sogg_storiaAction.onSelectActive}" partialTriggers="::t1"
+                                                           disabled="#{bindings.Idinvito.attributeValue!=row.bindings.Idinvito.inputValue}">
+                                                    <af:clientListener method="askBeforeGoingOn('Attenzione\: i dati di richiamo verranno ricalcolati in base all\'invito selezionato. Impostare tale invito come attivo?')"
+                                                                       type="action"/>
+                                                </af:button>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Opinserimento.label}"
+                                                       rendered="#{sessionScope.SOFunzHD}" id="c205" noWrap="false" width="150">
+                                                <af:outputText value="#{row.Opinserimento} (#{row.Dtcreazione})"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Opinserimento.tooltip}"
+                                                               id="ot201"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Opmodifica.label}"
+                                                       rendered="#{sessionScope.SOFunzHD}" id="c206" noWrap="false" width="150">
+                                                <af:outputText value="#{row.Opmodifica} (#{row.Dtultimamod})"
+                                                               shortDesc="#{bindings.Sogg_StInvitiView1.hints.Opmodifica.tooltip}"
+                                                               id="ot202"/>
+                                            </af:column>
+                                        </af:table>
+                                        <af:panelHeader text="Lettere" id="ph1" size="2">
+                                            <af:table value="#{bindings.Sogg_StInvitiAllegView1.collectionModel}"
+                                                      var="row" rows="#{bindings.Sogg_StInvitiAllegView1.rangeSize}"
+                                                      emptyText="#{bindings.Sogg_StInvitiAllegView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Sogg_StInvitiAllegView1.rangeSize}" id="t3"
+                                                      rowSelection="single">
+                                                <af:column headerText="#{bindings.Sogg_StInvitiAllegView1.hints.Dtcreazione.label}"
+                                                           id="c19">
+                                                    <af:outputText value="#{row.Dtcreazione}"
+                                                                   shortDesc="#{bindings.Sogg_StInvitiAllegView1.hints.Dtcreazione.tooltip}"
+                                                                   id="ot19">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_StInvitiAllegView1.hints.Dtcreazione.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StInvitiAllegView1.hints.Dtstampa.label}"
+                                                           id="c20">
+                                                    <af:outputText value="#{row.Dtstampa}"
+                                                                   shortDesc="#{bindings.Sogg_StInvitiAllegView1.hints.Dtstampa.tooltip}"
+                                                                   id="ot20">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_StInvitiAllegView1.hints.Dtstampa.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column id="c22" width="120">
+                                                    <af:button text="Recupera stampa" id="b1"
+                                                               rendered="#{row.Dtstampa != null and !sessionScope.SONoDatiSensibili==true}">
+                                                        <af:setPropertyListener from="#{row.Idallegato}"
+                                                                                to="#{requestScope.print_idallegato}"
+                                                                                type="action"/>
+                                                        <af:fileDownloadActionListener method="#{Print_invitoAction.stampaPDF}"
+                                                                                       filename="Invito#{row.Idallegato}.pdf"/>
+                                                    </af:button>
+                                                    <af:button text="Recupera stampa" id="b4"
+                                                               rendered="#{row.Dtcreazione != null and row.Dtstampa == null and !sessionScope.SONoDatiSensibili==true}">
+                                                        <af:showPopupBehavior popupId="printletter"/>
+                                                    </af:button>
+                                                    <af:popup childCreation="deferred" autoCancel="disabled"
+                                                              id="printletter">
+                                                        <af:dialog id="d3" title="Recupera lettera" type="none">
+                                                            <f:facet name="buttonBar">
+                                                                <af:panelGroupLayout id="pgl211" halign="end"
+                                                                                     layout="horizontal">
+                                                                    <af:toolbar id="t311">
+                                                                        <af:button text="OK" id="b311">
+                                                                            <af:setPropertyListener from="#{row.Idallegato}"
+                                                                                                    to="#{requestScope.print_idallegato}"
+                                                                                                    type="action"/>
+                                                                            <af:fileDownloadActionListener filename="Invito#{row.Idallegato}.pdf"
+                                                                                                           method="#{Print_invitoAction.stampaPDF}"/>
+                                                                            <af:clientListener method="showHidePopup('printletter', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="Annulla" id="b611">
+                                                                            <af:clientListener method="showHidePopup('printletter', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                    </af:toolbar>
+                                                                </af:panelGroupLayout>
+                                                            </f:facet>
+                                                            <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                           id="ot37"/>
+                                                        </af:dialog>
+                                                    </af:popup>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Storico esclusioni" id="sdi1">
+                                    <af:table value="#{bindings.Sogg_StEsclView1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StEsclView1.rangeSize}"
+                                              emptyText="#{bindings.Sogg_StEsclView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0" fetchSize="#{bindings.Sogg_StEsclView1.rangeSize}"
+                                              id="t2">
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Dtescl.label}"
+                                                   id="c11">
+                                            <af:outputText value="#{row.Dtescl}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Dtescl.tooltip}"
+                                                           id="ot11">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StEsclView1.hints.Dtescl.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Roundindiv.label}"
+                                                   id="c12">
+                                            <af:outputText value="#{row.Roundindiv}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Roundindiv.tooltip}"
+                                                           id="ot12">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StEsclView1.hints.Roundindiv.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.TipoEscl.label}"
+                                                   id="c13">
+                                            <af:outputText value="#{row.TipoEscl}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.TipoEscl.tooltip}"
+                                                           id="ot13"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Dtfine.label}"
+                                                   id="c14">
+                                            <af:outputText value="#{row.Dtfine}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Dtfine.tooltip}"
+                                                           id="ot14">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StEsclView1.hints.Dtfine.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Descrizione.label}"
+                                                   id="c15" width="300" noWrap="false">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Descrizione.tooltip}"
+                                                           id="ot15"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Dtannull.label}"
+                                                   id="c16">
+                                            <af:outputText value="#{row.Dtannull}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Dtannull.tooltip}"
+                                                           id="ot16">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StEsclView1.hints.Dtannull.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StEsclView1.hints.Noteescl.label}"
+                                                   id="c17" width="200" noWrap="false">
+                                            <af:outputText value="#{row.Noteescl}"
+                                                           shortDesc="#{bindings.Sogg_StEsclView1.hints.Noteescl.tooltip}"
+                                                           id="ot17"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Storico referti 1° livello" id="sdi2" rendered="#{sessionScope.SORefertazione}">
+                                    <af:table value="#{bindings.Sogg_StRef1View1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StRef1View1.rangeSize}"
+                                              rendered="#{sessionScope.scr == 'CI'}"
+                                              emptyText=""
+                                              rowBandingInterval="0" fetchSize="#{bindings.Sogg_StRef1View1.rangeSize}"
+                                              id="t4">
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Dtprelievo.label}"
+                                                   id="c21" width="80">
+                                            <af:outputText value="#{row.Dtprelievo}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Dtprelievo.tooltip}"
+                                                           id="ot21">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.Dtprelievo.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.DataPrelievoHpv.label}"
+                                                   id="c35">
+                                            <af:outputText value="#{row.DataPrelievoHpv}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.DataPrelievoHpv.tooltip}"
+                                                           id="ot34">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.DataPrelievoHpv.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Tpinvito.label}"
+                                                   id="c23" width="80">
+                                            <af:outputText value="#{row.Tpinvito}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Tpinvito.tooltip}"
+                                                           id="ot22"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Referto.label}"
+                                                   id="c24" width="80">
+                                            <af:outputText value="#{row.Referto}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Referto.tooltip}"
+                                                           id="ot23"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.HpvEsito.label}"
+                                                   id="c25" width="80" noWrap="false">
+                                            <af:outputText value="#{row.HpvEsito}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.HpvEsito.tooltip}"
+                                                           id="ot24"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.DataRefertoPap.label}"
+                                                   id="c36" width="80">
+                                            <af:outputText value="#{row.DataRefertoPap}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.DataRefertoPap.tooltip}"
+                                                           id="ot35">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.DataRefertoPap.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.DataRefertoHpv.label}"
+                                                   id="c37" width="80">
+                                            <af:outputText value="#{row.DataRefertoHpv}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.DataRefertoHpv.tooltip}"
+                                                           id="ot36">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.DataRefertoHpv.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Adepre.label}"
+                                                   id="c26">
+                                            <af:outputText value="#{row.Adepre}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Adepre.tooltip}"
+                                                           id="ot25"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Giudia.label}"
+                                                   id="c27">
+                                            <af:outputText value="#{row.Giudia}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Giudia.tooltip}"
+                                                           id="ot26"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.TipoPositivita.label}"
+                                                   id="c28">
+                                            <af:outputText value="#{row.TipoPositivita}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.TipoPositivita.tooltip}"
+                                                           id="ot27"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Descrizione.label}"
+                                                   id="c29" noWrap="false">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Descrizione.tooltip}"
+                                                           id="ot28"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Citoscreener.label}"
+                                                   id="c30">
+                                            <af:outputText value="#{row.Citoscreener}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Citoscreener.tooltip}"
+                                                           id="ot29"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Supervisore.label}"
+                                                   id="c31">
+                                            <af:outputText value="#{row.Supervisore}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Supervisore.tooltip}"
+                                                           id="ot30"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Notereferto.label}"
+                                                   id="c32">
+                                            <af:outputText value="#{row.Notereferto}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Notereferto.tooltip}"
+                                                           id="ot31"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Dtcreazione.label}"
+                                                   id="c33" width="80">
+                                            <af:outputText value="#{row.Dtcreazione}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Dtcreazione.tooltip}"
+                                                           id="ot32">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.Dtcreazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StRef1View1.hints.Dtstampa.label}"
+                                                   id="c34" width="80">
+                                            <af:outputText value="#{row.Dtstampa}"
+                                                           shortDesc="#{bindings.Sogg_StRef1View1.hints.Dtstampa.tooltip}"
+                                                           id="ot33">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StRef1View1.hints.Dtstampa.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column id="c38" width="120">
+                                            <af:button text="Recupera stampa" id="b2" rendered="#{row.Dtstampa != null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:setPropertyListener from="#{row.Idreferto}" to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                <af:setPropertyListener from="#{row.Livello}" to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}" filename="Referto#{row.Idreferto}.pdf"/>
+                                            </af:button>
+                                            <af:button text="Recupera stampa" id="b5"
+                                                       rendered="#{row.Dtcreazione != null and row.Dtstampa == null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:showPopupBehavior popupId="printref1"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="printref1">
+                                                    <af:dialog id="d2" 
+                                                               title="Recupera lettera"
+                                                               type="none">
+                                                        <f:facet name="buttonBar">
+                                                            <af:panelGroupLayout id="pgl2" halign="end"
+                                                                                 layout="horizontal">
+                                                                <af:toolbar id="t5">
+                                                                    <af:button text="OK" id="b6">
+                                                                        <af:setPropertyListener from="#{row.Idreferto}" to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                                        <af:setPropertyListener from="#{row.Livello}" to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                                        <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}" filename="Referto#{row.Idreferto}.pdf"/>
+                                                                    <af:clientListener method="showHidePopup('printref1', false)"
+                                                                                           type="action"/>
+                                                                </af:button>
+                                                                    <af:button text="Annulla" id="b7">
+                                                                    <af:clientListener method="showHidePopup('printref1', false)"
+                                                                                           type="action"/>
+                                                                </af:button>
+                                                                </af:toolbar>
+                                                            </af:panelGroupLayout>
+                                                        </f:facet>
+                                                        <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                       id="ot38"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                        </af:column>
+                                    </af:table>
+                                    <af:table value="#{bindings.Sogg_StCoRef1View1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StCoRef1View1.rangeSize}"
+                                              rendered="#{sessionScope.scr == 'CO'}"
+                                              emptyText=""
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Sogg_StCoRef1View1.rangeSize}" id="t6">
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Dtprel.label}"
+                                                   id="c39">
+                                            <af:outputText value="#{row.Dtprel}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Dtprel.tooltip}"
+                                                           id="ot39">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCoRef1View1.hints.Dtprel.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Tipoinv.label}"
+                                                   id="c40">
+                                            <af:outputText value="#{row.Tipoinv}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Tipoinv.tooltip}"
+                                                           id="ot40"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Referto.label}"
+                                                   id="c41">
+                                            <af:outputText value="#{row.Referto}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Referto.tooltip}"
+                                                           id="ot41"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Dtreferto.label}"
+                                                   id="c42">
+                                            <af:outputText value="#{row.Dtreferto}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Dtreferto.tooltip}"
+                                                           id="ot42">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCoRef1View1.hints.Dtreferto.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.CodProvetta.label}"
+                                                   id="c43">
+                                            <af:outputText value="#{row.CodProvetta}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.CodProvetta.tooltip}"
+                                                           id="ot43">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StCoRef1View1.hints.CodProvetta.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Esitosugg.label}"
+                                                   id="c45">
+                                            <af:outputText value="#{row.Esitosugg}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Esitosugg.tooltip}"
+                                                           id="ot45"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Quantita.label}"
+                                                   id="c46">
+                                            <af:outputText value="#{row.Quantita}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Quantita.tooltip}"
+                                                           id="ot46">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StCoRef1View1.hints.Quantita.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Azconseg.label}"
+                                                   id="c47" noWrap="false" width="150">
+                                            <af:outputText value="#{row.Azconseg}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Azconseg.tooltip}"
+                                                           id="ot47"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Lettore.label}"
+                                                   id="c48">
+                                            <af:outputText value="#{row.Lettore}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Lettore.tooltip}"
+                                                           id="ot48"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Note.label}"
+                                                   id="c49">
+                                            <af:outputText value="#{row.Note}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Note.tooltip}"
+                                                           id="ot49"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Dtcreazione.label}"
+                                                   id="c50">
+                                            <af:outputText value="#{row.Dtcreazione}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Dtcreazione.tooltip}"
+                                                           id="ot50">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCoRef1View1.hints.Dtcreazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCoRef1View1.hints.Dtstampa.label}"
+                                                   id="c51">
+                                            <af:outputText value="#{row.Dtstampa}"
+                                                           shortDesc="#{bindings.Sogg_StCoRef1View1.hints.Dtstampa.tooltip}"
+                                                           id="ot51">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCoRef1View1.hints.Dtstampa.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column id="c53" width="120">
+                                            <af:button text="Recupera stampa" id="b8"
+                                                       rendered="#{row.Dtstampa != null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:setPropertyListener from="#{row.Idreferto}"
+                                                                        to="#{requestScope.print_referto_idref}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="1"
+                                                                        to="#{requestScope.print_referto_livello}"
+                                                                        type="action"/>
+                                                <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                               filename="Referto#{row.Idreferto}.pdf"/>
+                                            </af:button>
+                                            <af:button text="Recupera stampa" id="b9"
+                                                       rendered="#{row.Dtcreazione != null and row.Dtstampa == null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:showPopupBehavior popupId="printref2"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="printref2">
+                                                <af:dialog id="d4" title="Recupera lettera" type="none">
+                                                    <f:facet name="buttonBar">
+                                                        <af:panelGroupLayout id="pgl3" halign="end" layout="horizontal">
+                                                            <af:toolbar id="t7">
+                                                                <af:button text="OK" id="b10">
+                                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                            to="#{requestScope.print_referto_idref}"
+                                                                                            type="action"/>
+                                                                    <af:setPropertyListener from="1"
+                                                                                            to="#{requestScope.print_referto_livello}"
+                                                                                            type="action"/>
+                                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                                    <af:clientListener method="showHidePopup('printref2', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                                <af:button text="Annulla" id="b11">
+                                                                    <af:clientListener method="showHidePopup('printref2', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                            </af:toolbar>
+                                                        </af:panelGroupLayout>
+                                                    </f:facet>
+                                                    <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                   id="ot53"/>
+                                                </af:dialog>
+                                            </af:popup>
+                                        </af:column>
+                                    </af:table>
+                                    <af:table value="#{bindings.Sogg_SoRefertomammo1livStoricoView1.collectionModel}"
+                                              var="row" rows="#{bindings.Sogg_SoRefertomammo1livStoricoView1.rangeSize}"
+                                              rendered="#{sessionScope.scr == 'MA'}"
+                                              emptyText=""
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Sogg_SoRefertomammo1livStoricoView1.rangeSize}"
+                                              id="t8">
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.CodiceReferto.label}"
+                                                   id="c54" width="80">
+                                            <af:outputText value="#{row.CodiceReferto}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.CodiceReferto.tooltip}"
+                                                           id="ot54"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtmammo.label}"
+                                                   id="c55" width="60">
+                                            <af:outputText value="#{row.Dtmammo}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtmammo.tooltip}"
+                                                           id="ot55">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtmammo.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Tipoinvito.label}"
+                                                   id="c56">
+                                            <af:outputText value="#{row.Tipoinvito}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Tipoinvito.tooltip}"
+                                                           id="ot56"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtreferto.label}"
+                                                   id="c57" width="60">
+                                            <af:outputText value="#{row.Dtreferto}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtreferto.tooltip}"
+                                                           id="ot57">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtreferto.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column id="c77" headerText="Prima lettura">
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitoprima.label}"
+                                                       id="c58" noWrap="false">
+                                                <af:outputText value="#{row.Esitoprima}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitoprima.tooltip}"
+                                                               id="ot58"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Lettore1.label}"
+                                                       id="c59" noWrap="false">
+                                                <af:outputText value="#{row.Lettore1}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Lettore1.tooltip}"
+                                                               id="ot59"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.L1Note.label}"
+                                                       id="c60" noWrap="false">
+                                                <af:outputText value="#{row.L1Note}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.L1Note.tooltip}"
+                                                               id="ot60"/>
+                                            </af:column>
+                                        </af:column>
+                                        <af:column id="c78" headerText="Seconda lettura" rendered="#{sessionScope.n_referti_1liv == '2' || sessionScope.n_referti_1liv == '3'}">
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitoseconda.label}"
+                                                       id="c61" noWrap="false">
+                                                <af:outputText value="#{row.Esitoseconda}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitoseconda.tooltip}"
+                                                               id="ot61"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Lettore2.label}"
+                                                       id="c62" noWrap="false">
+                                                <af:outputText value="#{row.Lettore2}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Lettore2.tooltip}"
+                                                               id="ot62"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.L2Note.label}"
+                                                       id="c63" noWrap="false">
+                                                <af:outputText value="#{row.L2Note}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.L2Note.tooltip}"
+                                                               id="ot63"/>
+                                            </af:column>
+                                        </af:column>
+                                        <af:column id="c79" headerText="Revisione" rendered="#{sessionScope.n_referti_1liv == '3'}">
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitorev.label}"
+                                                       id="c64" noWrap="false">
+                                                <af:outputText value="#{row.Esitorev}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitorev.tooltip}"
+                                                               id="ot64"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Revisore.label}"
+                                                       id="c65" noWrap="false">
+                                                <af:outputText value="#{row.Revisore}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Revisore.tooltip}"
+                                                               id="ot65"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.RNote.label}"
+                                                       id="c66" noWrap="false">
+                                                <af:outputText value="#{row.RNote}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.RNote.tooltip}"
+                                                               id="ot66"/>
+                                            </af:column>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitofin.label}"
+                                                   id="c67" noWrap="false">
+                                            <af:outputText value="#{row.Esitofin}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Esitofin.tooltip}"
+                                                           id="ot67"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtcreazione.label}"
+                                                   id="c68" width="60">
+                                            <af:outputText value="#{row.Dtcreazione}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtcreazione.tooltip}"
+                                                           id="ot68">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtcreazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtspedizione.label}"
+                                                   id="c69" width="60">
+                                            <af:outputText value="#{row.Dtspedizione}"
+                                                           shortDesc="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtspedizione.tooltip}"
+                                                           id="ot69">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo1livStoricoView1.hints.Dtspedizione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column id="c52" width="120">
+                                            <af:button text="Recupera stampa" id="b12"
+                                                       rendered="#{row.Dtspedizione != null and row.Idallegato != null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:setPropertyListener from="#{row.Idreferto}"
+                                                                        to="#{requestScope.print_referto_idref}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="1"
+                                                                        to="#{requestScope.print_referto_livello}"
+                                                                        type="action"/>
+                                                <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                               filename="Referto#{row.Idreferto}.pdf"/>
+                                            </af:button>
+                                            <af:button text="Recupera stampa" id="b13"
+                                                       rendered="#{row.Dtspedizione == null and row.Idallegato != null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:showPopupBehavior popupId="printref3"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="printref3">
+                                                <af:dialog id="d5" title="Recupera lettera" type="none">
+                                                    <f:facet name="buttonBar">
+                                                        <af:panelGroupLayout id="pgl4" halign="end" layout="horizontal">
+                                                            <af:toolbar id="t9">
+                                                                <af:button text="OK" id="b14">
+                                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                            to="#{requestScope.print_referto_idref}"
+                                                                                            type="action"/>
+                                                                    <af:setPropertyListener from="1"
+                                                                                            to="#{requestScope.print_referto_livello}"
+                                                                                            type="action"/>
+                                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                                    <af:clientListener method="showHidePopup('printref3', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                                <af:button text="Annulla" id="b15">
+                                                                    <af:clientListener method="showHidePopup('printref3', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                            </af:toolbar>
+                                                        </af:panelGroupLayout>
+                                                    </f:facet>
+                                                    <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                   id="ot52"/>
+                                                </af:dialog>
+                                            </af:popup>
+                                        </af:column>
+                                    </af:table>
+                                    <af:table value="#{bindings.Sogg_StCaRef1View1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StCaRef1View1.rangeSize}"
+                                              rendered="#{sessionScope.scr == 'CA'}"
+                                              emptyText=""
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Sogg_StCaRef1View1.rangeSize}" id="t10">
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.DataRilevazione.label}"
+                                                   id="c44">
+                                            <af:outputText value="#{row.DataRilevazione}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.DataRilevazione.tooltip}"
+                                                           id="ot44">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCaRef1View1.hints.DataRilevazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.Completo.label}"
+                                                   id="c71">
+                                            <af:outputText value="#{row.Completo}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.Completo.tooltip}"
+                                                           id="ot71"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.Dtcreazione.label}"
+                                                   id="c72">
+                                            <af:outputText value="#{row.Dtcreazione}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.Dtcreazione.tooltip}"
+                                                           id="ot72">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCaRef1View1.hints.Dtcreazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.Dtspedizione.label}"
+                                                   id="c73">
+                                            <af:outputText value="#{row.Dtspedizione}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.Dtspedizione.tooltip}"
+                                                           id="ot73">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StCaRef1View1.hints.Dtspedizione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.DescrQuestionario.label}"
+                                                   id="c74" noWrap="false">
+                                            <af:outputText value="#{row.DescrQuestionario}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.DescrQuestionario.tooltip}"
+                                                           id="ot74"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.Medico.label}"
+                                                   id="c75" noWrap="false">
+                                            <af:outputText value="#{row.Medico}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.Medico.tooltip}"
+                                                           id="ot75"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StCaRef1View1.hints.Suggerimento.label}"
+                                                   id="c76" noWrap="false" width="200">
+                                            <af:outputText value="#{row.Suggerimento}"
+                                                           shortDesc="#{bindings.Sogg_StCaRef1View1.hints.Suggerimento.tooltip}"
+                                                           id="ot76"/>
+                                        </af:column>
+                                        <af:column id="c70" width="120">
+                                            <af:button text="Recupera stampa" id="b16"
+                                                       rendered="#{row.Dtspedizione != null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:setPropertyListener from="#{row.Idreferto}"
+                                                                        to="#{requestScope.print_referto_idref}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="1"
+                                                                        to="#{requestScope.print_referto_livello}"
+                                                                        type="action"/>
+                                                <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                               filename="Referto#{row.Idreferto}.pdf"/>
+                                            </af:button>
+                                            <af:button text="Recupera stampa" id="b17"
+                                                       rendered="#{row.Dtcreazione != null and row.Dtspedizione == null and !sessionScope.SONoDatiSensibili==true}">
+                                                <af:showPopupBehavior popupId="printref4"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="printref4">
+                                                <af:dialog id="d6" title="Recupera lettera" type="none">
+                                                    <f:facet name="buttonBar">
+                                                        <af:panelGroupLayout id="pgl5" halign="end" layout="horizontal">
+                                                            <af:toolbar id="t11">
+                                                                <af:button text="OK" id="b18">
+                                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                            to="#{requestScope.print_referto_idref}"
+                                                                                            type="action"/>
+                                                                    <af:setPropertyListener from="1"
+                                                                                            to="#{requestScope.print_referto_livello}"
+                                                                                            type="action"/>
+                                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                                    <af:clientListener method="showHidePopup('printref4', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                                <af:button text="Annulla" id="b19">
+                                                                    <af:clientListener method="showHidePopup('printref4', false)"
+                                                                                       type="action"/>
+                                                                </af:button>
+                                                            </af:toolbar>
+                                                        </af:panelGroupLayout>
+                                                    </f:facet>
+                                                    <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                   id="ot70"/>
+                                                </af:dialog>
+                                            </af:popup>
+                                        </af:column>
+                                    </af:table>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Storico referti 2° livello" id="sdi3"
+                                                   rendered="#{(sessionScope.scr != 'CA') and sessionScope.SORefertazione}">
+                                    <af:panelGroupLayout id="pgl6" layout="scroll"
+                                                         rendered="#{sessionScope.scr == 'CI'}">
+                                        <af:table value="#{bindings.Sogg_StRef2View1.collectionModel}" var="row"
+                                                  rows="#{bindings.Sogg_StRef2View1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_StRef2View1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Sogg_StRef2View1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_StRef2View1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_StRef2View1.rangeSize}" id="t12">
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Dtapp.label}"
+                                                       id="c80" width="80">
+                                                <af:outputText value="#{row.Dtapp}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Dtapp.tooltip}"
+                                                               id="ot77">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StRef2View1.hints.Dtapp.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Tpinvito.label}"
+                                                       id="c81">
+                                                <af:outputText value="#{row.Tpinvito}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Tpinvito.tooltip}"
+                                                               id="ot78"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Colpfull.label}"
+                                                       id="c83" width="200" noWrap="false">
+                                                <af:outputText value="#{row.Colpfull}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Colpfull.tooltip}"
+                                                               id="ot80"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Biofull.label}"
+                                                       id="c85" width="200" noWrap="false">
+                                                <af:outputText value="#{row.Biofull}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Biofull.tooltip}"
+                                                               id="ot82"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Precito.label}"
+                                                       id="c86" width="50">
+                                                <af:selectBooleanCheckbox readOnly="true" selected="#{row.Precito == 1}"
+                                                                          id="sbc1"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Prebio.label}"
+                                                       id="c87" width="50">
+                                                <af:selectBooleanCheckbox readOnly="true" selected="#{row.Prebio == 1}"
+                                                                          id="sbc2"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Descrizione.label}"
+                                                       id="c88" noWrap="false">
+                                                <af:outputText value="#{row.Descrizione}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Descrizione.tooltip}"
+                                                               id="ot85"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Istopeggiore.label}"
+                                                       id="c89" noWrap="false">
+                                                <af:outputText value="#{row.Istopeggiore}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Istopeggiore.tooltip}"
+                                                               id="ot86"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Noteconcl.label}"
+                                                       id="c90">
+                                                <af:outputText value="#{row.Noteconcl}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Noteconcl.tooltip}"
+                                                               id="ot87"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Dtcreazione.label}"
+                                                       id="c91" width="80">
+                                                <af:outputText value="#{row.Dtcreazione}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Dtcreazione.tooltip}"
+                                                               id="ot88">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StRef2View1.hints.Dtcreazione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StRef2View1.hints.Dtstampa.label}"
+                                                       id="c92" width="80">
+                                                <af:outputText value="#{row.Dtstampa}"
+                                                               shortDesc="#{bindings.Sogg_StRef2View1.hints.Dtstampa.tooltip}"
+                                                               id="ot89">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StRef2View1.hints.Dtstampa.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column id="c104" width="120">
+                                                <af:button text="Recupera stampa" id="b20"
+                                                           rendered="#{row.Dtstampa != null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                            to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="2"
+                                                                            to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                </af:button>
+                                                <af:button text="Recupera stampa" id="b21"
+                                                           rendered="#{row.Dtcreazione != null and row.Dtstampa == null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:showPopupBehavior popupId="printref5"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="printref5">
+                                                    <af:dialog id="d7" title="Recupera lettera" type="none">
+                                                        <f:facet name="buttonBar">
+                                                            <af:panelGroupLayout id="pgl7" halign="end"
+                                                                                 layout="horizontal">
+                                                                <af:toolbar id="t14">
+                                                                    <af:button text="OK" id="b23">
+                                                                        <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                                to="#{requestScope.print_referto_idref}"
+                                                                                                type="action"/>
+                                                                        <af:setPropertyListener from="2"
+                                                                                                to="#{requestScope.print_referto_livello}"
+                                                                                                type="action"/>
+                                                                        <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                       filename="Referto#{row.Idreferto}.pdf"/>
+                                                                        <af:clientListener method="showHidePopup('printref5', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                    <af:button text="Annulla" id="b22">
+                                                                        <af:clientListener method="showHidePopup('printref5', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                </af:toolbar>
+                                                            </af:panelGroupLayout>
+                                                        </f:facet>
+                                                        <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                       id="ot90"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:column>
+                                        </af:table>
+                                        <af:panelHeader text="Interventi" id="ph2" size="2">
+                                            <af:table value="#{bindings.Sogg_StRef2IntView1.collectionModel}" var="row"
+                                                      rows="#{bindings.Sogg_StRef2IntView1.rangeSize}"
+                                                      emptyText="#{bindings.Sogg_StRef2IntView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Sogg_StRef2IntView1.rangeSize}" id="t13">
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.NInt.label}"
+                                                           id="c96" width="40">
+                                                    <af:outputText value="#{row.NInt}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.NInt.tooltip}"
+                                                                   id="ot93">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Sogg_StRef2IntView1.hints.NInt.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Dtintervento.label}"
+                                                           id="c97">
+                                                    <af:outputText value="#{row.Dtintervento}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Dtintervento.tooltip}"
+                                                                   id="ot94">
+                                                        <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Medint.label}"
+                                                           id="c98" noWrap="false">
+                                                    <af:outputText value="#{row.Medint}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Medint.tooltip}"
+                                                                   id="ot95"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Tipoint.label}"
+                                                           id="c99" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.Tipoint}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Tipoint.tooltip}"
+                                                                   id="ot96"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Dtistchir.label}"
+                                                           id="c100">
+                                                    <af:outputText value="#{row.Dtistchir}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Dtistchir.tooltip}"
+                                                                   id="ot97">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_StRef2IntView1.hints.Dtistchir.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Medist.label}"
+                                                           id="c101" noWrap="false">
+                                                    <af:outputText value="#{row.Medist}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Medist.tooltip}"
+                                                                   id="ot98"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Esitoist.label}"
+                                                           id="c102" noWrap="false" width="150">
+                                                    <af:outputText value="#{row.Esitoist}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Esitoist.tooltip}"
+                                                                   id="ot99"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_StRef2IntView1.hints.Esitosugg.label}"
+                                                           id="c103" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.Esitosugg}"
+                                                                   shortDesc="#{bindings.Sogg_StRef2IntView1.hints.Esitosugg.tooltip}"
+                                                                   id="ot100"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                    <af:panelGroupLayout id="pgl8" layout="scroll"
+                                                         rendered="#{sessionScope.scr eq 'CO'}">
+                                        <af:table value="#{bindings.Sogg_SoRefertocolon2livStoricoView1.collectionModel}"
+                                                  var="row"
+                                                  rows="#{bindings.Sogg_SoRefertocolon2livStoricoView1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Sogg_SoRefertocolon2livStoricoView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_SoRefertocolon2livStoricoView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_SoRefertocolon2livStoricoView1.rangeSize}"
+                                                  id="t15">
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtapp.label}"
+                                                       id="c93" width="80">
+                                                <af:outputText value="#{row.Dtapp}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtapp.tooltip}"
+                                                               id="ot91">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtapp.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TipoInvito.label}"
+                                                       id="c94" noWrap="false">
+                                                <af:outputText value="#{row.TipoInvito}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TipoInvito.tooltip}"
+                                                               id="ot92"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtRxColon.label}"
+                                                       id="c95" width="80">
+                                                <af:outputText value="#{row.DtRxColon}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtRxColon.tooltip}"
+                                                               id="ot101">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtRxColon.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.RxConclusioni.label}"
+                                                       id="c105" noWrap="false">
+                                                <af:outputText value="#{row.RxConclusioni}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.RxConclusioni.tooltip}"
+                                                               id="ot102"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.RxMedico.label}"
+                                                       id="c106" noWrap="false">
+                                                <af:outputText value="#{row.RxMedico}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.RxMedico.tooltip}"
+                                                               id="ot103"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtColonTac.label}"
+                                                       id="c82" width="80">
+                                                <af:outputText value="#{row.DtColonTac}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtColonTac.tooltip}"
+                                                               id="ot79">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DtColonTac.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TacConclusioni.label}"
+                                                       id="c84" noWrap="false">
+                                                <af:outputText value="#{row.TacConclusioni}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TacConclusioni.tooltip}"
+                                                               id="ot81"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TacMedico.label}"
+                                                       id="c115" width="100" noWrap="false">
+                                                <af:outputText value="#{row.TacMedico}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.TacMedico.tooltip}"
+                                                               id="ot83"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtconcl.label}"
+                                                       id="c107" width="80">
+                                                <af:outputText value="#{row.Dtconcl}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtconcl.tooltip}"
+                                                               id="ot104">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtconcl.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Concompleta.label}"
+                                                       id="c108" width="150" noWrap="false">
+                                                <af:outputText value="#{row.Concompleta}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Concompleta.tooltip}"
+                                                               id="ot105"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.ConclMedico.label}"
+                                                       id="c109" noWrap="false">
+                                                <af:outputText value="#{row.ConclMedico}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.ConclMedico.tooltip}"
+                                                               id="ot106"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DiagnosiP.label}"
+                                                       id="c110" noWrap="false">
+                                                <af:outputText value="#{row.DiagnosiP}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.DiagnosiP.tooltip}"
+                                                               id="ot107"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Note.label}"
+                                                       id="c111">
+                                                <af:outputText value="#{row.Note}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Note.tooltip}"
+                                                               id="ot108"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtcreazione.label}"
+                                                       id="c112" width="80">
+                                                <af:outputText value="#{row.Dtcreazione}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtcreazione.tooltip}"
+                                                               id="ot109">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtcreazione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtspedizione.label}"
+                                                       id="c113" width="80">
+                                                <af:outputText value="#{row.Dtspedizione}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtspedizione.tooltip}"
+                                                               id="ot110">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertocolon2livStoricoView1.hints.Dtspedizione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column id="c116" width="120">
+                                                <af:button text="Recupera stampa" id="b24"
+                                                           rendered="#{row.Dtspedizione != null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                            to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="2"
+                                                                            to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                </af:button>
+                                                <af:button text="Recupera stampa" id="b25"
+                                                           rendered="#{row.Dtcreazione != null and row.Dtspedizione == null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:showPopupBehavior popupId="printref6"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="printref6">
+                                                    <af:dialog id="d8" title="Recupera lettera" type="none">
+                                                        <f:facet name="buttonBar">
+                                                            <af:panelGroupLayout id="pgl9" halign="end"
+                                                                                 layout="horizontal">
+                                                                <af:toolbar id="t16">
+                                                                    <af:button text="OK" id="b26">
+                                                                        <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                                to="#{requestScope.print_referto_idref}"
+                                                                                                type="action"/>
+                                                                        <af:setPropertyListener from="2"
+                                                                                                to="#{requestScope.print_referto_livello}"
+                                                                                                type="action"/>
+                                                                        <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                       filename="Referto#{row.Idreferto}.pdf"/>
+                                                                        <af:clientListener method="showHidePopup('printref6', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                    <af:button text="Annulla" id="b27">
+                                                                        <af:clientListener method="showHidePopup('printref6', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                </af:toolbar>
+                                                            </af:panelGroupLayout>
+                                                        </f:facet>
+                                                        <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                       id="ot84"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:column>
+                                        </af:table>
+                                        <af:panelHeader text="Endoscopie" id="ph3">
+                                            <af:table value="#{bindings.Sogg_SoEndoscopiaStoricoView1.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.Sogg_SoEndoscopiaStoricoView1.rangeSize}"
+                                                      emptyText="#{bindings.Sogg_SoEndoscopiaStoricoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Sogg_SoEndoscopiaStoricoView1.rangeSize}"
+                                                      id="t17">
+                                                <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NEndo.label}"
+                                                           id="c114" width="40">
+                                                    <af:outputText value="#{row.NEndo}"
+                                                                   shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NEndo.tooltip}"
+                                                                   id="ot111">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NEndo.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Dtendo.label}"
+                                                           id="c117">
+                                                    <af:outputText value="#{row.Dtendo}"
+                                                                   shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Dtendo.tooltip}"
+                                                                   id="ot112">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Dtendo.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.MedicoEndo.label}"
+                                                           id="c118" noWrap="false" width="150">
+                                                    <af:outputText value="#{row.MedicoEndo}"
+                                                                   shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.MedicoEndo.tooltip}"
+                                                                   id="ot113"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Regione.label}"
+                                                           id="c119">
+                                                    <af:outputText value="#{row.Regione}"
+                                                                   shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Regione.tooltip}"
+                                                                   id="ot114"/>
+                                                </af:column>
+                                                <af:column id="c130" headerText="Carcinoma">
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.Cancro.label}"
+                                                               id="c120" width="50">
+                                                        
+                                                        <af:selectBooleanCheckbox selected="#{row.Cancro == 1}" readOnly="true" id="sbc3"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.CDiagnosi.label}"
+                                                               id="c121" noWrap="false" width="150">
+                                                        <af:outputText value="#{row.CDiagnosi}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.CDiagnosi.tooltip}"
+                                                                       id="ot116"/>
+                                                    </af:column>
+                                                </af:column>
+                                                <af:column id="c131" headerText="Polipi adenomatosi">
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NPolipi.label}"
+                                                               id="c122">
+                                                        <af:outputText value="#{row.NPolipi}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NPolipi.tooltip}"
+                                                                       id="ot117">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.NPolipi.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.DiametroMax.label}"
+                                                               id="c123" noWrap="false">
+                                                        <af:outputText value="#{row.DiametroMax}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.DiametroMax.tooltip}"
+                                                                       id="ot118"/>
+                                                    </af:column>
+                                                </af:column>
+                                                <af:column id="c132" headerText="1° polipo">
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P1.label}"
+                                                               id="c124" width="50">
+                                                        <af:selectBooleanCheckbox selected="#{row.P1 == 1}" readOnly="true" id="sbc4"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P1Diagnosi.label}"
+                                                               id="c125" noWrap="false">
+                                                        <af:outputText value="#{row.P1Diagnosi}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P1Diagnosi.tooltip}"
+                                                                       id="ot120"/>
+                                                    </af:column>
+                                                </af:column>
+                                                <af:column id="c133" headerText="2° polipo">
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P2.label}"
+                                                               id="c126" width="50">
+                                                        <af:selectBooleanCheckbox selected="#{row.P2 == 1}" readOnly="true" id="sbc5"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P2Diagnosi.label}"
+                                                               id="c127" noWrap="false">
+                                                        <af:outputText value="#{row.P2Diagnosi}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P2Diagnosi.tooltip}"
+                                                                       id="ot122"/>
+                                                    </af:column>
+                                                </af:column>
+                                                <af:column id="c134" headerText="3° polipo">
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P3.label}"
+                                                               id="c128" width="50">
+                                                        <af:selectBooleanCheckbox selected="#{row.P3 == 1}" readOnly="true" id="sbc6"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P3Diagnosi.label}"
+                                                               id="c129" noWrap="false">
+                                                        <af:outputText value="#{row.P3Diagnosi}"
+                                                                       shortDesc="#{bindings.Sogg_SoEndoscopiaStoricoView1.hints.P3Diagnosi.tooltip}"
+                                                                       id="ot124"/>
+                                                    </af:column>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                        <af:panelHeader text="Interventi" id="ph4">
+                                            <af:table value="#{bindings.Sogg_SoInterventocolonStoricoView1.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.Sogg_SoInterventocolonStoricoView1.rangeSize}"
+                                                      emptyText="#{bindings.Sogg_SoInterventocolonStoricoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Sogg_SoInterventocolonStoricoView1.rangeSize}"
+                                                      id="t18">
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.NInt.label}"
+                                                           id="c135" width="40">
+                                                    <af:outputText value="#{row.NInt}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.NInt.tooltip}"
+                                                                   id="ot115">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.NInt.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Esecuzione.label}"
+                                                           id="c136">
+                                                    <af:outputText value="#{row.Esecuzione}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Esecuzione.tooltip}"
+                                                                   id="ot119"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtintervento.label}"
+                                                           id="c137">
+                                                    <af:outputText value="#{row.Dtintervento}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtintervento.tooltip}"
+                                                                   id="ot121">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtintervento.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.TipoIntervento.label}"
+                                                           id="c138" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.TipoIntervento}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.TipoIntervento.tooltip}"
+                                                                   id="ot123"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.IntervMed.label}"
+                                                           id="c139">
+                                                    <af:outputText value="#{row.IntervMed}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.IntervMed.tooltip}"
+                                                                   id="ot125"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtistologia.label}"
+                                                           id="c140">
+                                                    <af:outputText value="#{row.Dtistologia}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtistologia.tooltip}"
+                                                                   id="ot126">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtistologia.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.DiagnosiIstchir.label}"
+                                                           id="c141" width="150">
+                                                    <af:outputText value="#{row.DiagnosiIstchir}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.DiagnosiIstchir.tooltip}"
+                                                                   id="ot127"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.IstochirMed.label}"
+                                                           id="c142">
+                                                    <af:outputText value="#{row.IstochirMed}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.IstochirMed.tooltip}"
+                                                                   id="ot128"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtconcl.label}"
+                                                           id="c143">
+                                                    <af:outputText value="#{row.Dtconcl}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtconcl.tooltip}"
+                                                                   id="ot129">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Dtconcl.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Suggerimento.label}"
+                                                           id="c144" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.Suggerimento}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.Suggerimento.tooltip}"
+                                                                   id="ot130"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.RaccMed.label}"
+                                                           id="c145">
+                                                    <af:outputText value="#{row.RaccMed}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventocolonStoricoView1.hints.RaccMed.tooltip}"
+                                                                   id="ot131"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                    <af:panelGroupLayout id="pgl10" layout="scroll"
+                                                         rendered="#{sessionScope.scr eq 'MA'}">
+                                        <af:table value="#{bindings.Sogg_SoRefertomammo2livStoricoView1.collectionModel}"
+                                                  var="row"
+                                                  rows="#{bindings.Sogg_SoRefertomammo2livStoricoView1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Sogg_SoRefertomammo2livStoricoView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_SoRefertomammo2livStoricoView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_SoRefertomammo2livStoricoView1.rangeSize}"
+                                                  id="t19">
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Descrbreve.label}"
+                                                       id="c180">
+                                                <af:outputText value="#{row.Descrbreve}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Descrbreve.tooltip}"
+                                                               id="ot166"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.MxData.label}"
+                                                       id="c146" width="150" noWrap="false">
+                                                <af:outputText value="#{row.MxData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.MxData.tooltip}"
+                                                               id="ot132"/>
+                                                <af:outputText value="#{row.MxMed}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.MxMed.tooltip}"
+                                                               id="ot133"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EcoData.label}"
+                                                       id="c148" noWrap="false" width="150">
+                                                <af:outputText value="#{row.EcoData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EcoData.tooltip}"
+                                                               id="ot134"/>
+                                                <af:outputText value="#{row.EcoMed}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EcoMed.tooltip}"
+                                                               id="ot135"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EscData.label}"
+                                                       id="c150" width="150" noWrap="false">
+                                                <af:outputText value="#{row.EscData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EscData.tooltip}"
+                                                               id="ot136"/>
+                                                <af:outputText value="#{row.EscMed}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.EscMed.tooltip}"
+                                                               id="ot137"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CidxEsame.label}"
+                                                       id="c152" width="150" noWrap="false">
+                                                <af:outputText value="#{row.CidxEsame}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CidxEsame.tooltip}"
+                                                               id="ot138"/>
+                                                <af:outputText value="#{row.CidxData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CidxData.tooltip}"
+                                                               id="ot139"/>
+                                                <af:outputText value="#{row.CidxEsito}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CidxEsito.tooltip}"
+                                                               id="ot140"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CisxEsame.label}"
+                                                       id="c155" width="150" noWrap="false">
+                                                <af:outputText value="#{row.CisxEsame}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CisxEsame.tooltip}"
+                                                               id="ot141"/>
+                                                <af:outputText value="#{row.CisxData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CisxData.tooltip}"
+                                                               id="ot142"/>
+                                                <af:outputText value="#{row.CisxEsito}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CisxEsito.tooltip}"
+                                                               id="ot143"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgdxEsame.label}"
+                                                       id="c158" width="150" noWrap="false">
+                                                <af:outputText value="#{row.AgdxEsame}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgdxEsame.tooltip}"
+                                                               id="ot144"/>
+                                                <af:outputText value="#{row.AgdxData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgdxData.tooltip}"
+                                                               id="ot145"/>
+                                                <af:outputText value="#{row.AgdxEsito}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgdxEsito.tooltip}"
+                                                               id="ot146"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgsxEsame.label}"
+                                                       id="c161" width="150" noWrap="false">
+                                                <af:outputText value="#{row.AgsxEsame}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgsxEsame.tooltip}"
+                                                               id="ot147"/>
+                                                <af:outputText value="#{row.AgsxData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgsxData.tooltip}"
+                                                               id="ot148"/>
+                                                <af:outputText value="#{row.AgsxEsito}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.AgsxEsito.tooltip}"
+                                                               id="ot149"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CnclSugg.label}"
+                                                       id="c164" width="150" noWrap="false">
+                                                <af:outputText value="#{row.CnclSugg}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CnclSugg.tooltip}"
+                                                               id="ot150"/>
+                                                <af:outputText value="#{row.CnclData}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CnclData.tooltip}"
+                                                               id="ot151"/>
+                                                <af:outputText value="#{row.CnclMed}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.CnclMed.tooltip}"
+                                                               id="ot152"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Diagnosi.label}"
+                                                       id="c167" noWrap="false">
+                                                <af:outputText value="#{row.Diagnosi}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Diagnosi.tooltip}"
+                                                               id="ot153"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Note.label}"
+                                                       id="c168">
+                                                <af:outputText value="#{row.Note}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Note.tooltip}"
+                                                               id="ot154"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtcreazione.label}"
+                                                       id="c169" width="80">
+                                                <af:outputText value="#{row.Dtcreazione}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtcreazione.tooltip}"
+                                                               id="ot155">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtcreazione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtspedizione.label}"
+                                                       id="c170" width="80">
+                                                <af:outputText value="#{row.Dtspedizione}"
+                                                               shortDesc="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtspedizione.tooltip}"
+                                                               id="ot156">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoRefertomammo2livStoricoView1.hints.Dtspedizione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column id="c147" width="120">
+                                                <af:button text="Recupera stampa" id="b28"
+                                                           rendered="#{row.Dtspedizione != null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:setPropertyListener from="#{row.Idreferto}"
+                                                                            to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="2"
+                                                                            to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                   filename="Referto#{row.Idreferto}.pdf"/>
+                                                </af:button>
+                                                <af:button text="Recupera stampa" id="b29"
+                                                           rendered="#{row.Dtcreazione != null and row.Dtspedizione == null and !sessionScope.SONoDatiSensibili==true}">
+                                                    <af:showPopupBehavior popupId="printref10"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="printref10">
+                                                    <af:dialog id="d9" title="Recupera lettera" type="none">
+                                                        <f:facet name="buttonBar">
+                                                            <af:panelGroupLayout id="pgl11" halign="end"
+                                                                                 layout="horizontal">
+                                                                <af:toolbar id="t21">
+                                                                    <af:button text="OK" id="b30">
+                                                                        <af:setPropertyListener from="#{row.Idreferto}"
+                                                                                                to="#{requestScope.print_referto_idref}"
+                                                                                                type="action"/>
+                                                                        <af:setPropertyListener from="2"
+                                                                                                to="#{requestScope.print_referto_livello}"
+                                                                                                type="action"/>
+                                                                        <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                                       filename="Referto#{row.Idreferto}.pdf"/>
+                                                                        <af:clientListener method="showHidePopup('printref10', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                    <af:button text="Annulla" id="b31">
+                                                                        <af:clientListener method="showHidePopup('printref10', false)"
+                                                                                           type="action"/>
+                                                                    </af:button>
+                                                                </af:toolbar>
+                                                            </af:panelGroupLayout>
+                                                        </f:facet>
+                                                        <af:outputText value="Dopo la visualizzazione la lettera risulterà stampata. Visualizzare ugualmente la lettera?"
+                                                                       id="ot157"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:column>
+                                        </af:table>
+                                        <af:panelHeader text="Interventi" id="ph5" size="2">
+                                            <af:table value="#{bindings.Sogg_SoInterventomammoStoricoView2.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.Sogg_SoInterventomammoStoricoView2.rangeSize}"
+                                                      emptyText="#{bindings.Sogg_SoInterventomammoStoricoView2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.Sogg_SoInterventomammoStoricoView2.rangeSize}"
+                                                      id="t20">
+                                                <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.NInt.label}"
+                                                           id="c172" width="50">
+                                                    <af:outputText value="#{row.NInt}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.NInt.tooltip}"
+                                                                   id="ot158">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.NInt.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtintervento.label}"
+                                                           id="c173" width="80">
+                                                    <af:outputText value="#{row.Dtintervento}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtintervento.tooltip}"
+                                                                   id="ot159">
+                                                        <af:convertDateTime pattern="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtintervento.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.TipoIntervento.label}"
+                                                           id="c174" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.TipoIntervento}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.TipoIntervento.tooltip}"
+                                                                   id="ot160"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Esecuzione.label}"
+                                                           id="c175" width="150" noWrap="false">
+                                                    <af:outputText value="#{row.Esecuzione}"
+                                                                   shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Esecuzione.tooltip}"
+                                                                   id="ot161"/>
+                                                </af:column>
+                                                <af:column id="c149" headerText="Istologia chirurgica">
+                                                    <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtistologia.label}"
+                                                               id="c176" width="80">
+                                                        <af:outputText value="#{row.Dtistologia}"
+                                                                       shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtistologia.tooltip}"
+                                                                       id="ot162">
+                                                            <af:convertDateTime pattern="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Dtistologia.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.DiagnosiIstchir.label}"
+                                                               id="c177" width="150" noWrap="false">
+                                                        <af:outputText value="#{row.DiagnosiIstchir}"
+                                                                       shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.DiagnosiIstchir.tooltip}"
+                                                                       id="ot163"/>
+                                                    </af:column>
+                                                </af:column>
+                                                <af:column id="c151" headerText="Conclusioni">
+                                                    <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Suggerimento.label}"
+                                                               id="c178" width="150" noWrap="false">
+                                                        <af:outputText value="#{row.Suggerimento}"
+                                                                       shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.Suggerimento.tooltip}"
+                                                                       id="ot164"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.RaccMed.label}"
+                                                               id="c179" width="150" noWrap="false">
+                                                        <af:outputText value="#{row.RaccMed}"
+                                                                       shortDesc="#{bindings.Sogg_SoInterventomammoStoricoView2.hints.RaccMed.tooltip}"
+                                                                       id="ot165"/>
+                                                    </af:column>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Storico consensi" id="sdi4">
+                                    <af:table value="#{bindings.Sogg_StConsensiView1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StConsensiView1.rangeSize}"
+                                              emptyText="#{bindings.Sogg_StConsensiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Sogg_StConsensiView1.rangeSize}" id="t22">
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.Tipo.label}"
+                                                   id="c153" width="400" noWrap="false">
+                                            <af:outputText value="#{row.Tipo eq 'GEN'?'Consenso generale al trattamento dei dati personali e sanitari':'Consenso alla condivisione dei dati'}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.Tipo.tooltip}"
+                                                           id="ot167"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.Descr.label}"
+                                                   id="c154">
+                                            <af:outputText value="#{row.Descr}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.Descr.tooltip}"
+                                                           id="ot168"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.InizioVal.label}"
+                                                   id="c156">
+                                            <af:outputText value="#{row.InizioVal}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.InizioVal.tooltip}"
+                                                           id="ot169">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StConsensiView1.hints.InizioVal.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.OpIns.label}"
+                                                   id="c157" width="150">
+                                            <af:outputText value="#{row.OpIns}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.OpIns.tooltip}"
+                                                           id="ot170"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.FineVal.label}"
+                                                   id="c159">
+                                            <af:outputText value="#{row.FineVal}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.FineVal.tooltip}"
+                                                           id="ot171">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StConsensiView1.hints.FineVal.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StConsensiView1.hints.OpMod.label}"
+                                                   id="c160" width="150">
+                                            <af:outputText value="#{row.OpMod}"
+                                                           shortDesc="#{bindings.Sogg_StConsensiView1.hints.OpMod.tooltip}"
+                                                           id="ot172"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Storico documenti" id="sdi5">
+                                    <af:table value="#{bindings.Sogg_StDocumentiView1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StDocumentiView1.rangeSize}"
+                                              emptyText="#{bindings.Sogg_StDocumentiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Sogg_StDocumentiView1.rangeSize}" id="t23">
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Descrizione.label}"
+                                                   id="c162" width="200" noWrap="false">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Descrizione.tooltip}"
+                                                           id="ot173"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.IdTipoDoc.label}"
+                                                   id="c163">
+                                            <af:outputText value="#{row.IdTipoDoc}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.IdTipoDoc.tooltip}"
+                                                           id="ot174"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.DocIdent.label}"
+                                                   id="c165">
+                                            <af:outputText value="#{row.DocIdent}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.DocIdent.tooltip}"
+                                                           id="ot175"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Dtrilascio.label}"
+                                                   id="c166" width="80">
+                                            <af:outputText value="#{row.Dtrilascio}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Dtrilascio.tooltip}"
+                                                           id="ot176">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StDocumentiView1.hints.Dtrilascio.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Dtfinevalidita.label}"
+                                                   id="c171" width="80">
+                                            <af:outputText value="#{row.Dtfinevalidita}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Dtfinevalidita.tooltip}"
+                                                           id="ot177">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StDocumentiView1.hints.Dtfinevalidita.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.DocIdentAnag.label}"
+                                                   id="c181">
+                                            <af:outputText value="#{row.DocIdentAnag}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.DocIdentAnag.tooltip}"
+                                                           id="ot178"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.IdIstComp.label}"
+                                                   id="c182">
+                                            <af:outputText value="#{row.IdIstComp}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.IdIstComp.tooltip}"
+                                                           id="ot179"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Dtinserimento.label}"
+                                                   id="c183" width="80">
+                                            <af:outputText value="#{row.Dtinserimento}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Dtinserimento.tooltip}"
+                                                           id="ot180">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StDocumentiView1.hints.Dtinserimento.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Opinserimento.label}"
+                                                   id="c184">
+                                            <af:outputText value="#{row.Opinserimento}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Opinserimento.tooltip}"
+                                                           id="ot181"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Dtultmodifica.label}"
+                                                   id="c185" width="80">
+                                            <af:outputText value="#{row.Dtultmodifica}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Dtultmodifica.tooltip}"
+                                                           id="ot182">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StDocumentiView1.hints.Dtultmodifica.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Opmodifica.label}"
+                                                   id="c186">
+                                            <af:outputText value="#{row.Opmodifica}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Opmodifica.tooltip}"
+                                                           id="ot183"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Dtstoriciz.label}"
+                                                   id="c187" width="80">
+                                            <af:outputText value="#{row.Dtstoriciz}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Dtstoriciz.tooltip}"
+                                                           id="ot184">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StDocumentiView1.hints.Dtstoriciz.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StDocumentiView1.hints.Opstoriciz.label}"
+                                                   id="c188">
+                                            <af:outputText value="#{row.Opstoriciz}"
+                                                           shortDesc="#{bindings.Sogg_StDocumentiView1.hints.Opstoriciz.tooltip}"
+                                                           id="ot185"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Inviti cancellati" id="sdi6" rendered="#{sessionScope.SOFunzHD eq true}">
+                                    <af:table value="#{bindings.Sogg_StInvitiBckView1.collectionModel}" var="row"
+                                              rows="#{bindings.Sogg_StInvitiBckView1.rangeSize}"
+                                              emptyText="#{bindings.Sogg_StInvitiBckView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0" summary="#{' '}"
+                                              selectedRowKeys="#{bindings.Sogg_StInvitiBckView1.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Sogg_StInvitiBckView1.collectionModel.makeCurrent}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Sogg_StInvitiBckView1.rangeSize}" id="t24">
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Dtapp.label}"
+                                                   id="c189" rowHeader="unstyled">
+                                            <af:outputText value="#{row.Dtapp}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Dtapp.tooltip}"
+                                                           id="ot186">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StInvitiBckView1.hints.Dtapp.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Tpinvito.label}"
+                                                   id="c190">
+                                            <af:outputText value="#{row.Tpinvito}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Tpinvito.tooltip}"
+                                                           id="ot187"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.DescEsito.label}"
+                                                   id="c191">
+                                            <af:outputText value="#{row.DescEsito}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.DescEsito.tooltip}"
+                                                           id="ot188"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.DescCprel.label}"
+                                                   id="c192">
+                                            <af:outputText value="#{row.DescCprel}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.DescCprel.tooltip}"
+                                                           id="ot189"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Roundindiv.label}"
+                                                   id="c193">
+                                            <af:outputText value="#{row.Roundindiv}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Roundindiv.tooltip}"
+                                                           id="ot190">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.Roundindiv.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Roundinviti.label}"
+                                                   id="c194">
+                                            <af:outputText value="#{row.Roundinviti}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Roundinviti.tooltip}"
+                                                           id="ot191">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.Roundinviti.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCi.label}"
+                                                   id="c195" rendered="#{sessionScope.scr=='CI'}">
+                                            <af:outputText value="#{row.RichiestaCi}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCi.tooltip}"
+                                                           id="ot192">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCi.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaMa.label}"
+                                                   id="#{sessionScope.scr=='MA'}">
+                                            <af:outputText value="#{row.RichiestaMa}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaMa.tooltip}"
+                                                           id="ot193">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaMa.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCo.label}"
+                                                   id="c197" rendered="#{sessionScope.scr=='CO'}">
+                                            <af:outputText value="#{row.RichiestaCo}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCo.tooltip}"
+                                                           id="ot194">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaCo.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaPf.label}"
+                                                   id="c198" rendered="#{sessionScope.scr=='PF'}">
+                                            <af:outputText value="#{row.RichiestaPf}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaPf.tooltip}"
+                                                           id="ot195">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Sogg_StInvitiBckView1.hints.RichiestaPf.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Noteinvito.label}"
+                                                   id="c199">
+                                            <af:outputText value="#{row.Noteinvito}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Noteinvito.tooltip}"
+                                                           id="ot196"/>
+                                        </af:column>
+                                        <!--af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Dtcanc.label}"
+                                                   id="c200">
+                                            <af:outputText value="#{row.Dtcanc}"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Dtcanc.tooltip}"
+                                                           id="ot197">
+                                                <af:convertDateTime pattern="#{bindings.Sogg_StInvitiBckView1.hints.Dtcanc.format}"/>
+                                            </af:outputText>
+                                        </af:column-->
+                                        <af:column headerText="#{bindings.Sogg_StInvitiBckView1.hints.Opcanc.label}"
+                                                   id="c203" noWrap="false" width="150">
+                                            <af:outputText value="#{row.Opcanc} (#{row.Dtcanc})"
+                                                           shortDesc="#{bindings.Sogg_StInvitiBckView1.hints.Opcanc.tooltip}"
+                                                           id="ot200"/>
+                                        </af:column>
+                                        <af:column id="c204"  width="100" align="center">
+                                            <af:button text="#{viewcontrollerBundle.RIPRISTINA}" id="b32">
+                                                <af:setPropertyListener from="#{row.Idinvito}" to="#{requestScope.print_idinvito}" type="action"/>
+                                                <af:showPopupBehavior popupId="restorePopup"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="restorePopup" binding="#{Sogg_storiaAction.restorePop}">
+                                                <af:dialog id="d302" title="#{viewcontrollerBundle.RIPRISTINA_INVITO}" type="none">
+                                                    <af:outputText value="#{viewcontrollerBundle.RIPRISTINA_MESSAGGIO}" id="ot3702"/>
+                                                    <af:toolbar id="t26" >
+                                                        <af:button text="#{viewcontrollerBundle.RIPRISTINA_SI}" id="b33" action="#{Sogg_storiaAction.restoreAndActivate}"
+                                                                   inlineStyle="width:100px;">
+                                                           <af:setPropertyListener from="#{row.Idinvito}" to="#{requestScope.ripristina_invito}" type="action"/>
+                                                        </af:button>
+                                                        <af:button text="#{viewcontrollerBundle.RIPRISTINA_NO}" id="b34" action="#{Sogg_storiaAction.restore}"
+                                                                   inlineStyle="width:100px;" rendered="#{sessionScope.forceActive ne true}">
+                                                           <af:setPropertyListener from="#{row.Idinvito}" to="#{requestScope.ripristina_invito}" type="action"/>
+                                                        </af:button>
+                                                        <af:button text="#{viewcontrollerBundle.RIPRISTINA_ANNULLA}" id="b35" action="#{Sogg_storiaAction.restorePopClose}"
+                                                                   inlineStyle="width:100px;"/>
+                                                    </af:toolbar>
+                                                </af:dialog>
+                                            </af:popup>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Opinserimento.label}"
+                                                   rendered="#{sessionScope.SOFunzHD}" id="c214" noWrap="false" width="150">
+                                            <af:outputText value="#{row.Opinserimento} (#{row.Dtcreazione})"
+                                                           shortDesc="#{bindings.Sogg_StInvitiView1.hints.Opinserimento.tooltip}"
+                                                           id="ot211"/>
+                                        </af:column>
+                                        <!--af:column headerText="#{bindings.Sogg_StInvitiView1.hints.Opmodifica.label}"
+                                                   rendered="#{sessionScope.SOFunzHD}" id="c2106" noWrap="false" width="150">
+                                            <af:outputText value="#{row.Opmodifica} (#{row.Dtultimamod})"
+                                                           shortDesc="#{bindings.Sogg_StInvitiView1.hints.Opmodifica.tooltip}"
+                                                           id="ot212"/>
+                                        </af:column-->
+                                    </af:table>
+                                    <af:panelHeader text="Lettere" id="ph6" size="2">
+                                        <af:table value="#{bindings.Sogg_StInvitiAllegBckView1.collectionModel}"
+                                                  var="row" rows="#{bindings.Sogg_StInvitiAllegBckView1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_StInvitiAllegBckView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0" summary="#{' '}"
+                                                  selectedRowKeys="#{bindings.Sogg_StInvitiAllegBckView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_StInvitiAllegBckView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_StInvitiAllegBckView1.rangeSize}" id="t25">
+                                            <af:column headerText="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtcreazione.label}"
+                                                       id="c196" rowHeader="unstyled">
+                                                <af:outputText value="#{row.Dtcreazione}"
+                                                               shortDesc="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtcreazione.tooltip}"
+                                                               id="ot198">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtcreazione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtstampa.label}" id="c201">
+                                                <af:outputText value="#{row.Dtstampa}" shortDesc="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtstampa.tooltip}" id="ot199">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_StInvitiAllegBckView1.hints.Dtstampa.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column id="c202" width="135" align="center">
+                                                <af:button text="Recupera stampa" id="b101"  rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                                    <af:setPropertyListener from="#{row.Idallegato}" to="#{requestScope.print_idallegato}" type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_invitoAction.stampaPDFDeleted}" filename="Invito#{row.Idallegato}.pdf"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="printLetterBckErrorPopup" binding="#{Print_invitoAction.errorPop}">
+                                                    <af:dialog id="d301" title="Recupera lettera" type="none">
+                                                        <af:outputText value="PDF non presente nell'allegato selezionato" id="ot3701"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelHeader>
+                                </af:showDetailItem>
+                            </af:panelTabbed>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_SOGGETTO}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="viewSubmenu"
+                             value="#{sessionScope.showTabs and !sessionScope.LINK_ACC and !sessionScope.LINK_REF}"/>
+                <f:attribute name="navigation" value="#{Sogg_storiaAction}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue, bindings.Nome.inputValue, bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

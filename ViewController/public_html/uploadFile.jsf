@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="uploadFile.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" usesUpload="true">
+            <af:panelHeader text="Selezionare il file" id="ph1"
+                            inlineStyle="margin-bottom:10px; margin-left:10px; margin-right:10px; margin-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px; padding-top:10px;">
+                <af:panelGroupLayout id="pgl2" halign="center" layout="scroll">
+                    <af:inputFile label="File:" id="if1" value="#{Impexp_presenzeAction.file}" required="true"/>
+                    <af:spacer width="10" height="10" id="s1"/>
+                    <af:selectOneChoice value="#{bindings.tpdip.inputValue}" label="Il file verrà caricato come proveniente da"
+                                        required="#{bindings.tpdip.hints.mandatory}"
+                                        readOnly="true"
+                                        shortDesc="#{bindings.tpdip.hints.tooltip}" id="soc1">
+                        <f:selectItems value="#{bindings.tpdip.items}" id="si1"/>
+                        <f:validator binding="#{bindings.tpdip.validator}"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice value="#{bindings.centro.inputValue}" label="centro"
+                                        required="#{bindings.centro.hints.mandatory}"
+                                        readOnly="true"
+                                        rendered="#{bindings.Impexp_SoCnfCentriImpexpView1Iterator.estimatedRowCount gt 0 ? true: false}"
+                                        shortDesc="#{bindings.centro.hints.tooltip}" id="soc2">
+                        <f:selectItems value="#{bindings.centro.items}" id="si2"/>
+                        <f:validator binding="#{bindings.centro.validator}"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="10" height="10" id="s2"/>
+                    <af:panelGroupLayout id="pgl1" layout="horizontal">
+                        <af:button text="OK" id="b1" action="#{Impexp_presenzeAction.insertFile}"/>
+                        <af:button text="Annulla" id="b2" action="exit" immediate="true">
+                            <af:returnActionListener/>
+                        </af:button>
+                    </af:panelGroupLayout>
+                </af:panelGroupLayout>
+            </af:panelHeader>
+        </af:form>
+    </af:document>
+</f:view>

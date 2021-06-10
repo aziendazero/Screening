@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_SoInvitoView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_SoInvitoViewImpl"
+   PageIterMode="Partial"
+   MsgBundleClass="model.soggetto.common.Sogg_SoInvitoViewRowImplMsgBundle"
+   RowClass="model.soggetto.Sogg_SoInvitoViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="SoInvMotivoView1"
+      ViewObjectName="model.inviti.SoInvMotivoView"
+      RowLevelBinds="true">
+      <ViewCriteriaUsage
+         Name="UlssTpscrViewCriteria"
+         FullName="model.inviti.SoInvMotivoView.UlssTpscrViewCriteria"/>
+      <ParameterMap>
+         <PIMap Variable="bndTpscr">
+            <TransientExpression
+               trustMode="untrusted"
+               Name="ExpressionScript"><![CDATA[Tpscr]]></TransientExpression>
+         </PIMap>
+         <PIMap Variable="bndUlss">
+            <TransientExpression
+               trustMode="untrusted"
+               Name="ExpressionScript"><![CDATA[Ulss]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <SQLQuery><![CDATA[SELECT Sogg_SoInvito.IDINVITO,            
+       Sogg_SoInvito.CODTS,            
+       Sogg_SoInvito.IDTPINVITO,       
+       Sogg_SoInvito.CODESITOINVITO,            
+       Sogg_SoInvito.LIVESITO,            
+       Sogg_SoInvito.ATTIVO,            
+       Sogg_SoInvito.IDCENTROPRELIEVO,            
+       Sogg_SoInvito.IDCENTRORICHIAMO,            
+       Sogg_SoInvito.IDCENTROREF1LIV,            
+       Sogg_SoInvito.IDCENTROREF2LIV,            
+       Sogg_SoInvito.IDAPP,            
+       Sogg_SoInvito.DTAPP,            
+       Sogg_SoInvito.ORAAPP,            
+       Sogg_SoInvito.MINAPP,            
+       Sogg_SoInvito.DTAPPINIZIALE,            
+       Sogg_SoInvito.CONSENSO,            
+       Sogg_SoInvito.DTESAMERECENTE,            
+       Sogg_SoInvito.DTRICHIAMO,            
+       Sogg_SoInvito.DTINVIORICHIAMO,            
+       Sogg_SoInvito.OPMEDICO,            
+       Sogg_SoInvito.DTINVIOSOLLECITO,            
+       Sogg_SoInvito.ROUNDCOMUNE,            
+       Sogg_SoInvito.ROUNDINDIV,            
+       Sogg_SoInvito.VOLONTARIA,            
+       Sogg_SoInvito.DTBLOCCO,            
+       Sogg_SoInvito.CHIUSURAROUNDINDIV,            
+       Sogg_SoInvito.DTULTIMAMOD,            
+       Sogg_SoInvito.DTCREAZIONE,            
+       Sogg_SoInvito.OPINSERIMENTO,            
+       Sogg_SoInvito.DTMODESCLUSIONE,            
+       Sogg_SoInvito.OPMODIFICA,            
+       Sogg_SoInvito.FUORIFASCIA,            
+       Sogg_SoInvito.NOTEINVITO,            
+       Sogg_SoInvito.ULSS,            
+       Sogg_SoInvito.TPSCR,            
+       Sogg_SoInvito.ROUNDINVITI,            
+       Sogg_SoInvito.TPRICHIAMO,           
+       Sogg_SoInvito.LIVELLO,           
+decode(Sogg_SoInvito.ORAAPP,null,null,substr(to_char(Sogg_SoInvito.ORAAPP,'00'),2) || ':' ||  substr(to_char(Sogg_SoInvito.MINAPP,'00'),2)) AS ORARIO,           
+SO_CNF_ESITOINVITO.DESCRSUGG DESCRSUGG,           
+SO_CNF_ESITOINVITO.METODO_CALCOLO METODO_CALCOLO,           
+SO_CNF_ESITOINVITO.DATA_OBBLIGATORIA DATA_OBBLIGATORIA,           
+SO_SOGG_SCR.ROUNDINVITI ROUNDINV,           
+SO_SOGG_SCR.ROUNDINDIV ROUNDIND,           
+SO_CENTRO_PREL_REF.DESCRBREVE CTRICHIAMO,           
+r.IDTPINVITO || ' ' || r.DESCRIZIONE TIPO_RICHIAMO,           
+fun_referto_invito(Sogg_SoInvito.IDINVITO,Sogg_SoInvito.LIVELLO,Sogg_SoInvito.TPSCR) ref_invito,           
+    Sogg_SoInvito.CODRESIDENZA,           
+    Sogg_SoInvito.CODDOMICILIO,           
+    Sogg_SoInvito.VIARESIDENZA,           
+    Sogg_SoInvito.VIADOMICILIO,           
+    Sogg_SoInvito.STATOANAG,           
+    Sogg_SoInvito.DTRITCONT,           
+    Sogg_SoInvito.DTCONSCONT,           
+    Sogg_SoInvito.ZONA,           
+    Sogg_SoInvito.DA_CONFERMARE,           
+    Sogg_SoInvito.NON_SPEDIRE_REFERTO,           
+    Sogg_SoInvito.RACC_LETT_INVITO,           
+    Sogg_SoInvito.RACC_LETT_REFERTO,           
+    FUN_SOLLECITARE(1,Sogg_SoInvito.CODESITOINVITO,Sogg_SoInvito.DTAPP,i.GGSOLLECITO,Sogg_SoInvito.CODTS,Sogg_SoInvito.ULSS, Sogg_SoInvito.TPSCR ) SOLLECITARE,           
+    Sogg_SoInvito.TEST_PROPOSTO,           
+    Sogg_SoInvito.ROUNDINDIV_HPV,           
+    Sogg_SoInvito.RELEASE_CODE_COM_RES,           
+    Sogg_SoInvito.RELEASE_CODE_COM_DOM,           
+    Sogg_SoInvito.OTP,           
+    Sogg_SoInvito.CONFERMATO,           
+    Sogg_SoInvito.NOTE_CITTADINO,         
+    SoInvMotivo.ID MOTIVO_ID,      
+    SoInvMotivo.GRUPPO MOTIVO_GRUPPO,      
+    SoInvMotivo.IDCNFREF MOTIVO_IDCNFREF,   
+       
+    Sogg_SoInvito.CODICEREGMEDICO CODICEREGMEDICO,      
+    Sogg_SoInvito.CODCLASSEPOP CODCLASSEPOP,  
+    SoChiavi.chiave CHIAVE  
+FROM SO_INVITO Sogg_SoInvito, SO_CNF_ESITOINVITO,           
+SO_SOGG_SCR, SO_CENTRO_PREL_REF, SO_CNF_TPINVITO r, SO_CNF_TPINVITO i , SO_INV_MOTIVO SoInvMotivo, so_chiavi SoChiavi          
+where SO_CNF_ESITOINVITO.CODESITOINVITO (+) = Sogg_SoInvito.CODESITOINVITO and           
+SO_CNF_ESITOINVITO.LIVESITO (+) = Sogg_SoInvito.LIVESITO and           
+SO_CNF_ESITOINVITO.ULSS (+) = Sogg_SoInvito.ULSS and           
+SO_CNF_ESITOINVITO.TPSCR (+) = Sogg_SoInvito.TPSCR and SO_SOGG_SCR.CODTS (+) = Sogg_SoInvito.CODTS           
+AND SO_SOGG_SCR.ULSS (+) = Sogg_SoInvito.ULSS           
+AND SO_SOGG_SCR.TPSCR (+) = Sogg_SoInvito.TPSCR           
+AND SO_CENTRO_PREL_REF.IDCENTRO (+) = Sogg_SoInvito.IDCENTRORICHIAMO           
+AND r.IDTPINVITO (+) = Sogg_SoInvito.TPRICHIAMO           
+AND r.ULSS (+) = Sogg_SoInvito.ULSS           
+AND r.TPSCR (+) = Sogg_SoInvito.TPSCR  
+AND SoChiavi.ULSS (+) = Sogg_SoInvito.ULSS           
+AND SoChiavi.CODTS (+) = Sogg_SoInvito.CODTS    
+ and i.IDTPINVITO = Sogg_SoInvito.IDTPINVITO           
+ and i.ULSS = Sogg_SoInvito.ULSS           
+ and i.TPSCR = Sogg_SoInvito.TPSCR          
+ and SoInvMotivo.IDINVITO(+) = Sogg_SoInvito.IDINVITO]]></SQLQuery>
+   <EntityUsage
+      Name="Sogg_SoInvito"
+      Entity="model.soggetto.Sogg_SoInvito" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idinvito"
+      IsNotNull="true"
+      EntityAttrName="Idinvito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDTPINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODESITOINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codesitoinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito"
+      EntityAttrName="Livesito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="LIVESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Attivo"
+      EntityAttrName="Attivo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ATTIVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      EntityAttrName="Idcentroprelievo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDCENTROPRELIEVO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentroprelievo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      EntityAttrName="Idcentrorichiamo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDCENTRORICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentrorichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref1liv"
+      IsNotNull="true"
+      EntityAttrName="Idcentroref1liv"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDCENTROREF1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref2liv"
+      EntityAttrName="Idcentroref2liv"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDCENTROREF2LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idapp"
+      EntityAttrName="Idapp"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="IDAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idapp_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      EntityAttrName="Dtapp"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      EntityAttrName="Oraapp"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtappiniziale"
+      EntityAttrName="Dtappiniziale"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTAPPINIZIALE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtappiniziale_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtappiniziale_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Consenso"
+      IsNotNull="true"
+      EntityAttrName="Consenso"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CONSENSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtesamerecente"
+      EntityAttrName="Dtesamerecente"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTESAMERECENTE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtesamerecente_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtesamerecente_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtesamerecente_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtrichiamo_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtrichiamo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtrichiamo_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviorichiamo"
+      EntityAttrName="Dtinviorichiamo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTINVIORICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtinviorichiamo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtinviorichiamo_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmedico"
+      EntityAttrName="Opmedico"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="OPMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviosollecito"
+      EntityAttrName="Dtinviosollecito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTINVIOSOLLECITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtinviosollecito_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtinviosollecito_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsNotNull="true"
+      EntityAttrName="Roundcomune"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ROUNDCOMUNE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      EntityAttrName="Roundindiv"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ROUNDINDIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundindiv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Volontaria"
+      EntityAttrName="Volontaria"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="VOLONTARIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtblocco"
+      EntityAttrName="Dtblocco"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTBLOCCO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtblocco_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtblocco_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chiusuraroundindiv"
+      EntityAttrName="Chiusuraroundindiv"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CHIUSURAROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultimamod"
+      EntityAttrName="Dtultimamod"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTULTIMAMOD" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtultimamod_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtultimamod_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTCREAZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opinserimento"
+      EntityAttrName="Opinserimento"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="OPINSERIMENTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtmodesclusione"
+      EntityAttrName="Dtmodesclusione"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTMODESCLUSIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMAT
+               ResId="Dtmodesclusione_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtmodesclusione_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      EntityAttrName="Opmodifica"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="OPMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Fuorifascia"
+      EntityAttrName="Fuorifascia"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="FUORIFASCIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Noteinvito"
+      EntityAttrName="Noteinvito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="NOTEINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Noteinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      EntityAttrName="Roundinviti"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ROUNDINVITI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      EntityAttrName="Tprichiamo"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="TPRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      EntityAttrName="Livello"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="LIVELLO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Orario"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORARIO"
+      Expression="ORARIO"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrsugg"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRSUGG"
+      Expression="DESCRSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MetodoCalcolo"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="METODO_CALCOLO"
+      Expression="METODO_CALCOLO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataObbligatoria"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DATA_OBBLIGATORIA"
+      Expression="DATA_OBBLIGATORIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinv"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINV"
+      Expression="ROUNDINV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundinv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundind"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDIND"
+      Expression="ROUNDIND"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundind_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ctrichiamo"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CTRICHIAMO"
+      Expression="CTRICHIAMO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ctrichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoRichiamo"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPO_RICHIAMO"
+      Expression="TIPO_RICHIAMO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TipoRichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RefInvito"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="REF_INVITO"
+      Expression="REF_INVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RefInvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codresidenza"
+      EntityAttrName="Codresidenza"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODRESIDENZA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddomicilio"
+      EntityAttrName="Coddomicilio"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODDOMICILIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Viaresidenza"
+      EntityAttrName="Viaresidenza"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="VIARESIDENZA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Viadomicilio"
+      EntityAttrName="Viadomicilio"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="VIADOMICILIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Statoanag"
+      EntityAttrName="Statoanag"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="STATOANAG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtritcont"
+      EntityAttrName="Dtritcont"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTRITCONT" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtritcont_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtritcont_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtritcont_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtconscont"
+      EntityAttrName="Dtconscont"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DTCONSCONT" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtconscont_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtconscont_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtconscont_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Zona"
+      EntityAttrName="Zona"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ZONA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DaConfermare"
+      EntityAttrName="DaConfermare"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="DA_CONFERMARE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NonSpedireReferto"
+      EntityAttrName="NonSpedireReferto"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="NON_SPEDIRE_REFERTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NonSpedireReferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettInvito"
+      EntityAttrName="RaccLettInvito"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="RACC_LETT_INVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RaccLettInvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettReferto"
+      EntityAttrName="RaccLettReferto"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="RACC_LETT_REFERTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RaccLettReferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sollecitare"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="SOLLECITARE"
+      Expression="SOLLECITARE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TestProposto"
+      PrecisionRule="true"
+      EntityAttrName="TestProposto"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="TEST_PROPOSTO">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TestProposto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RoundindivHpv"
+      PrecisionRule="true"
+      EntityAttrName="RoundindivHpv"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="ROUNDINDIV_HPV">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RoundindivHpv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeComRes"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComRes"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="RELEASE_CODE_COM_RES"/>
+   <ViewAttribute
+      Name="ReleaseCodeComDom"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComDom"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="RELEASE_CODE_COM_DOM"/>
+   <ViewAttribute
+      Name="Otp"
+      PrecisionRule="true"
+      EntityAttrName="Otp"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="OTP"/>
+   <ViewAttribute
+      Name="Confermato"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Confermato"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CONFERMATO">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Confermato_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NoteCittadino"
+      PrecisionRule="true"
+      EntityAttrName="NoteCittadino"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="NOTE_CITTADINO">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NoteCittadino_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MotivoId"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MOTIVO_ID"
+      Expression="MOTIVO_ID"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="MotivoGruppo"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="MOTIVO_GRUPPO"
+      Expression="MOTIVO_GRUPPO"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MotivoIdcnfref"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MOTIVO_IDCNFREF"
+      Expression="MOTIVO_IDCNFREF"
+      SQLType="NUMERIC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MotivoIdcnfref_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODICEREGMEDICO"/>
+   <ViewAttribute
+      Name="Codclassepop"
+      EntityAttrName="Codclassepop"
+      EntityUsage="Sogg_SoInvito"
+      AliasName="CODCLASSEPOP">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chiave"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CHIAVE"
+      Expression="CHIAVE"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Chiave_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Sogg_StInvitiAllegView"
+      ViewLink="model.soggetto.Sogg_SoInvitoAllegatoLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false">
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="SoInvMotivoView"
+      ViewLink="model.inviti.FK_SO_INV_MOTIVO_INVITOViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_SoInvitoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

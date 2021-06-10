@@ -1,0 +1,428 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.ref_colpo2livBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.REFERTAZIONE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Ref_colpo2livAction.frmReferto}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:switcher id="s1" facetName="#{bindings.Idreferto.inputValue==null?'da_creare':'esiste'}">
+                        <f:facet name="da_creare">
+                            <af:showDetailHeader messageType="info" text="Nessun referto inserito" disclosed="true"
+                                                 id="sdh1" styleClass="AFStretchWidth"
+                                                 inlineStyle="font-weight:bold; background-color:InfoBackground;">
+                                <af:outputFormatted value="Per inserire un referto cliccare su 'Nuovo referto'" id="of1"
+                                                    styleUsage="instruction" rendered="true"
+                                                    inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:button text="Nuovo referto" id="bcreateref"
+                                                   actionListener="#{Ref_colpo2livAction.onCreateReferto}"/>
+                                        <af:button text="Chiudi" id="b2" action="to_ref_ricerca"/>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:showDetailHeader>
+                        </f:facet>
+                        <f:facet name="esiste">
+                            <af:panelStretchLayout id="psl1" topHeight="220px">
+                                <f:facet name="start"/>
+                                <f:facet name="end"/>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pgl1" layout="vertical">
+                                        <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                                     inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                                     styleClass="no_border">
+                                            <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                                 inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                                 styleClass="AFStretchWidth">
+                                                <af:panelGroupLayout id="pgl8">
+                                                    <af:icon name="folder" id="i2" styleClass="banner_closed"
+                                                             rendered="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                                    <af:icon name="folder" id="i1" styleClass="banner_open"
+                                                             rendered="#{bindings.Completo.inputValue=='1'?false:true}"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                                     inlineStyle="background-color:#3a76cb;">
+                                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                                    id="pt_ol1" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                                    id="ol4" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                    <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                                    id="ol1"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                    <af:outputLabel value="Raccomandazione: #{bindings.Descrizione.inputValue}"
+                                                                    id="ol2"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl9131" halign="end" rendered="#{bindings.Idint.attributeValue==null?false:true}">
+                                                    <af:panelLabelAndMessage id="plam311">
+                                                        <af:icon name="Intchiusi" id="i323331"
+                                                                 styleClass="#{bindings.Intchiusi.inputValue==1?'checked_box':'unchecked_box'}"/>
+                                                        <f:facet name="end">
+                                                            <af:outputLabel value="Intervento/i chiuso/i" id="ol331"
+                                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                        </f:facet>
+                                                    </af:panelLabelAndMessage>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </af:panelBox>
+                                        <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                            <af:toolbar id="t1">
+                                                <af:button text="Conferma" id="b1"
+                                                           action="#{Ref_colpo2livAction.onConfirm}"
+                                                           disabled="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                                <af:button text="Annulla" id="b3" action="to_ref_ricerca"
+                                                           immediate="true"/>
+                                                <af:button text="Applica" id="b4"
+                                                           disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                           actionListener="#{Ref_colpo2livAction.onApply}"/>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pgl6" layout="horizontal" halign="end">
+                                            <af:toolbar id="t4">
+                                                <af:button text="Chiudi referto" id="b5"
+                                                           rendered="#{bindings.Completo.inputValue=='1'?false:true}">
+                                                    <af:clientListener method="#{'closeReferto(\''.concat(0).concat('\',\' ').concat(bindings.Dtspedizione.attributeValue).concat('\', \'').concat(bindings.Idallegato.inputValue).concat('\')')}"
+                                                                       type="action"/>
+                                                    <af:serverListener type="onChiudi"
+                                                                       method="#{Ref_colpo2livAction.onClose}"/>
+                                                </af:button>
+                                                <af:button text="Riapri referto" id="b6"
+                                                           action="#{Ref_colpo2livAction.onReopen}"
+                                                           rendered="#{bindings.Completo.inputValue!='1'?false: sessionScope.ref_livello=='2' and sessionScope.SORiaperturaReferti2Liv==true? true: sessionScope.ref_livello!='2' and sessionScope.SORiaperturaReferti1Liv==true?true:false}">
+                                                    <af:clientListener method="#{bindings.Dtspedizione.inputValue != null ? 'askBeforeGoingOn(\'Questo referto ha una lettera che risulta già stampata.\\n Procedere ugualmente con la riapertura?\')': true}"
+                                                                       type="action"/>
+                                                </af:button>
+                                                <af:button text="Cancella referto" id="b7"
+                                                           rendered="#{bindings.Completo.inputValue!='1'?true:false}"
+                                                           action="#{Ref_colpo2livAction.onDeleteReferto}">
+                                                    <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il referto selezionato?')"
+                                                                       type="action"/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pgl79" halign="end" layout="horizontal">
+                                            <af:toolbar id="t5">
+                                                <af:button text="Primo livello" id="b8" useWindow="true"
+                                                           immediate="true" windowEmbedStyle="inlineDocument"
+                                                           windowModalityType="applicationModal" windowHeight="450"
+                                                           windowWidth="900" action="dialog:ref_primolivRelativo"/>
+                                                <af:button text="Recupera lettera" id="b9"
+                                                           rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Completo.inputValue!='1'?false:bindings.Idallegato.attributeValue==null?false:true)}">
+                                                    <af:clientListener method="#{bindings.Dtspedizione.inputValue == null ? 'askBeforeGoingOn(\'Dopo la visualizzazione la lettera risulterà stampata.\\n Visualizzare ugualmente la lettera?\')': true}"
+                                                                       type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Idreferto.inputValue}"
+                                                                            to="#{requestScope.print_referto_idref}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{'2'}"
+                                                                            to="#{requestScope.print_referto_livello}"
+                                                                            type="action"/>
+                                                    <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                   filename="Referto#{bindings.Idreferto.inputValue}.pdf"/>
+                                                </af:button>
+                                                <af:button text="Report riassuntivo" id="b10"
+                                                           rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Completo.inputValue!='1'?false:true)}">
+                                                    <af:fileDownloadActionListener method="#{Ref_colpo2livAction.downloadRiassunto2liv}"
+                                                                                   filename="RefertoRiassuntivo#{bindings.Idreferto.inputValue}.pdf"/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="bottom"/>
+                                <f:facet name="center">
+                                    <af:panelGroupLayout id="pgl2" layout="scroll">
+                                        <af:panelBorderLayout id="pbl1">
+                                            <f:facet name="start">
+                                                <af:panelFormLayout id="pfl1" styleClass="AFStretchWidth"
+                                                                    rendered="#{bindings.Colposcopia.inputValue!='0'?true:false}">
+                                                    <af:inputDate value="#{bindings.Dtcolposcopia.inputValue}"
+                                                                  label="#{bindings.Dtcolposcopia.hints.label}"
+                                                                  styleClass="#{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                  readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                  required="#{bindings.Dtcolposcopia.hints.mandatory}"
+                                                                  columns="#{bindings.Dtcolposcopia.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.Dtcolposcopia.hints.tooltip}"
+                                                                  id="id1">
+                                                        <f:validator binding="#{bindings.Dtcolposcopia.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.Dtcolposcopia.format}"/>
+                                                    </af:inputDate>
+                                                    <af:selectOneChoice value="#{bindings.Idmedcolpo.inputValue}"
+                                                                        label="#{bindings.Idmedcolpo.label}"
+                                                                        required="#{bindings.Idmedcolpo.hints.mandatory}"
+                                                                        styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                        readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                        shortDesc="#{bindings.Idmedcolpo.hints.tooltip}"
+                                                                        id="soc1">
+                                                        <f:selectItems value="#{bindings.Idmedcolpo.items}" id="si1"/>
+                                                        <f:validator binding="#{bindings.Idmedcolpo.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.Idmedcolpo2.inputValue}"
+                                                                        label="#{bindings.Idmedcolpo2.label}"
+                                                                        styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                        readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                        required="#{bindings.Idmedcolpo2.hints.mandatory}"
+                                                                        shortDesc="#{bindings.Idmedcolpo2.hints.tooltip}"
+                                                                        id="soc2">
+                                                        <f:selectItems value="#{bindings.Idmedcolpo2.items}" id="si2"/>
+                                                        <f:validator binding="#{bindings.Idmedcolpo2.validator}"/>
+                                                    </af:selectOneChoice>
+                                                </af:panelFormLayout>
+                                            </f:facet>
+                                            <f:facet name="end">
+                                                <af:panelFormLayout id="pfl2">
+                                                    <f:facet name="footer"/>
+                                                    <af:inputText value="#{bindings.Notecolposcopia.inputValue}"
+                                                                  label="#{bindings.Notecolposcopia.hints.label}"
+                                                                  required="#{bindings.Notecolposcopia.hints.mandatory}"
+                                                                  columns="40"
+                                                                  styleClass="#{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                  readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                  maximumLength="#{bindings.Notecolposcopia.hints.precision}"
+                                                                  shortDesc="#{bindings.Notecolposcopia.hints.tooltip}"
+                                                                  id="it1">
+                                                        <f:validator binding="#{bindings.Notecolposcopia.validator}"/>
+                                                    </af:inputText>
+                                                </af:panelFormLayout>
+                                            </f:facet>
+                                        </af:panelBorderLayout>
+                                        <af:spacer width="10" height="10" id="s2"/>
+                                        <af:panelFormLayout id="pfl3" rows="1" maxColumns="3">
+                                            <f:facet name="footer"/>
+                                            <af:selectOneRadio value="#{bindings.Colposcopia.inputValue}"
+                                                               label="#{bindings.Colposcopia.label}"
+                                                               required="#{bindings.Colposcopia.hints.mandatory}"
+                                                               shortDesc="#{bindings.Colposcopia.hints.tooltip}"
+                                                               styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                               disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                               autoSubmit="true" id="sor1"
+                                                               valueChangeListener="#{Ref_colpo2livAction.onEseguito}">
+                                                <f:selectItems value="#{bindings.Colposcopia.items}" id="si3"/>
+                                                <f:validator binding="#{bindings.Colposcopia.validator}"/>
+                                            </af:selectOneRadio>
+                                            <af:selectOneRadio value="#{bindings.colpo_esito.inputValue}"
+                                                               label="#{viewcontrollerBundle.ESITO}"
+                                                               required="#{bindings.colpo_esito.hints.mandatory}"
+                                                               shortDesc="#{bindings.colpo_esito.hints.tooltip}"
+                                                               styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                               disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                               id="sor2"
+                                                               rendered="#{bindings.Colposcopia.inputValue!='0' and bindings.Colposcopia.inputValue!=ConstantsBean.cod_colpvl_non_es_flogistico and bindings.Colposcopia.inputValue!=ConstantsBean.cod_colpvl_non_es_tecnico?true:false}">
+                                                <f:selectItems value="#{bindings.colpo_esito.items}" id="si4"/>
+                                                <f:validator binding="#{bindings.colpo_esito.validator}"/>
+                                            </af:selectOneRadio>
+                                            <af:panelHeader text="#{viewcontrollerBundle.REPERTI_COLPOSCOPICI_MISCELLANEI}"
+                                                            id="ph39">
+                                                <af:panelCollection id="pc19"
+                                                                    featuresOff="detach freeze wrap viewMenu statusBar"
+                                                                    inlineStyle="width:80%">
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t59"
+                                                                    rendered="#{!(bindings.Completo.inputValue=='1'?true:false)}">
+                                                            <af:button text="#{viewcontrollerBundle.SELEZIONA_TUTTO}"
+                                                                       id="bSelectAllV"
+                                                                       disabled="#{bindings.Ref_SoCnfRef2livCOLPREView1Iterator.estimatedRowCount le 0}"
+                                                                       action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPREView1Iterator','Selected',true)}"/>
+                                                            <af:button text="#{viewcontrollerBundle.NESSUNA_SELEZIONE}"
+                                                                       disabled="#{bindings.Ref_SoCnfRef2livCOLPREView1Iterator.estimatedRowCount le 0}"
+                                                                       id="bDeselectAllV"
+                                                                       action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPREView1Iterator','Selected',false)}"/>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <af:table value="#{bindings.Ref_SoCnfRef2livCOLPREView1.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Ref_SoCnfRef2livCOLPREView1.rangeSize}"
+                                                              emptyText="#{bindings.Ref_SoCnfRef2livCOLPREView1.viewable ? 'Reperti colposcopici miscellanei non trovati.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              fetchSize="#{bindings.Ref_SoCnfRef2livCOLPREView1.rangeSize}"
+                                                              id="t29" columnStretching="last" summary="#{''}"
+                                                              partialTriggers="::bSelectAllV ::bDeselectAllV">
+                                                        <af:column headerText="#{''}" id="c129" width="20">
+                                                            <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                      label="#{row.bindings.Selected.label}"
+                                                                                      disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                                      shortDesc="#{bindings.Ref_SoCnfRef2livCOLPREView1.hints.Selected.tooltip}"
+                                                                                      id="sbc129"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Ref_SoCnfRef2livCOLPREView1.hints.Descrizione.label}"
+                                                                   id="c39" rowHeader="unstyled" width="20"
+                                                                   noWrap="false">
+                                                            <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                           id="it69"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:panelHeader>
+                                        </af:panelFormLayout>
+                                        <af:spacer width="10" height="10" id="s3"/>
+                                        <af:panelBorderLayout id="pbl2">
+                                            <f:facet name="start">
+                                                <af:panelFormLayout id="pfl4">
+                                                    <f:facet name="footer"/>
+                                                    <af:selectOneChoice value="#{bindings.hpv_esito.inputValue}"
+                                                                        label="#{viewcontrollerBundle.HPV}"
+                                                                        required="#{bindings.hpv_esito.hints.mandatory}"
+                                                                        shortDesc="#{bindings.hpv_esito.hints.tooltip}"
+                                                                        styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                        readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                        id="soc4">
+                                                        <f:selectItems value="#{bindings.hpv_esito.items}" id="si7"/>
+                                                        <f:validator binding="#{bindings.hpv_esito.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneRadio value="#{bindings.Precito.inputValue}"
+                                                                       label="#{viewcontrollerBundle.PRELIEVO_CITOLOGICO}"
+                                                                       required="#{bindings.Precito.hints.mandatory}"
+                                                                       shortDesc="#{bindings.Precito.hints.tooltip}"
+                                                                       autoSubmit="true"
+                                                                       styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                       disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                       id="Precito">
+                                                        <f:validator binding="#{bindings.Precito.validator}"/>
+                                                        <f:selectItem id="si19"
+                                                                      itemLabel="#{viewcontrollerBundle.NON_ESEGUITO}"
+                                                                      itemValue="0"/>
+                                                        <f:selectItem id="si191" itemValue="1"
+                                                                      itemLabel="#{viewcontrollerBundle.ESEGUITO}"/>
+                                                    </af:selectOneRadio>
+                                                    <af:selectOneChoice value="#{bindings.GiudizioPap.inputValue}"
+                                                                        label="#{bindings.GiudizioPap.label}"
+                                                                        required="#{bindings.GiudizioPap.hints.mandatory}"
+                                                                        shortDesc="#{bindings.GiudizioPap.hints.tooltip}"
+                                                                        styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                        readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                        disabled="#{bindings.Precito=='0'?true:false}"
+                                                                        autoSubmit="true" id="GiudizioPap"
+                                                                        partialTriggers="Precito">
+                                                        <f:selectItems value="#{bindings.GiudizioPap.items}" id="si5"/>
+                                                        <f:validator binding="#{bindings.GiudizioPap.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.PositivoPap.inputValue}"
+                                                                        label="#{bindings.PositivoPap.label}"
+                                                                        required="#{bindings.PositivoPap.hints.mandatory}"
+                                                                        shortDesc="#{bindings.PositivoPap.hints.tooltip}"
+                                                                        styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                        readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                        disabled="#{bindings.Precito=='0'?true: bindings.GiudizioPap.inputValue==ConstantsBean.cod_giudia_positivo_2l?false:true}"
+                                                                        partialTriggers="Precito GiudizioPap" id="soc3">
+                                                        <f:selectItems value="#{bindings.PositivoPap.items}" id="si6"/>
+                                                        <f:validator binding="#{bindings.PositivoPap.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:panelCollection id="pc199" partialTriggers="::Precito"
+                                                                        featuresOff="detach freeze wrap viewMenu statusBar"
+                                                                        inlineStyle="width:400px">
+                                                        <f:facet name="toolbar">
+                                                            <af:toolbar id="t599"
+                                                                        rendered="#{!(bindings.Completo.inputValue=='1'?true:false)}">
+                                                                <af:button text="#{viewcontrollerBundle.SELEZIONA_TUTTO}"
+                                                                           id="bSelectAllprecito"
+                                                                           disabled="#{bindings.Ref_SoCnfRef2livCOLPPCView1Iterator.estimatedRowCount le 0 or bindings.Completo.inputValue=='1'?true:(bindings.Precito=='0'?true:false)}"
+                                                                           action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPPCView1Iterator','Selected',true)}"/>
+                                                                <af:button text="#{viewcontrollerBundle.NESSUNA_SELEZIONE}"
+                                                                           disabled="#{bindings.Ref_SoCnfRef2livCOLPPCView1Iterator.estimatedRowCount le 0 or bindings.Completo.inputValue=='1'?true:(bindings.Precito=='0'?true:false)}"
+                                                                           id="bDeselectAllprecito"
+                                                                           action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPPCView1Iterator','Selected',false)}"/>
+                                                            </af:toolbar>
+                                                        </f:facet>
+                                                        <af:table value="#{bindings.Ref_SoCnfRef2livCOLPPCView1.collectionModel}"
+                                                                  var="row"
+                                                                  rows="#{bindings.Ref_SoCnfRef2livCOLPPCView1.rangeSize}"
+                                                                  emptyText="#{bindings.Ref_SoCnfRef2livCOLPPCView1.viewable ? 'Dati di prelievo citologico non trovati.' : 'Access Denied.'}"
+                                                                  rowBandingInterval="0"
+                                                                  fetchSize="#{bindings.Ref_SoCnfRef2livCOLPPCView1.rangeSize}"
+                                                                  id="t299" columnStretching="last" summary="#{''}"
+                                                                  partialTriggers="::bSelectAllprecito ::bDeselectAllprecito :::Precito">
+                                                            <af:column headerText="#{''}" id="c1299" width="20">
+                                                                <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                          label="#{row.bindings.Selected.label}"
+                                                                                          disabled="#{bindings.Completo.inputValue=='1'?true:(bindings.Precito=='0'?true:false)}"
+                                                                                          shortDesc="#{bindings.Ref_SoCnfRef2livCOLPPCView1.hints.Selected.tooltip}"
+                                                                                          id="sbc1299"/>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Ref_SoCnfRef2livCOLPPCView1.hints.Descrizione.label}"
+                                                                       id="c399" rowHeader="unstyled" width="20"
+                                                                       noWrap="false">
+                                                                <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                               id="it699"/>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                </af:panelFormLayout>
+                                            </f:facet>
+                                            <f:facet name="end">
+                                                <af:panelFormLayout id="pfl5">
+                                                    <f:facet name="footer"/>
+                                                    <af:selectOneRadio value="#{bindings.Prebio.inputValue}"
+                                                                       label="#{viewcontrollerBundle.PRELIEVO_CITOLOGICO}"
+                                                                       required="#{bindings.Prebio.hints.mandatory}"
+                                                                       shortDesc="#{bindings.Prebio.hints.tooltip}"
+                                                                       autoSubmit="true"
+                                                                       styleClass="choiceInTable #{bindings.Completo.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                       disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                       id="Prebio">
+                                                        <f:validator binding="#{bindings.Prebio.validator}"/>
+                                                        <f:selectItem id="si199"
+                                                                      itemLabel="#{viewcontrollerBundle.NON_ESEGUITO}"
+                                                                      itemValue="0"/>
+                                                        <f:selectItem id="si1919" itemValue="1"
+                                                                      itemLabel="#{viewcontrollerBundle.ESEGUITO}"/>
+                                                    </af:selectOneRadio>
+                                                    <af:panelCollection id="pc1999" partialTriggers="::Prebio"
+                                                                        featuresOff="detach freeze wrap viewMenu statusBar"
+                                                                        inlineStyle="width:400px">
+                                                        <f:facet name="toolbar">
+                                                            <af:toolbar id="t5999"
+                                                                        rendered="#{!(bindings.Completo.inputValue=='1'?true:false)}">
+                                                                <af:button text="#{viewcontrollerBundle.SELEZIONA_TUTTO}"
+                                                                           id="bSelectAllPrebio"
+                                                                           disabled="#{bindings.Ref_SoCnfRef2livCOLPPBView1Iterator.estimatedRowCount le 0 or bindings.Completo.inputValue=='1'?true:(bindings.Prebio=='0'?true:false)}"
+                                                                           action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPPBView1Iterator','Selected',true)}"/>
+                                                                <af:button text="#{viewcontrollerBundle.NESSUNA_SELEZIONE}"
+                                                                           disabled="#{bindings.Ref_SoCnfRef2livCOLPPBView1Iterator.estimatedRowCount le 0 or bindings.Completo.inputValue=='1'?true:(bindings.Prebio=='0'?true:false)}"
+                                                                           id="bDeselectAllPrebio"
+                                                                           action="#{Utility.selectAllCheckboxValueChange('Ref_SoCnfRef2livCOLPPBView1Iterator','Selected',false)}"/>
+                                                            </af:toolbar>
+                                                        </f:facet>
+                                                        <af:table value="#{bindings.Ref_SoCnfRef2livCOLPPBView1.collectionModel}"
+                                                                  var="row"
+                                                                  rows="#{bindings.Ref_SoCnfRef2livCOLPPBView1.rangeSize}"
+                                                                  emptyText="#{bindings.Ref_SoCnfRef2livCOLPPBView1.viewable ? 'Dati di prelievo citologico non trovati.' : 'Access Denied.'}"
+                                                                  rowBandingInterval="0"
+                                                                  fetchSize="#{bindings.Ref_SoCnfRef2livCOLPPBView1.rangeSize}"
+                                                                  id="t2999" columnStretching="last" summary="#{''}"
+                                                                  partialTriggers="::bSelectAllPrebio ::bDeselectAllPrebio :::Prebio">
+                                                            <af:column headerText="#{''}" id="c12999" width="20">
+                                                                <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                          label="#{row.bindings.Selected.label}"
+                                                                                          disabled="#{bindings.Completo.inputValue=='1'?true:(bindings.Prebio=='0'?true:false)}"
+                                                                                          shortDesc="#{bindings.Ref_SoCnfRef2livCOLPPBView1.hints.Selected.tooltip}"
+                                                                                          id="sbc12999"/>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Ref_SoCnfRef2livCOLPPBView1.hints.Descrizione.label}"
+                                                                       id="c3999" rowHeader="unstyled" width="20"
+                                                                       noWrap="false">
+                                                                <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                               id="it6999"/>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                </af:panelFormLayout>
+                                            </f:facet>
+                                        </af:panelBorderLayout>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:switcher>
+                </f:facet>
+                <f:attribute name="navigation" value="#{Ref_colpo2livAction}"/>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.REFERTO_COLPOSCOPIA}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="stats_tracciatoDWHPageDef"
+                Package="pages.statistiche">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempStatistichePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Stats_paramBeanDataControl"
+              id="Stats_paramBeanDataControlIterator"/>
+    <iterator Binds="ImpExp_SoAziendaView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="ImpExp_SoAziendaView1Iterator"/>
+    <iterator Binds="Impexp_SoLogTransferDWHView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoLogTransferDWHView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="DWH_ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="ImpExp_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="DWH_ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="DWH_periodo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="DWH_periodo"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="S1 Primo semestre"/>
+        <Item Value="S2 Secondo semestre"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="DWH_anno">
+      <AttrNames>
+        <Item Value="DWH_anno"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_paramBeanDataControlIterator" id="DWH_test" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DWH_test"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <tree IterBinding="Impexp_SoLogTransferDWHView1Iterator" id="Impexp_SoLogTransferDWHView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoLogTransferView" Name="Impexp_SoLogTransferDWHView10">
+        <AttrNames>
+          <Item Value="Data"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Impexp_SoLogTransferDWHView1Iterator" id="Execute" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

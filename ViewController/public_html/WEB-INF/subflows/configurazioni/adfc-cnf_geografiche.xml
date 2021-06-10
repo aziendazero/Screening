@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_comuni">
+    <page>/pages/conf/cnf_comuni.jsf</page>
+  </view>
+  <view id="cnf_round_comuni">
+    <page>/pages/conf/cnf_round_comuni.jsf</page>
+  </view>
+  <view id="cnf_province">
+    <page>/pages/conf/cnf_province.jsf</page>
+  </view>
+  <view id="cnf_zone">
+    <page>/pages/conf/cnf_zone.jsf</page>
+  </view>
+  <view id="cnf_stati">
+    <page>/pages/conf/cnf_stati.jsf</page>
+  </view>
+  <view id="cnf_comzone_params">
+    <page>/pages/conf/cnf_comzone_params.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editComune">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editComune.xml</document>
+      <id>cnf_editComune</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="adfc-lovZone">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/zona/adfc-lovZone.xml</document>
+      <id>adfc-lovZone</id>
+    </task-flow-reference>
+    <input-parameter id="__38">
+      <name>onOneReturn</name>
+      <value>#{requestScope.onOneReturn}</value>
+    </input-parameter>
+    <input-parameter id="__39">
+      <name>searchText</name>
+      <value>#{requestScope.searchText}</value>
+    </input-parameter>
+    <run-as-dialog>
+      <display-type>
+        <inline-popup/>
+      </display-type>
+    </run-as-dialog>
+  </task-flow-call>
+  <task-flow-call id="cnf_editZona">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editZona.xml</document>
+      <id>cnf_editZona</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="adfc-lovComune">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/comune/adfc-lovComune.xml</document>
+      <id>adfc-lovComune</id>
+    </task-flow-reference>
+    <input-parameter id="__30">
+      <name>iteratorBinding</name>
+      <value>#{requestScope.iteratorBinding}</value>
+    </input-parameter>
+    <input-parameter id="__32">
+      <name>searchText</name>
+      <value>#{requestScope.searchText}</value>
+    </input-parameter>
+    <input-parameter id="__33">
+      <name>source</name>
+      <value>#{requestScope.source}</value>
+    </input-parameter>
+    <input-parameter id="__34">
+      <name>onOneReturn</name>
+      <value>#{requestScope.onOneReturn}</value>
+    </input-parameter>
+    <run-as-dialog>
+      <display-type>
+        <inline-popup/>
+      </display-type>
+    </run-as-dialog>
+  </task-flow-call>
+  <task-flow-call id="cnf_editProvincia">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editProvincia.xml</document>
+      <id>cnf_editProvincia</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editStato">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editStato.xml</document>
+      <id>cnf_editStato</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <method-call id="queryComune">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="queryZone">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <task-flow-call id="cnf_comzona">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editComzone.xml</document>
+      <id>cnf_editComzone</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>comuni</from-outcome>
+      <to-activity-id>cnf_comuni</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>round_comuni</from-outcome>
+      <to-activity-id>cnf_round_comuni</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>zone</from-outcome>
+      <to-activity-id>cnf_zone</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>province</from-outcome>
+      <to-activity-id>cnf_province</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__6">
+      <from-outcome>stati</from-outcome>
+      <to-activity-id>cnf_stati</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__7">
+      <from-outcome>comzone_params</from-outcome>
+      <to-activity-id>cnf_comzone_params</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__11">
+    <from-activity-id>cnf_comuni</from-activity-id>
+    <control-flow-case id="__12">
+      <from-outcome>creatEditComune</from-outcome>
+      <to-activity-id>cnf_editComune</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__19">
+    <from-activity-id>cnf_zone</from-activity-id>
+    <control-flow-case id="__20">
+      <from-outcome>creatEditZona</from-outcome>
+      <to-activity-id>cnf_editZona</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__25">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__26">
+      <from-outcome>lovZone</from-outcome>
+      <to-activity-id>adfc-lovZone</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__29">
+      <from-outcome>lovComune</from-outcome>
+      <to-activity-id>adfc-lovComune</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__17">
+    <from-activity-id>cnf_province</from-activity-id>
+    <control-flow-case id="__27">
+      <from-outcome>creatEditProvincia</from-outcome>
+      <to-activity-id>cnf_editProvincia</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__28">
+    <from-activity-id>cnf_stati</from-activity-id>
+    <control-flow-case id="__31">
+      <from-outcome>creatEditStato</from-outcome>
+      <to-activity-id>cnf_editStato</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__13">
+    <from-activity-id>cnf_editComune</from-activity-id>
+    <control-flow-case id="__14">
+      <to-activity-id>queryComune</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__15">
+    <from-activity-id>queryComune</from-activity-id>
+    <control-flow-case id="__16">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_comuni</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__21">
+    <from-activity-id>cnf_editZona</from-activity-id>
+    <control-flow-case id="__22">
+      <to-activity-id>queryZone</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__23">
+    <from-activity-id>queryZone</from-activity-id>
+    <control-flow-case id="__24">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_zone</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__36">
+    <from-activity-id>cnf_comzone_params</from-activity-id>
+    <control-flow-case id="__37">
+      <from-outcome>creatEditComzone</from-outcome>
+      <to-activity-id>cnf_comzona</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__8">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_geografiche_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__9">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__10">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_geografiche_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__18">
+    <managed-bean-name>Cnf_comuneBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_comuneBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__35">
+    <managed-bean-name>Cnf_geog</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_geog</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

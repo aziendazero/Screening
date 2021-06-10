@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoRoundAttiviView"
+   Version="12.2.1.11.57"
+   SelectList="Round_SoComune.CODCOM, 
+       Round_SoComune.DESCRIZIONE, 
+       Round_SoComune.ULSS, 
+       Round_SoRoundorg.CODCOM AS CODCOM1, 
+       Round_SoRoundorg.CODSCR, 
+       Round_SoRoundorg.NUMROUND, 
+       Round_SoRoundorg.DTINIZIO, 
+       Round_SoRoundorg.DTFINE, 
+       Round_SoRoundorg.DTPRIMOINVITO, 
+       Round_SoRoundorg.DTULTINVITO, 
+       Round_SoRoundorg.DTULTSOLLECITO, 
+       Round_SoComune.RELEASE_CODE, 
+       Round_SoRoundorg.RELEASE_CODE_COM"
+   FromList="SO_COMUNE Round_SoComune, SO_ROUNDORG Round_SoRoundorg"
+   Where="Round_SoComune.RELEASE_CODE = Round_SoRoundorg.RELEASE_CODE_COM(+) and NOT EXISTS (SELECT 1 FROM SO_ROUNDORG R WHERE R.RELEASE_CODE_COM= Round_SoComune.RELEASE_CODE AND  R.codscr=Round_SoRoundorg.CODSCR AND R.numround>Round_SoRoundorg.NUMROUND)"
+   OrderBy="Round_SoComune.DESCRIZIONE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.round.Round_SoRoundAttiviViewImpl"
+   FetchMode="FETCH_ALL"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.round.common.Round_SoRoundAttiviViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Round_SoComune"
+      Entity="model.round.Round_SoComune" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoRoundorg"
+      Entity="model.round.Round_SoRoundorg"
+      SourceUsage="model.round.Round_SoRoundAttiviView.Round_SoComune"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoComune"
+      AliasName="CODCOM" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codcom_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoComune"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoComune"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codscr"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numround"
+      IsNotNull="true"
+      EntityAttrName="Numround"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="NUMROUND" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Numround_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinizio"
+      IsNotNull="true"
+      EntityAttrName="Dtinizio"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTINIZIO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtinizio_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtinizio_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtinizio_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfine"
+      EntityAttrName="Dtfine"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTFINE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfine_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtfine_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtfine_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprimoinvito"
+      EntityAttrName="Dtprimoinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTPRIMOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultinvito"
+      EntityAttrName="Dtultinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultsollecito"
+      EntityAttrName="Dtultsollecito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune"
+      AliasName="RELEASE_CODE"/>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeCom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="RELEASE_CODE_COM"/>
+   <ViewLinkAccessor
+      Name="Round_SoRoundorgView"
+      ViewLink="model.round.Round_RoundAttiviTuttiRoundLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.round.common.Round_SoRoundAttiviViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

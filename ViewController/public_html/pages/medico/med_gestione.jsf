@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="med_gestione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Med_gestioneAction.mediciForm}" defaultCommand="pt1:b1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                        <af:panelFormLayout id="pfl1" maxColumns="3" rows="2" partialTriggers="b2">
+                            <f:facet name="footer">
+                                <af:panelGroupLayout id="pgl2" layout="horizontal" halign="start">
+                                    <af:toolbar id="t1">
+                                        <af:button text="Cerca" id="b1" actionListener="#{Med_gestioneAction.cerca}"/>
+                                        <af:button text="Reimposta" id="b2"
+                                                   actionListener="#{Med_gestioneAction.reimposta}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            <af:inputText label="Cognome medico" id="it1" value="#{bindings.cognome.inputValue}">
+                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                <f:validator binding="#{bindings.cognome.validator}"/>
+                            </af:inputText>
+                            <af:inputText label="Codice comune" id="it4" disabled="true"
+                                          binding="#{Med_gestioneAction.codiceComune}"
+                                          value="#{bindings.codCom.inputValue}">
+                                <f:validator binding="#{bindings.codCom.validator}"/>
+                            </af:inputText>
+                            <af:inputText label="Nome medico" id="it2" value="#{bindings.nome.inputValue}">
+                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                <f:validator binding="#{bindings.nome.validator}"/>
+                            </af:inputText>
+                            <af:panelLabelAndMessage label="Comune" id="plam1">
+                                <af:inputText label="Comune" id="it5" value="#{bindings.desCom.inputValue}" simple="true"
+                                              columns="60" binding="#{Med_gestioneAction.descComune}">
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                    <f:validator binding="#{bindings.desCom.validator}"/>
+                                </af:inputText>
+                                <f:facet name="end">
+                                    <af:link id="l1" icon="/images/search_16.png" iconPosition="leading"
+                                             action="#{Med_gestioneAction.chDescom}" inlineStyle="padding: 1px;"
+                                             shortDesc="Cerca comune" useWindow="true"
+                                             windowHeight="650" windowWidth="800"
+                                             returnListener="#{Med_gestioneAction.lovComuneReturnListener}">
+                                        <af:setPropertyListener from="#{bindings.desCom.inputValue != null ? bindings.desCom.inputValue : ''}"
+                                                                to="#{requestScope.searchText}" type="action"/>
+                                        <af:setPropertyListener from="VB_desCom"
+                                                                to="#{requestScope.source}" type="action"/>
+                                        <af:setPropertyListener from="#{bindings.Med_ComuneView1Iterator}"
+                                                                to="#{requestScope.iteratorBinding}" type="action"/>
+                                        <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                to="#{requestScope.onClick}" type="action"/>
+                                        <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                to="#{requestScope.onOneReturn}" type="action"/>
+                                    </af:link>
+                                </f:facet>
+                            </af:panelLabelAndMessage>
+                            <af:inputText label="Codice medico" id="it3" value="#{bindings.codMedico.inputValue}">
+                                <f:validator binding="#{bindings.codMedico.validator}"/>
+                                <af:convertNumber groupingUsed="false" pattern="#{bindings.codMedico.format}"/>
+                            </af:inputText>
+                        </af:panelFormLayout>
+                        <af:panelHeader text="Medici" id="ph1">
+                            <f:facet name="context"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap"
+                                                partialTriggers="::b1">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t4">
+                                        <af:group id="g1">
+                                            <af:button text="Dettaglio" id="b3" action="toDettMed"
+                                                       actionListener="#{Med_gestioneAction.onDett}"
+                                                       disabled="#{bindings.Med_ElencoMediciView1Iterator.estimatedRowCount>0?false:true}">
+                                                <af:setPropertyListener from="true" to="#{sessionScope.modMedico}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Cancella" id="b4" disabled="#{bindings.Med_ElencoMediciView1Iterator.estimatedRowCount>0?false:true}">
+                                                <af:showPopupBehavior popupId="p1"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                      partialTriggers="t2">
+                                                <af:dialog id="d2" title="Cancellazione medico"
+                                                           cancelTextAndAccessKey="Annulla" partialTriggers="t2"
+                                                           affirmativeTextAndAccessKey="Cancella"
+                                                           dialogListener="#{Med_gestioneAction.cancella}">
+                                                    <f:facet name="buttonBar"/>
+                                                    <af:outputText value="Si conferma la cancellazione?" id="ot12"/>
+                                                </af:dialog>
+                                            </af:popup>
+                                            <af:spacer width="20" height="10" id="s1"/>
+                                            <af:button text="Stampa selezionato" id="b5"
+                                                       actionListener="#{Med_gestioneAction.resetParamStampa}"
+                                                       action="toCritStampa"
+                                                       disabled="#{bindings.Med_ElencoMediciView1Iterator.estimatedRowCount>0?false:true}">
+                                                <af:setPropertyListener from="true" to="#{sessionScope.medStsing}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Stampe elenco" id="b6" action="toCritStampa"
+                                                       actionListener="#{Med_gestioneAction.resetParamStampa}" visible="#{sessionScope.SOStampaElenco}"
+                                                       disabled="#{bindings.Med_ElencoMediciView1Iterator.estimatedRowCount>0?false:true}">
+                                                <af:setPropertyListener from="false" to="#{sessionScope.medStsing}"
+                                                                        type="action"/>
+                                            </af:button>
+                                        </af:group>
+                                        <af:button text="Nuovo" id="b7" action="#{Med_gestioneAction.onNuovo}">
+                                            <af:setPropertyListener to="#{sessionScope.modMedico}" from="false"
+                                                                    type="action"/>
+                                        </af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Med_ElencoMediciView1.collectionModel}" var="row"
+                                          rows="#{bindings.Med_ElencoMediciView1.rangeSize}"
+                                          emptyText="#{bindings.Med_ElencoMediciView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Med_ElencoMediciView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Med_ElencoMediciView1.collectionModel.makeCurrent}"
+                                          rowSelection="single" fetchSize="#{bindings.Med_ElencoMediciView1.rangeSize}"
+                                          id="t2" scrollPolicy="page" binding="#{Med_gestioneAction.tabMedici}">
+                                    <af:column headerText="#{bindings.Med_ElencoMediciView1.hints.Cognome.label}"
+                                               id="c1" width="200">
+                                        <af:outputText value="#{row.Cognome}"
+                                                       shortDesc="#{bindings.Med_ElencoMediciView1.hints.Cognome.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Med_ElencoMediciView1.hints.Nome.label}" id="c2"
+                                               width="200">
+                                        <af:outputText value="#{row.Nome}"
+                                                       shortDesc="#{bindings.Med_ElencoMediciView1.hints.Nome.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Med_ElencoMediciView1.hints.Codiceregmedico.label}"
+                                               id="c3">
+                                        <af:outputText value="#{row.Codiceregmedico}"
+                                                       shortDesc="#{bindings.Med_ElencoMediciView1.hints.Codiceregmedico.tooltip}"
+                                                       id="ot3">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Med_ElencoMediciView1.hints.Codiceregmedico.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Med_ElencoMediciView1.hints.Dtfinevalop.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.Dtfinevalop}"
+                                                       shortDesc="#{bindings.Med_ElencoMediciView1.hints.Dtfinevalop.tooltip}"
+                                                       id="ot4">
+                                            <af:convertDateTime pattern="#{bindings.Med_ElencoMediciView1.hints.Dtfinevalop.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </af:panelHeader>
+                        <af:panelHeader text="Assistiti" id="ph2">
+                            <f:facet name="context"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:table value="#{bindings.Med_ElencoSoggView2.collectionModel}" var="row"
+                                      rows="#{bindings.Med_ElencoSoggView2.rangeSize}"
+                                      emptyText="#{bindings.Med_ElencoSoggView2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0" fetchSize="#{bindings.Med_ElencoSoggView2.rangeSize}"
+                                      id="t3" scrollPolicy="page">
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.Cognome.label}" id="c5"
+                                           width="200">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.Cognome.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.Nome.label}" id="c6"
+                                           width="200">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.Nome.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.DataNascita.label}" id="c7">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.DataNascita.tooltip}"
+                                                   id="ot7">
+                                        <af:convertDateTime pattern="#{bindings.Med_ElencoSoggView2.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.Escl.label}" id="c8">
+                                    <af:outputText value="#{row.Escl}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.Escl.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.Dtapp.label}" id="c9">
+                                    <af:outputText value="#{row.Dtapp}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.Dtapp.tooltip}"
+                                                   id="ot9">
+                                        <af:convertDateTime pattern="#{bindings.Med_ElencoSoggView2.hints.Dtapp.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.DescTpinv.label}" id="c10"
+                                           width="150">
+                                    <af:outputText value="#{row.DescTpinv}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.DescTpinv.tooltip}"
+                                                   id="ot10"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Med_ElencoSoggView2.hints.DescEsito.label}" id="c11">
+                                    <af:outputText value="#{row.DescEsito}"
+                                                   shortDesc="#{bindings.Med_ElencoSoggView2.hints.DescEsito.tooltip}"
+                                                   id="ot11"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelHeader>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Gestione medici"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="navigation" value="#{Med_gestioneAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

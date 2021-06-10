@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfUtentiOperatoriView"
+   Version="12.2.1.11.57"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfUtentiOperatoriViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   SelectList="Cnf_SoCnfUtentiOperatori.IDASSOC, 
+       Cnf_SoCnfUtentiOperatori.USERNAME, 
+       Cnf_SoCnfUtentiOperatori.OPERATORE, 
+       Cnf_SoCnfUtentiOperatori.DATA_INS, 
+       Cnf_SoCnfUtentiOperatori.DATA_MOD, 
+       Cnf_SoCnfUtentiOperatori.OP_INS, 
+       Cnf_SoCnfUtentiOperatori.OP_MOD, 
+       Cnf_SoCnfUtentiOperatori.ULSS, 
+       Cnf_SoCnfUtentiOperatori.TPSCR, 
+       Cnf_SoOpmedico.IDOP, 
+       Cnf_SoOpmedico.COGNOME, 
+       Cnf_SoOpmedico.NOME, 
+       Cnf_SoOpmedico.TITOLO, 
+       Cnf_SoOpmedico.DTFINEVALOPMEDICO, 
+       Cnf_SoCnfTpopmedico.DESCRIZIONE, 
+       Cnf_SoCnfTpopmedico.CODOP AS CODOP1, 
+       Cnf_SoOpmedico.CODOP, 
+       Cnf_SoOpmedico.IDCENTRO"
+   FromList="SO_CNF_UTENTI_OPERATORI Cnf_SoCnfUtentiOperatori, SO_OPMEDICO Cnf_SoOpmedico, SO_CNF_TPOPMEDICO Cnf_SoCnfTpopmedico"
+   Where="(Cnf_SoCnfUtentiOperatori.OPERATORE = Cnf_SoOpmedico.IDOP)     
+AND (Cnf_SoCnfUtentiOperatori.ULSS = Cnf_SoOpmedico.ULSS)     
+AND (Cnf_SoCnfUtentiOperatori.TPSCR = Cnf_SoOpmedico.TPSCR)     
+AND (Cnf_SoCnfTpopmedico.CODOP = Cnf_SoOpmedico.CODOP)"
+   OrderBy="Cnf_SoCnfUtentiOperatori.USERNAME,Cnf_SoCnfUtentiOperatori.ULSS"
+   RowClass="model.conf.Cnf_SoCnfUtentiOperatoriViewRowImpl"
+   MsgBundleClass="model.conf.common.Cnf_SoCnfUtentiOperatoriViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfUtentiOperatori"
+      Entity="model.conf.Cnf_SoCnfUtentiOperatori" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoOpmedico"
+      Entity="model.conf.Cnf_SoOpmedico"
+      SourceUsage="model.conf.Cnf_SoCnfUtentiOperatoriView.Cnf_SoCnfUtentiOperatori"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTpopmedico"
+      Entity="model.conf.Cnf_SoCnfTpopmedico"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idassoc"
+      IsNotNull="true"
+      EntityAttrName="Idassoc"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="IDASSOC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Username"
+      EntityAttrName="Username"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="USERNAME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Operatore"
+      EntityAttrName="Operatore"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="OPERATORE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataIns"
+      EntityAttrName="DataIns"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="DATA_INS"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataIns_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataMod"
+      EntityAttrName="DataMod"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="DATA_MOD"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataMod_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OpIns"
+      EntityAttrName="OpIns"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="OP_INS"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="OpIns_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OpMod"
+      EntityAttrName="OpMod"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="OP_MOD"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="OpMod_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfUtentiOperatori"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idop"
+      PrecisionRule="true"
+      EntityAttrName="Idop"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="IDOP"/>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      AliasName="COGNOME"
+      PrecisionRule="true"
+      EntityAttrName="Cognome"
+      EntityUsage="Cnf_SoOpmedico"/>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      AliasName="NOME"
+      PrecisionRule="true"
+      EntityAttrName="Nome"
+      EntityUsage="Cnf_SoOpmedico"/>
+   <ViewAttribute
+      Name="Titolo"
+      AliasName="TITOLO"
+      PrecisionRule="true"
+      EntityAttrName="Titolo"
+      EntityUsage="Cnf_SoOpmedico"/>
+   <ViewAttribute
+      Name="Dtfinevalopmedico"
+      AliasName="DTFINEVALOPMEDICO"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalopmedico"
+      EntityUsage="Cnf_SoOpmedico">
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMAT
+               ResId="Dtfinevalopmedico_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevalopmedico_FMT_FORMATTER"/>
+            <LABEL
+               ResId="Dtfinevalopmedico_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfTpopmedico"
+      AliasName="DESCRIZIONE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codop1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codop"
+      EntityUsage="Cnf_SoCnfTpopmedico"
+      AliasName="CODOP1"/>
+   <ViewAttribute
+      Name="Codop"
+      PrecisionRule="true"
+      AliasName="CODOP"
+      IsNotNull="true"
+      EntityAttrName="Codop"
+      EntityUsage="Cnf_SoOpmedico"/>
+   <ViewAttribute
+      Name="Idcentro"
+      PrecisionRule="true"
+      AliasName="IDCENTRO"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoOpmedico"/>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idassoc"/>
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfUtentiOperatoriViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

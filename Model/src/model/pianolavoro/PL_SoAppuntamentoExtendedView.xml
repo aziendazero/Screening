@@ -1,0 +1,601 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="PL_SoAppuntamentoExtendedView"
+   Version="12.2.1.11.57"
+   SelectList="PL_SoAppuntamento.IDAPP, 
+       PL_SoAppuntamento.IDCENTRO, 
+       PL_SoAppuntamento.DTAPP, 
+       PL_SoAppuntamento.ORAAPP, 
+       PL_SoAppuntamento.MINAPP, 
+       PL_SoAppuntamento.DISPSLOT, 
+       PL_SoAppuntamento.TPSRC, 
+       PL_SoCentroPrelRef.DESCRIZIONE, 
+       PL_SoCentroPrelRef.IDCENTRO AS IDCENTRO1, 
+       PL_SoCentroPrelRef.INDIRIZZO_RES, 
+       PL_SoSoggetto.INDIRIZZO_DOM, 
+       PL_SoCentroPrelRef.TEL, 
+       PL_SoInvito.CODTS, 
+       PL_SoInvito.IDINVITO, 
+       PL_SoInvito.IDTPINVITO, 
+       PL_SoInvito.CODESITOINVITO, 
+       PL_SoInvito.LIVESITO, 
+       PL_SoInvito.IDAPP AS IDAPP1, 
+       PL_SoCnfTpinvito.DESCRIZIONE AS DESCRIZIONE1, 
+       PL_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       PL_SoCnfTpinvito.ULSS, 
+       PL_SoCnfTpinvito.TPSCR, 
+       PL_SoCnfEsitoinvito.ESITOINVITO, 
+       PL_SoCnfEsitoinvito.CODESITOINVITO AS CODESITOINVITO1, 
+       PL_SoCnfEsitoinvito.LIVESITO AS LIVESITO1, 
+       PL_SoCnfEsitoinvito.ULSS AS ULSS1, 
+       PL_SoCnfEsitoinvito.TPSCR AS TPSCR1, 
+       PL_SoSoggetto.CODTS AS CODTS1, 
+       PL_SoSoggetto.ULSS AS ULSS2, 
+       PL_SoSoggetto.CODCOMSCR, 
+       PL_SoSoggetto.COGNOME, 
+       PL_SoSoggetto.NOME, 
+       PL_SoSoggetto.DATA_NASCITA, 
+       PL_SoSoggetto.INDIRIZZO_SCR, 
+       PL_SoSoggetto.TEL1, 
+       PL_SoSoggetto.TEL2, 
+       PL_SoComune.CODCOM, 
+       PL_SoComune.DESCRIZIONE AS DESCRIZIONE2, 
+       PL_SoComune.ULSS AS ULSS3, 
+       PL_SoComune.CODPR, 
+       Decode(Pl_SoSoggetto.cap_comsrc,null,Pl_SoComune.CAP,Pl_SoSoggetto.cap_comsrc) AS CAP, 
+       PL_SoAccCito1liv.IDINVITO AS IDINVITO1, 
+       PL_SoAccCito1liv.IDACC1LIV, 
+       PL_SoAccCito1liv.NUMVETRINO, 
+       PL_SoSoggetto.CF, 
+       PL_SoComune1.DESCRIZIONE AS DESCRIZIONE3, 
+       PL_SoComune1.CODCOM AS CODCOM1, 
+       PL_SoComune1.CODPR AS CODPR1, 
+       Decode(Pl_SoSoggetto.cap_comdom,null,Pl_SoComune1.CAP,Pl_SoSoggetto.cap_comdom) AS CAP1, 
+       PL_SoComune2.DESCRIZIONE AS DESCRIZIONE4, 
+       PL_SoComune2.CODCOM AS CODCOM2, 
+       PL_SoComune2.CODPR AS CODPR2, 
+       Decode(Pl_SoSoggetto.cap_comres,null,Pl_SoComune2.CAP,Pl_SoSoggetto.cap_comres) AS CAP2, 
+       PL_SoSoggetto.INDIRIZZO_RES AS INDIRIZZO_RES1, 
+       A_SoAccColon1liv.COD_CAMPIONE, 
+       A_SoAccColon1liv.IDACCCO_1LIV, 
+       A_SoAccMammo1liv.IDACCMA_1LIV, 
+       DECODE(PL_SoInvito.TPSCR,'CO',A_SoAccColon1liv.COD_RICHIESTA,'MA',A_SoAccMammo1liv.COD_RICHIESTA,null) AS COD_RICHIESTA"
+   FromList="SO_APPUNTAMENTO PL_SoAppuntamento, SO_CENTRO_PREL_REF PL_SoCentroPrelRef, SO_INVITO PL_SoInvito, SO_CNF_TPINVITO PL_SoCnfTpinvito, SO_CNF_ESITOINVITO PL_SoCnfEsitoinvito, SO_SOGGETTO PL_SoSoggetto, SO_COMUNE PL_SoComune, SO_ACC_CITO1LIV PL_SoAccCito1liv, SO_COMUNE PL_SoComune1, SO_COMUNE PL_SoComune2, SO_ACC_COLON1LIV A_SoAccColon1liv, SO_ACC_MAMMO1LIV A_SoAccMammo1liv"
+   Where="(PL_SoAppuntamento.IDCENTRO = PL_SoCentroPrelRef.IDCENTRO)AND  (PL_SoAppuntamento.IDAPP = PL_SoInvito.IDAPP) AND (PL_SoInvito.IDTPINVITO=PL_SoCnfTpinvito.IDTPINVITO AND PL_SoInvito.ULSS=PL_SoCnfTpinvito.ULSS AND PL_SoInvito.TPSCR=PL_SoCnfTpinvito.TPSCR) AND (PL_SoInvito.CODESITOINVITO=PL_SoCnfEsitoinvito.CODESITOINVITO AND PL_SoInvito.LIVESITO=PL_SoCnfEsitoinvito.LIVESITO AND PL_SoInvito.ULSS=PL_SoCnfEsitoinvito.ULSS AND PL_SoInvito.TPSCR=PL_SoCnfEsitoinvito.TPSCR) AND (PL_SoInvito.CODTS=PL_SoSoggetto.CODTS AND PL_SoInvito.ULSS=PL_SoSoggetto.ULSS) AND (PL_SoSoggetto.CODCOMSCR=PL_SoComune.CODCOM(+) AND PL_SoSoggetto.CODCOMDOM=PL_SoComune1.CODCOM(+) AND PL_SoSoggetto.CODCOMRES=PL_SoComune2.CODCOM(+)) AND (PL_SoAccCito1liv.IDINVITO (+)=PL_SoInvito.IDINVITO) AND (A_SoAccColon1liv.IDINVITO(+)=PL_SoInvito.IDINVITO) AND (A_SoAccMammo1liv.IDINVITO(+)=PL_SoInvito.IDINVITO)"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.pianolavoro.PL_SoAppuntamentoExtendedViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   RowClass="model.pianolavoro.PL_SoAppuntamentoExtendedViewRowImpl"
+   RowInterface="model.pianolavoro.common.PL_SoAppuntamentoExtendedViewRow"
+   ClientRowProxyName="model.pianolavoro.client.PL_SoAppuntamentoExtendedViewRowClient">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <EntityUsage
+      Name="PL_SoAppuntamento"
+      Entity="model.pianolavoro.PL_SoAppuntamento" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoCentroPrelRef"
+      Entity="model.pianolavoro.PL_SoCentroPrelRef"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoAppuntamento"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoInvito"
+      Entity="model.pianolavoro.PL_SoInvito"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoCentroPrelRef"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoCnfTpinvito"
+      Entity="model.pianolavoro.PL_SoCnfTpinvito"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoInvito"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoCnfEsitoinvito"
+      Entity="model.pianolavoro.PL_SoCnfEsitoinvito"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoCnfTpinvito"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoSoggetto"
+      Entity="model.pianolavoro.PL_SoSoggetto"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoCnfEsitoinvito"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoComune"
+      Entity="model.pianolavoro.PL_SoComune"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoSoggetto"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoAccCito1liv"
+      Entity="model.pianolavoro.PL_SoAccCito1liv"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoComune"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoComune1"
+      Entity="model.pianolavoro.PL_SoComune"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoAccCito1liv"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoComune2"
+      Entity="model.pianolavoro.PL_SoComune"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoComune1"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccColon1liv"
+      Entity="model.accettazione.A_SoAccColon1liv"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.PL_SoComune2"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccMammo1liv"
+      Entity="model.accettazione.A_SoAccMammo1liv"
+      SourceUsage="model.pianolavoro.PL_SoAppuntamentoExtendedView.A_SoAccColon1liv"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idapp"
+      IsNotNull="true"
+      EntityAttrName="Idapp"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      IsNotNull="true"
+      EntityAttrName="Dtapp"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="DTAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      IsNotNull="true"
+      EntityAttrName="Oraapp"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dispslot"
+      IsNotNull="true"
+      EntityAttrName="Dispslot"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="DISPSLOT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpsrc"
+      IsNotNull="true"
+      EntityAttrName="Tpsrc"
+      EntityUsage="PL_SoAppuntamento"
+      AliasName="TPSRC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Centro"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoCentroPrelRef"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="PL_SoCentroPrelRef"
+      AliasName="IDCENTRO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      IsNotNull="true"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="PL_SoCentroPrelRef"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoDom"
+      EntityAttrName="IndirizzoDom"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="INDIRIZZO_DOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel"
+      IsNotNull="true"
+      EntityAttrName="Tel"
+      EntityUsage="PL_SoCentroPrelRef"
+      AliasName="TEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="PL_SoInvito"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsNotNull="true"
+      EntityAttrName="Idinvito"
+      EntityUsage="PL_SoInvito"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="PL_SoInvito"
+      AliasName="IDTPINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="PL_SoInvito"
+      AliasName="CODESITOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito"
+      EntityAttrName="Livesito"
+      EntityUsage="PL_SoInvito"
+      AliasName="LIVESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idapp1"
+      EntityAttrName="Idapp"
+      EntityUsage="PL_SoInvito"
+      AliasName="IDAPP1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoInvito"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoCnfTpinvito"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="PL_SoCnfTpinvito"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoCnfTpinvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="PL_SoCnfTpinvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitoinvito"
+      IsNotNull="true"
+      EntityAttrName="Esitoinvito"
+      EntityUsage="PL_SoCnfEsitoinvito"
+      AliasName="ESITOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito1"
+      IsNotNull="true"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="PL_SoCnfEsitoinvito"
+      AliasName="CODESITOINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito1"
+      IsNotNull="true"
+      EntityAttrName="Livesito"
+      EntityUsage="PL_SoCnfEsitoinvito"
+      AliasName="LIVESITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoCnfEsitoinvito"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="PL_SoCnfEsitoinvito"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts1"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="CODTS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomscr"
+      IsNotNull="true"
+      EntityAttrName="Codcomscr"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="CODCOMSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="COGNOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="NOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsNotNull="true"
+      EntityAttrName="DataNascita"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="DATA_NASCITA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoScr"
+      IsNotNull="true"
+      EntityAttrName="IndirizzoScr"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="INDIRIZZO_SCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      EntityAttrName="Tel1"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="TEL1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      EntityAttrName="Tel2"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="TEL2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="PL_SoComune"
+      AliasName="CODCOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comune"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoComune"
+      AliasName="DESCRIZIONE2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoComune"
+      AliasName="ULSS3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="PL_SoComune"
+      AliasName="CODPR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP"
+      Expression="Decode(Pl_SoSoggetto.cap_comsrc,null,Pl_SoComune.CAP,Pl_SoSoggetto.cap_comsrc)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito1"
+      EntityAttrName="Idinvito"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="IDINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idacc1liv"
+      IsNotNull="true"
+      EntityAttrName="Idacc1liv"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="IDACC1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numvetrino"
+      EntityAttrName="Numvetrino"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="NUMVETRINO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      EntityAttrName="Cf"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="CF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoComune1"
+      AliasName="DESCRIZIONE3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="PL_SoComune1"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr1"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="PL_SoComune1"
+      AliasName="CODPR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap1"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP1"
+      Expression="Decode(Pl_SoSoggetto.cap_comdom,null,Pl_SoComune1.CAP,Pl_SoSoggetto.cap_comdom)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoComune2"
+      AliasName="DESCRIZIONE4" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom2"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="PL_SoComune2"
+      AliasName="CODCOM2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr2"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="PL_SoComune2"
+      AliasName="CODPR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap2"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP2"
+      Expression="Decode(Pl_SoSoggetto.cap_comres,null,Pl_SoComune2.CAP,Pl_SoSoggetto.cap_comres)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes1"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="PL_SoSoggetto"
+      AliasName="INDIRIZZO_RES1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodCampione"
+      EntityAttrName="CodCampione"
+      EntityUsage="A_SoAccColon1liv"
+      AliasName="COD_CAMPIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idaccco1liv"
+      IsNotNull="true"
+      EntityAttrName="Idaccco1liv"
+      EntityUsage="A_SoAccColon1liv"
+      AliasName="IDACCCO_1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idaccma1liv"
+      IsNotNull="true"
+      EntityAttrName="Idaccma1liv"
+      EntityUsage="A_SoAccMammo1liv"
+      AliasName="IDACCMA_1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodRichiesta"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COD_RICHIESTA"
+      Expression="DECODE(PL_SoInvito.TPSCR,&#39;CO&#39;,A_SoAccColon1liv.COD_RICHIESTA,&#39;MA&#39;,A_SoAccMammo1liv.COD_RICHIESTA,null)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="PL_SoEsclusioneDEFExtendedView"
+      ViewLink="model.pianolavoro.PL_AppExtendedEsclusioniDEFLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="PL_SoEsclusioneTEMPExtendedView"
+      ViewLink="model.pianolavoro.PL_AppExtendedEsclusioniTEMPLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ClientRowInterface
+      Name="__rowClientInterface">
+      <Method
+         Name="getPL_SoEsclusioneDEFExtendedView"
+         MethodName="getPL_SoEsclusioneDEFExtendedView">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.RowIterator"/>
+      </Method>
+      <Method
+         Name="getPL_SoEsclusioneTEMPExtendedView"
+         MethodName="getPL_SoEsclusioneTEMPExtendedView">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.RowIterator"/>
+      </Method>
+   </ClientRowInterface>
+</ViewObject>

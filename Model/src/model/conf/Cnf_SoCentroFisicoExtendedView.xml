@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCentroFisicoExtendedView"
+   Version="12.2.1.11.57"
+   OrderBy="DESCR_BREVE"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.conf.Cnf_SoCentroFisicoExtendedViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT Cnf_SoCnfCentroFisico.IDCENTRO, 
+       Cnf_SoCnfCentroFisico.DESCR_BREVE, 
+       Cnf_SoCnfCentroFisico.DESCRIZIONE, 
+       Cnf_SoCnfCentroFisico.IDCENTRO1LIV, 
+       Cnf_SoCnfCentroFisico.IDCENTRO2LIV, 
+       Cnf_SoCnfCentroFisico.ULSS, 
+       Cnf_SoCnfCentroFisico.TPSCR,
+C1.DESCRBREVE CENTRO1,
+C2.DESCRBREVE CENTRO2
+FROM SO_CNF_CENTRO_FISICO Cnf_SoCnfCentroFisico, SO_CENTRO_PREL_REF C1, SO_CENTRO_PREL_REF C2
+WHERE Cnf_SoCnfCentroFisico.IDCENTRO1LIV=C1.IDCENTRO(+)
+ AND Cnf_SoCnfCentroFisico.IDCENTRO2LIV=C2.IDCENTRO(+)
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idcentro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO"
+      Expression="IDCENTRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescrBreve"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCR_BREVE"
+      Expression="DESCR_BREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DescrBreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO1LIV"
+      Expression="IDCENTRO1LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro1liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO2LIV"
+      Expression="IDCENTRO2LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro2liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Centro1"
+      IsPersistent="false"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CENTRO1"
+      Expression="CENTRO1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Centro1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Centro2"
+      IsPersistent="false"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CENTRO2"
+      Expression="CENTRO2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Centro2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idcentro" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfCentroFisicoView"
+      ViewLink="model.FK_centrofisico_Link"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCentroFisicoExtendedViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

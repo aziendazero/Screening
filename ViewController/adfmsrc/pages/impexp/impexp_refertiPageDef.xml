@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="impexp_refertiPageDef"
+                Package="pages.impexp" ControllerClass="view.util.MyAdfListener">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Impexp_SoCnfImpexpView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ImpexpBeanDataControl" id="ImpexpBeanDataControlIterator"/>
+    <iterator Binds="Impexp_SoCnfImpexpTpdipView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpTpdipView1Iterator"/>
+    <iterator Binds="Impexp_SoCnfCentriImpexpView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfCentriImpexpView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Cnf_selectionBean" id="Cnf_selectionBeanIterator"/>
+    <iterator Binds="Impexp_SoImportRefertiHPVView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiHPVView1Iterator"/>
+    <iterator Binds="Impexp_SoImportRefertiView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiView1Iterator"/>
+    <iterator Binds="Impexp_SoImportRefertiCOView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiCOView1Iterator"/>
+    <iterator Binds="Impexp_SoImportRefertiMAView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiMAView1Iterator"/>
+    <iterator Binds="Impexp_SoImportRefertiR2View1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiR2View1Iterator"/>
+    <iterator Binds="Impexp_SoImportRefertiA2View1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportRefertiA2View1Iterator"/>
+    <methodIterator Binds="findFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findFileListIterator" Refresh="ifNeeded"/>
+    <methodIterator Binds="findOLDFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findOLDFileListIterator" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dttransfer">
+      <AttrNames>
+        <Item Value="Dttransfer"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dtimport">
+      <AttrNames>
+        <Item Value="Dtimport"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="tpdip" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Impexp_SoCnfImpexpTpdipView1Iterator">
+      <AttrNames>
+        <Item Value="tpdip"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Tpdip"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Destinazione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="data">
+      <AttrNames>
+        <Item Value="data"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="LogFile">
+      <AttrNames>
+        <Item Value="LogFile"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_selectionBeanIterator" id="inClause">
+      <AttrNames>
+        <Item Value="inClause"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="ImpExp_AppModuleDataControl" RequiresUpdateModel="true"
+            Action="commitTransaction"/>
+    <tree IterBinding="Impexp_SoImportRefertiHPVView1Iterator" id="Impexp_SoImportRefertiHPVView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiHPVView" Name="Impexp_SoImportRefertiHPVView10">
+        <AttrNames>
+          <Item Value="Tpreferto"/>
+          <Item Value="Livello"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Codts"/>
+          <Item Value="DataReferto"/>
+          <Item Value="Esito"/>
+          <Item Value="Sugg"/>
+          <Item Value="QuantitaAbs"/>
+          <Item Value="QuantitaRel"/>
+          <Item Value="Laboratorio"/>
+          <Item Value="TipiVirus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoImportRefertiView1Iterator" id="Impexp_SoImportRefertiView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiView" Name="Impexp_SoImportRefertiView10">
+        <AttrNames>
+          <Item Value="TipoAcc"/>
+          <Item Value="CognomeNome"/>
+          <Item Value="Datanas"/>
+          <Item Value="Codts"/>
+          <Item Value="DataReferto"/>
+          <Item Value="AnnoAcc"/>
+          <Item Value="Snotop"/>
+          <Item Value="Snomo2"/>
+          <Item Value="Lettore"/>
+          <Item Value="Firma"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoImportRefertiCOView1Iterator" id="Impexp_SoImportRefertiCOView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiCOView" Name="Impexp_SoImportRefertiCOView10">
+        <AttrNames>
+          <Item Value="Idrichiesta"/>
+          <Item Value="Idcampione"/>
+          <Item Value="Dataacc"/>
+          <Item Value="Codprov"/>
+          <Item Value="Codservdia"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="Datanasc"/>
+          <Item Value="Sesso"/>
+          <Item Value="Codts"/>
+          <Item Value="Codanag"/>
+          <Item Value="Codfisc"/>
+          <Item Value="Codcomnasc"/>
+          <Item Value="Esito_qualitativo"/>
+          <Item Value="Quantita"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoImportRefertiMAView1Iterator" id="Impexp_SoImportRefertiMAView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiMAView" Name="Impexp_SoImportRefertiMAView10">
+        <AttrNames>
+          <Item Value="TipoReferto"/>
+          <Item Value="Livello"/>
+          <Item Value="Tessera"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataReferto"/>
+          <Item Value="L1Esito"/>
+          <Item Value="L2Esito"/>
+          <Item Value="REsito"/>
+          <Item Value="CEsito"/>
+          <Item Value="AnamRilevata"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoImportRefertiR2View1Iterator" id="Impexp_SoImportRefertiR2View1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiR2View" Name="Impexp_SoImportRefertiR2View10">
+        <AttrNames>
+          <Item Value="Tessera"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Ulss"/>
+          <Item Value="Cf"/>
+          <Item Value="IdInterno"/>
+          <Item Value="CodiceRichiesta"/>
+          <Item Value="TipoReferto"/>
+          <Item Value="DataReferto"/>
+          <Item Value="Livello"/>
+          <Item Value="Mammografia"/>
+          <Item Value="MammoData"/>
+          <Item Value="MammoMedico"/>
+          <Item Value="EsameStandard"/>
+          <Item Value="Ecografia"/>
+          <Item Value="EcoData"/>
+          <Item Value="EcoMedico"/>
+          <Item Value="EsameClinico"/>
+          <Item Value="CliData"/>
+          <Item Value="CliMedico"/>
+          <Item Value="Consiglio"/>
+          <Item Value="Note"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoImportRefertiA2View1Iterator" id="Impexp_SoImportRefertiA2View1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportRefertiA2View" Name="Impexp_SoImportRefertiA2View10">
+        <AttrNames>
+          <Item Value="Tessera"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Ulss"/>
+          <Item Value="Cf"/>
+          <Item Value="IdInterno"/>
+          <Item Value="CodiceRichiesta"/>
+          <Item Value="TipoReferto"/>
+          <Item Value="DataReferto"/>
+          <Item Value="Livello"/>
+          <Item Value="TipoEsame"/>
+          <Item Value="DataEsame"/>
+          <Item Value="Prelevatore"/>
+          <Item Value="NoteEsame"/>
+          <Item Value="Medico1"/>
+          <Item Value="Medico2"/>
+          <Item Value="Localizzazione"/>
+          <Item Value="Sede"/>
+          <Item Value="Esito"/>
+          <Item Value="NoteEsito"/>
+          <Item Value="Calcificazioni"/>
+          <Item Value="Esecuzione"/>
+          <Item Value="AltraTec"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="findFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findFileList_ImpexpProviderDataControl_dataProvider_findFileList_result"/>
+    <tree IterBinding="findFileListIterator" id="ImpexpFile">
+      <nodeDefinition DefName="model.bean.ImpexpFile" Name="ImpexpFile0">
+        <AttrNames>
+          <Item Value="viewName"/>
+          <Item Value="name"/>
+          <Item Value="status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="findOLDFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findOLDFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findOLDFileList_ImpexpProviderDataControl_dataProvider_findOLDFileList_result"/>
+    <tree IterBinding="findOLDFileListIterator" id="ImpexpFile1">
+      <nodeDefinition DefName="model.bean.ImpexpFile" Name="ImpexpFile10">
+        <AttrNames>
+          <Item Value="viewName"/>
+          <Item Value="status"/>
+          <Item Value="name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="idcentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Impexp_SoCnfCentriImpexpView1Iterator">
+      <AttrNames>
+        <Item Value="idcentro"/>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentroref"/>
+        <Item Value="Suffisso"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

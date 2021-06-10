@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_centri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.centroForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" inlineStyle="border-right-color:transparent;">
+                                <af:link text="Agenda" id="l1" action="#{Cnf_centriAction.onAgendaGiorno}"/>
+                                <af:separator id="s1"/>
+                                <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t2"
+                                                    rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}">
+                                            <af:group id="g1">
+                                                <af:button text="Modifica" id="b1" action="creatEditCentro"
+                                                           actionListener="#{Cnf_centriAction.onDettCentro}">
+                                                    <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                            type="action"/>
+                                                </af:button>
+                                                <af:button text="Cancella" id="b2" action="creatEditCentro">
+                                                    <af:showPopupBehavior popupId="p1"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                          partialTriggers="t1">
+                                                    <af:dialog id="d2" title="Cancella centro"
+                                                               cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                               affirmativeTextAndAccessKey="Cancella"
+                                                               dialogListener="#{ParentBackingBean.deleteAction}">
+                                                        <f:facet name="buttonBar"/>
+                                                        <h:outputText value="Cancellare definitivamente il seguente centro?"
+                                                                      id="ot5"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:group>
+                                            <af:button text="Nuovo" id="b3" action="creatEditCentro"
+                                                       actionListener="#{Cnf_centriAction.onNewCentro}">
+                                                <af:setPropertyListener to="#{requestScope.action}" from="create"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:selectOneChoice value="#{pageFlowScope.ulssSelectedCentro}"
+                                                                label="Azienda sanitaria"
+                                                                rendered="#{sessionScope.regionale?true:false}"
+                                                                shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}"
+                                                                id="soc3"
+                                                                valueChangeListener="#{Cnf_centriAction.onChangeCentri}"
+                                                                autoSubmit="true"
+                                                                binding="#{Cnf_centriAction.selectedCentri}">
+                                                <af:selectItem label="Tutte" id="si5"/>
+                                                <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si55"/>
+                                            </af:selectOneChoice>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.Cnf_SoCentroPrelRefView1.collectionModel}" var="row"
+                                              rows="#{bindings.Cnf_SoCentroPrelRefView1.rangeSize}"
+                                              emptyText="#{bindings.Cnf_SoCentroPrelRefView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Cnf_SoCentroPrelRefView1.collectionModel.selectedRow}"
+                                              selectionListener="#{Cnf_centriAction.onSelectCentro}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Cnf_SoCentroPrelRefView1.rangeSize}" id="t1"
+                                              columnStretching="last" scrollPolicy="page"
+                                              binding="#{Cnf_centriAction.tabCentro}">
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Idcentro.label}"
+                                                   id="c1" width="50" noWrap="false" sortable="true" sortProperty="#{bindings.Cnf_SoCentroPrelRefView1.hints.Idcentro.name}">
+                                            <af:outputText value="#{row.Idcentro}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Idcentro.tooltip}"
+                                                           id="ot1">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoCentroPrelRefView1.hints.Idcentro.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrizione.label}"
+                                                   id="c2" width="150" noWrap="false" sortable="true" sortProperty="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrizione.name}">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrizione.tooltip}"
+                                                           id="ot2"/>
+                                        </af:column>
+                                        <af:column headerText="Descrizione breve (per elenchi)" id="c3"  noWrap="false"
+                                                   sortable="true" sortProperty="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrbreve.name}">
+                                            <af:outputText value="#{row.Descrbreve}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrbreve.tooltip}"
+                                                           id="ot3"/>
+                                        </af:column>
+                                        <af:column headerText="Descr. portale" noWrap="false" id="c4" >
+                                            <af:outputText value="#{row.DescrPortale}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.DescrPortale.tooltip}"
+                                                           id="ot4"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Tipocentro.label}"
+                                                   noWrap="false" id="c5" sortable="true" sortProperty="#{bindings.Cnf_SoCentroPrelRefView1.hints.Tipocentro.name}">
+                                            <af:selectOneChoice id="soc1" readOnly="true" value="#{row.Tipocentro}"
+                                                                styleClass="choiceInTable">
+                                                <af:selectItem label="selectItem 1" id="si1"/>
+                                                <af:selectItem label="prelievo di 1° livello" value="1" id="si2"/>
+                                                <af:selectItem label="prelievo di 2° livello" value="2" id="si3"/>
+                                                <af:selectItem label="refertazione" value="3" id="si4"/>
+                                            </af:selectOneChoice>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.IndirizzoRes.label}"
+                                                   noWrap="false" id="c6" >
+                                            <af:outputText value="#{row.IndirizzoRes}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.IndirizzoRes.tooltip}"
+                                                           id="ot6"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Sede.label}"
+                                                     id="c7">
+                                            <af:outputText value="#{row.Sede}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Sede.tooltip}"
+                                                           id="ot7"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Tel.label}"
+                                                   noWrap="false" id="c8" >
+                                            <af:outputText value="#{row.Tel}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Tel.tooltip}"
+                                                           id="ot8"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Oraritel.label}"
+                                                   noWrap="false" id="c9" >
+                                            <af:outputText value="#{row.Oraritel}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Oraritel.tooltip}"
+                                                           id="ot9"/>
+                                        </af:column>
+                                        <af:column headerText="Data fine validità" noWrap="false" id="c10" width="50"
+                                                   sortable="true" sortProperty="#{bindings.Cnf_SoCentroPrelRefView1.hints.Dtchiusuracentro.name}">
+                                            <af:outputText value="#{row.Dtchiusuracentro}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Dtchiusuracentro.tooltip}"
+                                                           id="ot10">
+                                                <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="Centro di 2° livello" noWrap="false" id="c11" width="70">
+                                            <af:outputText value="#{row.Descrbreve1}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrbreve1.tooltip}"
+                                                           id="ot11"/>
+                                        </af:column>
+                                        <af:column headerText="Centro di refertazione" noWrap="false" id="c12" width="70">
+                                            <af:outputText value="#{row.Descrbreve2}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Descrbreve2.tooltip}"
+                                                           id="ot12"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Ulss.label}"
+                                                   noWrap="false" id="c13" rendered="#{sessionScope.regionale?true:false}" width="50">
+                                            <af:outputText value="#{row.Ulss}"
+                                                           shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Ulss.tooltip}"
+                                                           id="ot13"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCentroPrelRefView1.hints.Portale.label}" id="c14" width="30">
+                                            <af:selectBooleanCheckbox value="#{row.bindings.Portale.inputValue}"
+                                                                      label="#{row.bindings.Portale.label}"
+                                                                      shortDesc="#{bindings.Cnf_SoCentroPrelRefView1.hints.Portale.tooltip}"
+                                                                      id="sbc1" disabled="true"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelCollection>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Centri di prelievo e di refertazione"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

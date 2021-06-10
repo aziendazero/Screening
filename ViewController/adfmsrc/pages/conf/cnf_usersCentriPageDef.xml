@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_usersCentriPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SecCnfUsersView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SecCnfUsersView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfUsersCentriView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfUsersCentriView1Iterator"/>
+    <iterator id="Cnf_SecCnfUsersViewLOV1Iterator" Binds="Cnf_SecCnfUsersViewLOV1"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SecCnfUsersView1Iterator" id="Cnf_SecCnfUsersView1">
+      <nodeDefinition DefName="model.conf.Cnf_SecCnfUsersView" Name="Cnf_SecCnfUsersView10">
+        <AttrNames>
+          <Item Value="SoUserId"/>
+          <Item Value="IsEnabled"/>
+          <Item Value="CreateDate"/>
+          <Item Value="LastConnection"/>
+          <Item Value="LdapUserId"/>
+          <Item Value="Nome"/>
+          <Item Value="Cognome"/>
+          <Item Value="CodiceFiscale"/>
+          <Item Value="Ufficio"/>
+          <Item Value="Email"/>
+          <Item Value="Telefono"/>
+          <Item Value="DtfineValidita"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfUsersCentriView1Iterator" id="Cnf_SoCnfUsersCentriView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfUsersCentriView" Name="Cnf_SoCnfUsersCentriView10">
+        <AttrNames>
+          <Item Value="SoUserId"/>
+          <Item Value="Idcentro"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Descrbreve"/>
+          <Item Value="Idcentro1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="false"
+            Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

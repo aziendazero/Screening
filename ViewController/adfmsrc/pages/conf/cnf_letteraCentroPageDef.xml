@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_letteraCentroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfLetteracentroView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfLetteracentroView2Iterator"/>
+    <iterator Binds="Cnf_SoTemplateView2" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoTemplateView2Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView2" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView2Iterator"/>
+    <iterator Binds="Cnf_SoCnfSugg1livView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSugg1livView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSugg2livView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSugg2livView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSugg3livView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSugg3livView1Iterator"/>
+    <iterator Binds="Cnf_SoCentroPrelRefView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="EtaDa">
+      <AttrNames>
+        <Item Value="EtaDa"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="EtaA">
+      <AttrNames>
+        <Item Value="EtaA"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Codtempl" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoTemplateView2Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Codtempl"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Idtpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoView2Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Idsugg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfSugg1livView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idsugg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Idsugg2l" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfSugg2livView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idsugg2l"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg2l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Idsugg3l" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfSugg3livView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idsugg3l"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg3l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="TestProposto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="TestProposto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value=" "/>
+        <Item Value="HPV"/>
+        <Item Value="PAP"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Centro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCentroPrelRefView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="Ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

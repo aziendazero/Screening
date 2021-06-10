@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="ref_diagnosiPeggiorePageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoRefertocito2livView4" RangeSize="10" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoRefertocito2livView4Iterator"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiView1" RangeSize="10" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiView1Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg2livView3" RangeSize="10" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoCnfSugg2livView3Iterator"/>
+    <iterator Binds="Ref_SoCodref2livc2BIODIAView1" RangeSize="25" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoCodref2livc2BIODIAView1Iterator"/>
+    <iterator Binds="Ref_SoInterventocitoISTDIAView1" RangeSize="25" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoInterventocitoISTDIAView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Ref_2livBeanDataControl" id="Ref_2livBeanDataControlIterator"/>
+    <iterator Binds="Ref_SoCnfRef2livRACDIAView1" RangeSize="-1" DataControl="Ref_AppModuleDataControl"
+              id="Ref_SoCnfRef2livRACDIAView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoRefertocito2livView4Iterator" id="Completo">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="Tipoinvitodesc">
+      <AttrNames>
+        <Item Value="Tipoinvitodesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfSugg2livView3Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Ref_SoCodref2livc2BIODIAView1Iterator" id="Ref_SoCodref2livc2BIODIAView1">
+      <nodeDefinition DefName="model.referto.Ref_SoCodref2livc2BIODIAView" Name="Ref_SoCodref2livc2BIODIAView10">
+        <AttrNames>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Ref_SoRefertocito2livView4Iterator" id="Dtbiopsia">
+      <AttrNames>
+        <Item Value="Dtbiopsia"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Ref_SoInterventocitoISTDIAView1Iterator" id="Ref_SoInterventocitoISTDIAView1">
+      <nodeDefinition DefName="model.referto.Ref_SoInterventocitoISTDIAView" Name="Ref_SoInterventocitoISTDIAView10">
+        <AttrNames>
+          <Item Value="Dtistchir"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Ref_2livBeanDataControlIterator" id="diagnosi_peggiore" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livRACDIAView1Iterator">
+      <AttrNames>
+        <Item Value="diagnosi_peggiore"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_chiusureCentri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.chiusuraForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2">
+                                <af:link text="Agenda" id="l2" action="#{Cnf_centriAction.onAgendaGiorno}"/>
+                                <af:panelGridLayout id="pgl1">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="100%" marginEnd="5px" id="gc1"
+                                                     halign="center">
+                                            <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                                label="Centro di prelievo:"
+                                                                required="#{bindings.centro.hints.mandatory}"
+                                                                shortDesc="#{bindings.centro.hints.tooltip}" id="soc1"
+                                                                autoSubmit="true"
+                                                                valueChangeListener="#{viewScope.Cnf_agendaBean.selectCentro}"
+                                                                valuePassThru="true" styleClass="choiceInTable"
+                                                                unselectedLabel="Selezionare un centro di prelievo">
+                                                <f:selectItems value="#{bindings.centro.items}" id="si1"/>
+                                                <f:validator binding="#{bindings.centro.validator}"/>
+                                            </af:selectOneChoice>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                                <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                                    featuresOff="detach freeze wrap">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t2"
+                                                    rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}">
+                                            <af:group id="g1">
+                                                <af:button text="Modifica" id="b1" action="creatEditChiusura"
+                                                           actionListener="#{Cnf_centriAction.onDettChiusura}">
+                                                    <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                            type="action"/>
+                                                </af:button>
+                                                <af:button text="Cancella" id="b2">
+                                                    <af:showPopupBehavior popupId="p1"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                          partialTriggers="t1">
+                                                    <af:dialog id="d2" partialTriggers="t1"
+                                                               affirmativeTextAndAccessKey="Cancella"
+                                                               cancelTextAndAccessKey="Annulla"
+                                                               title="Cancella chiusura"
+                                                               dialogListener="#{ParentBackingBean.deleteAction}">
+                                                        <f:facet name="buttonBar"/>
+                                                        <af:outputText value="Cancellare definitivamente la seguente chiusura?"
+                                                                       id="ot4"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:group>
+                                            <af:button text="Nuovo" id="b3" action="creatEditChiusura">
+                                                <af:setPropertyListener from="create" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.Cnf_SoChiusuracentroView2.collectionModel}" var="row"
+                                              rows="#{bindings.Cnf_SoChiusuracentroView2.rangeSize}"
+                                              emptyText="Nessuna chiusura programmata per il centro selezionato"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Cnf_SoChiusuracentroView2.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Cnf_SoChiusuracentroView2.collectionModel.makeCurrent}"
+                                              rowSelection="single" scrollPolicy="page"
+                                              fetchSize="#{bindings.Cnf_SoChiusuracentroView2.rangeSize}" id="t1"
+                                              binding="#{Cnf_centriAction.tabChiusura}">
+                                        <af:column headerText="#{bindings.Cnf_SoChiusuracentroView2.hints.Dtda.label}"
+                                                   id="c1" sortable="true"
+                                                   sortProperty="#{bindings.Cnf_SoChiusuracentroView2.hints.Dtda.name}">
+                                            <af:outputText value="#{row.Dtda}"
+                                                           shortDesc="#{bindings.Cnf_SoChiusuracentroView2.hints.Dtda.tooltip}"
+                                                           id="ot1">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoChiusuracentroView2.hints.Dtda.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoChiusuracentroView2.hints.Dta.label}"
+                                                   id="c2" sortable="true"
+                                                   sortProperty="#{bindings.Cnf_SoChiusuracentroView2.hints.Dta.name}">
+                                            <af:outputText value="#{row.Dta}"
+                                                           shortDesc="#{bindings.Cnf_SoChiusuracentroView2.hints.Dta.tooltip}"
+                                                           id="ot2">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoChiusuracentroView2.hints.Dta.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoChiusuracentroView2.hints.Notechiusura.label}"
+                                                   id="c3" width="400" sortable="true"
+                                                   sortProperty="#{bindings.Cnf_SoChiusuracentroView2.hints.Notechiusura.name}">
+                                            <af:outputText value="#{row.Notechiusura}"
+                                                           shortDesc="#{bindings.Cnf_SoChiusuracentroView2.hints.Notechiusura.tooltip}"
+                                                           id="ot3"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelCollection>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Chiusure programmate"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

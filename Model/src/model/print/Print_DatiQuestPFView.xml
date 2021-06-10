@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+      xmlns="http://xmlns.oracle.com/bc4j"
+   Version="11.1.2.62.76"
+Name="Print_DatiQuestPFView"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.print.Print_DatiQuestPFViewImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+select r.idcnfquest, d.codice_dom, r.valore
+from so_cnf_quest_domande d, SO_REFERTOPFAS_DATI r
+where d.idcnfquest = r.idcnfquest
+and d.idcnfdom = r.idcnfdom
+and d.codice_dom is not null
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_version" Value="10.1.2.18.73" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idcnfquest"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="12"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCNFQUEST"
+      Expression="IDCNFQUEST"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodiceDom"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODICE_DOM"
+      Expression="CODICE_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Valore"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="2000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="VALORE"
+      Expression="VALORE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

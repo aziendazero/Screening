@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.acc_anamBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.ANAMNESI}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1"  binding="#{Acc_anamAction.frm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="80px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl10" layout="vertical">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="Precedente" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_anamAction.onPrev}"/>
+                                        <af:button text="Successivo" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_anamAction.onNext}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="#{viewcontrollerBundle.Schedacompilata}" id="b8"
+                                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                            <af:showPopupBehavior popupId="Scheda_compilata"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="Scheda_compilata">
+                                            <af:dialog id="d3"
+                                                       title="#{viewcontrollerBundle.SALVATAGGIO_SCHEDA_ANAMNESI}"
+                                                       type="none">
+                                                <af:message id="m2" messageType="info"
+                                                            message="#{viewcontrollerBundle.ATTENZIONE__CONTINUANDO__VERRANNO_AUTOMATICAMENTE_SALVATE_LE_MODIFICHE_ALLA_SCHEDA_ANAMNESI_}"/>
+                                                <f:facet name="buttonBar">
+                                                    <af:panelGroupLayout id="pgl211" halign="end" layout="horizontal">
+                                                        <af:toolbar id="t311">
+                                                            <af:button text="#{viewcontrollerBundle.SALVA_E_STAMPA}"
+                                                                       id="b311">
+                                                                <af:setPropertyListener from="#{bindings.IdAnamci.inputValue}"
+                                                                                        to="#{requestScope.idAnam}"
+                                                                                        type="action"/>
+                                                                <af:setPropertyListener from="#{1!=1}"
+                                                                                        to="#{requestScope.schedaEmpty}"
+                                                                                        type="action"/>
+                                                                <af:fileDownloadActionListener filename="SchedaAnamCito_#{bindings.IdAnamci.inputValue}.pdf"
+                                                                                               method="#{Acc_anamAction.stampaScheda}"
+                                                                                               contentType="application/pdf"/>
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                            <af:button text="Annulla" id="b611">
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </af:panelGroupLayout>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                        <af:button text="#{viewcontrollerBundle.Schedadacompilare}" id="b9"
+                                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                            <af:setPropertyListener from="#{bindings.Idinvito.inputValue}"
+                                                                    to="#{requestScope.Idinvito}" type="action"/>
+                                            <af:setPropertyListener from="#{1==1}" to="#{requestScope.schedaEmpty}"
+                                                                    type="action"/>
+                                            <af:fileDownloadActionListener filename="SchedaAnamCitoVuota_#{bindings.Idinvito.inputValue}.pdf"
+                                                                           method="#{Acc_anamAction.stampaScheda}"
+                                                                           contentType="application/pdf"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s2"/>
+                                        <af:button text="#{viewcontrollerBundle.Etichette}" id="b2"
+                                                   rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="600"
+                                                   windowWidth="600" action="dialog:printPianoLavoro">
+                                            <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                    to="#{pageFlowScope.pl_centro}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                    to="#{pageFlowScope.pl_data}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                    to="#{pageFlowScope.pl_codts}" type="action"/>
+                                            <af:setPropertyListener from="single" to="#{pageFlowScope.pl_type}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="#{viewcontrollerBundle.Conferma}" id="b4"
+                                                   disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{Acc_anamAction.onConf}"/>
+                                        <af:button text="Annulla" id="b5" action="#{Acc_anamAction.onRollback}" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Applica" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{Acc_anamAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s16"/>
+                                <af:outputText value="#{viewcontrollerBundle.SOGGETTO_ESCLUSO}" id="ot1"
+                                               rendered="#{bindings.Escl.inputValue != null}"
+                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                 <af:spacer width="30" height="10" id="s5" rendered="#{bindings.Escl.inputValue != null}"/>
+                                <af:outputText value="#{viewcontrollerBundle.SOLLECITARE}" id="ot2"
+                                               rendered="#{bindings.Sollecitare == '1'}"
+                                               inlineStyle="color:Red; font-size:large;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelFormLayout id="pfl1" maxColumns="2" fieldWidth="300" labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.VaccinatoHpv.inputValue}"
+                                                        label="#{bindings.VaccinatoHpv.label}"
+                                                        required="#{bindings.VaccinatoHpv.hints.mandatory}"
+                                                        styleClass="choiceInTable"
+                                                        shortDesc="#{bindings.VaccinatoHpv.hints.tooltip}" id="soc1">
+                                        <f:selectItems value="#{bindings.VaccinatoHpv.items}" id="si10"/>
+                                        <f:validator binding="#{bindings.VaccinatoHpv.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:separator id="s1"/>
+                                <af:panelFormLayout id="pfl2" maxColumns="2" partialTriggers="Gravidanza"
+                                                    fieldWidth="300"
+                                                    labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.Gravidanza.inputValue}"
+                                                        label="#{bindings.Gravidanza.label}"
+                                                        styleClass="choiceInTable"
+                                                        required="#{bindings.Gravidanza.hints.mandatory}"
+                                                        shortDesc="#{bindings.Gravidanza.hints.tooltip}" id="Gravidanza"
+                                                        autoSubmit="true"
+                                                        valueChangeListener="#{Acc_anamAction.onChGrav}">
+                                        <f:selectItems value="#{bindings.Gravidanza.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.Gravidanza.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{bindings.MeseGravidanza.inputValue}"
+                                                  label="#{bindings.MeseGravidanza.hints.label}"
+                                                  required="#{bindings.MeseGravidanza.hints.mandatory}"
+                                                  columns="#{bindings.MeseGravidanza.hints.displayWidth}"
+                                                  maximumLength="#{bindings.MeseGravidanza.hints.precision}"
+                                                  shortDesc="#{bindings.MeseGravidanza.hints.tooltip}" id="it6"
+                                                  rendered="#{bindings.Gravidanza=='2'}"
+                                                  autoSubmit="true">
+                                        <f:validator binding="#{bindings.MeseGravidanza.validator}"/>
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.MeseGravidanza.format}"/>
+                                    </af:inputText>
+                                </af:panelFormLayout>
+                                <af:separator id="s3"/>
+                                <af:panelFormLayout id="pfl3" fieldWidth="300" labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.Allattamento.inputValue}"
+                                                        label="#{bindings.Allattamento.label}"
+                                                        required="#{bindings.Allattamento.hints.mandatory}"
+                                                        shortDesc="#{bindings.Allattamento.hints.tooltip}" id="soc2"
+                                                        styleClass="choiceInTable" autoSubmit="true"
+                                                        valuePassThru="true">
+                                        <f:selectItems value="#{bindings.Allattamento.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.Allattamento.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:separator id="s8"/>
+                                <af:panelFormLayout id="pfl4" fieldWidth="300" labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.PresenzaIud.inputValue}"
+                                                        label="#{bindings.PresenzaIud.label}"
+                                                        required="#{bindings.PresenzaIud.hints.mandatory}"
+                                                        shortDesc="#{bindings.PresenzaIud.hints.tooltip}" id="soc3"
+                                                        autoSubmit="true" valuePassThru="true"
+                                                        styleClass="choiceInTable">
+                                        <f:selectItems value="#{bindings.PresenzaIud.items}" id="si3"/>
+                                        <f:validator binding="#{bindings.PresenzaIud.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.ContraccTorm.inputValue}"
+                                                        label="#{bindings.ContraccTorm.label}"
+                                                        required="#{bindings.ContraccTorm.hints.mandatory}"
+                                                        shortDesc="#{bindings.ContraccTorm.hints.tooltip}" id="soc31"
+                                                        autoSubmit="true" valuePassThru="true"
+                                                        styleClass="choiceInTable">
+                                        <f:selectItems value="#{bindings.ContraccTorm.items}" id="si31"/>
+                                        <f:validator binding="#{bindings.ContraccTorm.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:separator id="s121"/>
+                                <af:panelFormLayout id="pfl41" partialTriggers="Menopausa" fieldWidth="300"
+                                                    labelWidth="300" rows="1">
+                                    <af:selectOneChoice value="#{bindings.Menopausa.inputValue}"
+                                                        label="#{bindings.Menopausa.label}"
+                                                        styleClass="choiceInTable"
+                                                        required="#{bindings.Menopausa.hints.mandatory}"
+                                                        shortDesc="#{bindings.Menopausa.hints.tooltip}" id="Menopausa"
+                                                        autoSubmit="true"
+                                                        valueChangeListener="#{Acc_anamAction.onChMeno}">
+                                        <f:selectItems value="#{bindings.Menopausa.items}" id="si11"/>
+                                        <f:validator binding="#{bindings.Menopausa.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:inputDate value="#{bindings.DtUltMestr.inputValue}"
+                                                  label="#{bindings.DtUltMestr.hints.label}"
+                                                  required="#{bindings.DtUltMestr.hints.mandatory}"
+                                                  columns="#{bindings.DtUltMestr.hints.displayWidth}"
+                                                  shortDesc="#{bindings.DtUltMestr.hints.tooltip}" id="id1"
+                                                  rendered="#{bindings.Menopausa!='2'}" autoSubmit="true">
+                                        <f:validator binding="#{bindings.DtUltMestr.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.DtUltMestr.format}"/>
+                                    </af:inputDate>
+                                </af:panelFormLayout>
+                                <af:separator id="s12"/>
+                                <af:panelFormLayout id="pfl5" maxColumns="2" fieldWidth="300" labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.ChemioUlt1.inputValue}"
+                                                        label="#{bindings.ChemioUlt1.label}"
+                                                        required="#{bindings.ChemioUlt1.hints.mandatory}"
+                                                        styleClass="choiceInTable"
+                                                        shortDesc="#{bindings.ChemioUlt1.hints.tooltip}" id="soc11">
+                                        <f:selectItems value="#{bindings.ChemioUlt1.items}" id="si12"/>
+                                        <f:validator binding="#{bindings.ChemioUlt1.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.RadioUlt3.inputValue}"
+                                                        label="#{bindings.RadioUlt3.label}"
+                                                        styleClass="choiceInTable"
+                                                        required="#{bindings.RadioUlt3.hints.mandatory}"
+                                                        shortDesc="#{bindings.RadioUlt3.hints.tooltip}" id="soc12">
+                                        <f:selectItems value="#{bindings.RadioUlt3.items}" id="si13"/>
+                                        <f:validator binding="#{bindings.RadioUlt3.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:separator id="s14"/>
+                                <af:panelHeader text="#{viewcontrollerBundle.PARIT_U00E0}" id="ph1">
+                                    <af:panelFormLayout id="pfl6" rows="1" maxColumns="4">
+                                        <f:facet name="footer"/>
+                                        <af:inputText value="#{bindings.GravTermine.inputValue}"
+                                                      label="#{bindings.GravTermine.hints.label}"
+                                                      required="#{bindings.GravTermine.hints.mandatory}"
+                                                      columns="3"
+                                                      maximumLength="2"
+                                                      shortDesc="#{bindings.GravTermine.hints.tooltip}" id="it1">
+                                            <f:validator binding="#{bindings.GravTermine.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.GravTermine.format}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.PartiPrematuri.inputValue}"
+                                                      label="#{bindings.PartiPrematuri.hints.label}"
+                                                      required="#{bindings.PartiPrematuri.hints.mandatory}"
+                                                      columns="2"
+                                                      maximumLength="1"
+                                                      shortDesc="#{bindings.PartiPrematuri.hints.tooltip}" id="it2">
+                                            <f:validator binding="#{bindings.PartiPrematuri.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.PartiPrematuri.format}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Aborti.inputValue}"
+                                                      label="#{bindings.Aborti.hints.label}"
+                                                      required="#{bindings.Aborti.hints.mandatory}"
+                                                      columns="2"
+                                                      maximumLength="1"
+                                                      shortDesc="#{bindings.Aborti.hints.tooltip}" id="it3">
+                                            <f:validator binding="#{bindings.Aborti.validator}"/>
+                                            <af:convertNumber groupingUsed="false" pattern="#{bindings.Aborti.format}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.FigliViventi.inputValue}"
+                                                      label="#{bindings.FigliViventi.hints.label}"
+                                                      required="#{bindings.FigliViventi.hints.mandatory}"
+                                                      columns="3"
+                                                      maximumLength="2"
+                                                      shortDesc="#{bindings.FigliViventi.hints.tooltip}" id="it7">
+                                            <f:validator binding="#{bindings.FigliViventi.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.FigliViventi.format}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:separator id="s15"/>
+                                <af:panelFormLayout id="pfl7" fieldWidth="300" labelWidth="300" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:inputText value="#{bindings.Note.inputValue}"
+                                                  label="#{bindings.Note.hints.label}"
+                                                  required="#{bindings.Note.hints.mandatory}" columns="200"
+                                                  maximumLength="#{bindings.Note.hints.precision}"
+                                                  shortDesc="#{bindings.Note.hints.tooltip}" id="it5" rows="5">
+                                        <f:validator binding="#{bindings.Note.validator}"/>
+                                    </af:inputText>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="funzionalita"
+                             value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{Acc_anamAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

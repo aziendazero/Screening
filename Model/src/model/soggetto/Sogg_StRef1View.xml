@@ -1,0 +1,586 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_StRef1View"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;DTREFERTO&#34; desc"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_StRef1ViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT    
+ REFE.NUMACCAP, REFE.DTPRELIEVO, decode(REFE.COMPLETO,0,'Non completo',1,'Completo') referto, REFE.DTREFERTO, REFE.NOTEREFERTO,    
+ REFE.DATA_PRELIEVO_HPV, REFE.DATA_REFERTO_PAP, REFE.DATA_REFERTO_HPV,    
+ REFE.CODTS , CODREFADE.IDCNFREF IDADE, CODREFGIU.IDCNFREF IDGIU , SUGG.DESCRIZIONE,    
+ OPMEDICITO.COGNOME || ' ' || OPMEDICITO.NOME CITOSCREENER,    
+ OPMEDISUPER.TITOLO || ' ' || OPMEDISUPER.COGNOME SUPERVISORE,    
+ SO_ALLEGATO.IDALLEGATO,    
+ SO_ALLEGATO.DTCREAZIONE,    
+ SO_ALLEGATO.DTSTAMPA,    
+ REFE.ULSS,    
+ REFE.TPSCR,    
+ REFE.IDREFERTO,    
+ 1 LIVELLO,    
+ GIU.DESCRIZIONE GIUDIA,    
+ ADE.DESCRIZIONE ADEPRE,    
+ SO_CNF_TPINVITO.IDTPINVITO || SO_CNF_TPINVITO.DESCRBREVE TPINVITO,    
+ REFE.esito_hpv,    
+ REFE.gr_esito_hpv,    
+ HPV.descrizione HPV_ESITO,    
+ fun_tipo_positivita(REFE.IDREFERTO) tipo_positivita,  
+ SO_INVITO.IDCENTROPRELIEVO  
+     
+FROM    
+   SO_REFERTOCITO1LIV REFE    
+ , SO_CNF_SUGG_1LIV SUGG    
+ , SO_CODREF1LIVC CODREFGIU    
+ , SO_CODREF1LIVC CODREFADE    
+ , SO_OPMEDICO OPMEDICITO    
+ , SO_OPMEDICO OPMEDISUPER    
+ , SO_ALLEGATO    
+ , SO_CNF_REF1LIV GIU    
+ , SO_CNF_REF1LIV ADE    
+ , SO_CNF_REF1LIV HPV    
+ , SO_INVITO    
+ , SO_CNF_TPINVITO    
+WHERE    
+     (CODREFADE.IDREFERTO (+) = REFE.IDREFERTO)    
+ AND (CODREFADE.GRUPPO (+) = 'ADEPRE')    
+ AND (CODREFGIU.IDREFERTO (+) = REFE.IDREFERTO)    
+ AND (CODREFGIU.GRUPPO (+) = 'GIUDIA')    
+ AND (SUGG.IDSUGG = REFE.IDSUGG)    
+ AND (SUGG.ULSS = REFE.ULSS)    
+ AND (SUGG.TPSCR = REFE.TPSCR)    
+ AND (OPMEDICITO.IDOP (+) = REFE.IDCITOSCREENER)    
+ AND (OPMEDISUPER.IDOP (+) = REFE.IDMEDREF)    
+ AND (SO_ALLEGATO.IDALLEGATO (+) = REFE.IDALLEGATO)    
+  AND GIU.IDCNFREF1L (+) = CODREFGIU.IDCNFREF    
+ AND GIU.GRUPPO (+) = CODREFGIU.GRUPPO    
+ AND GIU.ULSS (+) = CODREFGIU.ULSS    
+ AND GIU.TPSCR (+) = CODREFGIU.TPSCR    
+ AND ADE.IDCNFREF1L (+) = CODREFADE.IDCNFREF    
+ AND ADE.GRUPPO (+) = CODREFADE.GRUPPO    
+ AND ADE.ULSS (+) = CODREFADE.ULSS    
+ AND ADE.TPSCR (+) = CODREFADE.TPSCR    
+ AND HPV.IDCNFREF1L (+) = REFE.esito_hpv    
+ AND HPV.GRUPPO (+) = REFE.gr_esito_hpv    
+ AND HPV.ULSS (+) = REFE.ULSS    
+ AND HPV.TPSCR (+) = REFE.TPSCR    
+ AND SO_INVITO.IDINVITO = REFE.IDINVITO    
+ AND SO_CNF_TPINVITO.IDTPINVITO = SO_INVITO.IDTPINVITO    
+ and SO_CNF_TPINVITO.ulss = SO_INVITO.ulss    
+ and SO_CNF_TPINVITO.tpscr = SO_INVITO.tpscr    
+and SO_INVITO.ulss=:1    
+ and SO_INVITO.tpscr=:2 and so_invito.codts=:3]]></SQLQuery>
+   <ViewAttribute
+      Name="Numaccap"
+      IsPersistent="false"
+      Precision="6"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="NUMACCAP"
+      Expression="NUMACCAP"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprelievo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTPRELIEVO"
+      Expression="DTPRELIEVO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtprelievo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtprelievo_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtprelievo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Referto"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="REFERTO"
+      Expression="REFERTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFERTO"
+      Expression="DTREFERTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtreferto_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtreferto_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtreferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Notereferto"
+      IsPersistent="false"
+      Precision="300"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOTEREFERTO"
+      Expression="NOTEREFERTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="300" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Notereferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataPrelievoHpv"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DATA_PRELIEVO_HPV"
+      Expression="DATA_PRELIEVO_HPV"
+      SQLType="DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataPrelievoHpv_LABEL"/>
+            <FMT_FORMATTER
+               ResId="DataPrelievoHpv_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataPrelievoHpv_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataRefertoPap"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DATA_REFERTO_PAP"
+      Expression="DATA_REFERTO_PAP"
+      SQLType="DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataRefertoPap_LABEL"/>
+            <FMT_FORMATTER
+               ResId="DataRefertoPap_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataRefertoPap_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataRefertoHpv"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DATA_REFERTO_HPV"
+      Expression="DATA_REFERTO_HPV"
+      SQLType="DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataRefertoHpv_LABEL"/>
+            <FMT_FORMATTER
+               ResId="DataRefertoHpv_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataRefertoHpv_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idade"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDADE"
+      Expression="IDADE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idade_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idgiu"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDGIU"
+      Expression="IDGIU"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idgiu_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Citoscreener"
+      IsPersistent="false"
+      Precision="61"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CITOSCREENER"
+      Expression="CITOSCREENER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="61" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Supervisore"
+      IsPersistent="false"
+      Precision="61"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SUPERVISORE"
+      Expression="SUPERVISORE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="61" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idallegato"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDALLEGATO"
+      Expression="IDALLEGATO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtstampa_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtstampa_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtstampa_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="LIVELLO"
+      Expression="LIVELLO"
+      SQLType="NUMERIC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Giudia"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="GIUDIA"
+      Expression="GIUDIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Giudia_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Adepre"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ADEPRE"
+      Expression="ADEPRE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Adepre_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpinvito"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TPINVITO"
+      Expression="TPINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EsitoHpv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ESITO_HPV"
+      Expression="ESITO_HPV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EsitoHpv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GrEsitoHpv"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="GR_ESITO_HPV"
+      Expression="GR_ESITO_HPV"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="HpvEsito"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="HPV_ESITO"
+      Expression="HPV_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="HpvEsito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoPositivita"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPO_POSITIVITA"
+      Expression="TIPO_POSITIVITA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TipoPositivita_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="4"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROPRELIEVO"
+      Expression="IDCENTROPRELIEVO"
+      SQLType="NUMERIC"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_StRef1ViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_ComuneView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;DESCRIZIONE&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_ComuneViewImpl"
+   PageIterMode="Partial"
+   MsgBundleClass="model.soggetto.common.Sogg_ComuneViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <Variable
+      Name="bndCodCom"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <SQLQuery><![CDATA[SELECT 
+    CODCOM, 
+    DESCRIZIONE, 
+    ULSS, 
+    CODPR, 
+    CAP, 
+    DTINIZIOVALIDITA, 
+    DTFINEVALIDITA, 
+    RELEASE_CODE, 
+    RELEASE_CODE_PR 
+ FROM SO_COMUNE]]></SQLQuery>
+   <ViewAttribute
+      Name="Codcom"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOM"
+      Expression="CODCOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODPR"
+      Expression="CODPR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP"
+      Expression="CAP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtiniziovalidita"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINIZIOVALIDITA"
+      Expression="DTINIZIOVALIDITA"
+      SQLType="DATE"/>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTFINEVALIDITA"
+      Expression="DTFINEVALIDITA"
+      SQLType="DATE"/>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RELEASE_CODE"
+      Expression="RELEASE_CODE"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="ReleaseCodePr"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RELEASE_CODE_PR"
+      Expression="RELEASE_CODE_PR"
+      SQLType="NUMERIC"/>
+   <ViewCriteria
+      Name="Sogg_ComuneViewCriteriaByCodCom"
+      ViewObjectName="model.soggetto.Sogg_ComuneView"
+      Conjunction="AND">
+      <Properties Name="_Props">
+         <CustomProperties>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="Sogg_ComuneViewCriteria_row_0"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Codcom"
+            ViewAttribute="Codcom"
+            Operator="="
+            Conjunction="AND"
+            Value=":bndCodCom"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="ReleaseCode"/>
+   </AttrArray>
+</ViewObject>

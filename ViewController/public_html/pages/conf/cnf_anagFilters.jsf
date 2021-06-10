@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_anagFilters.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCnfAnag.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:button text="Includi" id="b1" actionListener="#{Cnf_confAnagBean.includeConfAnag}"/>
+                                <af:button text="Escludi" id="b2" actionListener="#{Cnf_confAnagBean.excludeConfAnag}"/>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedFilters}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_anagraficheAction.onChangeFilters}" autoSubmit="true"
+                                    binding="#{Cnf_anagraficheAction.selectedFilters}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfAnagFilters1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfAnagFilters1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfAnagFilters1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfAnagFilters1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfAnagFilters1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfAnagFilters1.rangeSize}" 
+                                  id="t1" scrollPolicy="page">
+                            <af:column id="c5" headerText="#{bindings.Cnf_SoCnfAnagFilters1.hints.Sigla.label}">
+                                <af:column headerText="" id="c1">
+                                    <af:outputText value="#{row.Sigla}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfAnagFilters1.hints.Sigla.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column headerText=""
+                                           id="c2" width="250">
+                                    <af:outputText value="#{row.Descrizione}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfAnagFilters1.hints.Descrizione.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfAnagFilters1.hints.Incluso.label}" id="c4">
+                                <af:selectBooleanCheckbox id="sbc1" selected="true" rendered="#{row.Incluso == 1}"
+                                                          readOnly="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfAnagFilters1.hints.Ulss.label}" id="c3" rendered="${sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfAnagFilters1.hints.Ulss.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Filtri per l'importazione dell'anagrafica"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

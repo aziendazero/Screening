@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfAnagRegView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfAnagReg.CODANAGREG, 
+       Cnf_SoCnfAnagReg.SIGLA, 
+       Cnf_SoCnfAnagReg.DESCRIZIONE"
+   FromList="SO_CNF_ANAG_REG Cnf_SoCnfAnagReg"
+   OrderBy="Cnf_SoCnfAnagReg.SIGLA"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfAnagRegViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfAnagReg"
+      Entity="model.conf.Cnf_SoCnfAnagReg" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="CODANAGREG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codanagreg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sigla"
+      IsNotNull="true"
+      EntityAttrName="Sigla"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="SIGLA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfAnagScrView"
+      ViewLink="model.FkAnagScrRegLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfAnagUlssView"
+      ViewLink="model.FkAnagUlssRegLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfEsclAnagView"
+      ViewLink="model.FkEsclAnagAnagRegLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfAnagRegViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

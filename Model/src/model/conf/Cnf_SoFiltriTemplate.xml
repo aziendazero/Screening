@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Cnf_SoFiltriTemplate"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SO_CNF_TEMPLATE_FILTRI"
+  AliasName="Cnf_SoFiltriTemplate"
+  BindingStyle="OracleName"
+  RowClass="model.conf.Cnf_SoFiltriTemplateImpl"
+  DefClass="model.conf.Cnf_SoFiltriTemplateDefImpl"
+  CollClass="model.conf.Cnf_SoFiltriTemplateCollImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Def|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="Idriga"
+    IsNotNull="true"
+    ColumnName="IDRIGA"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Ulss"
+    IsUnique="true"
+    Precision="6"
+    ColumnName="ULSS"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="6"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tpscr"
+    IsUnique="true"
+    Precision="2"
+    ColumnName="TPSCR"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Codtempl"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="CODTEMPL"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_TEMPLATE_FILTRI"/>
+  <Attribute
+    Name="Idcentro"
+    IsUnique="true"
+    IsNotNull="true"
+    ColumnName="IDCENTRO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_TEMPLATE_FILTRI"/>
+  <Attribute
+    Name="Idtpinvito"
+    IsUnique="true"
+    Precision="2"
+    ColumnName="IDTPINVITO"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtins"
+    IsNotNull="true"
+    ColumnName="DTINS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    HistoryColumn="DateHistory"
+    IsUpdateable="while_insert"/>
+  <Attribute
+    Name="Opins"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="OPINS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    HistoryColumn="UserHistory"
+    IsUpdateable="while_insert">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtmod"
+    ColumnName="DTMOD"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    HistoryColumn="DateHistory"
+    />
+  <Attribute
+    Name="Opmod"
+    Precision="50"
+    ColumnName="OPMOD"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_TEMPLATE_FILTRI"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="Cnf_SoCentroPrelRef"
+    Association="model.conf.FkTemplateFiltriCentroAssoc"
+    AssociationEnd="model.conf.FkTemplateFiltriCentroAssoc.Cnf_SoCentroPrelRef"
+    AssociationOtherEnd="model.conf.FkTemplateFiltriCentroAssoc.Cnf_SoFiltriTemplate"
+    Type="model.conf.Cnf_SoCentroPrelRefImpl"
+    IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="Cnf_SoTemplate"
+    Association="model.conf.FkTemplateCentriTempAssoc"
+    AssociationEnd="model.conf.FkTemplateCentriTempAssoc.Cnf_SoTemplate"
+    AssociationOtherEnd="model.conf.FkTemplateCentriTempAssoc.Cnf_SoFiltriTemplate"
+    Type="model.conf.Cnf_SoTemplateImpl"
+    IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="Cnf_SoCnfTpinvito"
+    Association="model.conf.FkTempFiltriTpinvitoAssoc"
+    AssociationEnd="model.conf.FkTempFiltriTpinvitoAssoc.Cnf_SoCnfTpinvito"
+    AssociationOtherEnd="model.conf.FkTempFiltriTpinvitoAssoc.Cnf_SoFiltriTemplate"
+    Type="model.conf.Cnf_SoCnfTpinvitoImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="PkSoCnfTemplateFiltri"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SO_CNF_TEMPLATE_FILTRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Idriga"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UkSoCnfTemplateFiltri">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UK_SO_CNF_TEMPLATE_FILTRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Ulss"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Tpscr"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Codtempl"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Idcentro"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Idtpinvito"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkTempFiltriTpinvito">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CNF_TPINVITO"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_TEMP_FILTRI_TPINVITO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Idtpinvito"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Ulss"/>
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Tpscr"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkTemplateCentriTemp">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_TEMPLATE"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_TEMPLATE_CENTRI_TEMP"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Codtempl"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkTemplateFiltriCentro">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_TEMPLATE_FILTRI_CENTRO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoFiltriTemplate.Idcentro"/>
+    </AttrArray>
+  </Key>
+</Entity>

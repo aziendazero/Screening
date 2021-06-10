@@ -1,0 +1,349 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_StCoRef1View"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;DTREFERTO&#34; desc"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_StCoRef1ViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT 	b.dtapp dtprel,  
+	c.descrbreve tipoinv,  
+	decode(a.COMPLETO,0,'Non completo',1,'Completo') referto, 
+	a.dtreferto,  
+	a.cod_provetta,  
+	a.n_provetta,  
+	d.esitosugg, 
+        a.quantita, 
+	d.descrizione azconseg, 
+	e.cognome || ' ' || e.nome lettore, 
+	a.note, 
+        f.dtcreazione, 
+        f.dtstampa, 
+	a.ulss, 
+	a.tpscr, 
+	a.codts, 
+	a.idreferto, 
+        b.IDCENTROPRELIEVO 
+  FROM so_refertocolon1liv a, so_invito b, so_cnf_tpinvito c, 
+  SO_CNF_SUGG_1LIV d, SO_OPMEDICO e, so_allegato f 
+   
+  where b.idinvito = a.idinvito 
+  and c.idtpinvito = b.idtpinvito 
+  and c.ulss = b.ulss 
+  and c.tpscr = b.tpscr 
+  and d.idsugg (+) = a.idsugg 
+  and d.ulss (+) = a.ulss 
+  and d.tpscr (+) = a.tpscr 
+  and e.idop (+) = a.idlettore 
+  and f.idallegato (+) = a.idallegato 
+and b.ULSS=:1 and b.TPSCR=:2 and b.codts=:3]]></SQLQuery>
+   <ViewAttribute
+      Name="Dtprel"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTPREL"
+      Expression="DTPREL"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtprel_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtprel_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtprel_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoinv"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPOINV"
+      Expression="TIPOINV"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tipoinv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Referto"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="REFERTO"
+      Expression="REFERTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFERTO"
+      Expression="DTREFERTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtreferto_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtreferto_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtreferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodProvetta"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="COD_PROVETTA"
+      Expression="COD_PROVETTA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CodProvetta_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NProvetta"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_PROVETTA"
+      Expression="N_PROVETTA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NProvetta_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOSUGG"
+      Expression="ESITOSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitosugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Quantita"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="QUANTITA"
+      Expression="QUANTITA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Azconseg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AZCONSEG"
+      Expression="AZCONSEG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Azconseg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Lettore"
+      IsPersistent="false"
+      Precision="61"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LETTORE"
+      Expression="LETTORE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="61" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Note"
+      IsPersistent="false"
+      Precision="300"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOTE"
+      Expression="NOTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="300" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtstampa_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtstampa_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtstampa_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="4"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROPRELIEVO"
+      Expression="IDCENTROPRELIEVO"
+      SQLType="NUMERIC"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_StCoRef1ViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

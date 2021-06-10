@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Agenda_SoAppuntamentoView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.agenda.Agenda_SoAppuntamentoViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   RowClass="model.agenda.Agenda_SoAppuntamentoViewRowImpl"
+   RowInterface="model.agenda.common.Agenda_SoAppuntamentoViewRow"
+   ClientRowProxyName="model.agenda.client.Agenda_SoAppuntamentoViewRowClient"
+   MsgBundleClass="model.agenda.common.Agenda_SoAppuntamentoViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT Agenda_SoAppuntamento.IDAPP,     
+       Agenda_SoAppuntamento.IDCENTRO,     
+       Agenda_SoAppuntamento.DTAPP,     
+       Agenda_SoAppuntamento.ORAAPP,     
+       Agenda_SoAppuntamento.MINAPP,     
+       Agenda_SoAppuntamento.DISPSLOT,     
+       Agenda_SoAppuntamento.TPSRC,     
+       substr(to_char(Agenda_SoAppuntamento.ORAAPP,'00'),2) || ':' ||           substr(to_char(Agenda_SoAppuntamento.MINAPP,'00'),2) AS ORARIO,     
+       'S' AS RIGA_SALVATA,    
+       Agenda_SoAppuntamento.SLOTOCCUP,    
+       case when DISPSLOT>SLOTOCCUP then 'FREE'    
+            WHEN DISPSLOT=SLOTOCCUP THEN 'BUSY'    
+            ELSE 'OVER' END STATO,  
+       Agenda_SoAppuntamento.NASCOSTO  
+FROM SO_APPUNTAMENTO Agenda_SoAppuntamento]]></SQLQuery>
+   <EntityUsage
+      Name="Agenda_SoAppuntamento"
+      Entity="model.agenda.Agenda_SoAppuntamento" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idapp"
+      IsNotNull="true"
+      EntityAttrName="Idapp"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      IsNotNull="true"
+      EntityAttrName="Dtapp"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="DTAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      IsNotNull="true"
+      EntityAttrName="Oraapp"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dispslot"
+      IsNotNull="true"
+      EntityAttrName="Dispslot"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="DISPSLOT" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dispslot_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpsrc"
+      IsNotNull="true"
+      EntityAttrName="Tpsrc"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="TPSRC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Orario"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORARIO"
+      Expression="substr(to_char(Agenda_SoAppuntamento.ORAAPP,&#39;00&#39;),2) || &#39;:&#39; ||           substr(to_char(Agenda_SoAppuntamento.MINAPP,&#39;00&#39;),2)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RigaSalvata"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RIGA_SALVATA"
+      Expression="&#39;S&#39;"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Slotoccup"
+      EntityAttrName="Slotoccup"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="SLOTOCCUP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Slotoccup_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stato"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="STATO"
+      Expression="STATO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nascosto"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Nascosto"
+      EntityUsage="Agenda_SoAppuntamento"
+      AliasName="NASCOSTO">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="check_box"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Agenda_DettAppColonView"
+      ViewLink="model.Agenda_SlotAppColonViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Agenda_DettAppView"
+      ViewLink="model.Agenda_SlotAppViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ClientRowInterface
+      Name="__rowClientInterface">
+      <Method
+         Name="getAgenda_DettAppColonView"
+         MethodName="getAgenda_DettAppColonView">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.RowIterator"/>
+      </Method>
+      <Method
+         Name="getAgenda_DettAppView"
+         MethodName="getAgenda_DettAppView">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.RowIterator"/>
+      </Method>
+   </ClientRowInterface>
+   <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.agenda.common.Agenda_SoAppuntamentoViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

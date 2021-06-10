@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="impexp_presenzePageDef"
+                Package="pages.impexp" ControllerClass="view.util.MyAdfListener">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Impexp_SoCnfImpexpView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ImpexpBeanDataControl" id="ImpexpBeanDataControlIterator"/>
+    <iterator Binds="Impexp_SoCnfImpexpTpdipView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpTpdipView1Iterator"/>
+    <iterator Binds="Impexp_SoCnfCentriImpexpView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfCentriImpexpView1Iterator"/>
+    <iterator Binds="Impexp_SoImportPresenzeView1" RangeSize="10" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoImportPresenzeView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Cnf_selectionBean" id="Cnf_selectionBeanIterator"/>
+    <methodIterator Binds="findFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findFileListIterator" Refresh="ifNeeded"/>
+    <methodIterator Binds="findOLDFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findOLDFileListIterator" Refresh="ifNeeded"/>
+    <iterator Binds="Impexp_SoCnfImpExpLogView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpExpLogView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dttransfer">
+      <AttrNames>
+        <Item Value="Dttransfer"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dtimport">
+      <AttrNames>
+        <Item Value="Dtimport"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="tpdip" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Impexp_SoCnfImpexpTpdipView1Iterator">
+      <AttrNames>
+        <Item Value="tpdip"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Tpdip"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Destinazione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="ImpexpBeanDataControlIterator" id="centro" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Impexp_SoCnfCentriImpexpView1Iterator">
+      <AttrNames>
+        <Item Value="idcentro"/>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentroref"/>
+        <Item Value="Suffisso"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="ImpexpBeanDataControlIterator" id="data">
+      <AttrNames>
+        <Item Value="data"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="findOLDFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findOLDFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findOLDFileList_ImpexpProviderDataControl_dataProvider_findOLDFileList_result"/>
+    <methodAction id="getFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.getFileList_ImpexpProviderDataControl_dataProvider_getFileList_result"/>
+    <tree IterBinding="Impexp_SoImportPresenzeView1Iterator" id="Impexp_SoImportPresenzeView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoImportPresenzeView" Name="Impexp_SoImportPresenzeView10">
+        <AttrNames>
+          <Item Value="Codts"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="Cf"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Sesso"/>
+          <Item Value="Mpi"/>
+          <Item Value="Tel1"/>
+          <Item Value="Tel2"/>
+          <Item Value="Tipo"/>
+          <Item Value="Centro"/>
+          <Item Value="DataApp"/>
+          <Item Value="OraApp"/>
+          <Item Value="Presenza"/>
+          <Item Value="Livello"/>
+          <Item Value="AnamnesiRilevata"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Cnf_selectionBeanIterator" id="inClause">
+      <AttrNames>
+        <Item Value="inClause"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="LogFile">
+      <AttrNames>
+        <Item Value="LogFile"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="ImpExp_AppModuleDataControl" RequiresUpdateModel="true"
+            Action="commitTransaction"/>
+    <methodAction id="findFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findFileList_ImpexpProviderDataControl_dataProvider_findFileList_result"/>
+    <tree IterBinding="findFileListIterator" id="ImpexpFile">
+      <nodeDefinition DefName="model.bean.ImpexpFile" Name="ImpexpFile0">
+        <AttrNames>
+          <Item Value="viewName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="findOLDFileListIterator" id="ImpexpFile1">
+      <nodeDefinition DefName="model.bean.ImpexpFile" Name="ImpexpFile10">
+        <AttrNames>
+          <Item Value="viewName"/>
+          <Item Value="status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Impexp_SoCnfImpExpLogView1Iterator" id="Dtinizioelab">
+      <AttrNames>
+        <Item Value="Dtinizioelab"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Impexp_SoCnfImpExpLogView1Iterator" id="Impexp_SoCnfImpExpLogView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoCnfImpExpLogView" Name="Impexp_SoCnfImpExpLogView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Progrulss"/>
+          <Item Value="Impexp"/>
+          <Item Value="Tpdip"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Nomefileimport"/>
+          <Item Value="Dtinizioelab"/>
+          <Item Value="Op"/>
+          <Item Value="Nomefilelog"/>
+          <Item Value="Dtfineelab"/>
+          <Item Value="LogFile"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

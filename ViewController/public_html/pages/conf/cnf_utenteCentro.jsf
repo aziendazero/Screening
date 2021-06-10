@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_utenteCentro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Utente.inputValue}"
+                                              label="#{bindings.Utente.hints.label}"
+                                              required="#{bindings.Utente.hints.mandatory}"
+                                              columns="#{bindings.Utente.hints.displayWidth}"
+                                              maximumLength="#{bindings.Utente.hints.precision}"
+                                              shortDesc="#{bindings.Utente.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Utente.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idcentrof.inputValue}"
+                                                    label="Centro fisico"
+                                                    required="#{bindings.Idcentrof.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentrof.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Idcentrof.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idcentrof.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Note.inputValue}"
+                                              label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              columns="#{bindings.Note.hints.displayWidth}"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it2" rows="4">
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Utente vincolato al centro fisico"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

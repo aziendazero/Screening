@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_centri">
+    <page>/pages/conf/cnf_centri.jsf</page>
+  </view>
+  <view id="cnf_agendaCentro">
+    <page>/pages/conf/cnf_agendaCentro.jsf</page>
+  </view>
+  <view id="cnf_chiusureCentri">
+    <page>/pages/conf/cnf_chiusureCentri.jsf</page>
+  </view>
+  <view id="cnf_generazAgenda">
+    <page>/pages/conf/cnf_generazAgenda.jsf</page>
+  </view>
+  <view id="cnf_centrifisici">
+    <page>/pages/conf/cnf_centrifisici.jsf</page>
+  </view>
+  <view id="cnf_utenticentri"><page>/pages/conf/cnf_utenticentri.jsf</page></view>
+  <view id="cnf_medici_centri">
+    <page>/pages/conf/cnf_medici_centri.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editCentro">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editCentro.xml</document>
+      <id>cnf_editCentro</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editAgenda">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editAgenda.xml</document>
+      <id>cnf_editAgenda</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editChiusura">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editChiusura.xml</document>
+      <id>cnf_editChiusura</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="createMedicoCentro">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/createMedicoCentro.xml</document>
+      <id>createMedicoCentro</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editCentroFisico">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editCentroFisico.xml</document>
+      <id>cnf_editCentroFisico</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="utentiCentri">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/creatEditUtentiCentri.xml</document>
+      <id>utentiCentri</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <view id="cnf_usersCentri">
+    <page>/pages/conf/cnf_usersCentri.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editUserscentri">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editUserscentri.xml</document>
+      <id>cnf_editUserscentri</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>centri</from-outcome>
+      <to-activity-id>cnf_centri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>agenda_centro</from-outcome>
+      <to-activity-id>cnf_agendaCentro</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>chiusure_centri</from-outcome>
+      <to-activity-id>cnf_chiusureCentri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>generaz_agenda</from-outcome>
+      <to-activity-id>cnf_generazAgenda</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__7">
+      <from-outcome>centri_fisici</from-outcome>
+      <to-activity-id>cnf_centrifisici</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__8">
+      <from-outcome>utenti_centri</from-outcome>
+      <to-activity-id>cnf_utenticentri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__9">
+      <from-outcome>medici_centri</from-outcome>
+      <to-activity-id>cnf_medici_centri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__27">
+      <from-outcome>users_centri</from-outcome>
+      <to-activity-id>cnf_usersCentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__6">
+    <from-activity-id>cnf_centri</from-activity-id>
+    <control-flow-case id="__13">
+      <from-outcome>creatEditCentro</from-outcome>
+      <to-activity-id>cnf_editCentro</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__15">
+    <from-activity-id>cnf_agendaCentro</from-activity-id>
+    <control-flow-case id="__17">
+      <from-outcome>creatEditAgenda</from-outcome>
+      <to-activity-id>cnf_editAgenda</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__18">
+    <from-activity-id>cnf_chiusureCentri</from-activity-id>
+    <control-flow-case id="__19">
+      <from-outcome>creatEditChiusura</from-outcome>
+      <to-activity-id>cnf_editChiusura</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__20">
+    <from-activity-id>cnf_medici_centri</from-activity-id>
+    <control-flow-case id="__21">
+      <from-outcome>createMedicoCentro</from-outcome>
+      <to-activity-id>createMedicoCentro</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__22">
+    <from-activity-id>cnf_centrifisici</from-activity-id>
+    <control-flow-case id="__23">
+      <from-outcome>creatEditCentroFisico</from-outcome>
+      <to-activity-id>cnf_editCentroFisico</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__25">
+    <from-activity-id>cnf_utenticentri</from-activity-id>
+    <control-flow-case id="__26">
+      <from-outcome>creatEditUtentiCentri</from-outcome>
+      <to-activity-id>utentiCentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__28">
+    <from-activity-id>cnf_usersCentri</from-activity-id>
+    <control-flow-case id="__29">
+      <from-outcome>creatEditUsercentro</from-outcome>
+      <to-activity-id>cnf_editUserscentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__10">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_centri_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__11">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__12">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_centri_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__14">
+    <managed-bean-name>ParentBackingBean</managed-bean-name>
+    <managed-bean-class>view.backing.ParentBackingBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__16">
+    <managed-bean-name>Cnf_agendaBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_agendaCentroBean</managed-bean-class>
+    <managed-bean-scope>view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__24">
+    <managed-bean-name>Cnf_centriAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_centriAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_impexp1.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" usesUpload="true">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"
+                                               actionListener="#{Cnf_confImpexpBean.beforeSave}"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"
+                                                actionListener="#{Cnf_confImpexpBean.beforeSave}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Progrulss.inputValue}"
+                                              label="#{bindings.Progrulss.hints.label}"
+                                              required="#{bindings.Progrulss.hints.mandatory}"
+                                              columns="#{bindings.Progrulss.hints.displayWidth}"
+                                              maximumLength="#{bindings.Progrulss.hints.precision}"
+                                              shortDesc="#{bindings.Progrulss.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Progrulss.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Progrulss.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idcentroref.inputValue}"
+                                                    label="#{bindings.Idcentroref.label}"
+                                                    required="#{bindings.Idcentroref.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentroref.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentroref.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idcentroref.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Suffisso.inputValue}"
+                                              label="#{bindings.Suffisso.hints.label}"
+                                              required="#{bindings.Suffisso.hints.mandatory}"
+                                              columns="#{bindings.Suffisso.hints.displayWidth}"
+                                              maximumLength="#{bindings.Suffisso.hints.precision}"
+                                              shortDesc="#{bindings.Suffisso.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Suffisso.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Impexp.inputValue}"
+                                                    label="#{bindings.Impexp.label}" id="soc2"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="IMPORT" value="IMP" id="si2"/>
+                                    <af:selectItem label="EXPORT" value="EXP" id="si3"/>
+                                    <af:selectItem label="LOCALE" value="LOC" id="si4"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Tpdip.inputValue}"
+                                                    label="#{bindings.Tpdip.hints.label}" id="soc3"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="Anagrafe" value="AN" id="si5"/>
+                                    <af:selectItem label="Anatomia Patologica" value="AP" id="si6"/>
+                                    <af:selectItem label="Radiologia" value="RA" id="si7"/>
+                                    <af:selectItem label="Laboratorio" value="LA" id="si8"/>
+                                    <af:selectItem label="Tracciato Unico" value="RT" id="si9"/>
+                                    <af:selectItem label="SDO" value="SD" id="si10"/>
+                                    <af:selectItem label="SPS" value="SP" id="si11"/>
+                                    <af:selectItem label="Radiologia-2livello" value="R2" id="si12"/>
+                                    <af:selectItem label="Anatomia Patologica-2 livello" value="A2" id="si13"/>
+                                    <af:selectItem label="Accettazione" value="AC" id="si14"/>
+                                    <af:selectItem label="Tracciato DWH" value="DW" id="si15"/>
+                                    <af:selectItem label="Flusso SPS" value="SS" id="si16"/>
+                                    <af:selectItem label="Ginecologia-2 livello" value="G2" id="si17"/>
+                                    <af:selectItem label="Endoscopia-2 livello" value="E2" id="si18"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Modalita.inputValue}"
+                                                    label="#{bindings.Modalita.hints.label}" id="soc4"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="HTTPS" value="1" id="si19"/>
+                                    <af:selectItem label="database di frontiera" value="2" id="si20"/>
+                                    <af:selectItem label="porte di dominio" value="3" id="si21"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Ippart.inputValue}"
+                                              label="#{bindings.Ippart.hints.label}"
+                                              required="#{bindings.Ippart.hints.mandatory}"
+                                              columns="#{bindings.Ippart.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ippart.hints.precision}"
+                                              shortDesc="#{bindings.Ippart.hints.tooltip}" id="it7">
+                                    <f:validator binding="#{bindings.Ippart.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Dblink.inputValue}"
+                                              label="#{bindings.Dblink.hints.label}"
+                                              required="#{bindings.Dblink.hints.mandatory}"
+                                              columns="#{bindings.Dblink.hints.displayWidth}"
+                                              maximumLength="#{bindings.Dblink.hints.precision}"
+                                              shortDesc="#{bindings.Dblink.hints.tooltip}" id="it8">
+                                    <f:validator binding="#{bindings.Dblink.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Nomefilepart.inputValue}"
+                                              label="#{bindings.Nomefilepart.hints.label}"
+                                              required="#{bindings.Nomefilepart.hints.mandatory}"
+                                              columns="#{bindings.Nomefilepart.hints.displayWidth}"
+                                              maximumLength="#{bindings.Nomefilepart.hints.precision}"
+                                              shortDesc="#{bindings.Nomefilepart.hints.tooltip}" id="it9">
+                                    <f:validator binding="#{bindings.Nomefilepart.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Posizfilepart.inputValue}"
+                                              label="#{bindings.Posizfilepart.hints.label}"
+                                              required="#{bindings.Posizfilepart.hints.mandatory}"
+                                              columns="#{bindings.Posizfilepart.hints.displayWidth}"
+                                              maximumLength="#{bindings.Posizfilepart.hints.precision}"
+                                              shortDesc="#{bindings.Posizfilepart.hints.tooltip}" id="it10">
+                                    <f:validator binding="#{bindings.Posizfilepart.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Nomefilearr.inputValue}"
+                                              label="#{bindings.Nomefilearr.hints.label}"
+                                              required="#{bindings.Nomefilearr.hints.mandatory}"
+                                              columns="#{bindings.Nomefilearr.hints.displayWidth}"
+                                              maximumLength="#{bindings.Nomefilearr.hints.precision}"
+                                              shortDesc="#{bindings.Nomefilearr.hints.tooltip}" id="it11">
+                                    <f:validator binding="#{bindings.Nomefilearr.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Posizfilearr.inputValue}"
+                                              label="#{bindings.Posizfilearr.hints.label}"
+                                              required="#{bindings.Posizfilearr.hints.mandatory}"
+                                              columns="#{bindings.Posizfilearr.hints.displayWidth}"
+                                              maximumLength="#{bindings.Posizfilearr.hints.precision}"
+                                              shortDesc="#{bindings.Posizfilearr.hints.tooltip}" id="it12">
+                                    <f:validator binding="#{bindings.Posizfilearr.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Ftpport.inputValue}"
+                                              label="#{bindings.Ftpport.hints.label}"
+                                              required="#{bindings.Ftpport.hints.mandatory}"
+                                              columns="#{bindings.Ftpport.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ftpport.hints.precision}"
+                                              shortDesc="#{bindings.Ftpport.hints.tooltip}" id="it13">
+                                    <f:validator binding="#{bindings.Ftpport.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ftpport.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Usrftp.inputValue}"
+                                              label="#{bindings.Usrftp.hints.label}"
+                                              required="#{bindings.Usrftp.hints.mandatory}"
+                                              columns="#{bindings.Usrftp.hints.displayWidth}"
+                                              maximumLength="#{bindings.Usrftp.hints.precision}"
+                                              shortDesc="#{bindings.Usrftp.hints.tooltip}" id="it14">
+                                    <f:validator binding="#{bindings.Usrftp.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Pwdftp.inputValue}"
+                                              label="#{bindings.Pwdftp.hints.label}"
+                                              required="#{bindings.Pwdftp.hints.mandatory}"
+                                              columns="#{bindings.Pwdftp.hints.displayWidth}"
+                                              maximumLength="#{bindings.Pwdftp.hints.precision}"
+                                              shortDesc="#{bindings.Pwdftp.hints.tooltip}" id="it15">
+                                    <f:validator binding="#{bindings.Pwdftp.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Ipdirvirtuale.inputValue}"
+                                              label="#{bindings.Ipdirvirtuale.hints.label}"
+                                              required="#{bindings.Ipdirvirtuale.hints.mandatory}"
+                                              columns="#{bindings.Ipdirvirtuale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ipdirvirtuale.hints.precision}"
+                                              shortDesc="#{bindings.Ipdirvirtuale.hints.tooltip}" id="it16">
+                                    <f:validator binding="#{bindings.Ipdirvirtuale.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Posizdirvirtuale.inputValue}"
+                                              label="#{bindings.Posizdirvirtuale.hints.label}"
+                                              required="#{bindings.Posizdirvirtuale.hints.mandatory}"
+                                              columns="#{bindings.Posizdirvirtuale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Posizdirvirtuale.hints.precision}"
+                                              shortDesc="#{bindings.Posizdirvirtuale.hints.tooltip}" id="it17">
+                                    <f:validator binding="#{bindings.Posizdirvirtuale.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Dirvirtuale.inputValue}"
+                                              label="#{bindings.Dirvirtuale.hints.label}"
+                                              required="#{bindings.Dirvirtuale.hints.mandatory}"
+                                              columns="#{bindings.Dirvirtuale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Dirvirtuale.hints.precision}"
+                                              shortDesc="#{bindings.Dirvirtuale.hints.tooltip}" id="it18">
+                                    <f:validator binding="#{bindings.Dirvirtuale.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Filevirtuale.inputValue}"
+                                              label="#{bindings.Filevirtuale.hints.label}"
+                                              required="#{bindings.Filevirtuale.hints.mandatory}"
+                                              columns="#{bindings.Filevirtuale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Filevirtuale.hints.precision}"
+                                              shortDesc="#{bindings.Filevirtuale.hints.tooltip}" id="it19">
+                                    <f:validator binding="#{bindings.Filevirtuale.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Orasched.inputValue}"
+                                              label="#{bindings.Orasched.hints.label}"
+                                              required="#{bindings.Orasched.hints.mandatory}"
+                                              columns="#{bindings.Orasched.hints.displayWidth}"
+                                              maximumLength="#{bindings.Orasched.hints.precision}" shortDesc="hhmm"
+                                              id="it20" placeholder="hhmm">
+                                    <f:validator binding="#{bindings.Orasched.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Orasched.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Intervallo.inputValue}"
+                                              label="#{bindings.Intervallo.hints.label}"
+                                              required="#{bindings.Intervallo.hints.mandatory}"
+                                              columns="#{bindings.Intervallo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Intervallo.hints.precision}"
+                                              shortDesc="in secondi" id="it21">
+                                    <f:validator binding="#{bindings.Intervallo.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Intervallo.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Email.inputValue}" label="#{bindings.Email.hints.label}"
+                                              required="#{bindings.Email.hints.mandatory}"
+                                              columns="#{bindings.Email.hints.displayWidth}"
+                                              maximumLength="#{bindings.Email.hints.precision}"
+                                              shortDesc="#{bindings.Email.hints.tooltip}" id="it22">
+                                    <f:validator binding="#{bindings.Email.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.LunghRecord.inputValue}"
+                                              label="#{bindings.LunghRecord.hints.label}"
+                                              required="#{bindings.LunghRecord.hints.mandatory}"
+                                              columns="#{bindings.LunghRecord.hints.displayWidth}"
+                                              maximumLength="#{bindings.LunghRecord.hints.precision}"
+                                              shortDesc="#{bindings.LunghRecord.hints.tooltip}" id="it23">
+                                    <f:validator binding="#{bindings.LunghRecord.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.LunghRecord.format}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox value="#{bindings.Cancellazione.inputValue}"
+                                                          label="#{bindings.Cancellazione.hints.label}"
+                                                          required="#{bindings.Cancellazione.hints.mandatory}"
+                                                          shortDesc="#{bindings.Cancellazione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Cancellazione.validator}"/>
+                                </af:selectBooleanCheckbox>
+                                <af:selectBooleanCheckbox value="#{bindings.CancellazioneDip.inputValue}"
+                                                          label="#{bindings.CancellazioneDip.hints.label}"
+                                                          required="#{bindings.CancellazioneDip.hints.mandatory}"
+                                                          shortDesc="#{bindings.CancellazioneDip.hints.tooltip}"
+                                                          id="it4">
+                                    <f:validator binding="#{bindings.CancellazioneDip.validator}"/>
+                                </af:selectBooleanCheckbox>
+                                <af:selectBooleanCheckbox value="#{bindings.Fileparziale.inputValue}"
+                                                          label="#{bindings.Fileparziale.hints.label}"
+                                                          required="#{bindings.Fileparziale.hints.mandatory}"
+                                                          shortDesc="#{bindings.Fileparziale.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Fileparziale.validator}"/>
+                                </af:selectBooleanCheckbox>
+                                <af:selectBooleanCheckbox value="#{bindings.Consenso.inputValue}"
+                                                          label="#{bindings.Consenso.hints.label}"
+                                                          required="#{bindings.Consenso.hints.mandatory}"
+                                                          shortDesc="#{bindings.Consenso.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Consenso.validator}"/>
+                                </af:selectBooleanCheckbox>
+                                <af:selectOneChoice value="#{bindings.Test.inputValue}"
+                                                    label="#{bindings.Test.hints.label}"
+                                                    rendered="#{sessionScope.scr == 'CI'}" id="soc5"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="HPV" value="HPV" id="si22"/>
+                                    <af:selectItem label="PAP" value="PAP" id="si23"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Tipo.inputValue}"
+                                                    label="#{bindings.Tipo.hints.label}"
+                                                    rendered="#{sessionScope.scr == 'CI'}" id="soc6"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="appuntamenti" value="appuntamenti" id="si24"/>
+                                    <af:selectItem label="accettazioni" value="accettazioni" id="si25"/>
+                                    <af:selectItem label="cancellazioni" value="cancellazioni" id="si26"/>
+                                    <af:selectItem label="HPV positivi" value="HPV positivi" id="si27"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Ordine.inputValue}"
+                                              label="#{bindings.Ordine.hints.label}"
+                                              required="#{bindings.Ordine.hints.mandatory}"
+                                              columns="#{bindings.Ordine.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ordine.hints.precision}"
+                                              shortDesc="#{bindings.Ordine.hints.tooltip}" id="it32">
+                                    <f:validator binding="#{bindings.Ordine.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ordine.format}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox label="Template" readOnly="true"
+                                                          selected="#{bindings.Template.inputValue== null?false:true}"
+                                                          id="sbc1" partialTriggers="b11"/>
+                                <af:panelGroupLayout id="pgl0" layout="horizontal">
+                                    <af:inputFile label="Nuovo template" id="if1" partialTriggers="b11"
+                                                  value="#{Cnf_UploadFileBean.file}"/>
+                                    <af:commandButton text="Upload" id="b11" action="#{Cnf_UploadFileBean.insertFile}"
+                                                      partialSubmit="false">
+                                         <af:setPropertyListener type="action" from="impexplog" to="#{pageFlowScope.action}"/>
+                                    </af:commandButton>
+                                </af:panelGroupLayout>
+                                <af:inputText value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.hints.label}"
+                                              required="#{bindings.Ulss.hints.mandatory}"
+                                              rendered="${sessionScope.regionale==true?true:false}"
+                                              columns="#{bindings.Ulss.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ulss.hints.precision}"
+                                              shortDesc="#{bindings.Ulss.hints.tooltip}" id="it31">
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Configurazione di import/export"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

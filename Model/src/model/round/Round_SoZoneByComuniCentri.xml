@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoZoneByComuniCentri"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;DESCRIZIONE&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.round.Round_SoZoneByComuniCentriImpl"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT DISTINCT SO_DISTRETTO_ZONA.CODDISTRZONA, 
+SO_DISTRETTO_ZONA.DESCRIZIONE, 
+SO_DISTRETTO_ZONA.ULSS, 
+DECODE(SO_CNF_DISTRZONA.TPSCR,T.CODSCR,SO_CNF_DISTRZONA.idcentro1liv,NULL) IDCENTRO1LIV, 
+DECODE(SO_CNF_DISTRZONA.TPSCR,T.CODSCR,SO_CNF_DISTRZONA.idcentro2liv,NULL) IDCENTRO2LIV, 
+DECODE(SO_CNF_DISTRZONA.TPSCR,T.CODSCR,SO_CNF_DISTRZONA.TPSCR,NULL) tpscr, 
+SO_COM_DISTRETTI_ZONE.CODCOM, 
+SO_COM_DISTRETTI_ZONE.RELEASE_CODE_COM 
+FROM SO_DISTRETTO_ZONA, so_cnf_tpscr t,  
+SO_CNF_DISTRZONA,SO_COM_DISTRETTI_ZONE 
+where  SO_DISTRETTO_ZONA.CODDISTRZONA=SO_CNF_DISTRZONA.CODDISTRZONA(+) 
+AND SO_DISTRETTO_ZONA.ulss=SO_CNF_DISTRZONA.ulss(+) 
+and SO_DISTRETTO_ZONA.CODDISTRZONA=SO_COM_DISTRETTI_ZONE.CODDISTRZONA(+) 
+AND SO_DISTRETTO_ZONA.ulss=SO_COM_DISTRETTI_ZONE.ulss(+)]]></SQLQuery>
+   <ViewAttribute
+      Name="Coddistrzona"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CODDISTRZONA"
+      Expression="CODDISTRZONA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO1LIV"
+      Expression="IDCENTRO1LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO2LIV"
+      Expression="IDCENTRO2LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOM"
+      Expression="CODCOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RELEASE_CODE_COM"
+      Expression="RELEASE_CODE_COM"
+      SQLType="NUMERIC"/>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Coddistrzona"/>
+      <Item Value="Ulss"/>
+   </AttrArray>
+</ViewObject>

@@ -1,0 +1,544 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.acc_ricercaBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.ACCETTAZIONI}" id="d1" initialFocusId="pt1:cognome">
+        <!--af:resource type="javascript">
+          function onBdlClickSelect() {
+              var button = AdfPage.PAGE.findComponentByAbsoluteId('pc1:bselect');
+              var isOk = button != null && button.getProperty("visible") == true && button.getProperty("disabled") == false;
+              if (isOk)
+                  AdfActionEvent.queue(button, button.getPartialSubmit());
+
+          }
+        </af:resource-->
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOptionList(['pt1:soc2'])" type="load"/>
+        <af:form id="f1" binding="#{Acc_ricercaAction.formSearch}" defaultCommand="pt1:btcerca">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.ACCETTAZIONI}"/>
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" partialTriggers="breset" layout="scroll">
+                        <af:panelHeader text="#{viewcontrollerBundle.RICERCA_INVITI}" id="ph1">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t4">
+                                    <af:button text="#{viewcontrollerBundle.CHIUDI_APPUNTAMENTI}" id="Chiudiappuntamenti" 
+                                               partialTriggers="id1 soc1">
+                                        <af:clientAttribute name="msg"
+                                                            value="#{empty sessionScope.dtInvito ? viewcontrollerBundle.CK_DATA_MSG : empty bindings.idCprel.inputValue ? viewcontrollerBundle.CK_CENTRO_MSG : ''}"/>
+                                        <af:showPopupBehavior popupId="ckWarn" triggerType="action"
+                                                              disabled="#{not empty sessionScope.dtInvito and not empty bindings.idCprel.inputValue}"/>
+                                        <af:showPopupBehavior popupId="confirm" triggerType="action"
+                                                              disabled="#{empty sessionScope.dtInvito or empty bindings.idCprel.inputValue or sessionScope.todayCheckDate}"/>
+                                        <af:showPopupBehavior popupId="dateWarningPopup" triggerType="action"
+                                                              disabled="#{empty sessionScope.dtInvito or empty bindings.idCprel.inputValue or not sessionScope.todayCheckDate}"/>
+                                    </af:button>
+                                    <af:popup autoCancel="disabled" id="ckWarn" contentDelivery="lazyUncached"
+                                              eventContext="launcher" launcherVar="source">
+                                        <af:setPropertyListener from="#{source.attributes.msg}" to="#{viewScope.msg}"
+                                                                type="popupFetch"/>
+                                        <af:dialog id="d2" title="#{viewcontrollerBundle.AVVISO}" type="none"
+                                                   styleClass="warnTitle">
+                                            <f:facet name="buttonBar">
+                                                <af:panelGroupLayout id="pgl26" halign="end" layout="horizontal">
+                                                    <af:toolbar id="t37">
+                                                        <af:button text="#{viewcontrollerBundle.CHIUDI}"
+                                                                   id="ckWarnButton" action="closed">
+                                                            <af:clientListener method="showHidePopup('pt1:ckWarn', false)"
+                                                                               type="action"/>
+                                                        </af:button>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </f:facet>
+                                            <af:outputText value="#{viewScope.msg}" id="of3" noWrap="false"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                    <af:popup autoCancel="disabled" id="confirm" contentDelivery="lazyUncached"
+                                              eventContext="launcher" launcherVar="source"
+                                              binding="#{Acc_ricercaAction.confirm}">
+                                        <af:dialog id="d29" title="#{viewcontrollerBundle.AVVISO}" type="none">
+                                            <f:facet name="buttonBar">
+                                                <af:panelGroupLayout id="pgl269" halign="end" layout="horizontal">
+                                                    <af:toolbar id="t379">
+                                                        <af:button text="#{viewcontrollerBundle.SI}" id="confirmButton"
+                                                                   actionListener="#{Acc_ricercaAction.onChiudig}">
+                                                            <af:clientListener method="showHidePopup('pt1:confirm', false)"
+                                                                               type="action"/>
+                                                        </af:button>
+                                                        <af:button text="#{viewcontrollerBundle.NO}" id="b679"
+                                                                   action="#{Acc_ricercaAction.closeConfirm}"/>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </f:facet>
+                                            <af:outputText value="#{af:format2(viewcontrollerBundle.CLOSE_CONFIRM_MSG, Utility.format(sessionScope.closeToDate), bindings.idCprel.selectedValue ne ' ' ? bindings.idCprel.selectedValue.attributeValues[1] : '')}"
+                                                           id="of39" noWrap="false"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="dateWarningPopup"
+                                              binding="#{Acc_ricercaAction.dateWarning}">
+                                        <af:dialog id="d4" title="#{viewcontrollerBundle.ATTENZIONE}" type="none"
+                                                   styleClass="warnTitle">
+                                            <f:facet name="buttonBar">
+                                                <af:panelGroupLayout id="pgl2" halign="end" layout="horizontal">
+                                                    <af:toolbar id="t2">
+                                                        <af:button text="#{viewcontrollerBundle.PROSEGUI}" id="b1"
+                                                                   action="#{Acc_ricercaAction.openConfirm}"/>
+                                                        <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b2"
+                                                                   action="#{Acc_ricercaAction.closeDateWarning}"/>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </f:facet>
+                                            <af:outputText value="#{viewcontrollerBundle.DATA_NON_VALIDA}" id="ot5"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                    <af:button text="#{viewcontrollerBundle.PIANO_DI_LAVORO_ETICHETTE}" id="b10"
+                                               rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                               immediate="true" windowEmbedStyle="inlineDocument"
+                                               windowModalityType="applicationModal" windowHeight="600"
+                                               windowWidth="600" action="dialog:printPianoLavoro">
+                                        <af:setPropertyListener from="#{bindings.idCprel.inputValue}"
+                                                                to="#{pageFlowScope.pl_centro}" type="action"/>
+                                        <af:setPropertyListener from="#{sessionScope.dtInvito}"
+                                                                to="#{pageFlowScope.pl_data}" type="action"/>
+                                        <af:setPropertyListener from="more" to="#{pageFlowScope.pl_type}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:spacer width="10" height="10" id="s2"/>
+                            <af:panelFormLayout id="pfl299" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneRadio value="#{bindings.livello.inputValue}"
+                                                   label="#{bindings.livello.hints.label}"
+                                                   required="#{bindings.livello.hints.mandatory}"
+                                                   shortDesc="#{bindings.livello.hints.tooltip}" id="livello"
+                                                   rendered="#{sessionScope.SOAcc2Liv==true}" autoSubmit="true"
+                                                   valueChangeListener="#{Acc_ricercaAction.onChliv}">
+                                    <f:selectItems value="#{bindings.livello.items}" id="si199"/>
+                                    <f:validator binding="#{bindings.livello.validator}"/>
+                                </af:selectOneRadio>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl1" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.idCprel.inputValue}"
+                                                    label="#{bindings.idCprel.hints.label}" autoSubmit="true"
+                                                    styleClass="choiceInTable" unselectedLabel="#{''}"
+                                                    required="#{bindings.idCprel.hints.mandatory}"
+                                                    partialTriggers="livello Chiudiappuntamenti ckWarnButton confirmButton"
+                                                    shortDesc="#{bindings.idCprel.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.idCprel.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.idCprel.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputDate label="#{viewcontrollerBundle.DATA_INVITO}" id="id1"
+                                              value="#{sessionScope.dtInvito}" autoSubmit="true"
+                                              valueChangeListener="#{Acc_ricercaAction.checkDate}">
+                                    <af:convertDateTime pattern="#{'dd/MM/yyyy'}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl2" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:inputText value="#{bindings.cognome.inputValue}"
+                                              label="#{bindings.cognome.hints.label}"
+                                              required="#{bindings.cognome.hints.mandatory}"
+                                              columns="#{bindings.cognome.hints.displayWidth}"
+                                              maximumLength="#{bindings.cognome.hints.precision}"
+                                              shortDesc="#{bindings.cognome.hints.tooltip}" id="cognome"
+                                              clientComponent="true" contentStyle="text-transform: uppercase;">
+                                    <f:validator binding="#{bindings.cognome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.nome.inputValue}" label="#{bindings.nome.hints.label}"
+                                              required="#{bindings.nome.hints.mandatory}"
+                                              columns="#{bindings.nome.hints.displayWidth}"
+                                              maximumLength="#{bindings.nome.hints.precision}"
+                                              shortDesc="#{bindings.nome.hints.tooltip}" id="it2"
+                                              contentStyle="text-transform: uppercase;">
+                                    <f:validator binding="#{bindings.nome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl3" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:inputText value="#{bindings.codFisc.inputValue}"
+                                              label="#{bindings.codFisc.hints.label}"
+                                              required="#{bindings.codFisc.hints.mandatory}"
+                                              columns="#{bindings.codFisc.hints.displayWidth}"
+                                              maximumLength="#{bindings.codFisc.hints.precision}"
+                                              shortDesc="#{bindings.codFisc.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.codFisc.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.tessSan.inputValue}"
+                                              label="#{bindings.tessSan.hints.label}"
+                                              required="#{bindings.tessSan.hints.mandatory}"
+                                              columns="#{bindings.tessSan.hints.displayWidth}"
+                                              maximumLength="#{bindings.tessSan.hints.precision}"
+                                              shortDesc="#{bindings.tessSan.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.tessSan.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl4" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:inputText value="#{bindings.codIdSogg.inputValue}"
+                                              label="#{bindings.codIdSogg.hints.label}"
+                                              required="#{bindings.codIdSogg.hints.mandatory}"
+                                              columns="#{bindings.codIdSogg.hints.displayWidth}"
+                                              maximumLength="#{bindings.codIdSogg.hints.precision}"
+                                              shortDesc="#{bindings.codIdSogg.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.codIdSogg.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.codRichiesta.inputValue}"
+                                              label="#{bindings.codRichiesta.hints.label}"
+                                              required="#{bindings.codRichiesta.hints.mandatory}"
+                                              columns="#{bindings.codRichiesta.hints.displayWidth}"
+                                              maximumLength="#{bindings.codRichiesta.hints.precision}"
+                                              shortDesc="#{bindings.codRichiesta.hints.tooltip}" id="it599">
+                                    <f:validator binding="#{bindings.codRichiesta.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.codRichiesta.format}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl499" maxColumns="2" rows="1" rendered="#{sessionScope.HPV}"
+                                                fieldWidth="450" labelWidth="150" partialTriggers="livello">
+                                <af:selectOneChoice value="#{bindings.testProposto.inputValue}"
+                                                    label="#{bindings.testProposto.label}"
+                                                    required="#{bindings.testProposto.hints.mandatory}"
+                                                    shortDesc="#{bindings.testProposto.hints.tooltip}" id="soc4"
+                                                    styleClass="choiceInTable" rendered="#{sessionScope.HPV}"
+                                                    disabled="#{bindings.livello.selectedValue=='2'}"
+                                                    partialTriggers="livello" unselectedLabel="#{''}">
+                                    <f:selectItems value="#{bindings.testProposto.items}" id="si4"/>
+                                    <f:validator binding="#{bindings.testProposto.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.prelievoHpv.inputValue}"
+                                                    label="#{bindings.prelievoHpv.label}"
+                                                    required="#{bindings.prelievoHpv.hints.mandatory}"
+                                                    shortDesc="#{bindings.prelievoHpv.hints.tooltip}" id="soc5"
+                                                    styleClass="choiceInTable" rendered="#{sessionScope.HPV}"
+                                                    disabled="#{bindings.livello.selectedValue=='2'}"
+                                                    partialTriggers="livello" unselectedLabel="#{''}">
+                                    <f:selectItems value="#{bindings.prelievoHpv.items}" id="si5"/>
+                                    <f:validator binding="#{bindings.prelievoHpv.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl5" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:selectOneChoice value="#{bindings.tipoDoc.inputValue}"
+                                                    label="#{bindings.tipoDoc.label}" styleClass="choiceInTable"
+                                                    required="#{bindings.tipoDoc.hints.mandatory}"
+                                                    shortDesc="#{bindings.tipoDoc.hints.tooltip}" id="soc2"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.tipoDoc.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.tipoDoc.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.codiceDoc.inputValue}"
+                                              label="#{bindings.codiceDoc.hints.label}"
+                                              required="#{bindings.codiceDoc.hints.mandatory}"
+                                              columns="#{bindings.codiceDoc.hints.displayWidth}"
+                                              maximumLength="#{bindings.codiceDoc.hints.precision}"
+                                              shortDesc="#{bindings.codiceDoc.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.codiceDoc.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl61" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectBooleanCheckbox value="#{bindings.soloStorico.inputValue}"
+                                                          label="#{bindings.soloStorico.label}"
+                                                          shortDesc="#{bindings.soloStorico.hints.tooltip}" id="sbc3"
+                                                          rendered="#{!sessionScope.SONoDatiSensibili==true}"/>
+                                <af:inputText value="#{bindings.chiave.inputValue}"
+                                              label="Chiave anonima" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                              required="#{bindings.chiave.hints.mandatory}"
+                                              columns="#{bindings.chiave.hints.displayWidth}"
+                                              maximumLength="#{bindings.chiave.hints.precision}"
+                                              shortDesc="#{bindings.chiave.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.chiave.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl4991" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <f:facet name="footer">
+                                    <af:toolbar id="t434">
+                                        <af:button action="#{Acc_ricercaAction.onCerca}"
+                                                   disabled="#{sessionScope.SORefertazione!=true}"
+                                                   text="#{viewcontrollerBundle.CERCA}" id="btcerca"
+                                                   clientComponent="true"/>
+                                        <af:button actionListener="#{Acc_ricercaAction.onReimp}"
+                                                   text="#{viewcontrollerBundle.REIMPOSTA}" disabled="false"
+                                                   id="breset"/>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:selectOneChoice value="#{bindings.idStatoTrial.inputValue}"
+                                                    label="#{bindings.idStatoTrial.label}"
+                                                    required="#{bindings.idStatoTrial.hints.mandatory}"
+                                                    shortDesc="#{bindings.idStatoTrial.hints.tooltip}" id="soc41"
+                                                    styleClass="choiceInTable" rendered="#{sessionScope.trial > 0}">
+                                    <f:selectItems value="#{bindings.idStatoTrial.items}" id="si41"/>
+                                    <f:validator binding="#{bindings.idStatoTrial.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.idBraccioTrial.inputValue}"
+                                                    label="#{bindings.idBraccioTrial.label}"
+                                                    required="#{bindings.idBraccioTrial.hints.mandatory}"
+                                                    shortDesc="#{bindings.idBraccioTrial.hints.tooltip}" id="soc51"
+                                                    styleClass="choiceInTable" rendered="#{sessionScope.trial > 0}">
+                                    <f:selectItems value="#{bindings.idBraccioTrial.items}" id="si51"/>
+                                    <f:validator binding="#{bindings.idBraccioTrial.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </af:panelHeader>
+                        <af:panelCollection id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth"
+                                            partialTriggers="t1 ::btcerca ::breset">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3" partialTriggers="::btcerca ::breset t1">
+                                    <af:button text="#{viewcontrollerBundle.Esitoinvito}" id="b3"
+                                               action="#{Acc_ricercaAction.onEsito}"
+                                               disabled="#{viewScope.numSelected!=1 || ( bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"/>
+                                    <af:button text="#{viewcontrollerBundle.INTERVENTI_PRECEDENTI}" id="b31"
+                                               action="#{Acc_ricercaAction.onInterv}"
+                                               disabled="#{viewScope.numSelected!=1 || ( bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"/>
+                                    <af:button text="#{viewcontrollerBundle.Anamnesi}" id="b4"
+                                               action="#{Acc_ricercaAction.onAnam}"
+                                               disabled="#{viewScope.numSelected!=1 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"/>
+                                    <af:button text="#{viewcontrollerBundle.PRELIEVO}" id="b41"
+                                               rendered="#{bindings.livello.inputValue==1}"
+                                               action="#{Acc_ricercaAction.onPrel}"
+                                               disabled="#{viewScope.numSelected!=1 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"
+                                               partialTriggers="::livello t1"/>
+                                    <af:button text="#{viewcontrollerBundle.Anagrafica}" id="b5"
+                                               rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                               disabled="#{viewScope.numSelected!=1 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"
+                                               action="#{Acc_ricercaAction.onAnagrafica}"/>
+                                    <af:group id="g1">
+                                        <af:button text="#{viewcontrollerBundle.SEGNA_PRESENZA}" id="b6"
+                                                   disabled="#{viewScope.numSelected==null || viewScope.numSelected==0 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"
+                                                   actionListener="#{Acc_ricercaAction.onSegnapres}"/>
+                                        <af:button text="#{viewcontrollerBundle.SEGNA_ASSENZA}" id="b7"
+                                                   disabled="#{viewScope.numSelected==null || viewScope.numSelected==0 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}"
+                                                   actionListener="#{Acc_ricercaAction.onSegnaAss}"/>
+                                        <af:button text="#{viewcontrollerBundle.SCELTA_PRELEVATORE}" id="b61"
+                                                   disabled="#{viewScope.numSelected==null || viewScope.numSelected==0 || (bindings.Acc_RicInvitiView1Iterator.estimatedRowCount>0?false:true)}">
+                                            <af:showPopupBehavior popupId="choosePrel"/>
+                                            <af:clientListener method="removeEmptyOptionList(['pt1:idPrelevatore'])"
+                                                               type="action"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="choosePrel"
+                                                  binding="#{Acc_ricercaAction.choosePrel}">
+                                            <af:dialog id="d3" title="#{viewcontrollerBundle.PRELEVATORE}" type="none">
+                                                <af:panelFormLayout id="pfl6">
+                                                    <f:facet name="footer"/>
+                                                    <af:selectOneChoice value="#{bindings.idPrelevatore.inputValue}"
+                                                                        label="#{viewcontrollerBundle.PRELEVATORE}"
+                                                                        styleClass="choiceInTable"
+                                                                        required="#{bindings.idPrelevatore.hints.mandatory}"
+                                                                        shortDesc="#{bindings.idPrelevatore.hints.tooltip}"
+                                                                        id="idPrelevatore">
+                                                        <f:selectItems value="#{bindings.idPrelevatore.items}"
+                                                                       id="si3"/>
+                                                        <f:validator binding="#{bindings.idPrelevatore.validator}"/>
+                                                    </af:selectOneChoice>
+                                                </af:panelFormLayout>
+                                                <f:facet name="buttonBar">
+                                                    <af:panelGroupLayout id="pgl211" halign="end" layout="horizontal">
+                                                        <af:toolbar id="t311">
+                                                            <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b311"
+                                                                       actionListener="#{Acc_ricercaAction.choosePrel}"></af:button>
+                                                            <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b611">
+                                                                <af:clientListener method="showHidePopup('pt1:pc1:choosePrel', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </af:panelGroupLayout>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                    </af:group>
+                                    <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="b8" useWindow="true"
+                                               immediate="true" windowEmbedStyle="inlineDocument"
+                                               windowModalityType="applicationModal"
+                                               disabled="#{bindings.Acc_RicInvitiView1Iterator.estimatedRowCount gt 0?false:true}"
+                                               windowHeight="300" windowWidth="600"
+                                               visible="#{sessionScope.SOStampaElenco and !sessionScope.SONoDatiSensibili==true}"
+                                               action="dialog:printElencoSoggetti"/>
+                                    <af:button text="#{viewcontrollerBundle.STAMPA_ANAMNESI}" id="b89" useWindow="true"
+                                               immediate="true" windowEmbedStyle="inlineDocument"
+                                               windowModalityType="applicationModal"
+                                               disabled="#{bindings.Acc_RicInvitiView1Iterator.estimatedRowCount gt 0?false:true}"
+                                               rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                               windowHeight="300" windowWidth="600"
+                                               action="dialog:print_elencoAnamnesi"/>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Acc_RicInvitiView1.collectionModel}" var="row"
+                                      rows="#{bindings.Acc_RicInvitiView1.rangeSize}"
+                                      emptyText="#{bindings.Acc_RicInvitiView1.viewable ? 'Nessun dato trovato.' : 'Access Denied.'}"
+                                      rowBandingInterval="0" rowSelection="multiple"
+                                      fetchSize="#{bindings.Acc_RicInvitiView1.rangeSize}" id="t1"
+                                      columnStretching="column:c1" summary="#{''}"
+                                      binding="#{Acc_ricercaAction.accTable}" scrollPolicy="page"
+                                      selectionListener="#{Acc_ricercaAction.selectionListener}">
+                                <af:column headerText="#{''}" id="c121" noWrap="false" align="center"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                    styleClass="#{row.Selezionato?'p_AFSelected':''}" width="60">
+                                    <af:link id="l23" text="#{viewcontrollerBundle.ETICHETTA}" useWindow="true"
+                                             immediate="true" windowEmbedStyle="inlineDocument"
+                                             windowModalityType="applicationModal" windowHeight="600" windowWidth="600"
+                                             action="dialog:printPianoLavoro">
+                                        <af:setPropertyListener from="#{row.Idcentroprelievo}"
+                                                                to="#{pageFlowScope.pl_centro}" type="action"/>
+                                        <af:setPropertyListener from="#{row.Dtapp}" to="#{pageFlowScope.pl_data}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{row.Codts}" to="#{pageFlowScope.pl_codts}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="single" to="#{pageFlowScope.pl_type}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{row.Idtpinvito}" to="#{pageFlowScope.pl_idtpinv}"
+                                                                type="action"/>
+                                    </af:link>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.TrialStatoDescrbreve.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.TrialStatoDescrbreve.label}"
+                                           id="c171" rowHeader="unstyled"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false"
+                                           rendered="#{sessionScope.trial > 0}" width="54">
+                                    <af:outputText value="#{row.TrialStatoDescrbreve}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.TrialStatoDescrbreve.tooltip}"
+                                                   id="ot171"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}">
+                                        <af:convertDateTime pattern="#{bindings.Acc_RicInvitiView1.hints.TrialStatoDescrbreve.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.TrialBraccioDescrbreve.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.TrialBraccioDescrbreve.label}"
+                                           id="c172" rowHeader="unstyled"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false"
+                                           rendered="#{sessionScope.trial > 0}" width="54">
+                                    <af:outputText value="#{row.TrialBraccioDescrbreve}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.TrialBraccioDescrbreve.tooltip}"
+                                                   id="ot172"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}">
+                                        <af:convertDateTime pattern="#{bindings.Acc_RicInvitiView1.hints.TrialBraccioDescrbreve.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.Dtoraapp.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.Dtoraapp.label}" id="c17"
+                                           rowHeader="unstyled" styleClass="#{row.Selezionato?'p_AFSelected':''}"
+                                           noWrap="false" width="90">
+                                    <af:outputText value="#{row.Dtoraapp}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.Dtoraapp.tooltip}"
+                                                   id="ot17"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}">
+                                        <af:convertDateTime pattern="#{bindings.Acc_RicInvitiView1.hints.Dtoraapp.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.Cognome.name}"
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.Cognome.label}" id="c1"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="150">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.Cognome.tooltip}"
+                                                   id="ot1"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.Nome.name}" 
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.Nome.label}" id="c2"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="140">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.Nome.tooltip}"
+                                                   id="ot2"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.DataNascita.name}"
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.DataNascita.label}" id="c3"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="70">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.DataNascita.tooltip}"
+                                                   id="ot3"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}">
+                                        <af:convertDateTime pattern="#{bindings.Acc_RicInvitiView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.Escl.name}" sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.Escl.label}" id="c4"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="68">
+                                    <af:outputText value="#{row.Escl}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.Escl.tooltip}"
+                                                   id="ot4"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.DescTpinv.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.DescTpinv.label}" id="c6"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="62">
+                                    <af:outputText value="#{row.DescTpinv}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.DescTpinv.tooltip}"
+                                                   id="ot6"
+                                                   styleClass="#{row.Confermato != '0'?'InvitoConfermato':null}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.DescEsito.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.DescEsito.label}" id="c711"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="38">
+                                    <af:outputText value="#{row.DescEsito}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.DescEsito.tooltip}"
+                                                   id="ot711"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.CentroPrel.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.CentroPrel.label}" id="c21"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false" width="55">
+                                    <af:outputText value="#{row.CentroPrel}" shortDesc="#{row.CentroPrel}" id="ot21"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.TestProposto.name}"
+                                           sortable="true" rendered="#{sessionScope.HPV}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.TestProposto.label}"
+                                           id="c2212" styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false"
+                                           width="57">
+                                    <af:outputText value="#{row.TestProposto}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.TestProposto.tooltip}"
+                                                   id="ot2212"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.PrelievoHpv.name}"
+                                           sortable="true" rendered="#{sessionScope.HPV}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.PrelievoHpv.label}"
+                                           id="c221211" styleClass="#{row.Selezionato?'p_AFSelected':''}" noWrap="false"
+                                           width="32" align="center">
+                                    <af:outputText value="#{row.Codesitoinvito=='S' ? row.PrelievoHpv=='1' ? 'No' : row.PrelievoHpv=='2' ? 'Si' : '' : ''}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.PrelievoHpv.tooltip}"
+                                                   id="ot221211"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Acc_RicInvitiView1.hints.ConsensoCond.name}"
+                                           sortable="true" rendered="#{sessionScope.HPV}"
+                                           headerText="#{bindings.Acc_RicInvitiView1.hints.ConsensoCond.label}"
+                                           id="c2212111" styleClass="#{row.Selezionato?'p_AFSelected':''}"
+                                           noWrap="false" width="78" align="center">
+                                    <af:outputText value="#{row.ConsensoCond=='0' ? 'Dato non disponibile' : row.ConsensoCond=='1' ? 'No' : 'Si' }"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.ConsensoCond.tooltip}"
+                                                   id="ot2212111"/>
+                                </af:column>
+                                <af:column headerText="#{''}" id="c12" noWrap="false" align="center"
+                                           rendered="#{!sessionScope.SONoDatiSensibili==true and sessionScope.SORefertazione}"
+                                           styleClass="#{row.Selezionato?'p_AFSelected':''}" width="60">
+                                    <af:link id="l2" text="#{viewcontrollerBundle.STORICO}">
+                                        <af:setPropertyListener from="#{row.Codts}" to="#{requestScope.storico_codts}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{row.Ulss}" to="#{requestScope.storico_ulss}"
+                                                                type="action"/>
+                                        <af:fileDownloadActionListener filename="Storico#{row.Codts}.pdf"
+                                                                       method="#{Print_storicoAction.stampaPDF}"/>
+                                    </af:link>
+                                </af:column>
+                                <af:column headerText="#{bindings.Acc_RicInvitiView1.hints.Chiave.label}" id="c5"
+                                    rendered="#{sessionScope.SOAccessoAnonimo==true}" styleClass="#{row.Selezionato?'p_AFSelected':''}">
+                                    <af:outputText value="#{row.Chiave}"
+                                                   shortDesc="#{bindings.Acc_RicInvitiView1.hints.Chiave.tooltip}"
+                                                   id="ot7"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="navigation" value="#{Acc_ricercaAction}"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

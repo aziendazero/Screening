@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCo_referto1livPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiCOView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiCOView1Iterator"/>
+    <iterator Binds="Ref_SoRefertocolon1livView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoRefertocolon1livView1Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg1livView2" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfSugg1livView2Iterator"/>
+    <iterator Binds="Ref_SoOpmedicoView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoOpmedicoView1Iterator"/>
+    <iterator Binds="Ref_SoInvitoView2" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoInvitoView2Iterator"/>
+    <iterator Binds="Ref_SoCentroRefertoView2" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCentroRefertoView2Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg1livView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfSugg1livView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef1livCoES1LIVView1_1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef1livCoES1LIVView1_1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Ref_2livBeanDataControl" id="Ref_2livBeanDataControlIterator"/>
+    <iterator Binds="Ref_SoRefertocolon1livView2" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoRefertocolon1livView2Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Completo">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Tipoinvitodesc">
+      <AttrNames>
+        <Item Value="Tipoinvitodesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfSugg1livView2Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Dtreferto">
+      <AttrNames>
+        <Item Value="Dtreferto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Idlettore" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoOpmedicoView1Iterator">
+      <AttrNames>
+        <Item Value="Idlettore"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SoInvitoView2Iterator" id="Idcentroref1liv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCentroRefertoView2Iterator">
+      <AttrNames>
+        <Item Value="Idcentroref1liv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="CodProvetta">
+      <AttrNames>
+        <Item Value="CodProvetta"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="CodReferto">
+      <AttrNames>
+        <Item Value="CodReferto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Idsugg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfSugg1livView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Idsugg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Quantita">
+      <AttrNames>
+        <Item Value="Quantita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Esito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef1livCoES1LIVView1_1Iterator">
+      <AttrNames>
+        <Item Value="Esito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Dtspedizione">
+      <AttrNames>
+        <Item Value="Dtspedizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Idallegato">
+      <AttrNames>
+        <Item Value="Idallegato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView1Iterator" id="Idreferto">
+      <AttrNames>
+        <Item Value="Idreferto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_2livBeanDataControlIterator" id="co_esito1liv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef1livCoES1LIVView1_1Iterator">
+      <AttrNames>
+        <Item Value="co_esito1liv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_2livBeanDataControlIterator" id="co_esito1liv1">
+      <AttrNames>
+        <Item Value="co_esito1liv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfRef1livCoES1LIVView1_1Iterator" id="Idcnfref1l">
+      <AttrNames>
+        <Item Value="Idcnfref1l"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon1livView2Iterator" id="Esito1">
+      <AttrNames>
+        <Item Value="Esito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

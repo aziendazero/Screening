@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="ag_riassegnaPageDef"
+                Package="pages.agenda">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Agenda_ServizioDataControl"
+              id="Agenda_ServizioDataControlIterator"/>
+    <iterator Binds="Agenda_SelCprelView1" RangeSize="-1" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SelCprelView1Iterator"/>
+    <iterator Binds="Agenda_AppRiassView1" RangeSize="10" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_AppRiassView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Agenda_ServizioDataControlIterator" id="idCtRiass" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Agenda_SelCprelView1Iterator">
+      <AttrNames>
+        <Item Value="idCtRiass"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Agenda_AppRiassView1Iterator" id="Agenda_AppRiassView1">
+      <nodeDefinition DefName="model.agenda.Agenda_AppRiassView" Name="Agenda_AppRiassView10">
+        <AttrNames>
+          <Item Value="Idinvito"/>
+          <Item Value="Dtapp"/>
+          <Item Value="Ctapp"/>
+          <Item Value="Idcentroprelievo"/>
+          <Item Value="Nome"/>
+          <Item Value="Cognome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Codts"/>
+          <Item Value="Tel1"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Dtoraapp"/>
+          <Item Value="Codesitoinvito"/>
+          <Item Value="Dtcreazione"/>
+          <Item Value="DocIdent"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

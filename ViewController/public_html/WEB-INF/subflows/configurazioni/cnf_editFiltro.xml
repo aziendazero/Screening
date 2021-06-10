@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="cnf_editFiltro">
+    <default-activity>createOrEdit</default-activity>
+    <transaction>
+      <requires-transaction/>
+    </transaction>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <task-flow-return id="cancel">
+      <outcome>
+        <name>cancel</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <router id="createOrEdit">
+      <case id="__14">
+        <expression>#{requestScope.action=='create'}</expression>
+        <outcome>create</outcome>
+      </case>
+      <case id="__15">
+        <expression>#{requestScope.action=='edit'}</expression>
+        <outcome>edit</outcome>
+      </case>
+      <default-outcome>inValidAction</default-outcome>
+    </router>
+    <method-call id="createWithParameter">
+      <method>#{bindings.CreateWithParams.execute}</method>
+      <outcome>
+        <fixed-outcome>CreateWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Commit">
+      <method>#{bindings.Commit.execute}</method>
+      <outcome>
+        <fixed-outcome>Commit</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="commit">
+      <outcome>
+        <name>commit</name>
+        <commit/>
+      </outcome>
+    </task-flow-return>
+    <view id="cnf_filtroTemplate">
+      <page>/pages/conf/cnf_filtroTemplate.jsf</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id>*</from-activity-id>
+      <control-flow-case id="__3">
+        <from-outcome>cancel</from-outcome>
+        <to-activity-id>cancel</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>createOrEdit</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>cnf_filtroTemplate</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__6">
+        <from-outcome>create</from-outcome>
+        <to-activity-id>createWithParameter</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id>createWithParameter</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome>CreateWithParams</from-outcome>
+        <to-activity-id>cnf_filtroTemplate</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id>Commit</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome>Commit</from-outcome>
+        <to-activity-id>cnf_filtroTemplate</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__1">
+      <from-activity-id>cnf_filtroTemplate</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome>apply</from-outcome>
+        <to-activity-id>Commit</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome>confirm</from-outcome>
+        <to-activity-id>commit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

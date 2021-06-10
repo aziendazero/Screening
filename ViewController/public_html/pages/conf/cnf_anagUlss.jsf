@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_anagUlss.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_anagraficheAction.sdoCodiciLocaliForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCnfAnag.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                    <af:button text="Modifica" id="b1" actionListener="#{Cnf_anagraficheAction.onDettCodLoc}" action="creatEditAnagUlss">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella centro" cancelTextAndAccessKey="Annulla"
+                                                   partialTriggers="t1" affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar"/>
+                                            <h:outputText value="Cancellare definitivamente il seguente codice anagrafico?" id="ot6"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3"
+                                           rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                           action="creatEditAnagUlss">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedCodLoc}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_anagraficheAction.onChangeCodLoc}" autoSubmit="true"
+                                    binding="#{Cnf_anagraficheAction.selectedUlssCodLoc}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfAnagUlssView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfAnagUlssView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfAnagUlssView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfAnagUlssView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfAnagUlssView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfAnagUlssView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_anagraficheAction.tabCodLoc}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Codanagulss.label}" id="c1">
+                                <af:outputText value="#{row.Codanagulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Codanagulss.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Descrizione.label}" id="c2"
+                                       width="350">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Descrizione.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column id="c6" headerText="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Sigla.label}">
+                                <af:column id="c3">
+                                    <af:outputText value="#{row.Sigla}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Sigla.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                <af:column id="c4" width="250">
+                                    <af:outputText value="#{row.Descrizione1}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Descrizione1.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Ulss.label}" id="c5"
+                                       rendered="${sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfAnagUlssView1.hints.Ulss.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Codici anagrafici dell'azienda sanitaria"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

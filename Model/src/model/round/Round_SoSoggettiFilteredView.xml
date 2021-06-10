@@ -1,0 +1,593 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoSoggettiFilteredView"
+   Version="12.2.1.11.57"
+   SelectList="Round_SoSoggetto.CODTS, 
+       Round_SoSoggetto.ULSS, 
+       Round_SoSoggetto.COGNOME, 
+       Round_SoSoggetto.NOME, 
+       Round_SoSoggetto.DATA_NASCITA, 
+       Round_SoSoggetto.SESSO, 
+       Round_SoSoggetto.CODANAGREG, 
+       Round_SoSoggetto.CODDISTRZONA, 
+       Round_SoSoggetto.CODCOMRES, 
+       Round_SoComune.DESCRIZIONE, 
+       Round_SoSoggetto.INDIRIZZO_RES, 
+       Round_SoRoundorg.NUMROUND AS ROUNDCOMUNERIF, 
+       Round_SoRoundorg.CODSCR, 
+       Round_SoRoundorg.DTINIZIO AS DTINIZIOROUNDRIF, 
+       Round_SoSoggetto.CODCOMDOM, 
+       Round_SoComune1.DESCRIZIONE AS DOMICILIO, 
+       Round_SoComune1.CODCOM AS CODCOM2, 
+       Round_SoSoggetto.INDIRIZZO_DOM, 
+       Round_SoSoggetto.CODICEREGMEDICO, 
+       Round_SoMedico.COGNOME AS COGNOMEMED, 
+       Round_SoMedico.CODICEREGMEDICO AS CODICEREGMEDICO1, 
+       Round_SoMedico.NOME AS NOMEMED, 
+       Round_SoMedico.DTADESIONE, 
+       Round_SoSoggetto.TEL1, 
+       Round_SoSoggetto.TEL2, 
+       Round_SoInvito.IDINVITO, 
+       Round_SoInvito.ATTIVO, 
+       Round_SoInvito.DTINVIORICHIAMO, 
+       Round_SoInvito.ROUNDCOMUNE, 
+       Round_SoRoundorg.CODSCR AS CODSCR1, 
+       Round_SoCnfAnagScr.TPSCR, 
+       Round_SoCnfAnagScr.CODANAGREG AS CODANAGREG1, 
+       Round_SoCnfAnagScr.ULSS AS ULSS1, 
+       Round_SoCnfAnagScr.INCLUSO, 
+       Round_SoSoggScr.TPRICHIAMO, 
+       Round_SoSoggScr.IDCENTRORICHIAMO, 
+       Round_SoSoggScr.DTRICHIAMO, 
+       Round_SoRoundorg.CODCOM AS CODCOM4, 
+       Round_SoComune.CODCOM AS CODCOM3, 
+       DECODE(Round_SoSoggetto.codanagreg,3,Round_SoSoggetto.codcomdom,Round_SoSoggetto.codcomres) AS COMUNERIF, 
+       Round_SoSoggScr.CODTS AS CODTS1, 
+       Round_SoSoggScr.ULSS AS ULSS2, 
+       Round_SoSoggScr.TPSCR AS TPSCR1, 
+       Round_SoMedico.ULSS AS ULSS3, 
+       Round_SoSoggScr.IDCENTRO1LIV, 
+       Round_SoSoggScr.IDCENTRO2LIV, 
+       Round_SoComune.RELEASE_CODE, 
+       Round_SoComune.RELEASE_CODE AS RELEASE_CODE1, 
+       Round_SoComune1.RELEASE_CODE AS RELEASE_CODE2, 
+       Round_SoRoundorg.RELEASE_CODE_COM, 
+       Round_SoSoggetto.RELEASE_CODE_COM_RES, 
+       Round_SoSoggetto.RELEASE_CODE_COM_DOM"
+   FromList="SO_SOGGETTO Round_SoSoggetto, SO_INVITO Round_SoInvito, SO_COMUNE Round_SoComune, SO_COMUNE Round_SoComune1, SO_MEDICO Round_SoMedico, SO_ROUNDORG Round_SoRoundorg, SO_CNF_ANAG_SCR Round_SoCnfAnagScr, SO_SOGG_SCR Round_SoSoggScr"
+   Where="(Round_SoSoggetto.CODTS = Round_SoInvito.CODTS(+) AND Round_SoSoggetto.ULSS = Round_SoInvito.ULSS(+) AND Round_SoInvito.tpscr(+)=:1 AND Round_SoInvito.attivo(+)=1)  AND Round_SoSoggetto.RELEASE_CODE_COM_RES=Round_SoComune.RELEASE_CODE(+)  AND Round_SoSoggetto.RELEASE_CODE_COM_DOM=Round_SoComune1.RELEASE_CODE(+)  AND Round_SoSoggetto.CODICEREGMEDICO = Round_SoMedico.CODICEREGMEDICO(+)  AND Round_SoSoggetto.ULSS = Round_SoMedico.ULSS(+)  AND (DECODE(Round_SoSoggetto.CODANAGREG, 3, Round_SoSoggetto.RELEASE_CODE_COM_DOM, Round_SoSoggetto.RELEASE_CODE_COM_RES) = Round_SoRoundorg.RELEASE_CODE_COM  AND Round_SoRoundorg.dtfine IS NULL  AND :2=Round_SoRoundorg.CODSCR)  AND (Round_SoSoggetto.CODANAGREG= Round_SoCnfAnagScr.CODANAGREG  AND Round_SoSoggetto.ULSS= Round_SoCnfAnagScr.ULSS  AND Round_SoCnfAnagScr.incluso=1)  AND Round_SoSoggetto.ULSS=:3  AND Round_SoCnfAnagScr.tpscr=:4  AND Round_SoSoggetto.CODTS NOT IN (SELECT ROUND_SOESCLUSIONE.CODTS FROM SO_ESCLUSIONE ROUND_SOESCLUSIONE,   SO_CNF_ESCLUSIONE ROUND_SOCNFESCLUSIONE WHERE ((ROUND_SOESCLUSIONE.IDCNFESCL= ROUND_SOCNFESCLUSIONE.IDCNFESCL) AND (ROUND_SOESCLUSIONE.ULSS        = ROUND_SOCNfESCLUSIONE.ULSS) AND (ROUND_SOESCLUSIONE.TPSCR       = ROUND_SOCNFESCLUSIONE.TPSCR) AND (ROUND_SOESCLUSIONE.TPSCR       = :5) AND (ROUND_SOESCLUSIONE.ULSS        =:6) AND DTANNULL                       IS NULL AND DTESCL                         &#60;= to_date(:7,&#39;dd/mm/yyyy&#39;) AND (TPESCL                         = &#39;D&#39; OR ( TPESCL                         =&#39;T&#39; AND DTESCL+NUMGIORNI               &#62;= to_date(:8,&#39;dd/mm/yyyy&#39;)) ) ) ) AND Round_SoSoggScr.CODTS(+)      =Round_SoSoggetto.CODTS  AND Round_SoSoggScr.ULSS(+)=Round_SoSoggetto.ULSS  AND Round_SoSoggScr.TPSCR(+)=:9"
+   OrderBy="NVL(Round_SoSoggScr.dtrichiamo, TO_DATE(&#39;01/01/1900&#39;,&#39;dd/MM/yyyy&#39;)),DATA_NASCITA,COGNOME,NOME"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.round.Round_SoSoggettiFilteredViewImpl"
+   ComponentInterface="model.round.common.Round_SoSoggettiFilteredView"
+   ClientProxyName="model.round.client.Round_SoSoggettiFilteredViewClient"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="100"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Round_SoSoggetto"
+      Entity="model.round.Round_SoSoggetto"
+      ReadOnly="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoInvito"
+      Entity="model.round.Round_SoInvito"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoSoggetto"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoComune"
+      Entity="model.round.Round_SoComune"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoInvito"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoComune1"
+      Entity="model.round.Round_SoComune"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoComune"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoMedico"
+      Entity="model.round.Round_SoMedico"
+      Association="model.FkSoSoggeHaMmgSoMedicAssoc"
+      AssociationEnd="model.FkSoSoggeHaMmgSoMedicAssoc.Round_SoMedico"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoSoggetto"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.round.Round_SoSoggetto.Codiceregmedico" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.round.Round_SoMedico.Codiceregmedico" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoRoundorg"
+      Entity="model.round.Round_SoRoundorg"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoMedico"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoCnfAnagScr"
+      Entity="model.round.Round_SoCnfAnagScr"
+      ReadOnly="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoSoggScr"
+      Entity="model.round.Round_SoSoggScr"
+      Association="model.FkSoSoggScrSoggAssoc"
+      AssociationEnd="model.FkSoSoggScrSoggAssoc.Round_SoSoggScr"
+      SourceUsage="model.round.Round_SoSoggettiFilteredView.Round_SoSoggetto"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.round.Round_SoSoggetto.Codts" />
+            <Item Value="model.round.Round_SoSoggetto.Ulss" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.round.Round_SoSoggScr.Codts" />
+            <Item Value="model.round.Round_SoSoggScr.Ulss" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="ULSS" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ulss_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="COGNOME" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cognome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="NOME" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Nome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsNotNull="true"
+      EntityAttrName="DataNascita"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="DATA_NASCITA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataNascita_LABEL"/>
+            <FMT_FORMATTER
+               ResId="DataNascita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataNascita_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsNotNull="true"
+      EntityAttrName="Sesso"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="SESSO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sesso_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODANAGREG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddistrzona"
+      EntityAttrName="Coddistrzona"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODDISTRZONA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomres"
+      EntityAttrName="Codcomres"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODCOMRES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Residenza"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoComune"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Residenza_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomunerif"
+      IsNotNull="true"
+      EntityAttrName="Numround"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="ROUNDCOMUNERIF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codscr"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinizioroundrif"
+      IsNotNull="true"
+      EntityAttrName="Dtinizio"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTINIZIOROUNDRIF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomdom"
+      EntityAttrName="Codcomdom"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODCOMDOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Domicilio"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoComune1"
+      AliasName="DOMICILIO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Domicilio_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom2"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoComune1"
+      AliasName="CODCOM2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoDom"
+      EntityAttrName="IndirizzoDom"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="INDIRIZZO_DOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="CODICEREGMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CognomeMed"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="Round_SoMedico"
+      AliasName="COGNOMEMED" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CognomeMed_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico1"
+      IsNotNull="true"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="Round_SoMedico"
+      AliasName="CODICEREGMEDICO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NomeMed"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="Round_SoMedico"
+      AliasName="NOMEMED" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtadesione"
+      EntityAttrName="Dtadesione"
+      EntityUsage="Round_SoMedico"
+      AliasName="DTADESIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      EntityAttrName="Tel1"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="TEL1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tel1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      EntityAttrName="Tel2"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="TEL2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsNotNull="true"
+      EntityAttrName="Idinvito"
+      EntityUsage="Round_SoInvito"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Attivo"
+      EntityAttrName="Attivo"
+      EntityUsage="Round_SoInvito"
+      AliasName="ATTIVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviorichiamo"
+      EntityAttrName="Dtinviorichiamo"
+      EntityUsage="Round_SoInvito"
+      AliasName="DTINVIORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsNotNull="true"
+      EntityAttrName="Roundcomune"
+      EntityUsage="Round_SoInvito"
+      AliasName="ROUNDCOMUNE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Scrcomunerif"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Round_SoCnfAnagScr"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codanagreg1"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="Round_SoCnfAnagScr"
+      AliasName="CODANAGREG1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoCnfAnagScr"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Incluso"
+      IsNotNull="true"
+      EntityAttrName="Incluso"
+      EntityUsage="Round_SoCnfAnagScr"
+      AliasName="INCLUSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      EntityAttrName="Tprichiamo"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="TPRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      EntityAttrName="Idcentrorichiamo"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="IDCENTRORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="DTRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtrichiamo_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtrichiamo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtrichiamo_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom4"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODCOM4" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom3"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoComune"
+      AliasName="CODCOM3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comunerif"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="COMUNERIF"
+      Expression="DECODE(Round_SoSoggetto.codanagreg,3,Round_SoSoggetto.codcomdom,Round_SoSoggetto.codcomres)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts1"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="CODTS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoMedico"
+      AliasName="ULSS3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      EntityAttrName="Idcentro1liv"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="IDCENTRO1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      EntityAttrName="Idcentro2liv"
+      EntityUsage="Round_SoSoggScr"
+      AliasName="IDCENTRO2LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune"
+      AliasName="RELEASE_CODE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune"
+      AliasName="RELEASE_CODE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune1"
+      AliasName="RELEASE_CODE2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeCom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="RELEASE_CODE_COM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeComRes"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComRes"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeComDom"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComDom"
+      EntityUsage="Round_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_DOM" >
+   </ViewAttribute>
+   <ClientInterface
+      Name="__clientInterface">
+      <Method
+         Name="getInClause"
+         MethodName="getInClause" >
+         <Return
+            Type="java.lang.String"
+            Name="_return_type_">
+         </Return>
+      </Method>
+   </ClientInterface>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.round.common.Round_SoSoggettiFilteredViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

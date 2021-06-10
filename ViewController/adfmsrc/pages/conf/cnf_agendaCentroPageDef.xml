@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_agendaCentroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="Cnf_SoAgendacentroView2Iterator" Binds="Cnf_SoAgendacentroView2"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="10"/>
+    <iterator Binds="Cnf_SoCnfCentroPrelView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroPrelView1Iterator"/>
+    <iterator Binds="Cnf_SoAgendaCentroSettimanaleView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAgendaCentroSettimanaleView2Iterator"/>
+    <iterator id="Cnf_SoCentroPrelRefView1Iterator" Binds="Cnf_SoCentroPrelRefView1"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Cnf_selectionBean" id="Cnf_selectionBeanIterator"/>
+    <iterator Binds="Cnf_SoAgendacentroView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAgendacentroView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Cnf_SoCnfCentroPrelView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfCentroPrelView1Iterator" id="Cnf_SoCnfCentroPrelView1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </list>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <tree IterBinding="Cnf_SoAgendaCentroSettimanaleView2Iterator" id="Cnf_SoAgendaCentroSettimanaleView2">
+      <nodeDefinition DefName="model.conf.Cnf_SoAgendaCentroSettimanaleView" Name="Cnf_SoAgendaCentroSettimanaleView20">
+        <AttrNames>
+          <Item Value="Ggsettimana"/>
+          <Item Value="Inizio"/>
+          <Item Value="Fine"/>
+          <Item Value="Disponibilita"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoAgendacentroView2Iterator" id="Cnf_SoAgendacentroView2">
+      <nodeDefinition DefName="model.conf.Cnf_SoAgendacentroView" Name="Cnf_SoAgendacentroView20">
+        <AttrNames>
+          <Item Value="Ggsettimana"/>
+          <Item Value="Oraapp"/>
+          <Item Value="Minapp"/>
+          <Item Value="Disporaria"/>
+          <Item Value="Nascosto" Binds="Nascosto"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Cnf_selectionBeanIterator" id="centro" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoCnfCentroPrelView1Iterator">
+      <AttrNames>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <action IterBinding="Cnf_SoAgendacentroView2Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoAgendacentroView2" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <button IterBinding="Cnf_SoAgendacentroView2Iterator" id="Nascosto" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Nascosto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>

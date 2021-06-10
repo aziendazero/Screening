@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfSugg2livView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfSugg2liv.IDSUGG2L, 
+       Cnf_SoCnfSugg2liv.IDTPINVITO, 
+       Cnf_SoCnfSugg2liv.ESITOSUGG, 
+       Cnf_SoCnfSugg2liv.DESCRIZIONE, 
+       Cnf_SoCnfSugg2liv.GGRICHIAMO, 
+       Cnf_SoCnfSugg2liv.INVIA2LIV, 
+       Cnf_SoCnfSugg2liv.INVIAINTERVENTO, 
+       Cnf_SoCnfSugg2liv.CODREGIONALE, 
+       Cnf_SoCnfSugg2liv.ULSS, 
+       Cnf_SoCnfSugg2liv.TPSCR, 
+       Cnf_SoCnfSugg2liv.ORDINE, 
+       Cnf_SoCnfTpinvito.DESCRBREVE, 
+       Cnf_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Cnf_SoCnfTpinvito.ULSS AS ULSS1, 
+       Cnf_SoCnfTpinvito.TPSCR AS TPSCR1, 
+       Cnf_SoCnfSugg2liv.DTFINEVALIDITA"
+   FromList="SO_CNF_SUGG_2LIV Cnf_SoCnfSugg2liv, SO_CNF_TPINVITO Cnf_SoCnfTpinvito"
+   Where="((Cnf_SoCnfSugg2liv.IDTPINVITO = Cnf_SoCnfTpinvito.IDTPINVITO(+))AND (Cnf_SoCnfSugg2liv.ULSS = Cnf_SoCnfTpinvito.ULSS(+)))AND (Cnf_SoCnfSugg2liv.TPSCR = Cnf_SoCnfTpinvito.TPSCR(+))"
+   OrderBy="Cnf_SoCnfSugg2liv.ORDINE,Cnf_SoCnfSugg2liv.IDSUGG2L"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfSugg2livViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfSugg2liv"
+      Entity="model.conf.Cnf_SoCnfSugg2liv" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTpinvito"
+      Entity="model.conf.Cnf_SoCnfTpinvito"
+      Association="model.FkSoCnfSHaTpri1lSoCnfTAssoc"
+      AssociationEnd="model.FkSoCnfSHaTpri1lSoCnfTAssoc.Cnf_SoCnfTpinvito"
+      SourceUsage="model.conf.Cnf_SoCnfSugg2livView.Cnf_SoCnfSugg2liv"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Idtpinvito" />
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Ulss" />
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Tpscr" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Idtpinvito" />
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Ulss" />
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Tpscr" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idsugg2l"
+      IsNotNull="true"
+      EntityAttrName="Idsugg2l"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="IDSUGG2L" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg2l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="IDTPINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      EntityAttrName="Esitosugg"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="ESITOSUGG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitosugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggrichiamo"
+      EntityAttrName="Ggrichiamo"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="GGRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ggrichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Invia2liv"
+      EntityAttrName="Invia2liv"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="INVIA2LIV" >
+      <DesignTime>
+         <Attr Name="_diagramName" Value="Invia al 2° livello"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Invia2liv_LABEL"/>
+            <CONTROLTYPE
+               Value="check_box"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Inviaintervento"
+      EntityAttrName="Inviaintervento"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="INVIAINTERVENTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Inviaintervento_LABEL"/>
+            <CONTROLTYPE
+               Value="check_box"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale"
+      EntityAttrName="Codregionale"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="CODREGIONALE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codregionale_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="ULSS" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ulss_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      EntityAttrName="Ordine"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="ORDINE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ordine_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalidita"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="DTFINEVALIDITA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevalidita_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfSugg2livViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

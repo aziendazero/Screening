@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_opmedico.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Idop.inputValue}" label="#{bindings.Idop.hints.label}"
+                                              required="#{bindings.Idop.hints.mandatory}" readOnly="true"
+                                              columns="#{bindings.Idop.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idop.hints.precision}"
+                                              shortDesc="#{bindings.Idop.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idop.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idop.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Cognome.inputValue}"
+                                              label="#{bindings.Cognome.hints.label}"
+                                              required="#{bindings.Cognome.hints.mandatory}"
+                                              columns="#{bindings.Cognome.hints.displayWidth}"
+                                              maximumLength="#{bindings.Cognome.hints.precision}"
+                                              shortDesc="#{bindings.Cognome.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Cognome.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Nome.inputValue}" label="#{bindings.Nome.hints.label}"
+                                              required="#{bindings.Nome.hints.mandatory}"
+                                              columns="#{bindings.Nome.hints.displayWidth}"
+                                              maximumLength="#{bindings.Nome.hints.precision}"
+                                              shortDesc="#{bindings.Nome.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Nome.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Titolo.inputValue}"
+                                              label="#{bindings.Titolo.hints.label}"
+                                              required="#{bindings.Titolo.hints.mandatory}"
+                                              columns="#{bindings.Titolo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Titolo.hints.precision}"
+                                              shortDesc="#{bindings.Titolo.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Titolo.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Cf.inputValue}" label="#{bindings.Cf.hints.label}"
+                                              required="#{bindings.Cf.hints.mandatory}"
+                                              columns="#{bindings.Cf.hints.displayWidth}"
+                                              maximumLength="#{bindings.Cf.hints.precision}"
+                                              shortDesc="#{bindings.Cf.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Cf.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Codop.inputValue}" label="#{bindings.Codop.label}"
+                                                    required="#{bindings.Codop.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codop.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Codop.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codop.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputDate value="#{bindings.Dtfinevalopmedico.inputValue}"
+                                              label="#{bindings.Dtfinevalopmedico.hints.label}"
+                                              required="#{bindings.Dtfinevalopmedico.hints.mandatory}"
+                                              columns="#{bindings.Dtfinevalopmedico.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtfinevalopmedico.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.Dtfinevalopmedico.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Dtfinevalopmedico.format}"/>
+                                </af:inputDate>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale==true}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Operatore medico"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

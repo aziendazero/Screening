@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="ag_giornPageDef"
+                Package="pages.agenda">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Agenda_ServizioDataControl"
+              id="Agenda_ServizioDataControlIterator"/>
+    <iterator Binds="Agenda_SelCprelView1" RangeSize="-1" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SelCprelView1Iterator"/>
+    <iterator Binds="Agenda_SoAppuntamentoView1" RangeSize="10" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SoAppuntamentoView1Iterator" Refresh="ifNeeded"/>
+    <iterator Binds="Agenda_DettAppView1" RangeSize="5" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_DettAppView1Iterator"/>
+    <iterator Binds="Agenda_SintesiView1" RangeSize="25" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_SintesiView1Iterator"/>
+    <iterator Binds="Agenda_DettAppColonView1" RangeSize="5" DataControl="Agenda_AppModuleDataControl"
+              id="Agenda_DettAppColonView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Agenda_ServizioDataControlIterator" id="idCentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Agenda_SelCprelView1Iterator">
+      <AttrNames>
+        <Item Value="idCentro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Agenda_SoAppuntamentoView1Iterator" id="Agenda_SoAppuntamentoView1">
+      <nodeDefinition DefName="model.agenda.Agenda_SoAppuntamentoView" Name="Agenda_SoAppuntamentoView10">
+        <AttrNames>
+          <Item Value="Orario"/>
+          <Item Value="Dispslot"/>
+          <Item Value="Slotoccup"/>
+          <Item Value="RigaSalvata"/>
+          <Item Value="Stato"/>
+          <Item Value="Idapp"/>
+          <Item Value="Nascosto"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Agenda_DettAppView1Iterator" id="Agenda_DettAppView1">
+      <nodeDefinition DefName="model.agenda.Agenda_DettAppView" Name="Agenda_DettAppView10">
+        <AttrNames>
+          <Item Value="Cellulare"/>
+          <Item Value="Codts"/>
+          <Item Value="Cognome"/>
+          <Item Value="Confermato"/>
+          <Item Value="DataNascita"/>
+          <Item Value="DocIdent"/>
+          <Item Value="Dtapp"/>
+          <Item Value="Idapp"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Nome"/>
+          <Item Value="Spostato"/>
+          <Item Value="Tel1"/>
+          <Item Value="Tel2"/>
+          <Item Value="TestProposto"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Agenda_SintesiView1Iterator" id="Agenda_SintesiView1">
+      <nodeDefinition DefName="model.agenda.Agenda_SintesiView" Name="Agenda_SintesiView10">
+        <AttrNames>
+          <Item Value="Messaggio"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Agenda_DettAppColonView1Iterator" id="Agenda_DettAppColonView1">
+      <nodeDefinition DefName="model.agenda.Agenda_DettAppColonView" Name="Agenda_DettAppColonView10">
+        <AttrNames>
+          <Item Value="Cellulare"/>
+          <Item Value="Codts"/>
+          <Item Value="Cognome"/>
+          <Item Value="Confermato"/>
+          <Item Value="DataNascita"/>
+          <Item Value="DocIdent"/>
+          <Item Value="Dtapp"/>
+          <Item Value="Idapp"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Nome"/>
+          <Item Value="Spostato"/>
+          <Item Value="Tel1"/>
+          <Item Value="Tel2"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Agenda_SoAppuntamentoView1Iterator" id="Idapp">
+      <AttrNames>
+        <Item Value="Idapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Agenda_SoAppuntamentoView1Iterator" id="Dispslot">
+      <AttrNames>
+        <Item Value="Dispslot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Agenda_SoAppuntamentoView1Iterator" id="Slotoccup">
+      <AttrNames>
+        <Item Value="Slotoccup"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

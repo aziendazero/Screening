@@ -1,0 +1,581 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfLetteracentroExtendedView"
+   Version="12.2.1.11.57"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfLetteracentroExtendedViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   FromList="SO_CNF_LETTERACENTRO Cnf_SoCnfLetteracentro, SO_CNF_TPINVITO Cnf_SoCnfTpinvito, SO_CNF_SUGG_1LIV Cnf_SoCnfSugg1liv, SO_CNF_SUGG_2LIV Cnf_SoCnfSugg2liv, SO_CNF_SUGG_3LIV Cnf_SoCnfSugg3liv, SO_TEMPLATE Cnf_SoTemplate, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef"
+   Where="(((((((Cnf_SoCnfLetteracentro.IDTPINVITO = Cnf_SoCnfTpinvito.IDTPINVITO(+)) AND (Cnf_SoCnfLetteracentro.ULSS = Cnf_SoCnfTpinvito.ULSS(+))) AND (Cnf_SoCnfLetteracentro.TPSCR = Cnf_SoCnfTpinvito.TPSCR(+))) AND (((Cnf_SoCnfLetteracentro.IDSUGG = Cnf_SoCnfSugg1liv.IDSUGG(+)) AND (Cnf_SoCnfLetteracentro.ULSS = Cnf_SoCnfSugg1liv.ULSS(+))) AND (Cnf_SoCnfLetteracentro.TPSCR = Cnf_SoCnfSugg1liv.TPSCR(+)))) AND (((Cnf_SoCnfLetteracentro.IDSUGG2L = Cnf_SoCnfSugg2liv.IDSUGG2L(+)) AND (Cnf_SoCnfLetteracentro.ULSS = Cnf_SoCnfSugg2liv.ULSS(+))) AND (Cnf_SoCnfLetteracentro.TPSCR = Cnf_SoCnfSugg2liv.TPSCR(+)))) AND (((Cnf_SoCnfLetteracentro.IDSUGG3L = Cnf_SoCnfSugg3liv.IDSUGG3L(+)) AND (Cnf_SoCnfLetteracentro.ULSS = Cnf_SoCnfSugg3liv.ULSS(+))) AND (Cnf_SoCnfLetteracentro.TPSCR = Cnf_SoCnfSugg3liv.TPSCR(+)))) AND (Cnf_SoCnfLetteracentro.CODTEMPL = Cnf_SoTemplate.CODTEMPL)) AND (Cnf_SoCnfLetteracentro.CENTRO = Cnf_SoCentroPrelRef.IDCENTRO(+))"
+   SelectList="Cnf_SoCnfLetteracentro.IDROW, 
+       Cnf_SoCnfLetteracentro.IDTPINVITO, 
+       Cnf_SoCnfLetteracentro.CODTEMPL, 
+       Cnf_SoCnfLetteracentro.IDSUGG, 
+       Cnf_SoCnfLetteracentro.IDSUGG2L, 
+       Cnf_SoCnfLetteracentro.IDSUGG3L, 
+       Cnf_SoCnfLetteracentro.ULSS, 
+       Cnf_SoCnfLetteracentro.TPSCR, 
+       Cnf_SoCnfSugg1liv.DESCRIZIONE AS SUGG1L_DESC, 
+       Cnf_SoCnfSugg1liv.IDSUGG AS SUGG1, 
+       Cnf_SoCnfSugg1liv.ULSS AS ULSS2, 
+       Cnf_SoCnfSugg1liv.TPSCR AS TPSCR2, 
+       Cnf_SoCnfSugg1liv.ESITOSUGG AS ESITO_1L, 
+       Cnf_SoCnfSugg2liv.DESCRIZIONE AS SUGG2L_DESC, 
+       Cnf_SoCnfSugg2liv.IDSUGG2L AS SUGG2_, 
+       Cnf_SoCnfSugg2liv.ULSS AS ULSS3, 
+       Cnf_SoCnfSugg2liv.TPSCR AS TPSCR3, 
+       Cnf_SoCnfSugg2liv.ESITOSUGG AS ESITO_2L, 
+       Cnf_SoCnfSugg3liv.DESCRIZIONE AS SUGG3L_DESC, 
+       Cnf_SoCnfSugg3liv.IDSUGG3L AS SUGG3, 
+       Cnf_SoCnfSugg3liv.ULSS AS ULSS4, 
+       Cnf_SoCnfSugg3liv.TPSCR AS TPSCR4, 
+       Cnf_SoCnfSugg3liv.ESITOSUGG AS ESITO_3L, 
+       Cnf_SoTemplate.DESCRIZIONE, 
+       Cnf_SoTemplate.CODTEMPL AS CODTEMPL1, 
+       Cnf_SoCentroPrelRef.DESCRBREVE, 
+       Cnf_SoCentroPrelRef.IDCENTRO, 
+       Cnf_SoCnfTpinvito.DESCRIZIONE AS TPINVITO_DESC, 
+       Cnf_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Cnf_SoCnfTpinvito.ULSS AS ULSS1, 
+       Cnf_SoCnfTpinvito.TPSCR AS TPSCR1, 
+       Cnf_SoCnfTpinvito.DESCRBREVE AS TPINVITO_DBREVE, 
+       Cnf_SoCnfLetteracentro.ETA_DA, 
+       Cnf_SoCnfLetteracentro.ETA_A, 
+       Cnf_SoCnfLetteracentro.TEST_PROPOSTO"
+   OrderBy="Cnf_SoTemplate.CODTEMPL">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfLetteracentro"
+      Entity="model.conf.Cnf_SoCnfLetteracentro"/>
+   <EntityUsage
+      Name="Cnf_SoCnfTpinvito"
+      Entity="model.conf.Cnf_SoCnfTpinvito"
+      Association="model.FkSoCnfLHaTpinviSoCnfTAssoc"
+      AssociationEnd="model.FkSoCnfLHaTpinviSoCnfTAssoc.Cnf_SoCnfTpinvito"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="LEFT OUTER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Idtpinvito"/>
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfTpinvito.Tpscr"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Idtpinvito"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Tpscr"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfSugg1liv"
+      Entity="model.conf.Cnf_SoCnfSugg1liv"
+      Association="model.FkSoCnfLHaSugg1lSoCnfSAssoc"
+      AssociationEnd="model.FkSoCnfLHaSugg1lSoCnfSAssoc.Cnf_SoCnfSugg1liv"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="LEFT OUTER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Idsugg"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg1liv.Tpscr"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Idsugg"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Tpscr"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfSugg2liv"
+      Entity="model.conf.Cnf_SoCnfSugg2liv"
+      Association="model.FkSoCnfLHaSugg2lSoCnfSAssoc"
+      AssociationEnd="model.FkSoCnfLHaSugg2lSoCnfSAssoc.Cnf_SoCnfSugg2liv"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="LEFT OUTER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Idsugg2l"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg2liv.Tpscr"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Idsugg2l"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Tpscr"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfSugg3liv"
+      Entity="model.conf.Cnf_SoCnfSugg3liv"
+      Association="model.FkSoCnfLHaSugg3lSoCnfSAssoc"
+      AssociationEnd="model.FkSoCnfLHaSugg3lSoCnfSAssoc.Cnf_SoCnfSugg3liv"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="LEFT OUTER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfSugg3liv.Idsugg3l"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg3liv.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfSugg3liv.Tpscr"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Idsugg3l"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Ulss"/>
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Tpscr"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoTemplate"
+      Entity="model.conf.Cnf_SoTemplate"
+      Association="model.FkSoCnfLHaTemplaSoTemplAssoc"
+      AssociationEnd="model.FkSoCnfLHaTemplaSoTemplAssoc.Cnf_SoTemplate"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="INNER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoTemplate.Codtempl"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Codtempl"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      Association="model.conf.FkCnfLetteraCentroIdcentroAssoc"
+      AssociationEnd="model.conf.FkCnfLetteraCentroIdcentroAssoc.Cnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoCnfLetteracentroExtendedView.Cnf_SoCnfLetteracentro"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="LEFT OUTER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCentroPrelRef.Idcentro"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfLetteracentro.Centro"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idrow"
+      PrecisionRule="true"
+      EntityAttrName="Idrow"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="IDROW"/>
+   <ViewAttribute
+      Name="Idtpinvito"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="IDTPINVITO">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+    </ViewAttribute>      
+   <ViewAttribute
+      Name="Codtempl"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codtempl"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="CODTEMPL"
+      IsQueriable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codtempl_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+    </ViewAttribute>      
+   <ViewAttribute
+      Name="Idsugg"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="IDSUGG">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg2l"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg2l"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="IDSUGG2L">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg2l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg3l"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg3l"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="IDSUGG3L">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg3l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+    </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="ULSS"/>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="TPSCR"/>
+   <ViewAttribute
+      Name="Sugg1lDesc"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="SUGG1L_DESC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg1lDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="SUGG1">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="ULSS2"/>
+   <ViewAttribute
+      Name="Tpscr2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="TPSCR2"/>
+   <ViewAttribute
+      Name="Esito1l"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Esitosugg"
+      EntityUsage="Cnf_SoCnfSugg1liv"
+      AliasName="ESITO_1L">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esito1l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg2lDesc"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="SUGG2L_DESC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg2lDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg2l"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="SUGG2_">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="ULSS3"/>
+   <ViewAttribute
+      Name="Tpscr3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="TPSCR3"/>
+   <ViewAttribute
+      Name="Esito2l"
+      PrecisionRule="true"
+      EntityAttrName="Esitosugg"
+      EntityUsage="Cnf_SoCnfSugg2liv"
+      AliasName="ESITO_2L">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esito2l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg3lDesc"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfSugg3liv"
+      AliasName="SUGG3L_DESC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg3lDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+    </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg3l"
+      EntityUsage="Cnf_SoCnfSugg3liv"
+      AliasName="SUGG3">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg3_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss4"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfSugg3liv"
+      AliasName="ULSS4"/>
+   <ViewAttribute
+      Name="Tpscr4"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfSugg3liv"
+      AliasName="TPSCR4"/>
+   <ViewAttribute
+      Name="Esito3l"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Esitosugg"
+      EntityUsage="Cnf_SoCnfSugg3liv"
+      AliasName="ESITO_3L">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esito3l_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="DESCRIZIONE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codtempl1"
+      PrecisionRule="true"
+      EntityAttrName="Codtempl"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="CODTEMPL1"/>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="DESCRBREVE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsUpdateable="while_insert"
+      PrecisionRule="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="IDCENTRO"/>
+   <ViewAttribute
+      Name="TpinvitoDesc"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPINVITO_DESC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TpinvitoDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="IDTPINVITO1"/>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="ULSS1"/>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPSCR1"/>
+   <ViewAttribute
+      Name="TpinvitoDbreve"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPINVITO_DBREVE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TpinvitoDbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EtaDa"
+      PrecisionRule="true"
+      EntityAttrName="EtaDa"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="ETA_DA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EtaDa_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EtaA"
+      PrecisionRule="true"
+      EntityAttrName="EtaA"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="ETA_A">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EtaA_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TestProposto"
+      PrecisionRule="true"
+      EntityAttrName="TestProposto"
+      EntityUsage="Cnf_SoCnfLetteracentro"
+      AliasName="TEST_PROPOSTO">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TestProposto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idrow"/>
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfLetteracentroView"
+      ViewLink="model.Cnf_SoCnfLetteracentroLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfLetteracentroExtendedViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfEsitoinvitoView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfEsitoinvito.CODESITOINVITO, 
+       Cnf_SoCnfEsitoinvito.LIVESITO, 
+       Cnf_SoCnfEsitoinvito.ESITOINVITO, 
+       Cnf_SoCnfEsitoinvito.DESCRBREVE, 
+       Cnf_SoCnfEsitoinvito.DESCRIZIONE, 
+       Cnf_SoCnfEsitoinvito.DESCRSUGG, 
+       Cnf_SoCnfEsitoinvito.CATESITO, 
+       Cnf_SoCnfEsitoinvito.TIPOESITO, 
+       Cnf_SoCnfEsitoinvito.IDTPINVITO, 
+       Cnf_SoCnfEsitoinvito.GGRICHIAMO, 
+       Cnf_SoCnfEsitoinvito.CODREGIONALE, 
+       Cnf_SoCnfEsitoinvito.ULSS, 
+       Cnf_SoCnfEsitoinvito.TPSCR, 
+       Cnf_SoCnfEsitoinvito.ORDINE, 
+       Cnf_SoCnfTpinvito.DESCRBREVE AS DESCRBREVE1, 
+       Cnf_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Cnf_SoCnfTpinvito.ULSS AS ULSS1, 
+       Cnf_SoCnfTpinvito.TPSCR AS TPSCR1, 
+       Cnf_SoCnfEsitoinvito.METODO_CALCOLO, 
+       Cnf_SoCnfEsitoinvito.DATA_OBBLIGATORIA, 
+       Cnf_SoCnfEsitoinvito.PORTALE, 
+       Cnf_SoCnfEsitoinvito.DTFINEVALIDITA"
+   FromList="SO_CNF_ESITOINVITO Cnf_SoCnfEsitoinvito, SO_CNF_TPINVITO Cnf_SoCnfTpinvito"
+   Where="((Cnf_SoCnfEsitoinvito.TPSCR = Cnf_SoCnfTpinvito.TPSCR(+))AND (Cnf_SoCnfEsitoinvito.ULSS = Cnf_SoCnfTpinvito.ULSS(+)))AND (Cnf_SoCnfEsitoinvito.IDTPINVITO = Cnf_SoCnfTpinvito.IDTPINVITO(+))"
+   OrderBy="Cnf_SoCnfEsitoinvito.LIVESITO,Cnf_SoCnfEsitoinvito.ORDINE,Cnf_SoCnfEsitoinvito.CODESITOINVITO"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfEsitoinvitoViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.conf.common.Cnf_SoCnfEsitoinvitoViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfEsitoinvito"
+      Entity="model.conf.Cnf_SoCnfEsitoinvito" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTpinvito"
+      Entity="model.conf.Cnf_SoCnfTpinvito"
+      SourceUsage="model.conf.Cnf_SoCnfEsitoinvitoView.Cnf_SoCnfEsitoinvito"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      IsNotNull="true"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="CODESITOINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codesitoinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito"
+      IsNotNull="true"
+      EntityAttrName="Livesito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="LIVESITO"
+      DefaultValue="1">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Livesito_LABEL"/>
+            <AUTOSUBMIT
+               Value="true"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitoinvito"
+      IsNotNull="true"
+      EntityAttrName="Esitoinvito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="ESITOINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitoinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrsugg"
+      IsNotNull="true"
+      EntityAttrName="Descrsugg"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="DESCRSUGG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Catesito"
+      EntityAttrName="Catesito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="CATESITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Catesito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoesito"
+      EntityAttrName="Tipoesito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="TIPOESITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tipoesito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="IDTPINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggrichiamo"
+      EntityAttrName="Ggrichiamo"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="GGRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ggrichiamo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale"
+      IsNotNull="true"
+      EntityAttrName="Codregionale"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="CODREGIONALE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codregionale_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      EntityAttrName="Ordine"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="ORDINE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Ordine_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve1"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="DESCRBREVE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTpinvito"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MetodoCalcolo"
+      EntityAttrName="MetodoCalcolo"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="METODO_CALCOLO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MetodoCalcolo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataObbligatoria"
+      EntityAttrName="DataObbligatoria"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="DATA_OBBLIGATORIA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataObbligatoria_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Portale"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Portale"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="PORTALE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Portale_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalidita"
+      EntityUsage="Cnf_SoCnfEsitoinvito"
+      AliasName="DTFINEVALIDITA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevalidita_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevalidita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtfinevalidita_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <LOVUIHints
+      ListType="105"
+      MRUCount="0"
+      ListRangeSize="-1"
+      NullValueFlag="none">
+      <DisplayCriteria/>
+   </LOVUIHints>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfEsitoinvitoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

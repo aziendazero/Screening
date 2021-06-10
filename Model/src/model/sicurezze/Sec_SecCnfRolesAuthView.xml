@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sec_SecCnfRolesAuthView"
+  Version="11.1.2.62.76"
+  SelectList="Sec_SecCnfRolesAuth.SO_ROLE_ID, 
+       Sec_SecCnfRolesAuth.SO_AUTHORIZATION_ID, 
+       Sec_SecCnfRolesAuth.IS_ENABLED, 
+       Sec_SecCnfAuthorizations.DESCRIPTION, 
+       Sec_SecCnfAuthorizations.SO_AUTHORIZATION_ID AS SO_AUTHORIZATION_ID1"
+  FromList="SEC_CNF_ROLES_AUTH Sec_SecCnfRolesAuth, SEC_CNF_AUTHORIZATIONS Sec_SecCnfAuthorizations"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="Sec_SecCnfRolesAuth.SO_AUTHORIZATION_ID = Sec_SecCnfAuthorizations.SO_AUTHORIZATION_ID">
+  <EntityUsage
+    Name="Sec_SecCnfRolesAuth"
+    Entity="model.sicurezze.Sec_SecCnfRolesAuth"/>
+  <EntityUsage
+    Name="Sec_SecCnfAuthorizations"
+    Entity="model.sicurezze.Sec_SecCnfAuthorizations"
+    SourceUsage="model.sicurezze.Sec_SecCnfRolesAuthView.Sec_SecCnfRolesAuth"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"/>
+  <ViewAttribute
+    Name="SoRoleId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="SoRoleId"
+    EntityUsage="Sec_SecCnfRolesAuth"
+    AliasName="SO_ROLE_ID"/>
+  <ViewAttribute
+    Name="SoAuthorizationId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="SoAuthorizationId"
+    EntityUsage="Sec_SecCnfRolesAuth"
+    AliasName="SO_AUTHORIZATION_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="model.sicurezze.Sec_SecCnfRolesAuthView.SoAuthorizationId_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="IsEnabled"
+    PrecisionRule="true"
+    EntityAttrName="IsEnabled"
+    EntityUsage="Sec_SecCnfRolesAuth"
+    AliasName="IS_ENABLED">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="model.sicurezze.Sec_SecCnfRolesAuthView.IsEnabled_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Description"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="Sec_SecCnfAuthorizations"
+    AliasName="DESCRIPTION">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="model.sicurezze.Sec_SecCnfRolesAuthView.Description_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SoAuthorizationId1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="SoAuthorizationId"
+    EntityUsage="Sec_SecCnfAuthorizations"
+    AliasName="SO_AUTHORIZATION_ID1"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

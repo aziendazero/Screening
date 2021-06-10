@@ -1,0 +1,701 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUEndoscopieView"
+   Version="11.1.2.62.76"
+   OrderBy="&#34;N_ENDO&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUEndoscopieViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT a.idendo, 
+a.idreferto, 
+r.codts,
+a.ulss, 
+a.tpscr, 
+a.n_endo, 
+a.dtendo,
+Q.codreg QUALITA,
+a.idmedico, 
+a.estensione, 
+REG.codreg REGIONE,
+a.sedazione,
+C.codreg COMPLICANZE,
+I.codreg INDICAZIONI,
+DECODE(TRIM(a.controindicazioni),NULL,0,1) CONTROINDICAZIONI,  
+a.procedura, 
+a.n_polipi, 
+D.codreg DIAMETRO_MAX,
+a.polipo_1,
+S1.codreg P1_SEDE, 
+a.p1_diametro, 
+A1.codreg P1_ASPETTO,
+D1.codreg P1_DISPLASIA,
+I1.codreg P1_ISTOLOGIA,
+a.polipo_2, 
+S2.codreg P2_SEDE, 
+a.p2_diametro,
+A2.codreg P2_ASPETTO, 
+D2.codreg P2_DISPLASIA, 
+I2.codreg P2_ISTOLOGIA,
+a.polipo_3, 
+S3.codreg P3_SEDE, 
+a.p3_diametro, 
+A3.codreg P3_ASPETTO,
+D3.codreg P3_DISPLASIA, 
+I3.codreg P3_ISTOLOGIA,
+a.cancro, 
+S4.codreg C_SEDE,
+a.c_dimensioni, 
+I4.codreg C_ISTOLOGIA,
+A4.codreg C_ASPETTO,
+a.dtrefisto
+  FROM so_endoscopia a, so_refertocolon2liv r,SO_CNF_REF2LIV Q, SO_CNF_REF2LIV REG,
+  SO_CNF_REF2LIV M, SO_CNF_REF2LIV C,SO_CNF_REF2LIV I,SO_CNF_REF2LIV D,
+  SO_CNF_REF2LIV S1,SO_CNF_REF2LIV S2,SO_CNF_REF2LIV S3,SO_CNF_REF2LIV S4,
+  SO_CNF_REF2LIV A1,SO_CNF_REF2LIV A2,SO_CNF_REF2LIV A3,SO_CNF_REF2LIV A4,
+  SO_CNF_REF2LIV D1,SO_CNF_REF2LIV D2,SO_CNF_REF2LIV D3,
+  SO_CNF_REF2LIV I1,SO_CNF_REF2LIV I2,SO_CNF_REF2LIV I3,SO_CNF_REF2LIV I4
+  WHERE (A.qualita=Q.idcnfref2l(+) AND A.gr_qualita=Q.gruppo(+)
+  AND A.ulss=Q.ulss(+) AND A.tpscr=Q.tpscr(+))
+  AND (A.regione=REG.idcnfref2l(+) AND A.gr_regione=REG.gruppo(+)
+  AND A.ulss=REG.ulss(+) AND A.tpscr=REG.tpscr(+))
+  AND (A.motivo=M.idcnfref2l(+) AND A.gr_motivo=M.gruppo(+)
+  AND A.ulss=M.ulss(+) AND A.tpscr=M.tpscr(+))
+  AND (A.complicanze=C.idcnfref2l(+) AND A.gr_complicanze=C.gruppo(+)
+  AND A.ulss=C.ulss(+) AND A.tpscr=C.tpscr(+))
+  AND (A.indicazioni=I.idcnfref2l(+) AND A.gr_indicazioni=I.gruppo(+)
+  AND A.ulss=I.ulss(+) AND A.tpscr=I.tpscr(+))
+  AND (A.diametro_max=D.idcnfref2l(+) AND A.gr_diametro=D.gruppo(+)
+  AND A.ulss=D.ulss(+) AND A.tpscr=D.tpscr(+))
+  AND (A.p1_sede=S1.idcnfref2l(+) AND A.gr_regione=S1.gruppo(+)
+  AND A.ulss=S1.ulss(+) AND A.tpscr=S1.tpscr(+))
+  AND (A.p2_sede=S2.idcnfref2l(+) AND A.gr_regione=S2.gruppo(+)
+  AND A.ulss=S2.ulss(+) AND A.tpscr=S2.tpscr(+))
+  AND (A.p3_sede=S3.idcnfref2l(+) AND A.gr_regione=S3.gruppo(+)
+  AND A.ulss=S3.ulss(+) AND A.tpscr=S3.tpscr(+))
+  AND (A.c_sede=S4.idcnfref2l(+) AND A.gr_regione=S4.gruppo(+)
+  AND A.ulss=S4.ulss(+) AND A.tpscr=S4.tpscr(+))
+  AND (A.p1_aspetto=A1.idcnfref2l(+) AND A.gr_aspetto=A1.gruppo(+)
+  AND A.ulss=A1.ulss(+) AND A.tpscr=A1.tpscr(+))
+  AND (A.p2_aspetto=A2.idcnfref2l(+) AND A.gr_aspetto=A2.gruppo(+)
+  AND A.ulss=A2.ulss(+) AND A.tpscr=A2.tpscr(+))
+  AND (A.p3_aspetto=A3.idcnfref2l(+) AND A.gr_aspetto=A3.gruppo(+)
+  AND A.ulss=A3.ulss(+) AND A.tpscr=A3.tpscr(+))
+  AND (A.C_aspetto=A4.idcnfref2l(+) AND A.gr_aspetto=A4.gruppo(+)
+  AND A.ulss=A4.ulss(+) AND A.tpscr=A4.tpscr(+))
+  AND (A.p1_displasia=D1.idcnfref2l(+) AND A.gr_displasia=D1.gruppo(+)
+  AND A.ulss=D1.ulss(+) AND A.tpscr=D1.tpscr(+))
+  AND (A.p2_displasia=D2.idcnfref2l(+) AND A.gr_displasia=D2.gruppo(+)
+  AND A.ulss=D2.ulss(+) AND A.tpscr=D2.tpscr(+))
+  AND (A.p3_displasia=D3.idcnfref2l(+) AND A.gr_displasia=D3.gruppo(+)
+  AND A.ulss=D3.ulss(+) AND A.tpscr=D3.tpscr(+))
+  AND (A.p1_istologia=I1.idcnfref2l(+) AND A.gr_istologia=I1.gruppo(+)
+  AND A.ulss=I1.ulss(+) AND A.tpscr=I1.tpscr(+))
+  AND (A.p2_istologia=I2.idcnfref2l(+) AND A.gr_istologia=I2.gruppo(+)
+  AND A.ulss=I2.ulss(+) AND A.tpscr=I2.tpscr(+))
+  AND (A.p3_istologia=I3.idcnfref2l(+) AND A.gr_istologia=I3.gruppo(+)
+  AND A.ulss=I3.ulss(+) AND A.tpscr=I3.tpscr(+))
+  AND (A.C_istologia=I4.idcnfref2l(+) AND A.gr_c_istologia=I4.gruppo(+)
+  AND A.ulss=I4.ulss(+) AND A.tpscr=I4.tpscr(+))
+and a.idreferto=r.idreferto
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idendo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDENDO"
+      Expression="IDENDO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NEndo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_ENDO"
+      Expression="N_ENDO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtendo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTENDO"
+      Expression="DTENDO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Qualita"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="QUALITA"
+      Expression="QUALITA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idmedico"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDMEDICO"
+      Expression="IDMEDICO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Estensione"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ESTENSIONE"
+      Expression="ESTENSIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Regione"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="REGIONE"
+      Expression="REGIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sedazione"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="SEDAZIONE"
+      Expression="SEDAZIONE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Complicanze"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLICANZE"
+      Expression="COMPLICANZE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Indicazioni"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="INDICAZIONI"
+      Expression="INDICAZIONI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Controindicazioni"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CONTROINDICAZIONI"
+      Expression="CONTROINDICAZIONI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Procedura"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="PROCEDURA"
+      Expression="PROCEDURA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NPolipi"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_POLIPI"
+      Expression="N_POLIPI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DiametroMax"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DIAMETRO_MAX"
+      Expression="DIAMETRO_MAX"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo1"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="POLIPO_1"
+      Expression="POLIPO_1"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Sede"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1_SEDE"
+      Expression="P1_SEDE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Diametro"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1_DIAMETRO"
+      Expression="P1_DIAMETRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Aspetto"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1_ASPETTO"
+      Expression="P1_ASPETTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Displasia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1_DISPLASIA"
+      Expression="P1_DISPLASIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Istologia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1_ISTOLOGIA"
+      Expression="P1_ISTOLOGIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo2"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="POLIPO_2"
+      Expression="POLIPO_2"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Sede"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2_SEDE"
+      Expression="P2_SEDE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Diametro"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2_DIAMETRO"
+      Expression="P2_DIAMETRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Aspetto"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2_ASPETTO"
+      Expression="P2_ASPETTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Displasia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2_DISPLASIA"
+      Expression="P2_DISPLASIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Istologia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2_ISTOLOGIA"
+      Expression="P2_ISTOLOGIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo3"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="POLIPO_3"
+      Expression="POLIPO_3"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Sede"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3_SEDE"
+      Expression="P3_SEDE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Diametro"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3_DIAMETRO"
+      Expression="P3_DIAMETRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Aspetto"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3_ASPETTO"
+      Expression="P3_ASPETTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Displasia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3_DISPLASIA"
+      Expression="P3_DISPLASIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Istologia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3_ISTOLOGIA"
+      Expression="P3_ISTOLOGIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cancro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CANCRO"
+      Expression="CANCRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CSede"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_SEDE"
+      Expression="C_SEDE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CDimensioni"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_DIMENSIONI"
+      Expression="C_DIMENSIONI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CIstologia"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_ISTOLOGIA"
+      Expression="C_ISTOLOGIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CAspetto"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_ASPETTO"
+      Expression="C_ASPETTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrefisto"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFISTO"
+      Expression="DTREFISTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idendo" />
+   </AttrArray>
+</ViewObject>

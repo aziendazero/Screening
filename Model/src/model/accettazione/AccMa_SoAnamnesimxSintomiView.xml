@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="AccMa_SoAnamnesimxSintomiView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.accettazione.AccMa_SoAnamnesimxSintomiViewImpl"
+   PageIterMode="Partial"
+   RowClass="model.accettazione.AccMa_SoAnamnesimxSintomiViewRowImpl"
+   RowInterface="model.accettazione.common.AccMa_SoAnamnesimxSintomiViewRow"
+   ClientRowProxyName="model.accettazione.client.AccMa_SoAnamnesimxSintomiViewRowClient">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT AccMa_SoAnamnesimxSintomi.ID_ANAMMX_SINT, 
+       AccMa_SoAnamnesimxSintomi.ID_ANAMMA, 
+       AccMa_SoAnamnesimxSintomi.IDSINTOMO, 
+       AccMa_SoAnamnesimxSintomi.ULSS, 
+       AccMa_SoAnamnesimxSintomi.TPSCR, 
+       AccMa_SoAnamnesimxSintomi.DX_IDSEDE, 
+       AccMa_SoAnamnesimxSintomi.SX_IDSEDE,
+       SO_CNF_SINTOMI.descr,
+       SO_CNF_SINTOMI.ordine,
+       sededx.descr dessededx,
+       sedesx.descr dessedesx
+FROM SO_ANAMNESIMX_SINTOMI AccMa_SoAnamnesimxSintomi, SO_CNF_SINTOMI,
+SO_CNF_SEDISINT sededx, SO_CNF_SEDISINT sedesx
+where SO_CNF_SINTOMI.idsintomo = AccMa_SoAnamnesimxSintomi.idsintomo
+and SO_CNF_SINTOMI.ulss = AccMa_SoAnamnesimxSintomi.ULSS
+and SO_CNF_SINTOMI.tpscr = AccMa_SoAnamnesimxSintomi.tpscr
+and sededx.idsedesint = AccMa_SoAnamnesimxSintomi.dx_idsede
+and sedesx.idsedesint = AccMa_SoAnamnesimxSintomi.sx_idsede
+and AccMa_SoAnamnesimxSintomi.ID_ANAMMA=:1
+   ]]></SQLQuery>
+   <EntityUsage
+      Name="AccMa_SoAnamnesimxSintomi"
+      Entity="model.accettazione.AccMa_SoAnamnesimxSintomi" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="IdAnammxSint"
+      IsNotNull="true"
+      EntityAttrName="IdAnammxSint"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="ID_ANAMMX_SINT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdAnamma"
+      IsNotNull="true"
+      EntityAttrName="IdAnamma"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="ID_ANAMMA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsintomo"
+      IsNotNull="true"
+      EntityAttrName="Idsintomo"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="IDSINTOMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DxIdsede"
+      IsNotNull="true"
+      EntityAttrName="DxIdsede"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="DX_IDSEDE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DxIdsede_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SxIdsede"
+      IsNotNull="true"
+      EntityAttrName="SxIdsede"
+      EntityUsage="AccMa_SoAnamnesimxSintomi"
+      AliasName="SX_IDSEDE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="SxIdsede_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCR"
+      Expression="DESCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ORDINE"
+      Expression="ORDINE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dessededx"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESSEDEDX"
+      Expression="DESSEDEDX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dessedesx"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESSEDESX"
+      Expression="DESSEDESX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.accettazione.common.AccMa_SoAnamnesimxSintomiViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

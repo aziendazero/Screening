@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="stats_invitiEsiti">
+    <page>/pages/statistiche/stats_invitiEsiti.jsf</page>
+  </view>
+  <view id="stats_tracciatoUnico">
+    <page>/pages/statistiche/stats_tracciatoUnico.jsf</page>
+  </view>
+  <view id="stats_tracciatoDWH">
+    <page>/pages/statistiche/stats_tracciatoDWH.jsf</page>
+  </view>
+  <view id="stats_flussoSPS">
+    <page>/pages/statistiche/stats_flussoSPS.jsf</page>
+  </view>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>stats_toInvitiEsiti</from-outcome>
+      <to-activity-id>stats_invitiEsiti</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>stats_toTracciatoUnico</from-outcome>
+      <to-activity-id>stats_tracciatoUnico</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>stats_toTracciatoDWH</from-outcome>
+      <to-activity-id>stats_tracciatoDWH</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>stats_toFlussoSPS</from-outcome>
+      <to-activity-id>stats_flussoSPS</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__12">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>stats_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__13">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__14">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/menu/stats_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__15">
+    <managed-bean-name>Stats_toInvitiEsitiAction</managed-bean-name>
+    <managed-bean-class>view.statistiche.Stats_toInvitiEsitiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__6">
+    <managed-bean-name>Stats_invitiEsitiAction</managed-bean-name>
+    <managed-bean-class>view.statistiche.Stats_invitiEsitiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__7">
+      <property-name>Stats_toInvitiEsitiAction</property-name>
+      <property-class>view.statistiche.Stats_toInvitiEsitiAction</property-class>
+      <value>#{Stats_toInvitiEsitiAction}</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__8">
+    <managed-bean-name>Stats_tracciatoDWHAction</managed-bean-name>
+    <managed-bean-class>view.statistiche.Stats_tracciatoDWHAction</managed-bean-class>
+    <managed-bean-scope>view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__9">
+    <managed-bean-name>Stats_flussoSPSAction</managed-bean-name>
+    <managed-bean-class>view.statistiche.Stats_flussoSPSAction</managed-bean-class>
+    <managed-bean-scope>pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

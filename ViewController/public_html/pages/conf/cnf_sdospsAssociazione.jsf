@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_sdospsAssociazione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f2" binding="#{Cnf_SdoSpsAction.form}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneChoice value="#{bindings.TipoFlusso.inputValue}"
+                                                    label="Tipo flusso"
+                                                    required="#{bindings.TipoFlusso.hints.mandatory}"
+                                                    shortDesc="#{bindings.TipoFlusso.hints.tooltip}" id="soc2"
+                                                    disabled="#{sessionScope.editSdo}">
+                                    <f:selectItems value="#{bindings.TipoFlusso.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.TipoFlusso.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputListOfValues id="codsdosps1Id"
+                                                      popupTitle="Search and Select: #{bindings.Codsdosps1.hints.label}"
+                                                      value="#{bindings.Codsdosps1.inputValue}"
+                                                      label="Codice"
+                                                      model="#{bindings.Codsdosps1.listOfValuesModel}"
+                                                      required="#{bindings.Codsdosps1.hints.mandatory}"
+                                                      columns="#{bindings.Codsdosps1.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Codsdosps1.hints.tooltip}"
+                                                      disabled="#{sessionScope.editSdo}" rendered="false">
+                                    <f:validator binding="#{bindings.Codsdosps1.validator}"/>
+                                </af:inputListOfValues>
+                                
+                                <!--af:panelGroupLayout id="pgl2" layout="horizontal"-->
+                                    <af:panelLabelAndMessage id ="plm1" for="it1" label="* Codice">
+                                        <af:inputText required="#{bindings.Codsdosps2.hints.mandatory}" label="#{bindings.Codsdosps1.hints.label}" id="it1" simple="true" value="#{bindings.Codsdosps1.inputValue}" 
+                                            autoSubmit="true" binding="#{Cnf_SdoSpsAction.codSdoSpsAss}" disabled="#{sessionScope.editSdo}"
+                                                      columns="#{bindings.Codsdosps2.hints.displayWidth}"/>
+                                    
+                                        <af:link id="l1" icon="/images/search_16.png"
+                                                action="lovSdoSps" rendered="#{!sessionScope.editSdo}"
+                                                inlineStyle="padding:10px;vertical-align: baseline;"
+                                                shortDesc="Cerca: Codice"
+                                                useWindow="true" windowHeight="600" windowWidth="750"
+                                                returnListener="#{Cnf_SdoSpsAction.lovSdoSpsReturnListener}" immediate="true">
+                                        </af:link>
+                                    </af:panelLabelAndMessage>
+                                <!--/af:panelGroupLayout-->
+
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                    label="#{bindings.Descrizione.hints.label}"
+                                    required="#{bindings.Descrizione.hints.mandatory}"
+                                    columns="#{bindings.Descrizione.hints.displayWidth}"
+                                    maximumLength="#{bindings.Descrizione.hints.precision}"
+                                    disabled="true" shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it5" rows="5">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idcnfescl1.inputValue}"
+                                                    label="Causale"
+                                                    required="#{bindings.Idcnfescl1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcnfescl1.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Idcnfescl1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idcnfescl1.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Casuale esclusione SDO-SPS"/>
+            </af:pageTemplate>
+        </af:form>
+        <af:form id="f1"></af:form>
+    </af:document>
+</f:view>

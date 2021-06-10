@@ -1,0 +1,986 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Ref_SoInvitiPerRefertiCAView"
+   Version="12.2.1.11.57"
+   SelectList="Ref_SoInvito.IDINVITO, 
+       Ref_SoInvito.CODTS, 
+       Ref_SoInvito.IDTPINVITO, 
+       Ref_SoInvito.CODESITOINVITO, 
+       Ref_SoInvito.LIVESITO, 
+       Ref_SoInvito.ATTIVO, 
+       Ref_SoInvito.IDCENTROPRELIEVO, 
+       Ref_SoInvito.IDCENTRORICHIAMO, 
+       Ref_SoInvito.IDCENTROREF1LIV, 
+       Ref_SoInvito.IDAPP, 
+       Ref_SoInvito.DTAPP, 
+       Ref_SoInvito.ORAAPP, 
+       Ref_SoInvito.MINAPP, 
+       Ref_SoInvito.DTAPPINIZIALE, 
+       Ref_SoInvito.CONSENSO, 
+       Ref_SoInvito.DTESAMERECENTE, 
+       Ref_SoInvito.DTRICHIAMO, 
+       Ref_SoInvito.DTINVIORICHIAMO, 
+       Ref_SoInvito.OPMEDICO, 
+       Ref_SoInvito.DTINVIOSOLLECITO, 
+       Ref_SoInvito.ROUNDCOMUNE, 
+       Ref_SoInvito.ROUNDINDIV, 
+       Ref_SoInvito.VOLONTARIA, 
+       Ref_SoInvito.DTBLOCCO, 
+       Ref_SoInvito.CHIUSURAROUNDINDIV, 
+       Ref_SoInvito.DTULTIMAMOD, 
+       Ref_SoInvito.DTCREAZIONE, 
+       Ref_SoInvito.OPINSERIMENTO, 
+       Ref_SoInvito.DTMODESCLUSIONE, 
+       Ref_SoInvito.OPMODIFICA, 
+       Ref_SoInvito.FUORIFASCIA, 
+       Ref_SoInvito.NOTEINVITO, 
+       Ref_SoInvito.ULSS, 
+       Ref_SoInvito.TPSCR, 
+       Ref_SoInvito.ROUNDINVITI, 
+       Ref_SoInvito.TPRICHIAMO, 
+       Ref_SoInvito.DA_CONFERMARE, 
+       Ref_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Ref_SoCnfTpinvito.IDCATEG, 
+       Ref_SoCnfTpinvito.DESCRIZIONE, 
+       Ref_SoCnfTpinvito.DESCRBREVE, 
+       Ref_SoCnfTpinvito.APPUNTAMENTO, 
+       Ref_SoCnfTpinvito.CODREGIONALE, 
+       Ref_SoCnfTpinvito.ULSS AS ULSS1, 
+       Ref_SoCnfTpinvito.TPSCR AS TPSCR1, 
+       Ref_SoCnfTpinvito.GGSOLLECITO, 
+       Ref_SoCnfTpinvito.IDTPINV_SOLL, 
+       Ref_SoCnfTpinvito.LIVELLO, 
+       Ref_SoCnfEsitoinvito.CODESITOINVITO AS CODESITOINVITO1, 
+       Ref_SoCnfEsitoinvito.LIVESITO AS LIVESITO1, 
+       Ref_SoCnfEsitoinvito.ESITOINVITO, 
+       Ref_SoCnfEsitoinvito.DESCRBREVE AS DESCRBREVE1, 
+       Ref_SoCnfEsitoinvito.DESCRIZIONE AS DESCRIZIONE1, 
+       Ref_SoCnfEsitoinvito.DESCRSUGG, 
+       Ref_SoCnfEsitoinvito.CATESITO, 
+       Ref_SoCnfEsitoinvito.TIPOESITO, 
+       Ref_SoCnfEsitoinvito.IDTPINVITO AS IDTPINVITO2, 
+       Ref_SoCnfEsitoinvito.GGRICHIAMO, 
+       Ref_SoCnfEsitoinvito.CODREGIONALE AS CODREGIONALE1, 
+       Ref_SoCnfEsitoinvito.ULSS AS ULSS2, 
+       Ref_SoCnfEsitoinvito.TPSCR AS TPSCR2, 
+       RefCa_SoRefertocardio.IDREFERTO, 
+       RefCa_SoRefertocardio.COMPLETO, 
+       Ref_SoCentroPrelRef.IDCENTRO, 
+       Ref_SoCentroPrelRef.INDIRIZZO_RES, 
+       Ref_SoCentroPrelRef.SEDE, 
+       Ref_SoCentroPrelRef.TEL, 
+       Ref_SoCentroPrelRef.ORARITEL, 
+       Ref_SoCnfTpinvito1.IDTPINVITO AS IDTPINVITO3, 
+       Ref_SoCnfTpinvito1.DESCRIZIONE AS DESCRIZIONE3, 
+       Ref_SoCnfTpinvito1.ULSS AS ULSS4, 
+       Ref_SoCnfTpinvito1.TPSCR AS TPSCR3, 
+       FUN_GETSUGG_CA(Ref_SoInvito.IDINVITO) AS SUGG, 
+       Ref_SoSoggetto.COGNOME, 
+       Ref_SoSoggetto.CODTS AS CODTS1, 
+       Ref_SoSoggetto.ULSS AS ULSS3, 
+       Ref_SoSoggetto.NOME, 
+       Ref_SoSoggetto.DATA_NASCITA, 
+       Ref_SoSoggetto.SESSO, 
+       Ref_SoSoggetto.CF, 
+       Ref_SoSoggetto.COGNOME_CONIUGE, 
+       Ref_SoSoggetto.TEL1, 
+       Ref_SoSoggetto.TEL2, 
+       Cnf_SoDistrettoZona.DESCRIZIONE AS DESCRIZIONE4, 
+       Cnf_SoDistrettoZona.CODDISTRZONA, 
+       Cnf_SoDistrettoZona.ULSS AS ULSS5, 
+       Ref_SoCentroPrelRef.DESCRBREVE AS DESCRBREVE2, 
+       Ref_SoSoggetto.IDINTERNO, 
+       Ref_SoCentroPrelRef.DESCRIZIONE AS DESCRIZIONE2, 
+       RefCa_SoRefertocardio.IDSUGG, 
+       Sogg_SoDocumentiSogg.DOC_IDENT, 
+       Sogg_SoDocumentiSogg.ID_TIPO_DOC, 
+       Sogg_SoDocumentiSogg.ULSS AS ULSS6, 
+       Ref_SoInvito.CONFERMATO"
+   FromList="SO_INVITO Ref_SoInvito, SO_CNF_TPINVITO Ref_SoCnfTpinvito, SO_CNF_ESITOINVITO Ref_SoCnfEsitoinvito, SO_CNF_TPINVITO Ref_SoCnfTpinvito1, SO_CENTRO_PREL_REF Ref_SoCentroPrelRef, SO_REFERTOCARDIO RefCa_SoRefertocardio, SO_SOGGETTO Ref_SoSoggetto, SO_DISTRETTO_ZONA Cnf_SoDistrettoZona, SO_DOCUMENTI_SOGG Sogg_SoDocumentiSogg"
+   Where="(((((((Ref_SoInvito.IDTPINVITO = Ref_SoCnfTpinvito.IDTPINVITO)AND (Ref_SoInvito.ULSS = Ref_SoCnfTpinvito.ULSS))AND (Ref_SoInvito.TPSCR = Ref_SoCnfTpinvito.TPSCR))AND ((((Ref_SoInvito.CODESITOINVITO = Ref_SoCnfEsitoinvito.CODESITOINVITO)AND (Ref_SoInvito.LIVESITO = Ref_SoCnfEsitoinvito.LIVESITO))AND (Ref_SoInvito.ULSS = Ref_SoCnfEsitoinvito.ULSS))AND (Ref_SoInvito.TPSCR = Ref_SoCnfEsitoinvito.TPSCR)))AND (((Ref_SoInvito.TPRICHIAMO = Ref_SoCnfTpinvito1.IDTPINVITO(+))AND (Ref_SoInvito.ULSS = Ref_SoCnfTpinvito1.ULSS(+)))AND (Ref_SoInvito.TPSCR = Ref_SoCnfTpinvito1.TPSCR(+))))AND (Ref_SoInvito.IDCENTROPRELIEVO = Ref_SoCentroPrelRef.IDCENTRO(+)))AND ((Ref_SoInvito.CODTS = Ref_SoSoggetto.CODTS)AND (Ref_SoInvito.ULSS = Ref_SoSoggetto.ULSS)))AND (Ref_SoInvito.IDINVITO = RefCa_SoRefertocardio.IDINVITO(+)) AND (Cnf_SoDistrettoZona.ULSS(+) = Ref_SoInvito.ULSS AND Cnf_SoDistrettoZona.CODDISTRZONA(+) = Ref_SoInvito.ZONA)  AND (Sogg_SoDocumentiSogg.CODTS (+) = Ref_SoInvito.CODTS) AND (Sogg_SoDocumentiSogg.ID_TIPO_DOC = &#39;TS&#39; OR Sogg_SoDocumentiSogg.ID_TIPO_DOC IS NULL) AND Ref_SoInvito.ULSS = :1 AND Ref_SoInvito.TPSCR = :2"
+   OrderBy="Ref_SoSoggetto.COGNOME,Ref_SoSoggetto.NOME"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   RowClass="model.referto.Ref_SoInvitiPerRefertiCAViewRowImpl"
+   ComponentClass="model.referto.Ref_SoInvitiPerRefertiCAViewImpl"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <EntityUsage
+      Name="Ref_SoInvito"
+      Entity="model.referto.Ref_SoInvito" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfTpinvito"
+      Entity="model.referto.Ref_SoCnfTpinvito"
+      Association="model.referto.Ref_SoInvito_SoCnfTpInvitoAssoc"
+      AssociationEnd="model.referto.Ref_SoInvito_SoCnfTpInvitoAssoc.Ref_SoCnfTpinvito"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="Ref_SoCnfEsitoinvito"
+      Entity="model.referto.Ref_SoCnfEsitoinvito"
+      Association="model.referto.Ref_SoInvito_SoCnfEsitoinvitoAssoc"
+      AssociationEnd="model.referto.Ref_SoInvito_SoCnfEsitoinvitoAssoc.Ref_SoCnfEsitoinvito"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="Ref_SoCnfTpinvito1"
+      Entity="model.referto.Ref_SoCnfTpinvito"
+      Association="model.referto.Ref_SoInvito_SoCnfTprichiamoAssoc"
+      AssociationEnd="model.referto.Ref_SoInvito_SoCnfTprichiamoAssoc.Ref_SoCnfTpinvito1"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="Ref_SoCentroPrelRef"
+      Entity="model.referto.Ref_SoCentroPrelRef"
+      Association="model.referto.Ref_SoInvito_SoCentroPrelAssoc"
+      AssociationEnd="model.referto.Ref_SoInvito_SoCentroPrelAssoc.Ref_SoCentroPrelRef1"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="RefCa_SoRefertocardio"
+      Entity="model.referto.RefCa_SoRefertocardio"
+      Association="model.referto.RefCa_SoRefertocardio_SoInvitoAssoc"
+      AssociationEnd="model.referto.RefCa_SoRefertocardio_SoInvitoAssoc.RefCa_SoRefertocardio"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="Ref_SoSoggetto"
+      Entity="model.referto.Ref_SoSoggetto"
+      Association="model.referto.Ref_SoInvito_SoSoggettoAssoc"
+      AssociationEnd="model.referto.Ref_SoInvito_SoSoggettoAssoc.Ref_SoSoggetto"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoInvito"
+      ReadOnly="true"
+      Reference="true" />
+   <EntityUsage
+      Name="Cnf_SoDistrettoZona"
+      Entity="model.conf.Cnf_SoDistrettoZona"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Ref_SoSoggetto"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Sogg_SoDocumentiSogg"
+      Entity="model.soggetto.Sogg_SoDocumentiSogg"
+      SourceUsage="model.referto.Ref_SoInvitiPerRefertiCAView.Cnf_SoDistrettoZona"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idinvito"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idinvito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codts"
+      EntityUsage="Ref_SoInvito"
+      AliasName="CODTS" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codts_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDTPINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      PrecisionRule="true"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="CODESITOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito"
+      PrecisionRule="true"
+      EntityAttrName="Livesito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="LIVESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Attivo"
+      PrecisionRule="true"
+      EntityAttrName="Attivo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ATTIVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      PrecisionRule="true"
+      EntityAttrName="Idcentroprelievo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDCENTROPRELIEVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      PrecisionRule="true"
+      EntityAttrName="Idcentrorichiamo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDCENTRORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref1liv"
+      PrecisionRule="true"
+      EntityAttrName="Idcentroref1liv"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDCENTROREF1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idapp"
+      PrecisionRule="true"
+      EntityAttrName="Idapp"
+      EntityUsage="Ref_SoInvito"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      PrecisionRule="true"
+      EntityAttrName="Dtapp"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      PrecisionRule="true"
+      EntityAttrName="Oraapp"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      PrecisionRule="true"
+      EntityAttrName="Minapp"
+      EntityUsage="Ref_SoInvito"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtappiniziale"
+      PrecisionRule="true"
+      EntityAttrName="Dtappiniziale"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTAPPINIZIALE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Consenso"
+      PrecisionRule="true"
+      EntityAttrName="Consenso"
+      EntityUsage="Ref_SoInvito"
+      AliasName="CONSENSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtesamerecente"
+      PrecisionRule="true"
+      EntityAttrName="Dtesamerecente"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTESAMERECENTE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      PrecisionRule="true"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviorichiamo"
+      PrecisionRule="true"
+      EntityAttrName="Dtinviorichiamo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTINVIORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmedico"
+      PrecisionRule="true"
+      EntityAttrName="Opmedico"
+      EntityUsage="Ref_SoInvito"
+      AliasName="OPMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviosollecito"
+      PrecisionRule="true"
+      EntityAttrName="Dtinviosollecito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTINVIOSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Roundcomune"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ROUNDCOMUNE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      PrecisionRule="true"
+      EntityAttrName="Roundindiv"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Volontaria"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Volontaria"
+      EntityUsage="Ref_SoInvito"
+      AliasName="VOLONTARIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtblocco"
+      PrecisionRule="true"
+      EntityAttrName="Dtblocco"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTBLOCCO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chiusuraroundindiv"
+      PrecisionRule="true"
+      EntityAttrName="Chiusuraroundindiv"
+      EntityUsage="Ref_SoInvito"
+      AliasName="CHIUSURAROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultimamod"
+      PrecisionRule="true"
+      EntityAttrName="Dtultimamod"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTULTIMAMOD" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      PrecisionRule="true"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTCREAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opinserimento"
+      PrecisionRule="true"
+      EntityAttrName="Opinserimento"
+      EntityUsage="Ref_SoInvito"
+      AliasName="OPINSERIMENTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtmodesclusione"
+      PrecisionRule="true"
+      EntityAttrName="Dtmodesclusione"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DTMODESCLUSIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      PrecisionRule="true"
+      EntityAttrName="Opmodifica"
+      EntityUsage="Ref_SoInvito"
+      AliasName="OPMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Fuorifascia"
+      PrecisionRule="true"
+      EntityAttrName="Fuorifascia"
+      EntityUsage="Ref_SoInvito"
+      AliasName="FUORIFASCIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Noteinvito"
+      PrecisionRule="true"
+      EntityAttrName="Noteinvito"
+      EntityUsage="Ref_SoInvito"
+      AliasName="NOTEINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoInvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      PrecisionRule="true"
+      EntityAttrName="Roundinviti"
+      EntityUsage="Ref_SoInvito"
+      AliasName="ROUNDINVITI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      PrecisionRule="true"
+      EntityAttrName="Tprichiamo"
+      EntityUsage="Ref_SoInvito"
+      AliasName="TPRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DaConfermare"
+      PrecisionRule="true"
+      EntityAttrName="DaConfermare"
+      EntityUsage="Ref_SoInvito"
+      AliasName="DA_CONFERMARE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="IDTPINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcateg"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idcateg"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="IDCATEG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoinvitobreve"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tipoinvitobreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Appuntamento"
+      PrecisionRule="true"
+      EntityAttrName="Appuntamento"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="APPUNTAMENTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codregionale"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="CODREGIONALE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggsollecito"
+      PrecisionRule="true"
+      EntityAttrName="Ggsollecito"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="GGSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdtpinvSoll"
+      PrecisionRule="true"
+      EntityAttrName="IdtpinvSoll"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="IDTPINV_SOLL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Livello"
+      EntityUsage="Ref_SoCnfTpinvito"
+      AliasName="LIVELLO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="CODESITOINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Livesito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="LIVESITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitoinvito"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Esitoinvito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="ESITOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitobreve"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="DESCRBREVE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitobreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrsugg"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrsugg"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="DESCRSUGG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Catesito"
+      PrecisionRule="true"
+      EntityAttrName="Catesito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="CATESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoesito"
+      PrecisionRule="true"
+      EntityAttrName="Tipoesito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="TIPOESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito2"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="IDTPINVITO2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggrichiamo"
+      PrecisionRule="true"
+      EntityAttrName="Ggrichiamo"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="GGRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codregionale1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codregionale"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="CODREGIONALE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfEsitoinvito"
+      AliasName="TPSCR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idreferto"
+      EntityUsage="RefCa_SoRefertocardio"
+      AliasName="IDREFERTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Completo"
+      EntityUsage="RefCa_SoRefertocardio"
+      AliasName="COMPLETO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoCentro"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SedeCentro"
+      PrecisionRule="true"
+      EntityAttrName="Sede"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="SEDE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TelCentro"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tel"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="TEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OrariCentro"
+      PrecisionRule="true"
+      EntityAttrName="Oraritel"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="ORARITEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="Ref_SoCnfTpinvito1"
+      AliasName="IDTPINVITO3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RichiamoDesc"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfTpinvito1"
+      AliasName="DESCRIZIONE3" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RichiamoDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss4"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfTpinvito1"
+      AliasName="ULSS4" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfTpinvito1"
+      AliasName="TPSCR3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sugg"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SUGG"
+      Expression="FUN_GETSUGG_CA(Ref_SoInvito.IDINVITO)"
+      SQLType="VARCHAR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Sugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Cognome"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="COGNOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codts"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="CODTS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="ULSS3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Nome"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="NOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="DataNascita"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="DATA_NASCITA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataNascita_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Sesso"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="SESSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      PrecisionRule="true"
+      EntityAttrName="Cf"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="CF" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CognomeConiuge"
+      PrecisionRule="true"
+      EntityAttrName="CognomeConiuge"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="COGNOME_CONIUGE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      PrecisionRule="true"
+      EntityAttrName="Tel1"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="TEL1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      PrecisionRule="true"
+      EntityAttrName="Tel2"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="TEL2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Zona"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoDistrettoZona"
+      AliasName="DESCRIZIONE4" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Coddistrzona"
+      EntityUsage="Cnf_SoDistrettoZona"
+      AliasName="CODDISTRZONA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss5"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoDistrettoZona"
+      AliasName="ULSS5" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CentroPrelievo"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="DESCRBREVE2" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CentroPrelievo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinterno"
+      PrecisionRule="true"
+      EntityAttrName="Idinterno"
+      EntityUsage="Ref_SoSoggetto"
+      AliasName="IDINTERNO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescrCentroPrel"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCentroPrelRef"
+      AliasName="DESCRIZIONE2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idsugg"
+      EntityUsage="RefCa_SoRefertocardio"
+      AliasName="IDSUGG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocIdent"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="DocIdent"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DOC_IDENT" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DocIdent_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdTipoDoc"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="IdTipoDoc"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="ID_TIPO_DOC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss6"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="ULSS6" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Confermato"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Confermato"
+      EntityUsage="Ref_SoInvito"
+      AliasName="CONFERMATO" >
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idinvito" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="RefCa_SoRefertocardioView"
+      ViewLink="model.referto.Ref_FK_InvitiPerRefertoCA_VL"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Ref_SoInvitoView1"
+      ViewLink="model.referto.Ref_FKRefInvitiCA_VL"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.referto.common.Ref_SoInvitiPerRefertiCAViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

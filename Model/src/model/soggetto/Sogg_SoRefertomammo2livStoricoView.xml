@@ -1,0 +1,1486 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_SoRefertomammo2livStoricoView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;DTAPP&#34; desc"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_SoRefertomammo2livStoricoViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT a.idreferto,  
+        a.idinvito,  
+        a.mammo, 
+        a.m_data,  
+        DECODE(MEDICO_MAMMO.titolo,NULL,'',MEDICO_MAMMO.titolo||' ')||MEDICO_MAMMO.cognome||' '||MEDICO_MAMMO.nome  MEDICO_MAMMO, 
+         a.eco,  
+         a.e_data, 
+         DECODE(MEDICO_ECO.titolo,NULL,'',MEDICO_ECO.titolo||' ')||MEDICO_ECO.cognome||' '||MEDICO_ECO.nome  MEDICO_ECO, 
+       a.clinico,  
+       a.cl_data,  
+       DECODE(MEDICO_CLINICO.titolo,NULL,'',MEDICO_CLINICO.titolo||' ')||MEDICO_CLINICO.cognome||' '||MEDICO_CLINICO.nome  MEDICO_CLINICO, 
+       a.citologia_dx,  
+       CITODXEXEC.descrizione CITOLOGIA_DESTRA, 
+       a.c_dx_data, 
+       a.c_dx_esito, 
+       CITODXESITO.DESCRIZIONE ESITO_CITODX, 
+       a.citologia_sx,  
+       CITOSXEXEC.descrizione CITOLOGIA_SINISTRA, 
+       a.c_sx_data, 
+       a.c_sx_esito, 
+       CITOSXESITO.DESCRIZIONE ESITO_CITOSX, 
+       a.agob_dx,  
+       AGODXEXEC.descrizione AGOBIOPSIA_DESTRA, 
+       a.a_dx_data, 
+       a.a_dx_esito, 
+       AGODXESITO.DESCRIZIONE ESITO_AGODX, 
+       a.agob_sx, 
+       AGOSXEXEC.descrizione AGOBIOPSIA_SINISTRA, 
+       a.a_sx_data,  
+       a.a_sx_esito,  
+       AGOSXESITO.DESCRIZIONE ESITO_AGOSX, 
+       a.diagnosi_peggiore, 
+       DIAGNOSI.descrizione DIAGNOSI, 
+       a.idsugg2l,  
+       SO_CNF_SUGG_2LIV.esitosugg, 
+       SO_CNF_SUGG_2LIV.descrizione SUGGERIMENTO, 
+       DECODE(MEDCONCL.titolo,NULL,'',MEDCONCL.titolo||' ')||MEDCONCL.cognome||' '||MEDCONCL.nome  MEDICO_2LIV, 
+       a.dtconcl,  
+       a.completo,  
+       a.intchiusi, 
+       SO_INVITO.dtapp, 
+       SO_CNF_TPINVITO.descrbreve, 
+       a.dtcreazione, 
+       a.dtspedizione, 
+       decode(a.mammo,1,'Data: ' || to_char(a.m_data,'dd/mm/yyyy') || chr(10) ||   
+       'Medico: ' || DECODE(MEDICO_MAMMO.titolo,NULL,'',MEDICO_MAMMO.titolo||' ')||MEDICO_MAMMO.cognome||' '||MEDICO_MAMMO.nome,'') mammografia, 
+       decode(a.eco,1,'Data: ' || to_char(a.e_data,'dd/mm/yyyy') || chr(10) ||   
+       'Medico: ' || DECODE(MEDICO_ECO.titolo,NULL,'',MEDICO_ECO.titolo||' ')||MEDICO_ECO.cognome||' '||MEDICO_ECO.nome,'') ecografia, 
+       decode(a.clinico,1,'Data: ' || to_char(a.cl_data,'dd/mm/yyyy') || chr(10) ||   
+       'Medico: ' || DECODE(MEDICO_CLINICO.titolo,NULL,'',MEDICO_CLINICO.titolo||' ')||MEDICO_CLINICO.cognome||' '||MEDICO_CLINICO.nome,'') esclinico, 
+       CITODXEXEC.descrizione ||  
+       decode(a.c_dx_data,null,'',chr(10) || 'Data: ' || to_char(a.c_dx_data,'dd/MM/yyyy')) ||  
+       decode(CITODXESITO.DESCRIZIONE,null,'',chr(10) || 'Esito: ' || CITODXESITO.DESCRIZIONE) CIDESTRA, 
+       CITOSXEXEC.descrizione ||  
+       decode(a.c_sx_data,null,'',chr(10) || 'Data: ' || to_char(a.c_sx_data,'dd/MM/yyyy')) ||  
+       decode(CITOSXESITO.DESCRIZIONE,null,'',chr(10) || 'Esito: ' || CITOSXESITO.DESCRIZIONE) CISINISTRA, 
+       AGODXEXEC.descrizione ||  
+       decode(a.a_dx_data,null,'',chr(10) || 'Data: ' || to_char(a.a_dx_data,'dd/MM/yyyy')) ||  
+       decode(AGODXESITO.DESCRIZIONE,null,'',chr(10) || 'Esito: ' || AGODXESITO.DESCRIZIONE) AGODESTRA, 
+       AGOSXEXEC.descrizione ||  
+       decode(a.a_sx_data,null,'',chr(10) || 'Data: ' || to_char(a.a_sx_data,'dd/MM/yyyy')) ||  
+       decode(AGOSXESITO.DESCRIZIONE,null,'',chr(10) || 'Esito: ' || AGOSXESITO.DESCRIZIONE) AGOSINISTRA, 
+       SO_CNF_SUGG_2LIV.esitosugg ||  
+       decode(a.dtconcl,null,'',chr(10) || 'Data: ' || to_char(a.dtconcl,'dd/MM/yyyy')) ||  
+       decode(MEDCONCL.cognome,null,'', 
+       chr(10) || 'Medico: ' || DECODE(MEDCONCL.titolo,NULL,'',MEDCONCL.titolo||' ')||MEDCONCL.cognome||' '||MEDCONCL.nome) conclusioni, 
+       CITODXEXEC.descrizione cidx_esame, 
+       decode(a.c_dx_data,null,'','Data: ' || to_char(a.c_dx_data,'dd/MM/yyyy')) cidx_data, 
+       decode(CITODXESITO.DESCRIZIONE,null,'','Esito: ' || CITODXESITO.DESCRIZIONE) cidx_esito, 
+       CITOSXEXEC.descrizione cisx_esame, 
+       decode(a.c_sx_data,null,'','Data: ' || to_char(a.c_sx_data,'dd/MM/yyyy')) cisx_data, 
+       decode(CITOSXESITO.DESCRIZIONE,null,'','Esito: ' || CITOSXESITO.DESCRIZIONE) cisx_esito, 
+       AGODXEXEC.descrizione agdx_esame, 
+       decode(a.a_dx_data,null,'','Data: ' || to_char(a.a_dx_data,'dd/MM/yyyy')) agdx_data, 
+       decode(AGODXESITO.DESCRIZIONE,null,'','Esito: ' || AGODXESITO.DESCRIZIONE) agdx_esito, 
+       AGOSXEXEC.descrizione agsx_esame, 
+       decode(a.a_sx_data,null,'','Data: ' || to_char(a.a_sx_data,'dd/MM/yyyy')) agsx_data, 
+       decode(AGOSXESITO.DESCRIZIONE,null,'','Esito: ' || AGOSXESITO.DESCRIZIONE) agsx_esito, 
+       SO_CNF_SUGG_2LIV.esitosugg cncl_sugg, 
+       decode(a.dtconcl,null,'','Data: ' || to_char(a.dtconcl,'dd/MM/yyyy')) cncl_data, 
+       decode(MEDCONCL.cognome,null,'', 
+       'Medico: ' || DECODE(MEDCONCL.titolo,NULL,'',MEDCONCL.titolo||' ')||MEDCONCL.cognome||' '||MEDCONCL.nome 
+	   ) cncl_med, 
+	   decode(a.mammo,1,'Data: ' || to_char(a.m_data,'dd/mm/yyyy'),'') mx_data, 
+	   decode(a.mammo,1, 
+	   'Medico: ' || DECODE(MEDICO_MAMMO.titolo,NULL,'',MEDICO_MAMMO.titolo||' ')||MEDICO_MAMMO.cognome||' '||MEDICO_MAMMO.nome,'') mx_med, 
+	   decode(a.eco,1,'Data: ' || to_char(a.e_data,'dd/mm/yyyy'),'') eco_data, 
+	   decode(a.eco,1, 
+	   'Medico: ' || DECODE(MEDICO_ECO.titolo,NULL,'',MEDICO_ECO.titolo||' ')||MEDICO_ECO.cognome||' '||MEDICO_ECO.nome,'') eco_med, 
+	   decode(a.clinico,1,'Data: ' || to_char(a.cl_data,'dd/mm/yyyy'),'') esc_data, 
+	   decode(a.clinico,1, 
+	   'Medico: ' || DECODE(MEDICO_CLINICO.titolo,NULL,'',MEDICO_CLINICO.titolo||' ')||MEDICO_CLINICO.cognome||' '||MEDICO_CLINICO.nome,'') esc_med, 
+        a.codts,  
+        a.ulss,  
+        a.tpscr, 
+        a.note, 
+        SO_INVITO.IDCENTROPRELIEVO 
+  FROM so_refertomammo2liv a,  
+  SO_CNF_REF2LIV CITODXEXEC, SO_CNF_REF2LIV CITODXESITO, 
+  SO_CNF_REF2LIV CITOSXEXEC, SO_CNF_REF2LIV CITOSXESITO, 
+  SO_CNF_REF2LIV AGODXEXEC, SO_CNF_REF2LIV AGODXESITO, 
+  SO_CNF_REF2LIV AGOSXEXEC, SO_CNF_REF2LIV AGOSXESITO, 
+  SO_CNF_REF2LIV DIAGNOSI, SO_CNF_SUGG_2LIV, 
+  SO_OPMEDICO MEDICO_MAMMO, SO_OPMEDICO MEDICO_ECO, 
+  SO_OPMEDICO MEDICO_CLINICO, SO_OPMEDICO MEDCONCL, 
+  SO_INVITO, SO_CNF_TPINVITO 
+  WHERE (A.citologia_dx=CITODXEXEC.idcnfref2l(+) 
+  AND A.gr_exec=CITODXEXEC.gruppo(+) AND A.ulss=CITODXEXEC.ulss(+) 
+  AND A.tpscr=CITODXEXEC.tpscr(+)) 
+  AND (A.citologia_Sx=CITOSXEXEC.idcnfref2l(+) 
+  AND A.gr_exec=CITOSXEXEC.gruppo(+) AND A.ulss=CITOSXEXEC.ulss(+) 
+  AND A.tpscr=CITOSXEXEC.tpscr(+)) 
+  AND (A.AGOB_dx=AGODXEXEC.idcnfref2l(+) 
+  AND A.gr_exec=AGODXEXEC.gruppo(+) AND A.ulss=AGODXEXEC.ulss(+) 
+  AND A.tpscr=AGODXEXEC.tpscr(+)) 
+  AND (A.AGOB_Sx=AGOSXEXEC.idcnfref2l(+) 
+  AND A.gr_exec=AGOSXEXEC.gruppo(+) AND A.ulss=AGOSXEXEC.ulss(+) 
+  AND A.tpscr=AGOSXEXEC.tpscr(+)) 
+  AND (A.c_dx_esito=CITODXESITO.idcnfref2l(+) 
+  AND A.gr_esito_cito=CITODXESITO.gruppo(+) AND A.ulss=CITODXESITO.ulss(+) 
+  AND A.tpscr=CITODXESITO.tpscr(+)) 
+  AND (A.c_sx_esito=CITOSXESITO.idcnfref2l(+) 
+  AND A.gr_esito_cito=CITOSXESITO.gruppo(+) AND A.ulss=CITOSXESITO.ulss(+) 
+  AND A.tpscr=CITOSXESITO.tpscr(+)) 
+  AND (A.a_dx_esito=AGODXESITO.idcnfref2l(+) 
+  AND A.gr_esito_agob=AGODXESITO.gruppo(+) AND A.ulss=AGODXESITO.ulss(+) 
+  AND A.tpscr=AGODXESITO.tpscr(+)) 
+  AND (A.a_sx_esito=AGOSXESITO.idcnfref2l(+) 
+  AND A.gr_esito_agob=AGOSXESITO.gruppo(+) AND A.ulss=AGOSXESITO.ulss(+) 
+  AND A.tpscr=AGOSXESITO.tpscr(+)) 
+  AND (A.diagnosi_peggiore=DIAGNOSI.idcnfref2l(+) 
+  AND A.gr_diagnosi=DIAGNOSI.gruppo(+) AND A.ulss=DIAGNOSI.ulss(+) 
+  AND A.tpscr=DIAGNOSI.tpscr(+)) 
+  AND (A.IDSUGG2L=SO_CNF_SUGG_2LIV.IDSUGG2L(+) 
+  AND A.ULSS=SO_CNF_SUGG_2LIV.ULSS(+) 
+  AND A.TPSCR=SO_CNF_SUGG_2LIV.TPSCR(+)) 
+  AND (A.m_medico=MEDICO_MAMMO.idop(+)) 
+  AND (A.E_medico=MEDICO_ECO.idop(+)) 
+  AND (A.CL_medico=MEDICO_CLINICO.idop(+)) 
+  AND A.idmedconcl1=MEDCONCL.idop(+) 
+  AND SO_INVITO.IDINVITO = a.idinvito 
+ and SO_CNF_TPINVITO.IDTPINVITO = SO_INVITO.IDTPINVITO 
+and SO_CNF_TPINVITO.ulss = so_invito.ulss 
+and SO_CNF_TPINVITO.tpscr = so_invito.tpscr 
+and SO_INVITO.ULSS=:1 and SO_INVITO.TPSCR=:2 and so_invito.codts=:3]]></SQLQuery>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Mammo"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MAMMO"
+      Expression="MAMMO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="M_DATA"
+      Expression="M_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MData_LABEL"/>
+            <FMT_FORMATTER
+               ResId="MData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="MData_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MedicoMammo"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO_MAMMO"
+      Expression="MEDICO_MAMMO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MedicoMammo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Eco"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ECO"
+      Expression="ECO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="E_DATA"
+      Expression="E_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EData_LABEL"/>
+            <FMT_FORMATTER
+               ResId="EData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="EData_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MedicoEco"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO_ECO"
+      Expression="MEDICO_ECO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MedicoEco_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Clinico"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CLINICO"
+      Expression="CLINICO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ClData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="CL_DATA"
+      Expression="CL_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="ClData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="ClData_FMT_FORMAT"/>
+            <LABEL
+               ResId="ClData_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MedicoClinico"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO_CLINICO"
+      Expression="MEDICO_CLINICO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MedicoClinico_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CitologiaDx"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CITOLOGIA_DX"
+      Expression="CITOLOGIA_DX"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CitologiaDx_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CitologiaDestra"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CITOLOGIA_DESTRA"
+      Expression="CITOLOGIA_DESTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CitologiaDestra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CDxData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="C_DX_DATA"
+      Expression="C_DX_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CDxData_LABEL"/>
+            <FMT_FORMATTER
+               ResId="CDxData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="CDxData_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CDxEsito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_DX_ESITO"
+      Expression="C_DX_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CDxEsito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EsitoCitodx"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITO_CITODX"
+      Expression="ESITO_CITODX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EsitoCitodx_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CitologiaSx"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CITOLOGIA_SX"
+      Expression="CITOLOGIA_SX"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CitologiaSinistra"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CITOLOGIA_SINISTRA"
+      Expression="CITOLOGIA_SINISTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CitologiaSinistra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CSxData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="C_SX_DATA"
+      Expression="C_SX_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CSxData_LABEL"/>
+            <FMT_FORMATTER
+               ResId="CSxData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="CSxData_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CSxEsito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="C_SX_ESITO"
+      Expression="C_SX_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EsitoCitosx"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITO_CITOSX"
+      Expression="ESITO_CITOSX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EsitoCitosx_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgobDx"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="AGOB_DX"
+      Expression="AGOB_DX"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgobiopsiaDestra"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGOBIOPSIA_DESTRA"
+      Expression="AGOBIOPSIA_DESTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="AgobiopsiaDestra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ADxData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="A_DX_DATA"
+      Expression="A_DX_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="ADxData_LABEL"/>
+            <FMT_FORMATTER
+               ResId="ADxData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="ADxData_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ADxEsito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="A_DX_ESITO"
+      Expression="A_DX_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EsitoAgodx"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITO_AGODX"
+      Expression="ESITO_AGODX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EsitoAgodx_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgobSx"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="AGOB_SX"
+      Expression="AGOB_SX"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgobiopsiaSinistra"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGOBIOPSIA_SINISTRA"
+      Expression="AGOBIOPSIA_SINISTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="AgobiopsiaSinistra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ASxData"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="A_SX_DATA"
+      Expression="A_SX_DATA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="ASxData_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="ASxData_FMT_FORMAT"/>
+            <LABEL
+               ResId="ASxData_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ASxEsito"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="A_SX_ESITO"
+      Expression="A_SX_ESITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EsitoAgosx"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITO_AGOSX"
+      Expression="ESITO_AGOSX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EsitoAgosx_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DiagnosiPeggiore"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DIAGNOSI_PEGGIORE"
+      Expression="DIAGNOSI_PEGGIORE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Diagnosi"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DIAGNOSI"
+      Expression="DIAGNOSI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Diagnosi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg2l"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG2L"
+      Expression="IDSUGG2L"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOSUGG"
+      Expression="ESITOSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitosugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Suggerimento"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SUGGERIMENTO"
+      Expression="SUGGERIMENTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Medico2liv"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO_2LIV"
+      Expression="MEDICO_2LIV"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Medico2liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtconcl"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCONCL"
+      Expression="DTCONCL"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtconcl_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtconcl_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtconcl_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLETO"
+      Expression="COMPLETO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Intchiusi"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="INTCHIUSI"
+      Expression="INTCHIUSI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTAPP"
+      Expression="DTAPP"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRBREVE"
+      Expression="DESCRBREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtspedizione"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSPEDIZIONE"
+      Expression="DTSPEDIZIONE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtspedizione_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtspedizione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtspedizione_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Mammografia"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MAMMOGRAFIA"
+      Expression="MAMMOGRAFIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ecografia"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ECOGRAFIA"
+      Expression="ECOGRAFIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esclinico"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESCLINICO"
+      Expression="ESCLINICO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esclinico_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cidestra"
+      IsPersistent="false"
+      Precision="225"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CIDESTRA"
+      Expression="CIDESTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="225" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cidestra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cisinistra"
+      IsPersistent="false"
+      Precision="225"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CISINISTRA"
+      Expression="CISINISTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="225" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cisinistra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Agodestra"
+      IsPersistent="false"
+      Precision="225"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGODESTRA"
+      Expression="AGODESTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="225" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Agodestra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Agosinistra"
+      IsPersistent="false"
+      Precision="225"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGOSINISTRA"
+      Expression="AGOSINISTRA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="225" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Agosinistra_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Conclusioni"
+      IsPersistent="false"
+      Precision="208"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CONCLUSIONI"
+      Expression="CONCLUSIONI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="208" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CidxEsame"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CIDX_ESAME"
+      Expression="CIDX_ESAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CidxEsame_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CidxData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CIDX_DATA"
+      Expression="CIDX_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CidxEsito"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CIDX_ESITO"
+      Expression="CIDX_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CisxEsame"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CISX_ESAME"
+      Expression="CISX_ESAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CisxEsame_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CisxData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CISX_DATA"
+      Expression="CISX_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CisxEsito"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CISX_ESITO"
+      Expression="CISX_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgdxEsame"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGDX_ESAME"
+      Expression="AGDX_ESAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="AgdxEsame_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgdxData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGDX_DATA"
+      Expression="AGDX_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgdxEsito"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGDX_ESITO"
+      Expression="AGDX_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgsxEsame"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGSX_ESAME"
+      Expression="AGSX_ESAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="AgsxEsame_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgsxData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGSX_DATA"
+      Expression="AGSX_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AgsxEsito"
+      IsPersistent="false"
+      Precision="107"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AGSX_ESITO"
+      Expression="AGSX_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="107" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CnclSugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CNCL_SUGG"
+      Expression="CNCL_SUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CnclSugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CnclData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CNCL_DATA"
+      Expression="CNCL_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CnclMed"
+      IsPersistent="false"
+      Precision="90"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CNCL_MED"
+      Expression="CNCL_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="90" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MxData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MX_DATA"
+      Expression="MX_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MxData_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MxMed"
+      IsPersistent="false"
+      Precision="90"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MX_MED"
+      Expression="MX_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="90" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EcoData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ECO_DATA"
+      Expression="ECO_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EcoData_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EcoMed"
+      IsPersistent="false"
+      Precision="90"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ECO_MED"
+      Expression="ECO_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="90" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EscData"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESC_DATA"
+      Expression="ESC_DATA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="EscData_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EscMed"
+      IsPersistent="false"
+      Precision="90"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESC_MED"
+      Expression="ESC_MED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="90" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Note"
+      IsPersistent="false"
+      Precision="300"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOTE"
+      Expression="NOTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="300" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="4"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROPRELIEVO"
+      Expression="IDCENTROPRELIEVO"
+      SQLType="NUMERIC"/>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idreferto" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="Sogg_SoInterventomammoStoricoView"
+      ViewLink="model.soggetto.Sogg_StRefMa2IntViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_SoRefertomammo2livStoricoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

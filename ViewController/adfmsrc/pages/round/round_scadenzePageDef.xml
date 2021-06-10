@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="round_scadenzePageDef"
+                Package="pages.round">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="pages.conf.cnf_comzone_paramPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Round_SoRoundInScadenzaView1" RangeSize="25" DataControl="Round_AppModuleDataControl"
+              id="Round_SoRoundInScadenzaView1Iterator"/>
+    <iterator Binds="Round_SoComuniSenzaRound1" RangeSize="25" DataControl="Round_AppModuleDataControl"
+              id="Round_SoComuniSenzaRound1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Round_SoRoundInScadenzaView1Iterator" id="Round_SoRoundInScadenzaView1">
+      <nodeDefinition DefName="model.round.Round_SoRoundInScadenzaView" Name="Round_SoRoundInScadenzaView10">
+        <AttrNames>
+          <Item Value="Codcom"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Numround"/>
+          <Item Value="Scadenza"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Round_SoComuniSenzaRound1Iterator" id="Round_SoComuniSenzaRound1">
+      <nodeDefinition DefName="model.round.Round_SoComuniSenzaRound" Name="Round_SoComuniSenzaRound10">
+        <AttrNames>
+          <Item Value="Codcom"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Numround"/>
+          <Item Value="Dtinizio"/>
+          <Item Value="Dtfine"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

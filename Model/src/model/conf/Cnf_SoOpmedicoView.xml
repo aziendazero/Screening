@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoOpmedicoView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoOpmedico.IDOP, 
+       Cnf_SoOpmedico.CODOP, 
+       Cnf_SoOpmedico.IDCENTRO, 
+       Cnf_SoOpmedico.COGNOME, 
+       Cnf_SoOpmedico.NOME, 
+       Cnf_SoOpmedico.TITOLO, 
+       Cnf_SoOpmedico.DTFINEVALOPMEDICO, 
+       Cnf_SoOpmedico.ULSS, 
+       Cnf_SoOpmedico.TPSCR, 
+       Cnf_SoCentroPrelRef.DESCRBREVE, 
+       Cnf_SoCentroPrelRef.IDCENTRO AS IDCENTRO1, 
+       Cnf_SoCnfTpopmedico.DESCRIZIONE, 
+       Cnf_SoCnfTpopmedico.CODOP AS CODOP1, 
+       Cnf_SoOpmedico.CF"
+   FromList="SO_OPMEDICO Cnf_SoOpmedico, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef, SO_CNF_TPOPMEDICO Cnf_SoCnfTpopmedico"
+   Where="(Cnf_SoOpmedico.IDCENTRO = Cnf_SoCentroPrelRef.IDCENTRO(+))AND (Cnf_SoOpmedico.CODOP = Cnf_SoCnfTpopmedico.CODOP)"
+   OrderBy="Cnf_SoOpmedico.COGNOME,Cnf_SoOpmedico.NOME"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoOpmedicoViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.conf.common.Cnf_SoOpmedicoViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoOpmedico"
+      Entity="model.conf.Cnf_SoOpmedico" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoOpmedicoView.Cnf_SoOpmedico"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTpopmedico"
+      Entity="model.conf.Cnf_SoCnfTpopmedico"
+      SourceUsage="model.conf.Cnf_SoOpmedicoView.Cnf_SoCentroPrelRef"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idop"
+      IsNotNull="true"
+      EntityAttrName="Idop"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="IDOP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idop_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codop"
+      IsNotNull="true"
+      EntityAttrName="Codop"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="CODOP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codop_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="IDCENTRO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="COGNOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="NOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Titolo"
+      EntityAttrName="Titolo"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="TITOLO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalopmedico"
+      EntityAttrName="Dtfinevalopmedico"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="DTFINEVALOPMEDICO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevalopmedico_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevalopmedico_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtfinevalopmedico_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsNotNull="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="IDCENTRO1"
+      IsUpdateable="while_insert">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfTpopmedico"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codop1"
+      IsNotNull="true"
+      EntityAttrName="Codop"
+      EntityUsage="Cnf_SoCnfTpopmedico"
+      AliasName="CODOP1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      PrecisionRule="true"
+      EntityAttrName="Cf"
+      EntityUsage="Cnf_SoOpmedico"
+      AliasName="CF">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idop" />
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoOpmedicoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

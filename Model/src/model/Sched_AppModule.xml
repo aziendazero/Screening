@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<AppModule
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sched_AppModule"
+   Version="12.2.1.11.57"
+   ComponentClass="model.Sched_AppModuleImpl"
+   ClearCacheOnRollback="true"
+   ComponentInterface="model.common.Sched_AppModule">
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <ViewUsage
+      Name="Sched_RunningProcessesView"
+      ViewObjectName="model.sched.Sched_SoCodaProcessiView">
+      <ViewCriteriaUsage
+         Name="RunningProcessesCriteria"
+         FullName="model.sched.Sched_SoCodaProcessiView.RunningProcessesCriteria"/>
+   </ViewUsage>
+   <ViewUsage
+      Name="Sched_TodayRunProcessesView1"
+      ViewObjectName="model.sched.Sched_TodayRunProcessesView"/>
+   <ViewUsage
+      Name="Sched_ReadCodaProcessiView1"
+      ViewObjectName="model.sched.Sched_SoCodaProcessiView">
+      <ViewCriteriaUsage
+         Name="ScheduledProcessesCriteria"
+         FullName="model.sched.Sched_SoCodaProcessiView.ScheduledProcessesCriteria"/>
+   </ViewUsage>
+   <ViewUsage
+      Name="Sched_SoCnfImpexpDaSchedulareView1"
+      ViewObjectName="model.sched.Sched_SoCnfImpexpDaSchedulareView"/>
+   <ClientInterface
+      Name="__clientInterface">
+      <Method
+         Name="getDBConnection"
+         MethodName="getDBConnection">
+         <Return
+            Name="_return_type_"
+            Type="java.sql.Connection"/>
+      </Method>
+   </ClientInterface>
+</AppModule>

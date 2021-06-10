@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.accMa_esitoBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.ESITO_INVITO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{AccMa_esitoAction.frm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="80px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl49">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="Precedente" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{AccMa_esitoAction.prevInvitoMammo}"/>
+                                        <af:button text="Successivo" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{AccMa_esitoAction.nextInvitoMammo}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="Etichette" id="b2"
+                                                   rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="600"
+                                                   windowWidth="600" action="dialog:printPianoLavoro">
+                                            <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                    to="#{pageFlowScope.pl_centro}" type="action"></af:setPropertyListener>
+                                            <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                    to="#{pageFlowScope.pl_data}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                    to="#{pageFlowScope.pl_codts}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Idtpinvito.inputValue}"
+                                                                    to="#{pageFlowScope.pl_idtpinv}" type="action"/>                                                                      
+                                            <af:setPropertyListener from="single"
+                                                                    to="#{pageFlowScope.pl_type}" type="action"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="Conferma" id="b4" disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{AccMa_esitoAction.onConf}"/>
+                                        <af:button text="Annulla" id="b5" action="acc_toMammo" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Applica" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{AccMa_esitoAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s5"/>
+                                <af:outputText value="Soggetto escluso" id="ot1" rendered="#{bindings.Escl.inputValue != null}"
+                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                <af:spacer width="30" height="10" id="s5eee" rendered="#{bindings.Escl.inputValue != null}"/>
+                                <af:outputText value="Sollecitare" id="ot2" rendered="#{bindings.Sollecitare == '1'}"
+                                               inlineStyle="color:Red; font-size:large;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelHeader text="Dati invito" id="ph1" size="1">
+                                    <af:message id="m2" messageType="warning" message="Appuntamento da confermare"
+                                                rendered="#{bindings.DaConfermare.inputValue == '1'}"/>
+                                    <af:panelFormLayout id="pfl1" rows="3" maxColumns="2" partialTriggers="soc1">
+                                        <f:facet name="footer"/>
+                                        <af:inputDate value="#{bindings.Dtoraapp.inputValue}"
+                                                      label="#{bindings.Dtoraapp.hints.label}"
+                                                      required="#{bindings.Dtoraapp.hints.mandatory}"
+                                                      columns="#{bindings.Dtoraapp.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtoraapp.hints.tooltip}" id="id1"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Dtoraapp.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtoraapp.format}"/>
+                                        </af:inputDate>
+                                        <af:inputText value="#{bindings.Descrbreve.inputValue}"
+                                                      label="#{bindings.Descrbreve.hints.label}"
+                                                      required="#{bindings.Descrbreve.hints.mandatory}"
+                                                      columns="#{bindings.Descrbreve.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Descrbreve.hints.precision}"
+                                                      shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="it2"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Descrbreve.validator}"/>
+                                        </af:inputText>
+                                        <af:panelLabelAndMessage label="Codice identificativo" id="plam1">
+                                            <af:panelGroupLayout id="pgl2" layout="horizontal">
+                                                <af:inputText value="#{bindings.CodidsoggMx.inputValue}" simple="true"
+                                                              required="#{bindings.CodidsoggMx.hints.mandatory}"
+                                                              columns="#{bindings.CodidsoggMx.hints.displayWidth}"
+                                                              maximumLength="#{bindings.CodidsoggMx.hints.precision}"
+                                                              shortDesc="#{bindings.CodidsoggMx.hints.tooltip}" id="it5"
+                                                              disabled="true">
+                                                    <f:validator binding="#{bindings.CodidsoggMx.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.Anno.inputValue}" label="Ultimo accesso"
+                                                              columns="#{bindings.Anno.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Anno.hints.precision}"
+                                                              shortDesc="#{bindings.Anno.hints.tooltip}" id="it6"
+                                                              disabled="true">
+                                                    <f:validator binding="#{bindings.Anno.validator}"/>
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Anno.format}"/>
+                                                </af:inputText>
+                                            </af:panelGroupLayout>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.TipoInvito.inputValue}"
+                                                      label="#{bindings.TipoInvito.hints.label}"
+                                                      required="#{bindings.TipoInvito.hints.mandatory}"
+                                                      columns="#{bindings.TipoInvito.hints.displayWidth}"
+                                                      maximumLength="#{bindings.TipoInvito.hints.precision}"
+                                                      shortDesc="#{bindings.TipoInvito.hints.tooltip}" id="it1"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.TipoInvito.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.CodRichiesta.inputValue}"
+                                                      label="#{bindings.CodRichiesta.hints.label}"
+                                                      rendered="#{bindings.Livello == '1'}"
+                                                      columns="#{bindings.CodRichiesta.hints.displayWidth}"
+                                                      maximumLength="#{bindings.CodRichiesta.hints.precision}"
+                                                      shortDesc="#{bindings.CodRichiesta.hints.tooltip}" id="it3"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.CodRichiesta.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.CodRichiesta.format}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.CodRichiesta1.inputValue}"
+                                                      label="#{bindings.CodRichiesta1.hints.label}"
+                                                      rendered="#{bindings.Livello == '2'}"
+                                                      columns="#{bindings.CodRichiesta1.hints.displayWidth}"
+                                                      maximumLength="#{bindings.CodRichiesta1.hints.precision}"
+                                                      shortDesc="#{bindings.CodRichiesta1.hints.tooltip}" id="it4"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.CodRichiesta1.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.CodRichiesta1.format}"/>
+                                        </af:inputText>
+                                        <af:link id="l1" icon="../images/calendar.png" iconPosition="leading" 
+                                                 rendered="#{sessionScope.sposta_invito==true and sessionScope.SOAgenda==true &amp;&amp; bindings.Codesitoinvito.attributeValue == '?' }"
+                                                 action="#{MenuUtilBean.doAction('ag_preGiorn', AccMa_esitoAction, null)}"
+                                                 styleClass="img32">
+                                            <af:setPropertyListener from="#{Ag_daInvitoAction}"
+                                                                    to="#{pageFlowScope.agendaObject}" type="action"/>
+                                        </af:link>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:spacer width="10" height="20" id="s2"/>
+                                <af:panelHeader text="Esito invito" id="ph2" size="1">
+                                    <af:panelFormLayout id="pfl2" rows="3" maxColumns="2">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.Codesitoinvito1.inputValue}"
+                                                            label="#{bindings.Codesitoinvito1.label}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.Codesitoinvito1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Codesitoinvito1.hints.tooltip}"
+                                                            id="soc1" valuePassThru="true" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.Codesitoinvito1.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.Codesitoinvito1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputDate value="#{bindings.Dtesamerecente.inputValue}"
+                                                      label="#{bindings.Dtesamerecente.hints.label}"
+                                                      rendered="#{bindings.MetodoCalcolo == 'D'}"
+                                                      disabled="#{sessionScope.refPresente}"
+                                                      columns="#{bindings.Dtesamerecente.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtesamerecente.hints.tooltip}" id="id2"
+                                                      showRequired="#{bindings.DataObbligatoria=='1'}">
+                                            <f:validator binding="#{bindings.Dtesamerecente.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtesamerecente.format}"/>
+                                        </af:inputDate>
+                                        <af:inputDate value="#{bindings.Dtrichiamo.inputValue}"
+                                                      label="#{bindings.Dtrichiamo.hints.label}"
+                                                      required="#{bindings.Dtrichiamo.hints.mandatory}"
+                                                      columns="#{bindings.Dtrichiamo.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtrichiamo.hints.tooltip}" id="id3"
+                                                      disabled="true" partialTriggers="soc1">
+                                            <f:validator binding="#{bindings.Dtrichiamo.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtrichiamo.format}"/>
+                                        </af:inputDate>
+                                        <af:spacer width="10" height="10" id="s1"/>
+                                        <af:inputText value="#{bindings.Descrsugg.inputValue}"
+                                                      label="#{bindings.Descrsugg.hints.label}"
+                                                      required="#{bindings.Descrsugg.hints.mandatory}" columns="60"
+                                                      shortDesc="#{bindings.Descrsugg.hints.tooltip}" id="it7"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Descrsugg.validator}"/>
+                                        </af:inputText>
+                                        <af:selectBooleanCheckbox value="#{bindings.NonSpedireReferto.inputValue}"
+                                                                  label="#{bindings.NonSpedireReferto.hints.label}"
+                                                                  required="#{bindings.NonSpedireReferto.hints.mandatory}"
+                                                                  shortDesc="#{bindings.NonSpedireReferto.hints.tooltip}"
+                                                                  id="it8" text=""/>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:spacer width="10" height="20" id="s3"/>
+                                <af:panelHeader text="Privacy" id="ph3" size="1">
+                                    <af:panelFormLayout id="pfl3" rows="1" maxColumns="2">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.ConsensoB.inputValue}"
+                                                            label="#{bindings.ConsensoB.label}"
+                                                            rendered="#{bindings.Livello == '1'}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.ConsensoB.hints.mandatory}"
+                                                            shortDesc="#{bindings.ConsensoB.hints.tooltip}" id="soc2">
+                                            <f:selectItems value="#{bindings.ConsensoB.items}" id="si2"/>
+                                            <f:validator binding="#{bindings.ConsensoB.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.ConsensoC.inputValue}"
+                                                            label="#{bindings.ConsensoC.label}"
+                                                            rendered="#{bindings.Livello == '1'}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.ConsensoC.hints.mandatory}"
+                                                            shortDesc="#{bindings.ConsensoC.hints.tooltip}" id="soc3">
+                                            <f:selectItems value="#{bindings.ConsensoC.items}" id="si3"/>
+                                            <f:validator binding="#{bindings.ConsensoC.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.ConsensoB1.inputValue}"
+                                                            label="#{bindings.ConsensoB1.label}"
+                                                            rendered="#{bindings.Livello == '2'}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.ConsensoB1.hints.mandatory}"
+                                                            shortDesc="#{bindings.ConsensoB1.hints.tooltip}" id="soc4">
+                                            <f:selectItems value="#{bindings.ConsensoB1.items}" id="si4"/>
+                                            <f:validator binding="#{bindings.ConsensoB1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.ConsensoC1.inputValue}"
+                                                            label="#{bindings.ConsensoC1.label}"
+                                                            rendered="#{bindings.Livello == '2'}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.ConsensoC1.hints.mandatory}"
+                                                            shortDesc="#{bindings.ConsensoC1.hints.tooltip}" id="soc5">
+                                            <f:selectItems value="#{bindings.ConsensoC1.items}" id="si5"/>
+                                            <f:validator binding="#{bindings.ConsensoC1.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="funzionalita" value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="soggData" value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{AccMa_esitoAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.comune.lovComuneBundle']}"/>
+    <af:document title="Ricerca" id="d1" initialFocusId="itsearch"
+        inlineStyle="padding-bottom:40px; padding-left:40px; padding-right:40px; padding-top:40px; width:inherit;">
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:resource type="javascript">
+            function onClearFilter(){
+                var button = AdfPage.PAGE.findComponentByAbsoluteId('bcerca');
+                var inputText = AdfPage.PAGE.findComponentByAbsoluteId("itsearch");
+                inputText.setValue("");
+                
+                if(button!=null)
+                    AdfActionEvent.queue(button, button.getPartialSubmit());
+            }
+            
+            function onBdlClickSelect(){
+                var button = AdfPage.PAGE.findComponentByAbsoluteId('pc1:bselect');
+                var isOk = button != null &amp;&amp; button.getProperty("visible") == true &amp;&amp; button.getProperty("disabled") == false;
+                if(isOk)
+                    AdfActionEvent.queue(button, button.getPartialSubmit());
+                
+            }
+        </af:resource>
+        <af:messages id="m1"/>
+        <af:form id="f1" defaultCommand="bcerca">
+            <af:panelHeader text="#{viewcontrollerBundle.RICERCA}" id="ph1">
+                <f:facet name="toolbar">
+                    <af:panelGroupLayout id="pgl4" layout="horizontal" halign="start" inlineStyle="padding-top:5px">
+                        <af:button action="#{Cnf_SdoSpsAction.onLovFilter}" text="#{viewcontrollerBundle.CERCA}"
+                                   id="bcerca" clientComponent="true">
+                        </af:button>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:button text="#{viewcontrollerBundle.CANCELLA_FILTRI}" action="reset" id="breset">
+                            <af:setPropertyListener from="#{''}" to="#{requestScope.searchText}" type="action"/>
+                            <af:clientListener method="onClearFilter" type="action"/>
+                        </af:button>
+                        <af:spacer width="10" height="10" id="s2"/>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <af:inputText label="#{viewcontrollerBundle.CERCA}" id="itsearch" value="#{requestScope.searchText}"
+                              partialTriggers="breset" clientComponent="true" contentStyle="text-transform: uppercase;"
+                              columns="60" binding="#{Cnf_SdoSpsAction.codSdoSpsAss}">
+                      <af:clientListener type="keyUp" method="toUppercase"/>
+                </af:inputText>
+                <af:spacer width="10" height="10" id="s3"/>
+                <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                    <f:facet name="toolbar">
+                        <af:toolbar id="t2">
+                            <af:group id="g1">
+                                <af:button text="#{viewcontrollerBundle.SELEZIONA}" id="bselect"
+                                           action="#{Cnf_SdoSpsAction.onLovSelect}"
+                                           disabled="#{bindings.Cnf_SoCnfSdosps_SelCodView1.currentRowIndex == null}"
+                                           partialTriggers="t1 ::bcerca ::breset">
+                                </af:button>
+                            </af:group>
+                        </af:toolbar>
+                    </f:facet>
+                    <af:table value="#{bindings.Cnf_SoCnfSdosps_SelCodView1.collectionModel}" var="row"
+                              rows="#{bindings.Cnf_SoCnfSdosps_SelCodView1.rangeSize}"
+                              emptyText="#{bindings.Cnf_SoCnfSdosps_SelCodView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                              rowBandingInterval="0"
+                              selectedRowKeys="#{bindings.Cnf_SoCnfSdosps_SelCodView1.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.Cnf_SoCnfSdosps_SelCodView1.collectionModel.makeCurrent}"
+                              rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfSdosps_SelCodView1.rangeSize}"
+                              id="t1" scrollPolicy="page">
+                        <af:column headerText="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.Codsdosps.label}" id="c1">
+                            <af:outputText value="#{row.Codsdosps}"
+                                           shortDesc="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.Codsdosps.tooltip}"
+                                           id="ot1"/>
+                        </af:column>
+                        <af:column headerText="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.Descrizione.label}" id="c3"
+                                   width="500">
+                            <af:outputText value="#{row.Descrizione}"
+                                           shortDesc="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.Descrizione.tooltip}"
+                                           id="ot3"/>
+                        </af:column>
+                        <af:column headerText="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.TipoFlusso.label}" id="c2">
+                            <af:outputText value="#{row.TipoFlusso}"
+                                           shortDesc="#{bindings.Cnf_SoCnfSdosps_SelCodView1.hints.TipoFlusso.tooltip}"
+                                           id="ot2"/>
+                        </af:column>
+                    </af:table>
+                    <f:facet name="statusbar">
+                        <af:toolbar id="t3" styleClass="AFStretchWidth">
+                            <af:group id="g2">
+                                <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b4" action="annulla"></af:button>
+                            </af:group>
+                        </af:toolbar>
+                    </f:facet>                  
+                </af:panelCollection>
+            </af:panelHeader>
+        </af:form>
+    </af:document>
+</f:view>

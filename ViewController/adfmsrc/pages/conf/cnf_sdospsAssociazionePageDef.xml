@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_sdospsAssociazionePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfSdospsEsclView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsEsclView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSdospsMotEsclView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsMotEsclView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSdosps_SelCodView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdosps_SelCodView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" StaticList="false" Uses="LOV_Codsdosps" id="Codsdosps"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Ulss">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Idcnfescl">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="DataInizioValidita">
+      <AttrNames>
+        <Item Value="DataInizioValidita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="DataFineValidita">
+      <AttrNames>
+        <Item Value="DataFineValidita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="TipoFlusso" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="TipoFlusso"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="SDO"/>
+        <Item Value="SPS"/>
+      </ValueList>
+    </list>
+    <listOfValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" StaticList="false" Uses="LOV_Codsdosps"
+                  id="Codsdosps1"/>
+    <list IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Idcnfescl1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfSdospsMotEsclView1Iterator">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfescl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Idcnfescl"/>
+        <Item Value="Tpescl"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSdospsMotEsclView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfSdospsMotEsclView1Iterator" id="Cnf_SoCnfSdospsMotEsclView1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+      </AttrNames>
+    </list>
+    <attributeValues IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="Codsdosps2">
+      <AttrNames>
+        <Item Value="Codsdosps"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfSdosps_SelCodView1Iterator" id="Codsdosps3">
+      <AttrNames>
+        <Item Value="Codsdosps"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

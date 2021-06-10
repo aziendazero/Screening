@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Round_pianificaInvitiCountView"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  SelectList="S.COGNOME, 
+       S.NOME, 
+       S.DATA_NASCITA, 
+       S.SESSO, 
+       S.CODTS, 
+       S.ULSS, 
+       S.CF, 
+       I.IDINVITO, 
+       I.IDTPINVITO, 
+       I.DTAPP, 
+       I.IDCENTROPRELIEVO, 
+       (I.DTAPP + P.GG_PERIODISMO) AS Richiamo, 
+       SC.CODCLASSEPOP, 
+       SC.CODTS AS CODTS1, 
+       SC.ULSS AS ULSS1, 
+       SC.TPSCR"
+  FromList="SO_SOGGETTO S, SO_SOGG_SCR SC, SO_INVITO I, SO_CNF_ANAG_SCR A, SO_CNF_PERIODISMO P"
+  Where="(S.CODTS = SC.CODTS) AND (S.ULSS = SC.ULSS)"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  ComponentClass="model.round.Round_pianificaInvitiCountViewImpl"
+  PageIterMode="Partial"
+  OrderBy="(I.DTAPP + P.GG_PERIODISMO) NULLS FIRST,S.COGNOME,S.NOME"
+  ComponentInterface="model.round.common.Round_pianificaInvitiCountView"
+  ClientProxyName="model.round.client.Round_pianificaInvitiCountViewClient">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="Round_pianificaInvitiCountView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="S"
+    Entity="model.round.Round_SoSoggetto"/>
+  <EntityUsage
+    Name="SC"
+    Entity="model.round.Round_SoSoggScr"
+    Association="model.FkSoSoggScrSoggAssoc"
+    AssociationEnd="model.FkSoSoggScrSoggAssoc.Round_SoSoggScr"
+    SourceUsage="model.round.Round_pianificaInvitiCountView.S"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="model.round.Round_SoSoggScr.Codts"/>
+        <Item Value="model.round.Round_SoSoggScr.Ulss"/>
+      </AttrArray>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="model.round.Round_SoSoggetto.Codts"/>
+        <Item Value="model.round.Round_SoSoggetto.Ulss"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="I"
+    Entity="model.round.Round_SoInvito"
+    ReadOnly="true"
+    DeleteParticipant="false">
+    <DesignTime>
+      <Attr Name="_customjoin" Value="true"/>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="A"
+    Entity="model.round.Round_SoCnfAnagScr"
+    ReadOnly="true"
+    DeleteParticipant="false">
+    <DesignTime>
+      <Attr Name="_customjoin" Value="true"/>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="P"
+    Entity="model.conf.Cnf_SoCnfPeriodicitaInviti"
+    ReadOnly="true"
+    DeleteParticipant="false">
+    <DesignTime>
+      <Attr Name="_customjoin" Value="true"/>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Cognome"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Cognome"
+    EntityUsage="S"
+    AliasName="COGNOME"/>
+  <ViewAttribute
+    Name="Nome"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Nome"
+    EntityUsage="S"
+    AliasName="NOME"/>
+  <ViewAttribute
+    Name="DataNascita"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DataNascita"
+    EntityUsage="S"
+    AliasName="DATA_NASCITA">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="DataNascita_LABEL"/>
+        <FMT_FORMAT
+          ResId="DataNascita_FMT_FORMAT"/>
+        <FMT_FORMATTER
+          ResId="DataNascita_FMT_FORMATTER"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Sesso"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Sesso"
+    EntityUsage="S"
+    AliasName="SESSO"/>
+  <ViewAttribute
+    Name="Codts"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Codts"
+    EntityUsage="S"
+    AliasName="CODTS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Codts_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Ulss"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="S"
+    AliasName="ULSS"/>
+  <ViewAttribute
+    Name="Cf"
+    PrecisionRule="true"
+    EntityAttrName="Cf"
+    EntityUsage="S"
+    AliasName="CF"/>
+  <ViewAttribute
+    Name="Idinvito"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Idinvito"
+    EntityUsage="I"
+    AliasName="IDINVITO"/>
+  <ViewAttribute
+    Name="Idtpinvito"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Idtpinvito"
+    EntityUsage="I"
+    AliasName="IDTPINVITO"/>
+  <ViewAttribute
+    Name="Dtapp"
+    PrecisionRule="true"
+    EntityAttrName="Dtapp"
+    EntityUsage="I"
+    AliasName="DTAPP">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Dtapp_LABEL"/>
+        <FMT_FORMAT
+          ResId="Dtapp_FMT_FORMAT"/>
+        <FMT_FORMATTER
+          ResId="Dtapp_FMT_FORMATTER"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Idcentroprelievo"
+    PrecisionRule="true"
+    EntityAttrName="Idcentroprelievo"
+    EntityUsage="I"
+    AliasName="IDCENTROPRELIEVO"/>
+  <ViewAttribute
+    Name="Richiamo"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    SQLType="DATE"
+    Expression="I.DTAPP + P.GG_PERIODISMO"
+    IsQueriable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Richiamo_LABEL"/>
+        <FMT_FORMAT
+          ResId="Richiamo_FMT_FORMAT"/>
+        <FMT_FORMATTER
+          ResId="Richiamo_FMT_FORMATTER"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Codclassepop"
+    PrecisionRule="true"
+    EntityAttrName="Codclassepop"
+    EntityUsage="SC"
+    AliasName="CODCLASSEPOP"/>
+  <ViewAttribute
+    Name="Codts1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Codts"
+    EntityUsage="SC"
+    AliasName="CODTS1"/>
+  <ViewAttribute
+    Name="Ulss1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="SC"
+    AliasName="ULSS1"/>
+  <ViewAttribute
+    Name="Tpscr"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="SC"
+    AliasName="TPSCR"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Codts"/>
+    <Item Value="Ulss"/>
+    <Item Value="Idinvito"/>
+  </AttrArray>
+  <ClientInterface
+    Name="__clientInterface">
+    <Method
+      Name="getInClause"
+      MethodName="getInClause">
+      <Return
+        Name="_return_type_"
+        Type="java.lang.String"/>
+    </Method>
+  </ClientInterface>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.round.common.Round_pianificaInvitiCountViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

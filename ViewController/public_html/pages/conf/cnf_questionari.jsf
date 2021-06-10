@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_questionari.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempQuestionari.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelHeader text="Questionari" id="ph1" size="2">
+                        <f:facet name="context"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"/>
+                        <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                            <f:facet name="menus"/>
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                    <af:group id="g1">
+                                        <af:button text="Modifica" id="b1" action="creatEditQuestionario">
+                                            <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Cancella" id="b2">
+                                            <af:showPopupBehavior popupId="p1"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                  partialTriggers="t1">
+                                            <af:dialog id="d2" title="Cancella configurazione"
+                                                       cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                       affirmativeTextAndAccessKey="Cancella"
+                                                       dialogListener="#{Cnf_questionarioBean.deleteQuestionario}">
+                                                <f:facet name="buttonBar">
+                                                    <h:outputText value="Cancellare definitivamente il seguente questionario?" id="ot10"/>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                    </af:group>
+                                    <af:button text="Nuovo" id="b3" action="creatEditQuestionario">
+                                        <af:setPropertyListener from="create" to="#{requestScope.action}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <f:facet name="statusbar"/>
+                            <af:table value="#{bindings.Cnf_SoCnfQuestionarioView1.collectionModel}" var="row"
+                                      rows="#{bindings.Cnf_SoCnfQuestionarioView1.rangeSize}"
+                                      emptyText="#{bindings.Cnf_SoCnfQuestionarioView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Cnf_SoCnfQuestionarioView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Cnf_SoCnfQuestionarioView1.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfQuestionarioView1.rangeSize}"
+                                      id="t1">
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestionarioView1.hints.DescrBreve.label}"
+                                           id="c1" width="150">
+                                    <af:outputText value="#{row.DescrBreve}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestionarioView1.hints.DescrBreve.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Descrizione.label}"
+                                           id="c2" width="250">
+                                    <af:outputText value="#{row.Descrizione}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Descrizione.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Note.label}" id="c3"
+                                           width="150">
+                                    <af:outputText value="#{row.Note}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Note.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestionarioView1.hints.DtFineVal.label}"
+                                           id="c4">
+                                    <af:outputText value="#{row.DtFineVal}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestionarioView1.hints.DtFineVal.tooltip}"
+                                                   id="ot4">
+                                        <af:convertDateTime pattern="#{bindings.Cnf_SoCnfQuestionarioView1.hints.DtFineVal.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Algoritmo.label}"
+                                           id="c5">
+                                    <af:outputText value="#{row.Algoritmo}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestionarioView1.hints.Algoritmo.tooltip}"
+                                                   id="ot5"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelHeader>
+                    <af:panelHeader text="Domande associate" id="ph2" size="2">
+                        <f:facet name="context"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"/>
+                        <af:panelCollection id="pc2" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                            <f:facet name="menus"/>
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t4" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                    <af:group id="g2">
+                                        <af:button text="Modifica" id="b4" action="creatEditQuestionario"
+                                                   actionListener="#{Cnf_questionarioBean.editDomandaListener}">
+                                            <af:setPropertyListener from="editDomanda" to="#{requestScope.action}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Cancella" id="b5">
+                                            <af:showPopupBehavior popupId="p2"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
+                                                  partialTriggers="t2">
+                                            <af:dialog id="d3" title="Cancella configurazione"
+                                                       cancelTextAndAccessKey="Annulla" partialTriggers="t2"
+                                                       affirmativeTextAndAccessKey="Cancella"
+                                                       dialogListener="#{Cnf_questionarioBean.deleteQuestDom}">
+                                                <f:facet name="buttonBar">
+                                                    <h:outputText value="Cancellare definitivamente la seguente domanda associata al questionario?" id="ot12"/>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                    </af:group>
+                                    <af:button text="Nuovo" id="b6" action="creatEditQuestionario"
+                                               actionListener="#{Cnf_questionarioBean.createDomListener}">
+                                        <af:setPropertyListener from="createDomanda" to="#{requestScope.action}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <f:facet name="statusbar"/>
+                            <af:table value="#{bindings.Cnf_SoCnfQuestDomandeView1.collectionModel}" var="row"
+                                      rows="#{bindings.Cnf_SoCnfQuestDomandeView1.rangeSize}"
+                                      emptyText="#{bindings.Cnf_SoCnfQuestDomandeView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Cnf_SoCnfQuestDomandeView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Cnf_SoCnfQuestDomandeView1.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfQuestDomandeView1.rangeSize}"
+                                      id="t2">
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Domanda.label}"
+                                           id="c6" width="300">
+                                    <af:outputText value="#{row.Domanda}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Domanda.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Livello.label}"
+                                           id="c7">
+                                    <af:outputText value="#{row.Livello}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Livello.tooltip}"
+                                                   id="ot7">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Livello.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Sezione.label}"
+                                           id="c8">
+                                    <af:outputText value="#{row.Sezione}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Sezione.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Ordine.label}"
+                                           id="c9">
+                                    <af:outputText value="#{row.Ordine}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Ordine.tooltip}"
+                                                   id="ot9">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Ordine.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.Obbligatorio.label}"
+                                           id="c10">
+                                    <af:selectBooleanCheckbox id="sbc1" readOnly="true" selected="#{row.Obbligatorio}"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.CodiceDom.label}"
+                                           id="c11">
+                                    <af:outputText value="#{row.CodiceDom}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfQuestDomandeView1.hints.CodiceDom.tooltip}"
+                                                   id="ot11"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Questionari"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

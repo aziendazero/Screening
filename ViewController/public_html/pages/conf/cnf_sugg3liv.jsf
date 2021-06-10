@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_sugg3liv.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_sugg3livAction.suggForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSugg.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelBox text="Regole di modifica" id="pb1">
+                        <f:facet name="toolbar"/>
+                        <af:panelList id="pl1">
+                            <af:outputText value="Ogni azienda sanitaria ha una copia locale dello standard regionale, che è meglio NON modificare" id="ot11"/>
+                            <af:outputText value="E' possibile aggiungere nuovi suggerimenti che ricadano all'interno dei codici regionali" id="ot12"/>
+                        </af:panelList>
+                    </af:panelBox>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b3"  action="creatEditSugg3liv" actionListener="#{Cnf_sugg3livAction.onDett}"> 
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente suggerimento di 3° livello?" id="ot14"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b1" action="creatEditSugg3liv">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedSugg3}" label="Azienda sanitaria"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                                    valueChangeListener="#{Cnf_sugg3livAction.onChange}" autoSubmit="true"
+                                                    binding="#{Cnf_sugg3livAction.selectedUlss}">
+                                    <af:selectItem label="Tutte" id="si2"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si1"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfSugg3livView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfSugg3livView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfSugg3livView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfSugg3livView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfSugg3livView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfSugg3livView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_sugg3livAction.tabSugg3}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Idsugg3l.label}" id="c1">
+                                <af:outputText value="#{row.Idsugg3l}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Idsugg3l.tooltip}"
+                                               id="ot1">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfSugg3livView1.hints.Idsugg3l.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Esitosugg.label}" id="c2">
+                                <af:outputText value="#{row.Esitosugg}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Esitosugg.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Descrizione.label}" id="c3">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Descrizione.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ggrichiamo.label}" id="c4">
+                                <af:outputText value="#{row.Ggrichiamo}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ggrichiamo.tooltip}"
+                                               id="ot4">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ggrichiamo.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Descrbreve.label}" id="c5">
+                                <af:outputText value="#{row.Descrbreve}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Descrbreve.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Invia2liv.label}" id="c6">
+                                <af:selectBooleanCheckbox id="ot6" readOnly="true"
+                                                          selected="#{row.Invia2liv}"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Codregionale.label}" id="c7">
+                                <af:outputText value="#{row.Codregionale}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Codregionale.tooltip}"
+                                               id="ot7">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfSugg3livView1.hints.Codregionale.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ordine.label}" id="c8">
+                                <af:outputText value="#{row.Ordine}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ordine.tooltip}"
+                                               id="ot8">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ordine.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ulss.label}" id="c9"
+                            rendered="#{sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Ulss.tooltip}"
+                                               id="ot9"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSugg3livView1.hints.Dtfinevalidita.label}"
+                                       id="c10">
+                                <af:outputText value="#{row.Dtfinevalidita}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSugg3livView1.hints.Dtfinevalidita.tooltip}"
+                                               id="ot10">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfSugg3livView1.hints.Dtfinevalidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Suggerimenti di terzo livello"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

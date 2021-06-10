@@ -1,0 +1,979 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.impexp.impexp_refertiBundle']}"/>
+    <af:document title="impexp_referti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:message id="m2" messageType="warning" rendered="#{sessionScope.impexp_modalita != 1}"
+                                message="Impossibile utilizzare la funzionalità. Modalità non ancora implementata"/>
+                    <af:panelStretchLayout id="psl1" rendered="#{sessionScope.impexp_modalita == 1}">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Chiudi operazione" id="b3"
+                                               rendered="#{sessionScope.renderChiudiOp &amp;&amp; sessionScope.impexp_lock != true}" partialSubmit="false"
+                                               partialTriggers="pc1:t2:b41 pc2:t56:b4"
+                                               action="#{Impexp_refertiAction.chiudiOperazione('chiudi')}">
+                                       <af:clientListener method="askBeforeGoingOn('L\'operazione potrebbe essere stata aperta da un altro utente. Chiudere ugualmente?')"
+                                                               type="action"/> 
+                                    </af:button>
+                                    <af:button text="Chiudi operazione" id="b33"
+                                               rendered="#{sessionScope.renderChiudiOp &amp;&amp; sessionScope.impexp_lock == true}" partialSubmit="false"
+                                               partialTriggers="pc1:t2:b41 pc2:t56:b4"
+                                               action="#{Impexp_refertiAction.chiudiOperazione('chiudi')}">
+                                    </af:button>                                       
+                                     <af:button text="Ultimo log" id="b84"
+                                               disabled="#{bindings.LogFile.inputValue==null}">
+                                        <af:fileDownloadActionListener filename="LogImportReferti_#{sessionScope.scr}.pdf"
+                                                method="#{Impexp_refertiAction.downloadLogListener}"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelGridLayout id="pgl1" partialTriggers="soc1" styleClass="AFStretchWidth">
+                                    <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc1"
+                                                     halign="center" width="auto">
+                                            <af:panelFormLayout id="pfl1" styleClass="AFStretchWidth">
+                                                <f:facet name="footer"/>
+                                                <af:panelLabelAndMessage label="Data ultimo trasferimento" id="plam1">
+                                                    <af:outputText value="#{bindings.Dttransfer.inputValue}"
+                                                                   shortDesc="#{bindings.Dttransfer.hints.tooltip}"
+                                                                   id="ot1">
+                                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                    </af:outputText>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="Data ultimo import" id="plam2">
+                                                    <af:outputText value="#{bindings.Dtimport.inputValue}"
+                                                                   shortDesc="#{bindings.Dtimport.hints.tooltip}"
+                                                                   id="ot2">
+                                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                    </af:outputText>
+                                                </af:panelLabelAndMessage>
+                                                <af:spacer width="10" height="20" id="s1"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr31"
+                                                rendered="#{sessionScope.impexp_referti_mode!='dati'}">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc41"
+                                                     halign="center" width="auto">
+                                            <af:panelFormLayout id="pfl2">
+                                                <f:facet name="footer"/>
+                                                <af:selectOneChoice value="#{bindings.tpdip.inputValue}"
+                                                                    label="Import da"
+                                                                    required="#{bindings.tpdip.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    shortDesc="#{bindings.tpdip.hints.tooltip}"
+                                                                    id="soc1"
+                                                                    disabled="#{bindings.Impexp_SoCnfImpexpTpdipView1Iterator.estimatedRowCount gt 1 ? false : true}"
+                                                                    valueChangeListener="#{Impexp_refertiAction.selectTpdip}"
+                                                                    valuePassThru="true" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.tpdip.items}" id="si1"/>
+                                                    <f:validator binding="#{bindings.tpdip.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.idcentro.inputValue}"
+                                                                    label="Centro di refertazione"
+                                                                    shortDesc="#{bindings.idcentro.hints.tooltip}"
+                                                                    styleClass="choiceInTable" id="soc2"
+                                                                    autoSubmit="true" valuePassThru="true"
+                                                                    valueChangeListener="#{Impexp_refertiAction.nuovoCentro}"
+                                                                    rendered="#{bindings.Impexp_SoCnfCentriImpexpView1Iterator.estimatedRowCount>0}">
+                                                    <f:selectItems value="#{bindings.idcentro.items}" id="si2"/>
+                                                </af:selectOneChoice>
+                                                <af:inputDate value="#{bindings.data.inputValue}" label="Data file"
+                                                              required="#{bindings.data.hints.mandatory}"
+                                                              columns="#{bindings.data.hints.displayWidth}"
+                                                              shortDesc="#{bindings.data.hints.tooltip}" id="id1">
+                                                    <f:validator binding="#{bindings.data.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.data.format}"/>
+                                                </af:inputDate>
+                                                <af:button text="Filtra" id="b1"
+                                                           actionListener="#{Impexp_refertiAction.filter}"/>
+                                                <af:spacer width="10" height="10" id="s2"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" id="gr2">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc2" halign="center">
+                                            <af:panelHeader text="File da importare" id="ph1"
+                                                            rendered="#{sessionScope.impexp_referti_mode!='dati'}">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:panelCollection id="pc1" featuresOff="detach freeze wrap">
+                                                    <f:facet name="menus"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t3" rendered="#{sessionScope.SOImportReferti}"/>
+                                                    </f:facet>
+                                                    <f:facet name="statusbar"/>
+                                                    <af:table value="#{bindings.ImpexpFile.collectionModel}" var="row"
+                                                              rows="#{bindings.ImpexpFile.rangeSize}"
+                                                              emptyText="#{bindings.ImpexpFile.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              binding="#{Impexp_refertiAction._table}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.ImpexpFile.rangeSize}" id="t2"
+                                                              columnStretching="multiple">
+                                                        <af:column headerText="" id="c1" width="40%">
+                                                            <af:outputText value="#{row.viewName}"
+                                                                           binding="#{Impexp_refertiAction.fileName}"
+                                                                           shortDesc="#{row.viewName}" id="ot3"
+                                                                           noWrap="false"/>
+                                                        </af:column>
+                                                        <af:column id="c1001" width="30%"
+                                                                   rendered="#{sessionScope.SOImportReferti}">
+                                                            <af:button text="Visualizza dati" id="b41"
+                                                                       partialSubmit="false"
+                                                                       actionListener="#{Impexp_refertiAction.copyToDB}">
+                                                                <af:setPropertyListener from="new" type="action"
+                                                                                        to="#{requestScope.type}"/>
+                                                            </af:button>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:panelHeader>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc3"
+                                                     halign="center">
+                                            <af:panelHeader text="File già visualizzati/importati" id="ph2"
+                                                            rendered="#{sessionScope.impexp_referti_mode!='dati'}">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:panelCollection id="pc2" featuresOff="detach freeze wrap">
+                                                    <f:facet name="menus"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t4" rendered="#{sessionScope.SOImportReferti}"/>
+                                                    </f:facet>
+                                                    <f:facet name="statusbar"/>
+                                                    <af:table value="#{bindings.ImpexpFile1.collectionModel}" var="row"
+                                                              rows="#{bindings.ImpexpFile1.rangeSize}"
+                                                              emptyText="#{bindings.ImpexpFile1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              fetchSize="#{bindings.ImpexpFile1.rangeSize}" id="t56"
+                                                              columnStretching="multiple"
+                                                              binding="#{Impexp_refertiAction._tableOld}"
+                                                              rowSelection="single">
+                                                        <af:column headerText="" id="c2" width="40%">
+                                                            <af:outputText value="#{row.viewName}"
+                                                                           shortDesc="#{row.viewName}" id="ot4"
+                                                                           noWrap="false"/>
+                                                        </af:column>
+                                                        <af:column headerText="" id="c3" width="30%">
+                                                            <af:outputText value="#{row.status}"
+                                                                           shortDesc="#{bindings.ImpexpFile1.hints.status.tooltip}"
+                                                                           id="ot5"/>
+                                                        </af:column>
+                                                        <af:column headerText="" rendered="false" id="c101" width="0%">
+                                                            <af:outputText value="#{row.name}"
+                                                                           binding="#{Impexp_refertiAction.filenameOld}"
+                                                                           shortDesc="#{bindings.ImpexpFile1.hints.status.tooltip}"
+                                                                           id="ot102"/>
+                                                        </af:column>
+                                                        <af:column id="c100" width="30%">
+                                                            <af:button text="Visualizza dati" id="b4"
+                                                                       partialSubmit="false"
+                                                                       actionListener="#{Impexp_refertiAction.copyToDB}">
+                                                                <af:setPropertyListener from="old" type="action"
+                                                                                        to="#{requestScope.type}"/>
+                                                            </af:button>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:panelHeader>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr3"
+                                                rendered="#{sessionScope.impexp_referti_mode=='dati'}">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc4"
+                                                     halign="center" width="auto">
+                                            <af:panelHeader text="Referti in #{sessionScope.impexp_file_name}" id="ph3"
+                                                            styleClass="AFStretchWidth">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:switcher id="s3" facetName="#{sessionScope.scr}">
+                                                    <f:facet name="CI">
+                                                        <af:switcher id="s4"
+                                                                     facetName="#{bindings.tpdip.attributeValue}">
+                                                            <f:facet name="AP">
+                                                                <af:panelCollection id="pc4" styleClass="AFStretchWidth"
+                                                                                    featuresOff="detach freeze wrap">
+                                                                    <f:facet name="menus"/>
+                                                                    <f:facet name="toolbar">
+                                                                        <af:toolbar id="t7">
+                                                                            <af:button text="Importa referti" id="b6"
+                                                                                       actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                            <af:button text="Stampa elenco" id="b7"
+                                                                                       useWindow="true" immediate="true"
+                                                                                       windowEmbedStyle="inlineDocument"
+                                                                                       windowModalityType="applicationModal"
+                                                                                       windowHeight="300"
+                                                                                       windowWidth="600"
+                                                                                       action="dialog:printElencoSoggetti"/>
+                                                                        </af:toolbar>
+                                                                    </f:facet>
+                                                                    <f:facet name="statusbar"/>
+                                                                    <af:table value="#{bindings.Impexp_SoImportRefertiView1.collectionModel}"
+                                                                              var="row"
+                                                                              rows="#{bindings.Impexp_SoImportRefertiView1.rangeSize}"
+                                                                              emptyText="#{bindings.Impexp_SoImportRefertiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                              rowBandingInterval="0"
+                                                                              fetchSize="#{bindings.Impexp_SoImportRefertiView1.rangeSize}"
+                                                                              id="t8">
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.TipoAcc.label}"
+                                                                                   id="c17">
+                                                                            <af:outputText value="#{row.TipoAcc}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.TipoAcc.tooltip}"
+                                                                                           id="ot19"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.CognomeNome.label}"
+                                                                                   id="c18">
+                                                                            <af:outputText value="#{row.CognomeNome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.CognomeNome.tooltip}"
+                                                                                           id="ot20"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Datanas.label}"
+                                                                                   id="c19">
+                                                                            <af:outputText value="#{row.Datanas}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Datanas.tooltip}"
+                                                                                           id="ot21"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Codts.label}"
+                                                                                   id="c20">
+                                                                            <af:outputText value="#{row.Codts}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Codts.tooltip}"
+                                                                                           id="ot22"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.DataReferto.label}"
+                                                                                   id="c21">
+                                                                            <af:outputText value="#{row.DataReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.DataReferto.tooltip}"
+                                                                                           id="ot23"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.AnnoAcc.label}"
+                                                                                   id="c22">
+                                                                            <af:outputText value="#{row.AnnoAcc}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.AnnoAcc.tooltip}"
+                                                                                           id="ot24"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Snotop.label}"
+                                                                                   id="c23">
+                                                                            <af:outputText value="#{row.Snotop}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Snotop.tooltip}"
+                                                                                           id="ot25"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Snomo2.label}"
+                                                                                   id="c24">
+                                                                            <af:outputText value="#{row.Snomo2}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Snomo2.tooltip}"
+                                                                                           id="ot26"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Lettore.label}"
+                                                                                   id="c25">
+                                                                            <af:outputText value="#{row.Lettore}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Lettore.tooltip}"
+                                                                                           id="ot27"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiView1.hints.Firma.label}"
+                                                                                   id="c26">
+                                                                            <af:outputText value="#{row.Firma}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiView1.hints.Firma.tooltip}"
+                                                                                           id="ot28"/>
+                                                                        </af:column>
+                                                                    </af:table>
+                                                                </af:panelCollection>
+                                                            </f:facet>
+                                                            <f:facet name="LA">
+                                                                <af:panelCollection id="pc3" styleClass="AFStretchWidth"
+                                                                                    featuresOff="detach freeze wrap">
+                                                                    <f:facet name="menus"/>
+                                                                    <f:facet name="toolbar">
+                                                                        <af:toolbar id="t9">
+                                                                            <af:button text="Importa referti" id="b8"
+                                                                                       actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                            <af:button text="Stampa elenco" id="b9"
+                                                                                       useWindow="true" immediate="true"
+                                                                                       windowEmbedStyle="inlineDocument"
+                                                                                       windowModalityType="applicationModal"
+                                                                                       windowHeight="300"
+                                                                                       windowWidth="600"
+                                                                                       action="dialog:printElencoSoggetti"/>
+                                                                        </af:toolbar>
+                                                                    </f:facet>
+                                                                    <f:facet name="statusbar"/>
+                                                                    <af:table value="#{bindings.Impexp_SoImportRefertiHPVView1.collectionModel}"
+                                                                              var="row"
+                                                                              rows="#{bindings.Impexp_SoImportRefertiHPVView1.rangeSize}"
+                                                                              emptyText="#{bindings.Impexp_SoImportRefertiHPVView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                              rowBandingInterval="0"
+                                                                              fetchSize="#{bindings.Impexp_SoImportRefertiHPVView1.rangeSize}"
+                                                                              id="t6">
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Tpreferto.label}"
+                                                                                   id="c4">
+                                                                            <af:outputText value="#{row.Tpreferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Tpreferto.tooltip}"
+                                                                                           id="ot6"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Livello.label}"
+                                                                                   id="c5">
+                                                                            <af:outputText value="#{row.Livello}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Livello.tooltip}"
+                                                                                           id="ot7"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Cognome.label}"
+                                                                                   id="c6">
+                                                                            <af:outputText value="#{row.Cognome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Cognome.tooltip}"
+                                                                                           id="ot8"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Nome.label}"
+                                                                                   id="c7">
+                                                                            <af:outputText value="#{row.Nome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Nome.tooltip}"
+                                                                                           id="ot9"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.DataNascita.label}"
+                                                                                   id="c8">
+                                                                            <af:outputText value="#{row.DataNascita}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.DataNascita.tooltip}"
+                                                                                           id="ot10"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Codts.label}"
+                                                                                   id="c9">
+                                                                            <af:outputText value="#{row.Codts}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Codts.tooltip}"
+                                                                                           id="ot11"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.DataReferto.label}"
+                                                                                   id="c10">
+                                                                            <af:outputText value="#{row.DataReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.DataReferto.tooltip}"
+                                                                                           id="ot12"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Esito.label}"
+                                                                                   id="c11">
+                                                                            <af:outputText value="#{row.Esito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Esito.tooltip}"
+                                                                                           id="ot13"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Sugg.label}"
+                                                                                   id="c12">
+                                                                            <af:outputText value="#{row.Sugg}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Sugg.tooltip}"
+                                                                                           id="ot14"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.QuantitaAbs.label}"
+                                                                                   id="c13">
+                                                                            <af:outputText value="#{row.QuantitaAbs}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.QuantitaAbs.tooltip}"
+                                                                                           id="ot15"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.QuantitaRel.label}"
+                                                                                   id="c14">
+                                                                            <af:outputText value="#{row.QuantitaRel}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.QuantitaRel.tooltip}"
+                                                                                           id="ot16"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Laboratorio.label}"
+                                                                                   id="c15">
+                                                                            <af:outputText value="#{row.Laboratorio}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.Laboratorio.tooltip}"
+                                                                                           id="ot17"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiHPVView1.hints.TipiVirus.label}"
+                                                                                   id="c16">
+                                                                            <af:outputText value="#{row.TipiVirus}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiHPVView1.hints.TipiVirus.tooltip}"
+                                                                                           id="ot18"/>
+                                                                        </af:column>
+                                                                    </af:table>
+                                                                </af:panelCollection>
+                                                            </f:facet>
+                                                        </af:switcher>
+                                                    </f:facet>
+                                                    <f:facet name="CO">
+                                                        <af:panelCollection id="pc5" styleClass="AFStretchWidth"
+                                                                            featuresOff="detach freeze wrap">
+                                                            <f:facet name="menus"/>
+                                                            <f:facet name="toolbar">
+                                                                <af:toolbar id="t11">
+                                                                    <af:button text="Importa referti" id="b10"
+                                                                               actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                    <af:button text="Stampa elenco" id="b11"
+                                                                               useWindow="true" immediate="true"
+                                                                               windowEmbedStyle="inlineDocument"
+                                                                               windowModalityType="applicationModal"
+                                                                               windowHeight="300" windowWidth="600"
+                                                                               action="dialog:printElencoSoggetti"/>
+                                                                </af:toolbar>
+                                                            </f:facet>
+                                                            <f:facet name="statusbar"/>
+                                                            <af:table value="#{bindings.Impexp_SoImportRefertiCOView1.collectionModel}"
+                                                                      var="row"
+                                                                      rows="#{bindings.Impexp_SoImportRefertiCOView1.rangeSize}"
+                                                                      emptyText="#{bindings.Impexp_SoImportRefertiCOView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                      rowBandingInterval="0"
+                                                                      fetchSize="#{bindings.Impexp_SoImportRefertiCOView1.rangeSize}"
+                                                                      id="t10">
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Idrichiesta.label}"
+                                                                           id="c27">
+                                                                    <af:outputText value="#{row.Idrichiesta}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Idrichiesta.tooltip}"
+                                                                                   id="ot29"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Idcampione.label}"
+                                                                           id="c28">
+                                                                    <af:outputText value="#{row.Idcampione}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Idcampione.tooltip}"
+                                                                                   id="ot30"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Dataacc.label}"
+                                                                           id="c29">
+                                                                    <af:outputText value="#{row.Dataacc}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Dataacc.tooltip}"
+                                                                                   id="ot31"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codprov.label}"
+                                                                           id="c30">
+                                                                    <af:outputText value="#{row.Codprov}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codprov.tooltip}"
+                                                                                   id="ot32"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codservdia.label}"
+                                                                           id="c31">
+                                                                    <af:outputText value="#{row.Codservdia}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codservdia.tooltip}"
+                                                                                   id="ot33"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Cognome.label}"
+                                                                           id="c32">
+                                                                    <af:outputText value="#{row.Cognome}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Cognome.tooltip}"
+                                                                                   id="ot34"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Nome.label}"
+                                                                           id="c33">
+                                                                    <af:outputText value="#{row.Nome}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Nome.tooltip}"
+                                                                                   id="ot35"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Datanasc.label}"
+                                                                           id="c34">
+                                                                    <af:outputText value="#{row.Datanasc}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Datanasc.tooltip}"
+                                                                                   id="ot36"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Sesso.label}"
+                                                                           id="c35">
+                                                                    <af:outputText value="#{row.Sesso}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Sesso.tooltip}"
+                                                                                   id="ot37"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codts.label}"
+                                                                           id="c36">
+                                                                    <af:outputText value="#{row.Codts}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codts.tooltip}"
+                                                                                   id="ot38"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codanag.label}"
+                                                                           id="c37">
+                                                                    <af:outputText value="#{row.Codanag}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codanag.tooltip}"
+                                                                                   id="ot39"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codfisc.label}"
+                                                                           id="c38">
+                                                                    <af:outputText value="#{row.Codfisc}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codfisc.tooltip}"
+                                                                                   id="ot40"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codcomnasc.label}"
+                                                                           id="c39">
+                                                                    <af:outputText value="#{row.Codcomnasc}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Codcomnasc.tooltip}"
+                                                                                   id="ot41"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Esito_qualitativo.label}"
+                                                                           id="c40">
+                                                                    <af:outputText value="#{row.Esito_qualitativo}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Esito_qualitativo.tooltip}"
+                                                                                   id="ot42"/>
+                                                                </af:column>
+                                                                <af:column headerText="#{bindings.Impexp_SoImportRefertiCOView1.hints.Quantita.label}"
+                                                                           id="c41">
+                                                                    <af:outputText value="#{row.Quantita}"
+                                                                                   shortDesc="#{bindings.Impexp_SoImportRefertiCOView1.hints.Quantita.tooltip}"
+                                                                                   id="ot43"/>
+                                                                </af:column>
+                                                            </af:table>
+                                                        </af:panelCollection>
+                                                    </f:facet>
+                                                    <f:facet name="MA">
+                                                        <af:switcher id="s5"
+                                                                     facetName="#{bindings.tpdip.attributeValue}">
+                                                            <f:facet name="RA">
+                                                                <af:panelCollection id="pc6" styleClass="AFStretchWidth"
+                                                                                    featuresOff="detach freeze wrap">
+                                                                    <f:facet name="menus"/>
+                                                                    <f:facet name="toolbar">
+                                                                        <af:toolbar id="t13">
+                                                                            <af:button text="Importa referti" id="b12"
+                                                                                       actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                            <af:button text="Stampa elenco" id="b13"
+                                                                                       useWindow="true" immediate="true"
+                                                                                       windowEmbedStyle="inlineDocument"
+                                                                                       windowModalityType="applicationModal"
+                                                                                       windowHeight="300"
+                                                                                       windowWidth="600"
+                                                                                       action="dialog:printElencoSoggetti"/>
+                                                                        </af:toolbar>
+                                                                    </f:facet>
+                                                                    <f:facet name="statusbar"/>
+                                                                    <af:table value="#{bindings.Impexp_SoImportRefertiMAView1.collectionModel}"
+                                                                              var="row"
+                                                                              rows="#{bindings.Impexp_SoImportRefertiMAView1.rangeSize}"
+                                                                              emptyText="#{bindings.Impexp_SoImportRefertiMAView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                              rowBandingInterval="0"
+                                                                              fetchSize="#{bindings.Impexp_SoImportRefertiMAView1.rangeSize}"
+                                                                              id="t12">
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.TipoReferto.label}"
+                                                                                   id="c42">
+                                                                            <af:outputText value="#{row.TipoReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.TipoReferto.tooltip}"
+                                                                                           id="ot44"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.Livello.label}"
+                                                                                   id="c43">
+                                                                            <af:outputText value="#{row.Livello}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.Livello.tooltip}"
+                                                                                           id="ot45"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.Tessera.label}"
+                                                                                   id="c44">
+                                                                            <af:outputText value="#{row.Tessera}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.Tessera.tooltip}"
+                                                                                           id="ot46"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.Cognome.label}"
+                                                                                   id="c45">
+                                                                            <af:outputText value="#{row.Cognome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.Cognome.tooltip}"
+                                                                                           id="ot47"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.Nome.label}"
+                                                                                   id="c46">
+                                                                            <af:outputText value="#{row.Nome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.Nome.tooltip}"
+                                                                                           id="ot48"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.DataReferto.label}"
+                                                                                   id="c47">
+                                                                            <af:outputText value="#{row.DataReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.DataReferto.tooltip}"
+                                                                                           id="ot49"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.L1Esito.label}"
+                                                                                   id="c48">
+                                                                            <af:outputText value="#{row.L1Esito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.L1Esito.tooltip}"
+                                                                                           id="ot50"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.L2Esito.label}"
+                                                                                   id="c49">
+                                                                            <af:outputText value="#{row.L2Esito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.L2Esito.tooltip}"
+                                                                                           id="ot51"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.REsito.label}"
+                                                                                   id="c50">
+                                                                            <af:outputText value="#{row.REsito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.REsito.tooltip}"
+                                                                                           id="ot52"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.CEsito.label}"
+                                                                                   id="c51">
+                                                                            <af:outputText value="#{row.CEsito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.CEsito.tooltip}"
+                                                                                           id="ot53"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiMAView1.hints.AnamRilevata.label}"
+                                                                                   id="c52">
+                                                                            <af:outputText value="#{row.AnamRilevata}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiMAView1.hints.AnamRilevata.tooltip}"
+                                                                                           id="ot54"/>
+                                                                        </af:column>
+                                                                    </af:table>
+                                                                </af:panelCollection>
+                                                            </f:facet>
+                                                            <f:facet name="R2">
+                                                                <af:panelCollection id="pc7" styleClass="AFStretchWidth"
+                                                                                    featuresOff="detach freeze wrap">
+                                                                    <f:facet name="menus"/>
+                                                                    <f:facet name="toolbar">
+                                                                        <af:toolbar id="t15">
+                                                                            <af:button text="Importa referti" id="b14"
+                                                                                       actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                            <af:button text="Stampa elenco" id="b15"
+                                                                                       useWindow="true" immediate="true"
+                                                                                       windowEmbedStyle="inlineDocument"
+                                                                                       windowModalityType="applicationModal"
+                                                                                       windowHeight="300"
+                                                                                       windowWidth="600"
+                                                                                       action="dialog:printElencoSoggetti"/>
+                                                                        </af:toolbar>
+                                                                    </f:facet>
+                                                                    <f:facet name="statusbar"/>
+                                                                    <af:table value="#{bindings.Impexp_SoImportRefertiR2View1.collectionModel}"
+                                                                              var="row"
+                                                                              rows="#{bindings.Impexp_SoImportRefertiR2View1.rangeSize}"
+                                                                              emptyText="#{bindings.Impexp_SoImportRefertiR2View1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                              rowBandingInterval="0"
+                                                                              fetchSize="#{bindings.Impexp_SoImportRefertiR2View1.rangeSize}"
+                                                                              id="t14">
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Tessera.label}"
+                                                                                   id="c53">
+                                                                            <af:outputText value="#{row.Tessera}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Tessera.tooltip}"
+                                                                                           id="ot55"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Cognome.label}"
+                                                                                   id="c54">
+                                                                            <af:outputText value="#{row.Cognome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Cognome.tooltip}"
+                                                                                           id="ot56"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Nome.label}"
+                                                                                   id="c55">
+                                                                            <af:outputText value="#{row.Nome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Nome.tooltip}"
+                                                                                           id="ot57"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.DataNascita.label}"
+                                                                                   id="c56">
+                                                                            <af:outputText value="#{row.DataNascita}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.DataNascita.tooltip}"
+                                                                                           id="ot58"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Ulss.label}"
+                                                                                   id="c57">
+                                                                            <af:outputText value="#{row.Ulss}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Ulss.tooltip}"
+                                                                                           id="ot59"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Cf.label}"
+                                                                                   id="c58">
+                                                                            <af:outputText value="#{row.Cf}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Cf.tooltip}"
+                                                                                           id="ot60"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.IdInterno.label}"
+                                                                                   id="c59">
+                                                                            <af:outputText value="#{row.IdInterno}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.IdInterno.tooltip}"
+                                                                                           id="ot61"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.CodiceRichiesta.label}"
+                                                                                   id="c60">
+                                                                            <af:outputText value="#{row.CodiceRichiesta}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.CodiceRichiesta.tooltip}"
+                                                                                           id="ot62"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.TipoReferto.label}"
+                                                                                   id="c61">
+                                                                            <af:outputText value="#{row.TipoReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.TipoReferto.tooltip}"
+                                                                                           id="ot63"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.DataReferto.label}"
+                                                                                   id="c62">
+                                                                            <af:outputText value="#{row.DataReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.DataReferto.tooltip}"
+                                                                                           id="ot64"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Livello.label}"
+                                                                                   id="c63">
+                                                                            <af:outputText value="#{row.Livello}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Livello.tooltip}"
+                                                                                           id="ot65"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Mammografia.label}"
+                                                                                   id="c64">
+                                                                            <af:outputText value="#{row.Mammografia}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Mammografia.tooltip}"
+                                                                                           id="ot66"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.MammoData.label}"
+                                                                                   id="c65">
+                                                                            <af:outputText value="#{row.MammoData}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.MammoData.tooltip}"
+                                                                                           id="ot67"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.MammoMedico.label}"
+                                                                                   id="c66">
+                                                                            <af:outputText value="#{row.MammoMedico}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.MammoMedico.tooltip}"
+                                                                                           id="ot68"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.EsameStandard.label}"
+                                                                                   id="c67">
+                                                                            <af:outputText value="#{row.EsameStandard}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.EsameStandard.tooltip}"
+                                                                                           id="ot69"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Ecografia.label}"
+                                                                                   id="c68">
+                                                                            <af:outputText value="#{row.Ecografia}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Ecografia.tooltip}"
+                                                                                           id="ot70"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.EcoData.label}"
+                                                                                   id="c69">
+                                                                            <af:outputText value="#{row.EcoData}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.EcoData.tooltip}"
+                                                                                           id="ot71"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.EcoMedico.label}"
+                                                                                   id="c70">
+                                                                            <af:outputText value="#{row.EcoMedico}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.EcoMedico.tooltip}"
+                                                                                           id="ot72"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.EsameClinico.label}"
+                                                                                   id="c71">
+                                                                            <af:outputText value="#{row.EsameClinico}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.EsameClinico.tooltip}"
+                                                                                           id="ot73"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.CliData.label}"
+                                                                                   id="c72">
+                                                                            <af:outputText value="#{row.CliData}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.CliData.tooltip}"
+                                                                                           id="ot74"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.CliMedico.label}"
+                                                                                   id="c73">
+                                                                            <af:outputText value="#{row.CliMedico}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.CliMedico.tooltip}"
+                                                                                           id="ot75"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Consiglio.label}"
+                                                                                   id="c74">
+                                                                            <af:outputText value="#{row.Consiglio}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Consiglio.tooltip}"
+                                                                                           id="ot76"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiR2View1.hints.Note.label}"
+                                                                                   id="c75">
+                                                                            <af:outputText value="#{row.Note}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiR2View1.hints.Note.tooltip}"
+                                                                                           id="ot77"/>
+                                                                        </af:column>
+                                                                    </af:table>
+                                                                </af:panelCollection>
+                                                            </f:facet>
+                                                            <f:facet name="A2">
+                                                                <af:panelCollection id="pc8" styleClass="AFStretchWidth"
+                                                                                    featuresOff="detach freeze wrap">
+                                                                    <f:facet name="menus"/>
+                                                                    <f:facet name="toolbar">
+                                                                        <af:toolbar id="t17">
+                                                                            <af:button text="Importa referti" id="b16"
+                                                                                       actionListener="#{Impexp_refertiAction.importReferti}"/>
+                                                                            <af:button text="Stampa elenco" id="b17"
+                                                                                       useWindow="true" immediate="true"
+                                                                                       windowEmbedStyle="inlineDocument"
+                                                                                       windowModalityType="applicationModal"
+                                                                                       windowHeight="300"
+                                                                                       windowWidth="600"
+                                                                                       action="dialog:printElencoSoggetti"/>
+                                                                        </af:toolbar>
+                                                                    </f:facet>
+                                                                    <f:facet name="statusbar"/>
+                                                                    <af:table value="#{bindings.Impexp_SoImportRefertiA2View1.collectionModel}"
+                                                                              var="row"
+                                                                              rows="#{bindings.Impexp_SoImportRefertiA2View1.rangeSize}"
+                                                                              emptyText="#{bindings.Impexp_SoImportRefertiA2View1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                              rowBandingInterval="0"
+                                                                              fetchSize="#{bindings.Impexp_SoImportRefertiA2View1.rangeSize}"
+                                                                              id="t16">
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Tessera.label}"
+                                                                                   id="c76">
+                                                                            <af:outputText value="#{row.Tessera}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Tessera.tooltip}"
+                                                                                           id="ot78"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Cognome.label}"
+                                                                                   id="c77">
+                                                                            <af:outputText value="#{row.Cognome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Cognome.tooltip}"
+                                                                                           id="ot79"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Nome.label}"
+                                                                                   id="c78">
+                                                                            <af:outputText value="#{row.Nome}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Nome.tooltip}"
+                                                                                           id="ot80"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataNascita.label}"
+                                                                                   id="c79">
+                                                                            <af:outputText value="#{row.DataNascita}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataNascita.tooltip}"
+                                                                                           id="ot81"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Ulss.label}"
+                                                                                   id="c80">
+                                                                            <af:outputText value="#{row.Ulss}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Ulss.tooltip}"
+                                                                                           id="ot82"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Cf.label}"
+                                                                                   id="c81">
+                                                                            <af:outputText value="#{row.Cf}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Cf.tooltip}"
+                                                                                           id="ot83"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.IdInterno.label}"
+                                                                                   id="c82">
+                                                                            <af:outputText value="#{row.IdInterno}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.IdInterno.tooltip}"
+                                                                                           id="ot84"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.CodiceRichiesta.label}"
+                                                                                   id="c83">
+                                                                            <af:outputText value="#{row.CodiceRichiesta}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.CodiceRichiesta.tooltip}"
+                                                                                           id="ot85"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.TipoReferto.label}"
+                                                                                   id="c84">
+                                                                            <af:outputText value="#{row.TipoReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.TipoReferto.tooltip}"
+                                                                                           id="ot86"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataReferto.label}"
+                                                                                   id="c85">
+                                                                            <af:outputText value="#{row.DataReferto}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataReferto.tooltip}"
+                                                                                           id="ot87"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Livello.label}"
+                                                                                   id="c86">
+                                                                            <af:outputText value="#{row.Livello}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Livello.tooltip}"
+                                                                                           id="ot88"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.TipoEsame.label}"
+                                                                                   id="c87">
+                                                                            <af:outputText value="#{row.TipoEsame}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.TipoEsame.tooltip}"
+                                                                                           id="ot89"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataEsame.label}"
+                                                                                   id="c88">
+                                                                            <af:outputText value="#{row.DataEsame}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.DataEsame.tooltip}"
+                                                                                           id="ot90"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Prelevatore.label}"
+                                                                                   id="c89">
+                                                                            <af:outputText value="#{row.Prelevatore}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Prelevatore.tooltip}"
+                                                                                           id="ot91"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.NoteEsame.label}"
+                                                                                   id="c90">
+                                                                            <af:outputText value="#{row.NoteEsame}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.NoteEsame.tooltip}"
+                                                                                           id="ot92"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Medico1.label}"
+                                                                                   id="c91">
+                                                                            <af:outputText value="#{row.Medico1}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Medico1.tooltip}"
+                                                                                           id="ot93"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Medico2.label}"
+                                                                                   id="c92">
+                                                                            <af:outputText value="#{row.Medico2}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Medico2.tooltip}"
+                                                                                           id="ot94"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Localizzazione.label}"
+                                                                                   id="c93">
+                                                                            <af:outputText value="#{row.Localizzazione}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Localizzazione.tooltip}"
+                                                                                           id="ot95"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Sede.label}"
+                                                                                   id="c94">
+                                                                            <af:outputText value="#{row.Sede}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Sede.tooltip}"
+                                                                                           id="ot96"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Esito.label}"
+                                                                                   id="c95">
+                                                                            <af:outputText value="#{row.Esito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Esito.tooltip}"
+                                                                                           id="ot97"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.NoteEsito.label}"
+                                                                                   id="c96">
+                                                                            <af:outputText value="#{row.NoteEsito}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.NoteEsito.tooltip}"
+                                                                                           id="ot98"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Calcificazioni.label}"
+                                                                                   id="c97">
+                                                                            <af:outputText value="#{row.Calcificazioni}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Calcificazioni.tooltip}"
+                                                                                           id="ot99"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.Esecuzione.label}"
+                                                                                   id="c98">
+                                                                            <af:outputText value="#{row.Esecuzione}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.Esecuzione.tooltip}"
+                                                                                           id="ot100"/>
+                                                                        </af:column>
+                                                                        <af:column headerText="#{bindings.Impexp_SoImportRefertiA2View1.hints.AltraTec.label}"
+                                                                                   id="c99">
+                                                                            <af:outputText value="#{row.AltraTec}"
+                                                                                           shortDesc="#{bindings.Impexp_SoImportRefertiA2View1.hints.AltraTec.tooltip}"
+                                                                                           id="ot101"/>
+                                                                        </af:column>
+                                                                    </af:table>
+                                                                </af:panelCollection>
+                                                            </f:facet>
+                                                        </af:switcher>
+                                                    </f:facet>
+                                                </af:switcher>
+                                            </af:panelHeader>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Import referti"/>
+                <f:attribute name="navigation" value="#{Impexp_refertiAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

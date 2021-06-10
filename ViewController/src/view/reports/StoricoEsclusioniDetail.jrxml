@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="StoricoEsclusioniDetail"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cod_ts" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ulss" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["050000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tpscr" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ordStorico" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT
+    SO_ESCLUSIONE.IDESCL,
+    SO_ESCLUSIONE.IDCNFESCL,
+    SO_ESCLUSIONE.IDINVITO,
+    SO_ESCLUSIONE.CODTS,
+    SO_ESCLUSIONE.DTESCL,
+    SO_ESCLUSIONE.DTANNULL,
+    SO_ESCLUSIONE.ULSS,
+    SO_ESCLUSIONE.TPSCR,
+    SO_CNF_ESCLUSIONE.DESCRIZIONE ESCLUSIONE,
+    SO_CNF_ESCLUSIONE.TPESCL,
+    DECODE(SO_CNF_ESCLUSIONE.TPESCL,'D','definitiva','T','temporanea') ESCLUSA_COME,
+    SO_CNF_ESCLUSIONE.NUMGIORNI,
+    SO_ESCLUSIONE.DTESCL+SO_CNF_ESCLUSIONE.NUMGIORNI FINO_AL
+ FROM SO_ESCLUSIONE JOIN SO_CNF_ESCLUSIONE
+ ON (SO_ESCLUSIONE.IDCNFESCL=SO_CNF_ESCLUSIONE.IDCNFESCL AND
+ SO_ESCLUSIONE.ULSS=SO_CNF_ESCLUSIONE.ULSS AND
+ SO_ESCLUSIONE.TPSCR=SO_CNF_ESCLUSIONE.TPSCR)
+ WHERE SO_ESCLUSIONE.CODTS=$P{cod_ts} AND SO_ESCLUSIONE.ULSS=$P{ulss}
+AND SO_ESCLUSIONE.TPSCR=$P{tpscr}
+ ORDER BY SO_ESCLUSIONE.DTESCL $P!{ordStorico}]]></queryString>
+
+	<field name="IDESCL" class="java.lang.Double"/>
+	<field name="IDCNFESCL" class="java.lang.Double"/>
+	<field name="IDINVITO" class="java.lang.Double"/>
+	<field name="CODTS" class="java.lang.String"/>
+	<field name="DTESCL" class="java.util.Date"/>
+	<field name="DTANNULL" class="java.util.Date"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="TPSCR" class="java.lang.String"/>
+	<field name="ESCLUSIONE" class="java.lang.String"/>
+	<field name="TPESCL" class="java.lang.String"/>
+	<field name="ESCLUSA_COME" class="java.lang.String"/>
+	<field name="NUMGIORNI" class="java.lang.Double"/>
+	<field name="FINO_AL" class="java.util.Date"/>
+
+
+		<group  name="soggetto" >
+			<groupExpression><![CDATA[$F{CODTS}]]></groupExpression>
+			<groupHeader>
+			<band height="20"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="1"
+						width="241"
+						height="16"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-BoldOblique" isBold="true" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[ESCLUSIONI]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="1"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="33"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="0"
+						width="144"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-1"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esclusione "+$F{ESCLUSA_COME}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="145"
+						y="0"
+						width="110"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{FINO_AL}==null?"il ":"dal ")+new SimpleDateFormat("dd/MM/yyyy").format($F{DTESCL})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="256"
+						y="0"
+						width="175"
+						height="17"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{FINO_AL}==null?null:"fino al "+new SimpleDateFormat("dd/MM/yyyy").format($F{FINO_AL})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="20"
+						y="17"
+						width="355"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Motivo: "+$F{ESCLUSIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="382"
+						y="17"
+						width="152"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-5"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DTANNULL}==null?null:"annullata il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DTANNULL})]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Cnf_SoCnfUsersCentri"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SO_CNF_USERS_CENTRI"
+  AliasName="Cnf_SoCnfUsersCentri"
+  BindingStyle="OracleName">
+  <Attribute
+    Name="SoUserId"
+    ColumnName="SO_USER_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_USERS_CENTRI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Idcentro"
+    ColumnName="IDCENTRO"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_USERS_CENTRI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Ulss"
+    Precision="6"
+    ColumnName="ULSS"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_USERS_CENTRI"
+    PrimaryKey="true"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="6"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tpscr"
+    Precision="2"
+    ColumnName="TPSCR"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_USERS_CENTRI"
+    PrimaryKey="true"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtins"
+    ColumnName="DTINS"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_USERS_CENTRI"/>
+  <Attribute
+    Name="Opins"
+    Precision="50"
+    ColumnName="OPINS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_USERS_CENTRI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtmod"
+    ColumnName="DTMOD"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_USERS_CENTRI"/>
+  <Attribute
+    Name="Opmod"
+    Precision="50"
+    ColumnName="OPMOD"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_USERS_CENTRI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="A_SoCentroPrelRef"
+    Association="model.conf.FkSoCnfUsersCentriFk2"
+    AssociationEnd="model.conf.FkSoCnfUsersCentriFk2.A_SoCentroPrelRef"
+    AssociationOtherEnd="model.conf.FkSoCnfUsersCentriFk2.Cnf_SoCnfUsersCentri"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="SoCnfUsersCentriPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SO_CNF_USERS_CENTRI_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.SoUserId"/>
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.Idcentro"/>
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.Ulss"/>
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.Tpscr"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="uk_Cnf_SoCnfUsersCentri">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UK_CNF_SO_CNF_USERS_CENTRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.Idcentro"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SoCnfUsersCentriFk1">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="SO_CNF_USERS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="SO_CNF_USERS_CENTRI_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.SoUserId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SoCnfUsersCentriFk2">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="SO_CNF_USERS_CENTRI_FK2"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.Idcentro"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_Cnf_SoCnfUsersCentri">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="SO_CNF_USERS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CNF_SO_CNF_USERS_CENTRI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfUsersCentri.SoUserId"/>
+    </AttrArray>
+  </Key>
+</Entity>

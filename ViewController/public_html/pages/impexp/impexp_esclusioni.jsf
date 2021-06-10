@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="impexp_esclusioni.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"><af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                <af:toolbar id="t4">
+                                    <af:button text="Chiudi operazione" id="b7"
+                                               partialSubmit="false"
+                                               actionListener="#{pageFlowScope.Impexp_esclusioniAction.chiudiOperazione}"
+                                               action="chiudi">
+                                        
+                                    </af:button>
+                                    
+                                    <af:button text="Ultimo log" id="b8"
+                                               disabled="#{sessionScope.viewlog_disabled}" partialTriggers="b1">
+                                        <af:fileDownloadActionListener method="#{pageFlowScope.Impexp_esclusioniAction.downloadLogListener}"
+                                                                       filename="LogImportEsclusioni.csv"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </af:panelGroupLayout></f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" layout="scroll"
+                                                 rendered="#{not sessionScope.eleb_escl_view}">
+                                <af:panelFormLayout id="pfl1" rows="1" maxColumns="4">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice label="Tipo flusso"
+                                                        value="#{pageFlowScope.Impexp_esclusioniAction.tipo_flusso}" id="soc1"
+                                                        styleClass="choiceInTable">
+                                        <af:selectItem label="SDO" value="SDO" id="si1"/>
+                                        <af:selectItem label="SPS" value="SPS" id="si2"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice label="Stato"
+                                                        value="#{pageFlowScope.Impexp_esclusioniAction.elaborato}"
+                                                        id="soc2" styleClass="choiceInTable">
+                                        <af:selectItem label="Da elaborare" value="N" id="si3"/>
+                                        <af:selectItem label="Elaborato" value="S" id="si4"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText label="Anno" id="it1"
+                                                  value="#{pageFlowScope.Impexp_esclusioniAction.anno}"/>
+                                    <af:inputText label="Fase" id="it2"
+                                                  value="#{pageFlowScope.Impexp_esclusioniAction.fase}"/>
+                                </af:panelFormLayout>
+                                <af:spacer width="10" height="20" id="s1"/>
+                                <af:panelGroupLayout id="pgl2" halign="left">
+                                    <af:button text="Cerca" id="b1"
+                                               actionListener="#{pageFlowScope.Impexp_esclusioniAction.cerca}"/>
+                                    <af:button text="Reimposta" id="b2"
+                                               actionListener="#{pageFlowScope.Impexp_esclusioniAction.reimposta}"/>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="20" id="s2"/>
+                                <af:table value="#{bindings.Impexp_Sdosps_ElencoFlussiView1.collectionModel}" var="row"
+                                          rows="#{bindings.Impexp_Sdosps_ElencoFlussiView1.rangeSize}"
+                                          emptyText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Impexp_Sdosps_ElencoFlussiView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Impexp_Sdosps_ElencoFlussiView1.collectionModel.makeCurrent}"
+                                          fetchSize="#{bindings.Impexp_Sdosps_ElencoFlussiView1.rangeSize}" id="t1">
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Anno.label}"
+                                               id="c1">
+                                        <af:outputText value="#{row.Anno}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Anno.tooltip}"
+                                                       id="ot1">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Anno.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Fase.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.Fase}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Fase.tooltip}"
+                                                       id="ot2">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Fase.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Desstato.label}"
+                                               id="c3">
+                                        <af:outputText value="#{row.Desstato}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.Desstato.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataPreparazione.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.DataPreparazione}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataPreparazione.tooltip}"
+                                                       id="ot4">
+                                            <af:convertDateTime pattern="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataPreparazione.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataEstrazione.label}"
+                                               id="c5">
+                                        <af:outputText value="#{row.DataEstrazione}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataEstrazione.tooltip}"
+                                                       id="ot5">
+                                            <af:convertDateTime pattern="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataEstrazione.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataElaborazione.label}"
+                                               id="c6">
+                                        <af:outputText value="#{row.DataElaborazione}"
+                                                       shortDesc="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataElaborazione.tooltip}"
+                                                       id="ot6">
+                                            <af:convertDateTime pattern="#{bindings.Impexp_Sdosps_ElencoFlussiView1.hints.DataElaborazione.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column id="c12">
+                                        <af:button text="Visualizza flusso" id="b3" rendered="#{row.Stato eq 'S'}"
+                                                   actionListener="#{pageFlowScope.Impexp_esclusioniAction.visualizzaFlusso}"
+                                                   partialSubmit="false"/>
+                                    </af:column>
+                                    <af:column id="c7">
+                                        <af:button text="Scarica flusso" id="b4" rendered="#{row.DaScaricare=='1'}"
+                                                   actionListener="#{pageFlowScope.Impexp_esclusioniAction.scaricaFlusso}"
+                                                   partialSubmit="false"/>
+                                    </af:column>
+                                </af:table>
+                                <af:spacer width="20" height="20" id="s3"/>
+                                <af:showDetail id="sd1"
+                                               disclosedText="Nascondi processi" undisclosedText="Visualizza processi">
+                                    <af:panelCollection id="pc1" featuresOff="detach freeze wrap"
+                                                        styleClass="AFStretchWidth">
+                                        <f:facet name="menus"/>
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t3">
+                                                <af:button text="Aggiorna" id="b6"
+                                                           actionListener="#{bindings.Execute.execute}"
+                                                           disabled="#{!bindings.Execute.enabled}"/>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="statusbar"/>
+                                        <af:table value="#{bindings.Impexp_ElabEsclusioniView1.collectionModel}"
+                                                  var="row" rows="#{bindings.Impexp_ElabEsclusioniView1.rangeSize}"
+                                                  emptyText="#{bindings.Impexp_ElabEsclusioniView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  fetchSize="#{bindings.Impexp_ElabEsclusioniView1.rangeSize}" id="t2"
+                                                  partialTriggers="::b6">
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.TipoFlusso.label}"
+                                                       id="c8">
+                                                <af:outputText value="#{row.TipoFlusso}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.TipoFlusso.tooltip}"
+                                                               id="ot7"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.Anno.label}"
+                                                       id="c9">
+                                                <af:outputText value="#{row.Anno}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.Anno.tooltip}"
+                                                               id="ot8">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Impexp_ElabEsclusioniView1.hints.Anno.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.Fase.label}"
+                                                       id="c10">
+                                                <af:outputText value="#{row.Fase}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.Fase.tooltip}"
+                                                               id="ot9">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Impexp_ElabEsclusioniView1.hints.Fase.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.InizioEsecuzione.label}"
+                                                       id="c11" width="150">
+                                                <af:outputText value="#{row.InizioEsecuzione}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.InizioEsecuzione.tooltip}"
+                                                               id="ot10">
+                                                    <af:convertDateTime pattern="#{bindings.Impexp_ElabEsclusioniView1.hints.InizioEsecuzione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.FineEsecuzione.label}"
+                                                       id="c13" width="150">
+                                                <af:outputText value="#{row.FineEsecuzione}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.FineEsecuzione.tooltip}"
+                                                               id="ot11">
+                                                    <af:convertDateTime pattern="#{bindings.Impexp_ElabEsclusioniView1.hints.FineEsecuzione.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.UtenteEsecuzione.label}"
+                                                       id="c14">
+                                                <af:outputText value="#{row.UtenteEsecuzione}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.UtenteEsecuzione.tooltip}"
+                                                               id="ot12"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_ElabEsclusioniView1.hints.Modalita.label}"
+                                                       id="c15">
+                                                <af:outputText value="#{row.Modalita}"
+                                                               shortDesc="#{bindings.Impexp_ElabEsclusioniView1.hints.Modalita.tooltip}"
+                                                               id="ot13"/>
+                                            </af:column>
+                                            <af:column id="c16" headerText="">
+                                                <af:button text="Log" id="b5"
+                                                           disabled="#{row.LinkLog!=null?false:true}"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelCollection>
+                                </af:showDetail>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                    <af:panelStretchLayout id="psl2" rendered="#{sessionScope.eleb_escl_view}">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"><af:panelGroupLayout id="pgl5" layout="horizontal" halign="end">
+                                <af:toolbar id="t8">
+                                    <af:button text="Annulla" id="b9"
+                                               partialSubmit="false">
+                                        <af:setPropertyListener type="action" from="false" to="#{sessionScope.eleb_escl_view}"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </af:panelGroupLayout></f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelGridLayout id="pgl4">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                            <af:panelFormLayout id="pfl2">
+                                                <f:facet name="footer"/>
+                                                <af:panelLabelAndMessage label="Data ultimo trasferimento" id="plam1">
+                                                    <af:outputText value="#{bindings.Dttransfer.inputValue}"
+                                                                   shortDesc="#{bindings.Dttransfer.hints.tooltip}"
+                                                                   id="ot14">
+                                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                    </af:outputText>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="Data ultimo import" id="plam2">
+                                                    <af:outputText value="#{bindings.Dtimport.inputValue}"
+                                                                   shortDesc="#{bindings.Dtimport.hints.tooltip}"
+                                                                   id="ot15">
+                                                        <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                    </af:outputText>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="Tipo flusso / anno / fase" id="plam3">
+                                                    <af:outputText value="#{sessionScope.sdosps_caratt_flusso}"
+                                                                   id="ot16"/>
+                                                </af:panelLabelAndMessage>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2"
+                                                     halign="stretch">
+                                            <af:table value="#{bindings.Impexp_SdospsUlssErogView1.collectionModel}"
+                                                      var="row" rows="#{bindings.Impexp_SdospsUlssErogView1.rangeSize}"
+                                                      emptyText="#{bindings.Impexp_SdospsUlssErogView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      selectedRowKeys="#{bindings.Impexp_SdospsUlssErogView1.collectionModel.selectedRow}"
+                                                      rowSelection="multiple"
+                                                      fetchSize="#{bindings.Impexp_SdospsUlssErogView1.rangeSize}"
+                                                      id="t5"
+                                                      binding="#{pageFlowScope.Impexp_esclusioniAction.ulssTable}">
+                                                <af:column headerText=""
+                                                           id="c28" width="40">
+                                                    <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                              id="sbc1" autoSubmit="true"/>
+                                                </af:column>
+                                                <af:column headerText="Ulss erogante"
+                                                           id="c17">
+                                                    <af:outputText value="#{row.UlssInviante}"
+                                                                   shortDesc="#{bindings.Impexp_SdospsUlssErogView1.hints.UlssInviante.tooltip}"
+                                                                   id="ot17"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow id="gr2">
+                                        <af:gridCell id="gc3" columnSpan="2">
+                                            <af:panelCollection id="pc3" styleClass="AFStretchWidth"
+                                                                featuresOff="detach freeze wrap">
+                                                <f:facet name="menus"/>
+                                                <f:facet name="toolbar">
+                                                    <af:toolbar id="t10">
+                                                        <af:button text="Importa esclusioni" id="b12"
+                                                                   disabled="#{sessionScope.sdosps_lanciato_import}"
+                                                                   actionListener="#{pageFlowScope.Impexp_esclusioniAction.importEscl}"
+                                                                   partialSubmit="false"/>
+                                                        <af:button text="Verifica import" id="b13"
+                                                                   disabled="#{sessionScope.sdosps_lanciato_import}"
+                                                                   actionListener="#{pageFlowScope.Impexp_esclusioniAction.verifica}"
+                                                                   partialSubmit="false"/>
+                                                        <af:button text="Annulla import" id="b14"
+                                                                   disabled="#{sessionScope.sdosps_lanciato_import}"
+                                                                   actionListener="#{pageFlowScope.Impexp_esclusioniAction.annullaImport}"
+                                                                   partialSubmit="false"/>
+                                                        <af:button text="Stampa elenco" id="b15" useWindow="true"
+                                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                                   windowModalityType="applicationModal"
+                                                                   windowHeight="300" windowWidth="600"
+                                                                   action="dialog:printElencoSoggetti"/>
+                                                    </af:toolbar>
+                                                </f:facet>
+                                                <f:facet name="statusbar"/>
+                                                <af:table value="#{bindings.Impexp_SdospsDaextView1.collectionModel}"
+                                                          var="row" rows="#{bindings.Impexp_SdospsDaextView1.rangeSize}"
+                                                          emptyText="#{bindings.Impexp_SdospsDaextView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          fetchSize="#{bindings.Impexp_SdospsDaextView1.rangeSize}"
+                                                          id="t6">
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.Codts.label}"
+                                                               id="c18">
+                                                        <af:outputText value="#{row.Codts}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.Codts.tooltip}"
+                                                                       id="ot18"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.Cf.label}"
+                                                               id="c19" width="150">
+                                                        <af:outputText value="#{row.Cf}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.Cf.tooltip}"
+                                                                       id="ot19"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.Cognome.label}"
+                                                               id="c20" width="200">
+                                                        <af:outputText value="#{row.Cognome}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.Cognome.tooltip}"
+                                                                       id="ot20"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.Nome.label}"
+                                                               id="c21" width="200">
+                                                        <af:outputText value="#{row.Nome}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.Nome.tooltip}"
+                                                                       id="ot21"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.DataNascita.label}"
+                                                               id="c22">
+                                                        <af:outputText value="#{row.DataNascita}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.DataNascita.tooltip}"
+                                                                       id="ot22"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.UlssInviante.label}"
+                                                               id="c23">
+                                                        <af:outputText value="#{row.UlssInviante}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.UlssInviante.tooltip}"
+                                                                       id="ot23"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.CodPrestazione.label}"
+                                                               id="c24">
+                                                        <af:outputText value="#{row.CodPrestazione}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.CodPrestazione.tooltip}"
+                                                                       id="ot24"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Impexp_SdospsDaextView1.hints.DesPrestazione.label}"
+                                                               id="c25" width="400">
+                                                        <af:outputText value="#{row.DesPrestazione}"
+                                                                       shortDesc="#{bindings.Impexp_SdospsDaextView1.hints.DesPrestazione.tooltip}"
+                                                                       id="ot25"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow id="gr3">
+                                        <af:gridCell id="gc4" columnSpan="2">
+                                            <af:showDetail disclosed="false" id="sd2" disclosedText="Nascondi log"
+                                                           undisclosedText="Visualizza log">
+                                                <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                                                    featuresOff="detach freeze wrap">
+                                                    <f:facet name="menus"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t9">
+                                                            <af:button text="Aggiorna" id="b10"
+                                                                       actionListener="#{bindings.Execute1.execute}"
+                                                                       disabled="#{!bindings.Execute1.enabled}"/>
+                                                            <af:button text="Pulizia log" id="b11"
+                                                                       actionListener="#{pageFlowScope.Impexp_esclusioniAction.cleanLog}"/>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <f:facet name="statusbar"/>
+                                                    <af:table value="#{bindings.Impexp_SoLogTransferView1.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Impexp_SoLogTransferView1.rangeSize}"
+                                                              emptyText="#{bindings.Impexp_SoLogTransferView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              fetchSize="#{bindings.Impexp_SoLogTransferView1.rangeSize}"
+                                                              id="t7" columnStretching="last" partialTriggers="::b10">
+                                                        <af:column headerText="#{bindings.Impexp_SoLogTransferView1.hints.Data.label}"
+                                                                   id="c26">
+                                                            <af:outputText value="#{row.Data}"
+                                                                           shortDesc="#{bindings.Impexp_SoLogTransferView1.hints.Data.tooltip}"
+                                                                           id="ot26">
+                                                                <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoLogTransferView1.hints.Descrizione.label}"
+                                                                   id="c27">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Impexp_SoLogTransferView1.hints.Descrizione.tooltip}"
+                                                                           id="ot27"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:showDetail>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Import esclusioni"/>
+                <f:attribute name="navigation" value="#{pageFlowScope.Impexp_esclusioniAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

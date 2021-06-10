@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_questionario.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"
+                                               actionListener="#{Cnf_questionarioBean.beforeSave}"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"
+                                               actionListener="#{Cnf_questionarioBean.beforeSave}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.DescrBreve.inputValue}"
+                                              label="#{bindings.DescrBreve.hints.label}"
+                                              required="#{bindings.DescrBreve.hints.mandatory}"
+                                              columns="#{bindings.DescrBreve.hints.displayWidth}"
+                                              maximumLength="#{bindings.DescrBreve.hints.precision}"
+                                              shortDesc="#{bindings.DescrBreve.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.DescrBreve.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.DtFineVal.inputValue}"
+                                              label="#{bindings.DtFineVal.hints.label}"
+                                              required="#{bindings.DtFineVal.hints.mandatory}"
+                                              columns="#{bindings.DtFineVal.hints.displayWidth}"
+                                              shortDesc="#{bindings.DtFineVal.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.DtFineVal.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.DtFineVal.format}"/>
+                                </af:inputDate>
+                                <af:inputText value="#{bindings.Algoritmo.inputValue}"
+                                              label="#{bindings.Algoritmo.hints.label}"
+                                              required="#{bindings.Algoritmo.hints.mandatory}"
+                                              columns="#{bindings.Algoritmo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Algoritmo.hints.precision}"
+                                              shortDesc="#{bindings.Algoritmo.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Algoritmo.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Note.inputValue}" label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              columns="#{bindings.Note.hints.displayWidth}"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Questionario"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,422 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUInvitiMammoView"
+   Version="11.1.2.62.76"
+   OrderBy="&#34;DTAPPINIZIALE&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUInvitiMammoViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT a.idinvito, 
+a.codts, 
+a.ulss, 
+a.tpscr,
+i1.codregionale idtpinvito, 
+a.livello,
+e.codregionale codesitoinvito,
+a.da_confermare,
+a.idcentroprelievo,
+a.idcentroref1liv,
+a.dtcreazione,
+a.dtappiniziale,
+al.dtcreazione dtcreazionelettera,
+al.dtstampa,
+a.dtrichiamo,
+i2.codregionale tprichiamo,
+a.idcentrorichiamo,
+a.dtinviorichiamo,
+a.roundcomune, 
+a.roundindiv, 
+a.roundinviti, 
+a.volontaria,
+a.idostetrica,
+decode(a1.idaccma_1liv,null,a2.dtanamnesi, a1.dtanamnesi) dtanamnesi
+  FROM so_invito a, so_allegato al,
+  so_cnf_tpinvito i1, so_cnf_esitoinvito e,so_cnf_tpinvito i2,
+  (select ac1.*,an1.dtanamnesi from so_acc_mammo1liv ac1, so_anamnesimx an1
+  where ac1.idaccma_1liv=an1.idaccma_1liv) a1, 
+  (select ac2.*,an2.dtanamnesi from so_acc_mammo2liv ac2, so_anamnesimx an2
+  where ac2.idaccma_2liv=an2.idaccma_2liv) a2
+  where a.idinvito=al.idinvito(+)
+  and a.fuorifascia=0
+  and (a.idtpinvito=i1.idtpinvito and a.ulss=i1.ulss and a.tpscr=i1.tpscr)
+  and (a.codesitoinvito=e.codesitoinvito and a.livesito=e.livesito
+  and a.ulss=e.ulss and a.tpscr=e.tpscr)
+  and (a.tprichiamo=i2.idtpinvito(+) and a.ulss=i2.ulss(+) and a.tpscr=i2.tpscr(+))
+  and a.idinvito=a1.idinvito(+)
+  and a.idinvito=a2.idinvito(+)
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="IDTPINVITO"
+      Expression="IDTPINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="LIVELLO"
+      Expression="LIVELLO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODESITOINVITO"
+      Expression="CODESITOINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DaConfermare"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DA_CONFERMARE"
+      Expression="DA_CONFERMARE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROPRELIEVO"
+      Expression="IDCENTROPRELIEVO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref1liv"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROREF1LIV"
+      Expression="IDCENTROREF1LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtappiniziale"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTAPPINIZIALE"
+      Expression="DTAPPINIZIALE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazionelettera"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONELETTERA"
+      Expression="DTCREAZIONELETTERA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTRICHIAMO"
+      Expression="DTRICHIAMO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPRICHIAMO"
+      Expression="TPRICHIAMO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRORICHIAMO"
+      Expression="IDCENTRORICHIAMO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviorichiamo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINVIORICHIAMO"
+      Expression="DTINVIORICHIAMO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDCOMUNE"
+      Expression="ROUNDCOMUNE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINDIV"
+      Expression="ROUNDINDIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINVITI"
+      Expression="ROUNDINVITI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Volontaria"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="VOLONTARIA"
+      Expression="VOLONTARIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idostetrica"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDOSTETRICA"
+      Expression="IDOSTETRICA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtanamnesi"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTANAMNESI"
+      Expression="DTANAMNESI"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idinvito" />
+   </AttrArray>
+</ViewObject>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="cnf_createEditTpPrelievi_cnf_createEditTpPrelievi_CreateWithParamsPageDef"
+                Package="subflows.configurazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfTpprelievoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpprelievoView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Cnf_SoCnfTpprelievoView1Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="Tpscr" NDValue="#{sessionScope.scr}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

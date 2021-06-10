@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Ref_SoCodref2livc2BIODIAView"
+   Version="11.1.2.62.76"
+   SelectList="Ref_SoCodref2livc2.ID, 
+       Ref_SoCodref2livc2.GRUPPO, 
+       Ref_SoCodref2livc2.IDCNFREF, 
+       Ref_SoCodref2livc2.IDREFERTO, 
+       Ref_SoCodref2livc2.IDCNFREF2L, 
+       Ref_SoCodref2livc2.ULSS, 
+       Ref_SoCodref2livc2.TPSCR, 
+       Ref_SoCnfRef2liv.DESCRIZIONE, 
+       Ref_SoCnfRef2liv.IDCNFREF2L AS IDCNFREF2L1, 
+       Ref_SoCnfRef2liv.GRUPPO AS GRUPPO1, 
+       Ref_SoCnfRef2liv.ULSS AS ULSS1, 
+       Ref_SoCnfRef2liv.TPSCR AS TPSCR1"
+   FromList="SO_CODREF2LIVC2 Ref_SoCodref2livc2, SO_CNF_REF2LIV Ref_SoCnfRef2liv"
+   Where="(((Ref_SoCodref2livc2.IDCNFREF = Ref_SoCnfRef2liv.IDCNFREF2L)AND (Ref_SoCodref2livc2.TPSCR = Ref_SoCnfRef2liv.TPSCR))AND (Ref_SoCodref2livc2.GRUPPO = Ref_SoCnfRef2liv.GRUPPO))AND (Ref_SoCodref2livc2.ULSS = Ref_SoCnfRef2liv.ULSS) AND Ref_SoCnfRef2liv.GRUPPO=&#39;BIODIA&#39;"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.referto.Ref_SoCodref2livc2BIODIAViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Ref_SoCodref2livc2"
+      Entity="model.referto.Ref_SoCodref2livc2" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef2liv"
+      Entity="model.referto.Ref_SoCnfRef2liv"
+      Association="model.FkSoCodreSoCnfRef2lAssoc"
+      AssociationEnd="model.FkSoCodreSoCnfRef2lAssoc.Ref_SoCnfRef2liv"
+      SourceUsage="model.referto.Ref_SoCodref2livc2BIODIAView.Ref_SoCodref2livc2"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.referto.Ref_SoCodref2livc2.Idcnfref2l" />
+            <Item Value="model.referto.Ref_SoCodref2livc2.Tpscr" />
+            <Item Value="model.referto.Ref_SoCodref2livc2.Gruppo" />
+            <Item Value="model.referto.Ref_SoCodref2livc2.Ulss" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.referto.Ref_SoCnfRef2liv.Idcnfref2l" />
+            <Item Value="model.referto.Ref_SoCnfRef2liv.Tpscr" />
+            <Item Value="model.referto.Ref_SoCnfRef2liv.Gruppo" />
+            <Item Value="model.referto.Ref_SoCnfRef2liv.Ulss" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="GRUPPO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref"
+      EntityAttrName="Idcnfref"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="IDCNFREF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsNotNull="true"
+      EntityAttrName="Idreferto"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="IDREFERTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="IDCNFREF2L" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCodref2livc2"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l1"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="IDCNFREF2L1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo1"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="GRUPPO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+</ViewObject>

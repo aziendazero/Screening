@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_round_comuniPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Round_SoRoundAttiviView1" RangeSize="10" DataControl="Round_AppModuleDataControl"
+              id="Round_SoRoundAttiviView1Iterator"/>
+    <iterator Binds="Round_SoRoundorgView3" RangeSize="25" DataControl="Round_AppModuleDataControl"
+              id="Round_SoRoundorgView3Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Round_SoRoundAttiviView1Iterator" id="Round_SoRoundAttiviView1">
+      <nodeDefinition DefName="model.round.Round_SoRoundAttiviView" Name="Round_SoRoundAttiviView10">
+        <AttrNames>
+          <Item Value="Descrizione"/>
+          <Item Value="Codcom"/>
+          <Item Value="Numround"/>
+          <Item Value="Dtinizio"/>
+          <Item Value="Dtfine"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Round_SoRoundorgView3Iterator" id="Round_SoRoundorgView3">
+      <nodeDefinition DefName="model.round.Round_SoRoundorgView" Name="Round_SoRoundorgView30">
+        <AttrNames>
+          <Item Value="Numround"/>
+          <Item Value="Dtinizio"/>
+          <Item Value="Dtfine"/>
+          <Item Value="Dtprimoinvito"/>
+          <Item Value="Dtultinvito"/>
+          <Item Value="Dtultsollecito"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Round_SoRoundAttiviView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="Round_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

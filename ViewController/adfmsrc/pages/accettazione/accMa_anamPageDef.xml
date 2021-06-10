@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="accMa_anamPageDef"
+                Package="pages.accettazione">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="AccMa_RicInvitiView1" RangeSize="25" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_RicInvitiView1Iterator"/>
+    <iterator Binds="AccMa_SoAnamnesimxView1" RangeSize="25" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SoAnamnesimxView1Iterator"/>
+    <iterator Binds="AccMa_OpAnamView1" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_OpAnamView1Iterator"/>
+    <iterator Binds="AccMa_SinondViewFam" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SinondViewFamIterator"/>
+    <iterator Binds="AccMa_SinondViewTer" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SinondViewTerIterator"/>
+    <iterator Binds="AccMa_SinondViewInt" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SinondViewIntIterator"/>
+    <iterator Binds="AccMa_SediInterventoView1" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SediInterventoView1Iterator"/>
+    <iterator Binds="AccMa_TpInterventoView1" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_TpInterventoView1Iterator"/>
+    <iterator Binds="AccMa_MotInterventoView1" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_MotInterventoView1Iterator"/>
+    <iterator Binds="AccMa_SoAnamnesimxSintomiView1" RangeSize="25" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SoAnamnesimxSintomiView1Iterator"/>
+    <iterator Binds="AccMa_SediSintViewDX" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SediSintViewDXIterator"/>
+    <iterator Binds="AccMa_SediSintViewSX" RangeSize="-1" DataControl="AccMa_AppModuleDataControl"
+              id="AccMa_SediSintViewSXIterator"/>
+    <iterator id="Ref_SoInvitiPerRefertiMAView1Iterator" Binds="Ref_SoInvitiPerRefertiMAView1"
+              DataControl="RefMa_AppModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="Dtanamnesi">
+      <AttrNames>
+        <Item Value="Dtanamnesi"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmFuoriscr" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="UmFuoriscr"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmData">
+      <AttrNames>
+        <Item Value="UmData"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmCons" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="UmCons"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmDtcons">
+      <AttrNames>
+        <Item Value="UmDtcons"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AccMa_RicInvitiView1Iterator" id="Previous" RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="AccMa_RicInvitiView1Iterator" id="Next" RequiresUpdateModel="true" Action="next"/>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Escl">
+      <AttrNames>
+        <Item Value="Escl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Sollecitare">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmRest" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="UmRest"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="UmDtrest">
+      <AttrNames>
+        <Item Value="UmDtrest"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="AfEsito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SinondViewFamIterator">
+      <AttrNames>
+        <Item Value="AfEsito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="AfMadre" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AfMadre"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="AfSorella" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AfSorella"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="AfAltro" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AfAltro"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="AfAltroTesto">
+      <AttrNames>
+        <Item Value="AfAltroTesto"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="ToPresente" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SinondViewTerIterator">
+      <AttrNames>
+        <Item Value="ToPresente"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="AccMa_SoAnamnesimxView1Iterator" id="ToIncorso" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ToIncorso"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="ToDal">
+      <AttrNames>
+        <Item Value="ToDal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="ToAl">
+      <AttrNames>
+        <Item Value="ToAl"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcPresente" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SinondViewIntIterator">
+      <AttrNames>
+        <Item Value="IcPresente"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcDataint">
+      <AttrNames>
+        <Item Value="IcDataint"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcSedeint" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SediInterventoView1Iterator">
+      <AttrNames>
+        <Item Value="IcSedeint"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsedeint"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcIdintervento" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_TpInterventoView1Iterator">
+      <AttrNames>
+        <Item Value="IcIdintervento"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idintervento"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcAltroint">
+      <AttrNames>
+        <Item Value="IcAltroint"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcIdmot" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_MotInterventoView1Iterator">
+      <AttrNames>
+        <Item Value="IcIdmot"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idmot"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IcAltromot">
+      <AttrNames>
+        <Item Value="IcAltromot"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AccMa_SoAnamnesimxSintomiView1Iterator" id="AccMa_SoAnamnesimxSintomiView1">
+      <nodeDefinition DefName="model.accettazione.AccMa_SoAnamnesimxSintomiView" Name="AccMa_SoAnamnesimxSintomiView10">
+        <AttrNames>
+          <Item Value="Descr"/>
+          <Item Value="DxIdsede" Binds="DxIdsede"/>
+          <Item Value="SxIdsede" Binds="SxIdsede"/>
+          <Item Value="IdAnammxSint"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxSintomiView1Iterator" id="IdAnammxSint">
+      <AttrNames>
+        <Item Value="IdAnammxSint"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxSintomiView1Iterator" id="DxIdsede" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SediSintViewDXIterator">
+      <AttrNames>
+        <Item Value="DxIdsede"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsedesint"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="AccMa_SoAnamnesimxSintomiView1Iterator" id="SxIdsede" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_SediSintViewSXIterator">
+      <AttrNames>
+        <Item Value="SxIdsede"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsedesint"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_SoAnamnesimxView1Iterator" id="IdAnamma">
+      <AttrNames>
+        <Item Value="IdAnamma"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Idinvito">
+      <AttrNames>
+        <Item Value="Idinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccMa_SoAnamnesimxView1Iterator" id="Idopanamnesi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="AccMa_OpAnamView1Iterator">
+      <AttrNames>
+        <Item Value="Idopanamnesi"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccMa_RicInvitiView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfComuniZoneParam"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_CNF_COMUNI_ZONE_PARAM"
+   AliasName="Cnf_SoCnfComuniZoneParam"
+   BindingStyle="Oracle"
+   RowClass="model.conf.Cnf_SoCnfComuniZoneParamImpl"
+   MsgBundleClass="model.conf.common.Cnf_SoCnfComuniZoneParamImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Msg" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Id"
+      ColumnName="ID"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM"
+      PrimaryKey="true">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Codcom"
+      IsUnique="true"
+      Precision="6"
+      ColumnName="CODCOM"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codcom_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </Attribute>
+   <Attribute
+      Name="Coddistrzona"
+      IsUnique="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="CODDISTRZONA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Coddistrzona_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      IsUnique="true"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Altro"
+      Precision="1000"
+      ColumnName="ALTRO"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1000" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReleaseCodeCom"
+      IsUnique="true"
+      ColumnName="RELEASE_CODE_COM"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_COMUNI_ZONE_PARAM"/>
+   <AccessorAttribute
+      Name="Cnf_SoDistrettoZona"
+      Association="model.FkComZonePHaZonaAssoc"
+      AssociationEnd="model.FkComZonePHaZonaAssoc.Cnf_SoDistrettoZona"
+      AssociationOtherEnd="model.FkComZonePHaZonaAssoc.Cnf_SoCnfComuniZoneParam"
+      Type="model.conf.Cnf_SoDistrettoZonaImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoComune"
+      Association="model.conf.FkCnfComZoneParamComAssoc"
+      AssociationEnd="model.conf.FkCnfComZoneParamComAssoc.Cnf_SoComune"
+      AssociationOtherEnd="model.conf.FkCnfComZoneParamComAssoc.Cnf_SoCnfComuniZoneParam"
+      Type="model.conf.Cnf_SoComuneImpl"
+      IsUpdateable="true"/>
+   <Key
+      Name="PkComZoneParam"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_COM_ZONE_PARAM"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfComuniZoneParam.Id" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="UkComZonaScr" >
+      <DesignTime>
+         <Attr Name="_isUnique" Value="true"/>
+         <Attr Name="_DBObjectName" Value="UK_COM_ZONA_SCR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfComuniZoneParam.Coddistrzona" />
+         <Item Value="model.conf.Cnf_SoCnfComuniZoneParam.Tpscr" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkCnfComZoneParamCom">
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_COMUNE"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_CNF_COM_ZONE_PARAM_COM"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoCnfComuniZoneParam.ReleaseCodeCom"/>
+      </AttrArray>
+   </Key>
+   <MethodValidationBean
+      xmlns="http://xmlns.oracle.com/adfm/validation"
+      Name="Cnf_SoCnfComuniZoneParam_Rule_1"
+      ResId="Cnf_SoCnfComuniZoneParam_Rule_0"
+      MethodName="validateDipendenza" >
+   </MethodValidationBean>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfComuniZoneParamMsgBundle"/>
+   </ResourceBundle>
+</Entity>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_sdosps_filtro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_flussiRegionaliAction.sdoFiltriForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempFlussiReg.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioniRegionali==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" action="creatEditSdospsFiltro"
+                                               actionListener="#{Cnf_flussiRegionaliAction.onDettFiltri}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella filtro"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente Filtro SDO-SPS?"
+                                                              id="ot14"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                     <af:button text="Export" id="b33">
+                                        <af:showPopupBehavior popupId="p2" />
+                                    </af:button>
+                                    <af:popup id="p2">
+                                          <af:panelWindow title="Export">
+                                            <af:outputFormatted value="#{Cnf_flussiRegionaliAction.export}"/>
+                                          </af:panelWindow>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditSdospsFiltro">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                    <af:setPropertyListener from="false" to="#{sessionScope.sdoSpsEdit}" type="action"/>
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfSdoSpsElencoView1.collectionModel}" var="row" 
+                                  rows="#{bindings.Cnf_SoCnfSdoSpsElencoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfSdoSpsElencoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfSdoSpsElencoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfSdoSpsElencoView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_flussiRegionaliAction.tabFiltri}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.TipoFlusso.label}"
+                                       id="c1" sortable="true"
+                                       sortProperty="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.TipoFlusso.name}">
+                                <af:outputText value="#{row.TipoFlusso}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.TipoFlusso.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Codsdosps.label}"
+                                       id="c2" sortable="true"
+                                       sortProperty="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Codsdosps.name}">
+                                <af:outputText value="#{row.Codsdosps}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Codsdosps.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Descrizione.label}"
+                                       id="c3" width="700" sortable="true" sortProperty="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Descrizione.name}">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.Descrizione.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataInizioValidita.label}"
+                                       id="c4" sortable="true" sortProperty="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataInizioValidita.name}">
+                                <af:outputText value="#{row.DataInizioValidita}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataInizioValidita.tooltip}"
+                                               id="ot4">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataInizioValidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataFineValidita.label}"
+                                       id="c5" sortable="true"  sortProperty="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataFineValidita.name}">
+                                <af:outputText value="#{row.DataFineValidita}"
+                                               shortDesc="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataFineValidita.tooltip}"
+                                               id="ot5">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfSdoSpsElencoView1.hints.DataFineValidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Filtro SDO-SPS - Elenco"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

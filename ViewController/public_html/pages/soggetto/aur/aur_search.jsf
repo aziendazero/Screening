@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.aur.aur_searchBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.RICERCA_IN_AUR}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" defaultCommand="pt1:btcerca" binding="#{Sogg_AurAction.frmSearch}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                        <af:panelHeader text="#{viewcontrollerBundle.PANEL_SEARCH_TITLE}" id="ph1">
+                             <f:facet name="toolbar">
+                                <af:toolbar id="t5" partialTriggers="btcerca">
+                                    <af:button  disabled="#{!viewScope.enableNewButton}"
+                                                text="Nuovo soggetto" id="b2" 
+                                                rendered="#{sessionScope.SODatiAnagraficiStandardWrite or sessionScope.SODatiAnagraficiNewWrite}"
+                                                action="#{Sogg_ricercaAction.onNuova}">
+                                        <af:setPropertyListener from="#{1==1}" to="#{sessionScope.FROM_AUR}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                                <af:toolbar id="t4">
+                                    <af:button action="#{bindings.rollback.execute}" text="#{viewcontrollerBundle.ANNULLA}"
+                                               disabled="#{!bindings.rollback.enabled}" id="b3"/>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:panelGridLayout id="pgl2" partialTriggers="btreset">
+                                <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc1" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.fiscalCode.hints.label}" id="ol1"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc2">
+                                        <af:inputText value="#{bindings.fiscalCode.inputValue}"
+                                                      label="#{bindings.fiscalCode.hints.label}"
+                                                      required="#{bindings.fiscalCode.hints.mandatory}"
+                                                      columns="#{bindings.fiscalCode.hints.displayWidth}"
+                                                      maximumLength="#{bindings.fiscalCode.hints.precision}"
+                                                      shortDesc="#{bindings.fiscalCode.hints.tooltip}" id="it8"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.fiscalCode.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc3" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.cs.hints.label}" id="ol2"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc4">
+                                        <af:inputText value="#{bindings.cs.inputValue}"
+                                                      label="#{bindings.cs.hints.label}"
+                                                      required="#{bindings.cs.hints.mandatory}"
+                                                      columns="#{bindings.cs.hints.displayWidth}"
+                                                      maximumLength="#{bindings.cs.hints.precision}"
+                                                      shortDesc="#{bindings.cs.hints.tooltip}" id="it10"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.cs.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc5" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.mpi.hints.label}" id="ol3"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc6">
+                                        <af:inputText value="#{bindings.mpi.inputValue}"
+                                                      label="#{bindings.mpi.hints.label}"
+                                                      required="#{bindings.mpi.hints.mandatory}"
+                                                      columns="#{bindings.mpi.hints.displayWidth}"
+                                                      maximumLength="#{bindings.mpi.hints.precision}"
+                                                      shortDesc="#{bindings.mpi.hints.tooltip}" id="it11"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.mpi.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr19">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc7" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.nameFam.hints.label}" id="ol4"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc8">
+                                        <af:inputText value="#{bindings.nameFam.inputValue}"
+                                                      label="#{bindings.nameFam.hints.label}"
+                                                      required="#{bindings.nameFam.hints.mandatory}"
+                                                      columns="#{bindings.nameFam.hints.displayWidth}"
+                                                      maximumLength="#{bindings.nameFam.hints.precision}"
+                                                      shortDesc="#{bindings.nameFam.hints.tooltip}" id="it12"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.nameFam.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc9" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.nameGiv.hints.label}" id="ol5"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc10">
+                                        <af:inputText value="#{bindings.nameGiv.inputValue}"
+                                                      label="#{bindings.nameGiv.hints.label}"
+                                                      required="#{bindings.nameGiv.hints.mandatory}"
+                                                      columns="#{bindings.nameGiv.hints.displayWidth}"
+                                                      maximumLength="#{bindings.nameGiv.hints.precision}"
+                                                      shortDesc="#{bindings.nameGiv.hints.tooltip}" id="it1"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.nameGiv.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc11" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.birthTimeDate.hints.label}" id="ol10"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc12">
+                                        <af:inputDate value="#{bindings.birthTimeDate.inputValue}"
+                                                      label="#{bindings.birthTimeDate.hints.label}"
+                                                      required="#{bindings.birthTimeDate.hints.mandatory}"
+                                                      columns="#{bindings.birthTimeDate.hints.displayWidth}"
+                                                      shortDesc="#{bindings.birthTimeDate.hints.tooltip}" id="id1"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.birthTimeDate.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.birthTimeDate.format}"/>
+                                        </af:inputDate>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                            <af:panelFormLayout id="pfl1">
+                                <f:facet name="footer">
+                                    <af:toolbar id="t2" inlineStyle='padding-right: 13px'>
+                                        <af:button actionListener="#{bindings.findAnag.execute}" text="#{viewcontrollerBundle.CERCA}"
+                                                   disabled="#{!bindings.findAnag.enabled}" id="btcerca">
+                                            <af:setPropertyListener from="#{1==1}" to="#{requestScope.executeSearch}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button actionListener="#{bindings.reset.execute}" text="#{viewcontrollerBundle.CANCELLA_FILTRI}"
+                                                   disabled="#{!bindings.reset.enabled}" id="btreset"/>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:panelFormLayout>
+                        </af:panelHeader>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:panelCollection id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth"
+                                            partialTriggers="::btcerca">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3">
+                                    <af:button action="#{bindings.importAnagrafe1.execute}"
+                                               text="Importa" disabled="#{!bindings.importAnagrafe1.enabled || bindings.persons.currentRow == null}"
+                                               id="b1">
+                                        <af:setPropertyListener from="#{1==1}" to="#{sessionScope.FROM_AUR}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.persons.collectionModel}" var="row"
+                                      rows="#{bindings.persons.rangeSize}"
+                                      emptyText="#{bindings.persons.viewable ? 'Nessun dato trovato.' : 'Accesso negato.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.persons.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.persons.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.persons.rangeSize}" id="t1"
+                                      columnStretching="last" summary='${""}' partialTriggers="::b1">
+                                <af:column sortProperty="#{bindings.persons.hints.mpi.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.mpi.label}" id="c28" noWrap="false"
+                                           rowHeader="unstyled">
+                                    <af:outputText value="#{row.mpi}" shortDesc="#{row.mpi}" id="ot28"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.fiscalCode.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.fiscalCode.label}" id="c11" width="125"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.fiscalCode}"
+                                                   shortDesc="#{row.fiscalCode}" id="ot11"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.cs.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.cs.label}" id="c37" noWrap="false">
+                                    <af:outputText value="#{row.cs}" shortDesc="#{row.cs}" id="ot37"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.nameFam.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.nameFam.label}" id="c27" noWrap="false">
+                                    <af:outputText value="#{row.nameFam}" shortDesc="#{row.nameFam}"
+                                                   id="ot27"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.nameGiv.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.nameGiv.label}" id="c33" noWrap="false">
+                                    <af:outputText value="#{row.nameGiv}" shortDesc="#{row.nameGiv}"
+                                                   id="ot33"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.birthTimeDate.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.birthTimeDate.label}" id="c6" noWrap="false">
+                                    <af:outputText value="#{row.birthTimeDate}"
+                                                   shortDesc="#{row.birthTimeDate}" id="ot1">
+                                        <af:convertDateTime pattern="#{bindings.persons.hints.birthTimeDate.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.countryOfBirth.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.countryOfBirth.label}" id="c10" width="190"
+                                           noWrap="false">
+                                    <af:panelLabelAndMessage label="#{''}" id="plam43">
+                                        <af:outputText value="#{row.countryOfBirth}" shortDesc="#{row.countryOfBirth}"
+                                                   id="ot413"/>
+                                        <!--f:facet name="end">
+                                            <af:panelGroupLayout id="pgl32" layout="horizontal">
+                                                <af:icon name="warning" id="i32"
+                                                         rendered="#{row.countryOfBirthRow==null}"
+                                                         shortDesc="Dato non presente negli archivi dello screening."/>
+                                                <af:outputText value="(#{row.countryOfBirthRow==null ? null : row.countryOfBirthRow.getAttribute('Descrizione')})"
+                                                        rendered="#{row.countryOfBirthRow!=null}"
+                                                        shortDesc="#{row.countryOfBirthRow==null ? null : row.countryOfBirthRow.getAttribute('Descrizione')}"
+                                                               id="soc32"/>
+                                            </af:panelGroupLayout>
+                                        </f:facet-->
+                                    </af:panelLabelAndMessage>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.birthplaceCode.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.birthplaceCode.label}" id="c43" width="190"
+                                           noWrap="false">
+                                    <af:panelLabelAndMessage label="#{''}" id="plam32">
+                                        <af:outputText value="#{row.birthplaceCode}" shortDesc="#{row.birthplaceCode}"
+                                                   id="ot402"/>
+                                        <!-- f:facet name="end">
+                                            <af:panelGroupLayout id="pgl321" layout="horizontal">
+                                                <af:icon name="warning" id="i321"
+                                                         rendered="#{row.birthplaceCodeRow==null}"
+                                                         shortDesc="Dato non presente negli archivi dello screening."/>
+                                                <af:outputText value="(#{row.birthplaceCodeRow==null ? null : row.birthplaceCodeRow.getAttribute('Descrizione')})"
+                                                        rendered="#{row.birthplaceCodeRow!=null}"
+                                                        shortDesc="#{row.birthplaceCodeRow==null ? null : row.birthplaceCodeRow.getAttribute('Descrizione')}"
+                                                               id="soc321"/>
+                                            </af:panelGroupLayout>
+                                        </f:facet -->
+                                    </af:panelLabelAndMessage>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.countryOfAddr.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.countryOfAddr.label}" id="c41" noWrap="false">
+                                    <af:panelLabelAndMessage label="#{''}" id="plam4">
+                                        <af:outputText value="#{row.countryOfAddr}" shortDesc="#{row.countryOfAddr}"
+                                                   id="ot41"/>
+                                        <!--f:facet name="end">
+                                            <af:panelGroupLayout id="pgl322" layout="horizontal">
+                                                <af:icon name="warning" id="i322"
+                                                         rendered="#{row.countryOfAddrRow==null}"
+                                                         shortDesc="Dato non presente negli archivi dello screening."/>
+                                                <af:outputText value="(#{row.countryOfAddrRow==null ? null : row.countryOfAddrRow.getAttribute('Descrizione')})"
+                                                        rendered="#{row.countryOfAddrRow!=null}"
+                                                        shortDesc="#{row.countryOfAddrRow==null ? null : row.countryOfAddrRow.getAttribute('Descrizione')}"
+                                                               id="soc322"/>
+                                            </af:panelGroupLayout>
+                                        </f:facet-->
+                                    </af:panelLabelAndMessage>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.addrCode.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.addrCode.label}" id="c40" width="190"
+                                           noWrap="false">
+                                    <af:panelLabelAndMessage label="#{''}" id="plam3">
+                                        <af:outputText value="#{row.addrCode}" shortDesc="#{row.addrCode}"
+                                                   id="ot40"/>
+                                        <!--f:facet name="end">
+                                            <af:panelGroupLayout id="pgl323" layout="horizontal">
+                                                <af:icon name="warning" id="i323"
+                                                         rendered="#{row.addrCodeRow==null}"
+                                                         shortDesc="Dato non presente negli archivi dello screening."/>
+                                                <af:outputText value="(#{row.addrCodeRow==null ? null : row.addrCodeRow.getAttribute('Descrizione')})"
+                                                        rendered="#{row.addrCodeRow!=null}"
+                                                        shortDesc="#{row.addrCodeRow==null ? null : row.addrCodeRow.getAttribute('Descrizione')}"
+                                                               id="soc323"/>
+                                            </af:panelGroupLayout>
+                                        </f:facet-->
+                                    </af:panelLabelAndMessage>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.persons.hints.addrStr.name}" sortable="true"
+                                           headerText="#{bindings.persons.hints.addrStr.label}" id="c12" noWrap="false">
+                                    <af:outputText value="#{row.addrStr}" shortDesc="#{row.addrStr}"
+                                                   id="ot12"/>
+                                    <af:outputText value=", #{row.addrBnr}" shortDesc="#{row.addrBnr}"
+                                                   id="ot26"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="navigation" value="#{Sogg_AurAction}"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.RICERCA_IN_AUR}"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+            </af:pageTemplate>       
+        </af:form>
+    </af:document>
+</f:view>

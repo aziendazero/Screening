@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_sugg1liv">
+    <page>/pages/conf/cnf_sugg1liv.jsf</page>
+  </view>
+  <view id="cnf_sugg2liv">
+    <page>/pages/conf/cnf_sugg2liv.jsf</page>
+  </view>
+  <view id="cnf_sugg3liv">
+    <page>/pages/conf/cnf_sugg3liv.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editSugg1liv">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editSugg1liv.xml</document>
+      <id>cnf_editSugg1liv</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editSugg2liv">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editSugg2liv.xml</document>
+      <id>cnf_editSugg2liv</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editSugg3liv">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editSugg3liv.xml</document>
+      <id>cnf_editSugg3liv</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>sugg1liv</from-outcome>
+      <to-activity-id>cnf_sugg1liv</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>sugg2liv</from-outcome>
+      <to-activity-id>cnf_sugg2liv</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>sugg3liv</from-outcome>
+      <to-activity-id>cnf_sugg3liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__8">
+    <from-activity-id>cnf_sugg1liv</from-activity-id>
+    <control-flow-case id="__9">
+      <from-outcome>creatEditSugg1liv</from-outcome>
+      <to-activity-id>cnf_editSugg1liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__10">
+    <from-activity-id>cnf_sugg2liv</from-activity-id>
+    <control-flow-case id="__11">
+      <from-outcome>creatEditSugg2liv</from-outcome>
+      <to-activity-id>cnf_editSugg2liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__14">
+    <from-activity-id>cnf_sugg3liv</from-activity-id>
+    <control-flow-case id="__15">
+      <from-outcome>creatEditSugg3liv</from-outcome>
+      <to-activity-id>cnf_editSugg3liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__19">
+    <from-activity-id>cnf_editSugg1liv</from-activity-id>
+    <control-flow-case id="__20">
+      <to-activity-id>cnf_sugg1liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__17">
+    <from-activity-id>cnf_editSugg2liv</from-activity-id>
+    <control-flow-case id="__18">
+      <to-activity-id>cnf_sugg2liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__21">
+    <from-activity-id>cnf_editSugg3liv</from-activity-id>
+    <control-flow-case id="__22">
+      <to-activity-id>cnf_sugg3liv</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__5">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_suggerimenti_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__6">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__7">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_suggerimenti_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__12">
+    <managed-bean-name>Cnf_sugg1livAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_sugg1livAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__13">
+    <managed-bean-name>Cnf_sugg2livAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_sugg2livAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__16">
+    <managed-bean-name>Cnf_sugg3livAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_sugg3livAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__23">
+    <managed-bean-name>AziendaSanitariaAction</managed-bean-name>
+    <managed-bean-class>view.conf.AziendaSanitariaAction</managed-bean-class>
+    <managed-bean-scope>pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

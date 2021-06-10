@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="impexp_appuntamenti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:switcher id="s5" facetName="#{sessionScope.impexp_modalita != null?'funzOK':'funzNO'}">
+                        <f:facet name="funzNO">
+                            <af:message id="m2" messageType="warning" message="Impossibile utilizzare la funzionalità"/>
+                        </f:facet>
+                        <f:facet name="funzOK">
+                            <af:panelStretchLayout id="psl1">
+                                <f:facet name="start"/>
+                                <f:facet name="end"/>
+                                <f:facet name="top">
+                                    <af:panelGridLayout id="pgl3">
+                                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                            <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                                <af:link text="Torna indietro" id="l1"
+                                                         rendered="#{sessionScope.LINK_INV}" action="#{MenuUtilBean.doAction('goInvCorr', Impexp_appuntamentiAction, null)}"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                                <af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                                    <af:toolbar id="t1">
+                                                        <af:button text="Chiudi operazione" id="b3"
+                                                                   rendered="#{sessionScope.renderChiudiOp}"
+                                                                   partialSubmit="false"
+                                                                   actionListener="#{Impexp_appuntamentiAction.chiudiOperazione}"
+                                                                   action="chiudi"/>
+                                                        <af:button text="Ultimo log" id="b5"
+                                                                   disabled="#{bindings.LogFile.inputValue==null}">
+                                                            <af:fileDownloadActionListener method="#{Impexp_presenzeAction.downloadLogListener}"
+                                                                                           filename="LogExportAppuntamenti_#{sessionScope.scr}.pdf"/>
+                                                        </af:button>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                    </af:panelGridLayout>
+                                </f:facet>
+                                <f:facet name="bottom"/>
+                                <f:facet name="center">
+                                    <af:panelGroupLayout id="pgl1" layout="scroll" halign="center">
+                                        <af:panelFormLayout id="pfl1">
+                                            <f:facet name="footer"/>
+                                            <af:inputDate value="#{bindings.Dtimport.inputValue}"
+                                                          label="Data ultimo export"
+                                                          required="#{bindings.Dtimport.hints.mandatory}"
+                                                          columns="#{bindings.Dtimport.hints.displayWidth}"
+                                                          shortDesc="#{bindings.Dtimport.hints.tooltip}" id="id1"
+                                                          readOnly="true">
+                                                <f:validator binding="#{bindings.Dtimport.validator}"/>
+                                                <af:convertDateTime pattern="dd/MM/yyyy kk:mm"/>
+                                            </af:inputDate>
+                                        </af:panelFormLayout>
+                                        <af:spacer width="10" height="20" id="s4"/>
+                                        <af:separator id="s3"/>
+                                        <af:spacer width="10" height="20" id="s1"/>
+                                        <af:panelFormLayout id="pfl2">
+                                            <f:facet name="footer"/>
+                                            <af:selectOneChoice value="#{bindings.tpdip.inputValue}"
+                                                                label="Destinazione"
+                                                                required="#{bindings.tpdip.hints.mandatory}"
+                                                                styleClass="choiceInTable"
+                                                                disabled="#{bindings.Impexp_SoCnfTpdipartimentaleView1Iterator.estimatedRowCount lt 2||(sessionScope.LINK_INV &amp;&amp; sessionScope.scr != 'CI')}"
+                                                                shortDesc="#{bindings.tpdip.hints.tooltip}" id="soc1"
+                                                                valueChangeListener="#{Impexp_appuntamentiAction.selectTpdip}"
+                                                                valuePassThru="true" autoSubmit="true">
+                                                <f:selectItems value="#{bindings.tpdip.items}" id="si1"/>
+                                                <f:validator binding="#{bindings.tpdip.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneChoice value="#{bindings.idcentro.inputValue}"
+                                                                label="Centro di destinazione"
+                                                                styleClass="choiceInTable"
+                                                                required="#{bindings.idcentro.hints.mandatory}"
+                                                                shortDesc="#{bindings.idcentro.hints.tooltip}" id="soc2"
+                                                                visible="#{bindings.Impexp_SoCnfCentriImpexpView1Iterator.estimatedRowCount gt 0}"
+                                                                valueChangeListener="#{Impexp_appuntamentiAction.selectOnlyCentro}"
+                                                                valuePassThru="true" autoSubmit="true"
+                                                                partialTriggers="soc1">
+                                                <f:selectItems value="#{bindings.idcentro.items}" id="si2"/>
+                                                <f:validator binding="#{bindings.idcentro.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:panelLabelAndMessage label="Data appuntamento dal*" id="plam1">
+                                                <af:panelGroupLayout id="pgl2" layout="horizontal">
+                                                    <af:inputDate value="#{bindings.data.inputValue}"
+                                                                  disabled="#{sessionScope.LINK_INV}"
+                                                                  columns="#{bindings.data.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.data.hints.tooltip}" id="id2">
+                                                        <f:validator binding="#{bindings.data.validator}"/>
+                                                        <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                                    </af:inputDate>
+                                                    <h:outputText value="al" id="ot1"/>
+                                                    <af:inputDate value="#{bindings.data_max.inputValue}"
+                                                                  disabled="#{sessionScope.LINK_INV}"
+                                                                  columns="#{bindings.data_max.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.data_max.hints.tooltip}"
+                                                                  id="id3">
+                                                        <f:validator binding="#{bindings.data_max.validator}"/>
+                                                        <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                                    </af:inputDate>
+                                                </af:panelGroupLayout>
+                                            </af:panelLabelAndMessage>
+                                            <af:outputFormatted value="* Data inserimento referto, per gli hpv positivi"
+                                                                id="of1" styleUsage="inContextBranding"
+                                                                rendered="#{sessionScope.scr eq 'CI'}"
+                                                                inlineStyle="font-size:x-small;"/>
+                                            <af:selectOneChoice value="#{bindings.centro_prel.inputValue}"
+                                                                label="Centro dell'appuntamento"
+                                                                styleClass="choiceInTable"
+                                                                disabled="#{sessionScope.LINK_INV}"
+                                                                required="#{bindings.centro_prel.hints.mandatory}"
+                                                                shortDesc="#{bindings.centro_prel.hints.tooltip}"
+                                                                id="soc3" unselectedLabel="">
+                                                <f:selectItems value="#{bindings.centro_prel.items}" id="si3"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneChoice value="#{bindings.livello.inputValue}"
+                                                                label="Livello inviti"
+                                                                required="#{bindings.livello.hints.mandatory}"
+                                                                disabled="#{sessionScope.LINK_INV}"
+                                                                styleClass="choiceInTable"
+                                                                shortDesc="#{bindings.livello.hints.tooltip}" id="soc4"
+                                                                partialTriggers="soc1">
+                                                <f:selectItems value="#{bindings.livello.items}" id="si4"/>
+                                                <f:validator binding="#{bindings.livello.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneChoice label="Inviti" id="soc5"
+                                                                value="#{bindings.inviti_hpv.inputValue}"
+                                                                rendered="#{sessionScope.HPV==true}"
+                                                                styleClass="choiceInTable"
+                                                                disabled="#{sessionScope.LINK_INV || bindings.Test.inputValue != null }"
+                                                                partialTriggers="soc1">
+                                                <af:selectItem label="qualsiasi" value="-1" id="si5"/>
+                                                <af:selectItem label="solo pap-test" value="0" id="si6"/>
+                                                <af:selectItem label="solo HPV" value="1" id="si7"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneRadio label="Tipo di export" id="sor1"
+                                                               value="#{bindings.op_type.inputValue}"
+                                                               rendered="#{!sessionScope.LINK_INV==true}"
+                                                               disabled="#{bindings.Tipo.inputValue != null}"
+                                                               valuePassThru="true" autoSubmit="true"
+                                                               partialTriggers="soc1">
+                                                <af:selectItem label="appuntamenti" value="0" id="si8"
+                                                               rendered="#{sessionScope.SOExportAppuntamenti==true}"/>
+                                                <af:selectItem label="accettazioni" value="1" id="si9"
+                                                               rendered="#{sessionScope.SOExportAccettazioni==true}"/>
+                                                <af:selectItem label="cancellazioni" value="2" id="si10"
+                                                               rendered="#{sessionScope.SOExportCancellazioni==true}"/>
+                                                <af:selectItem label="HPV positivi" value="3" id="si11"
+                                                               rendered="#{sessionScope.HPV==true?(sessionScope.SOExportAppuntamenti==true or sessionScope.SOExportAccettazioni==true) : false}"/>
+                                            </af:selectOneRadio>
+                                            <af:inputText value="#{bindings.cognome.inputValue}" label="Cognome"
+                                                          rendered="#{sessionScope.LINK_INV}" disabled="true"
+                                                          columns="#{bindings.cognome.hints.displayWidth}"
+                                                          maximumLength="#{bindings.cognome.hints.precision}"
+                                                          shortDesc="#{bindings.cognome.hints.tooltip}" id="it1"/>
+                                            <af:inputText value="#{bindings.nome.inputValue}" label="Nome"
+                                                          rendered="#{sessionScope.LINK_INV}" disabled="true"
+                                                          columns="#{bindings.nome.hints.displayWidth}"
+                                                          maximumLength="#{bindings.nome.hints.precision}"
+                                                          shortDesc="#{bindings.nome.hints.tooltip}" id="it2"/>
+                                            <af:inputText value="#{bindings.codts.inputValue}" label="Chiave"
+                                                          rendered="#{sessionScope.LINK_INV}" disabled="true"
+                                                          columns="#{bindings.codts.hints.displayWidth}"
+                                                          maximumLength="#{bindings.codts.hints.precision}"
+                                                          shortDesc="#{bindings.codts.hints.tooltip}" id="it3"/>
+                                            <af:spacer width="10" height="30" id="s2"/>
+                                            <af:button text="Esporta" id="b1"
+                                                       actionListener="#{Impexp_appuntamentiAction.export}"/>
+                                        </af:panelFormLayout>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:switcher>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Export appuntamenti/accettazioni/cancellazioni"/>
+                <f:attribute name="navigation" value="#{Impexp_appuntamentiAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

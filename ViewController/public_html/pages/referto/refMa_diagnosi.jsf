@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.refMa_diagnosiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.DIAGNOSI_PATOLOGICA_PEGGIORE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{RefMa_diagnosiAction.diagnosiForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="220px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl5" layout="vertical">
+                                <af:panelBox text="PanelBox1" id="pt_pb18" showHeader="never"
+                                             inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                             styleClass="no_border">
+                                    <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                         inlineStyle="background-color:#3a76cb; padding-left:20px;" styleClass="AFStretchWidth">
+                                        <af:panelGroupLayout id="pgl88">
+                                            <af:icon name="folder" id="i28" styleClass="banner_closed" rendered="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                            <af:icon name="folder" id="i18" styleClass="banner_open" rendered="#{bindings.Completo.inputValue=='1'?false:true}"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pt_pgl118" layout="vertical"
+                                                             inlineStyle="background-color:#3a76cb;">
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                            id="pt_ol18"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"
+                                                            rendered="#{!sessionScope.SONoDatiSensibili==true and sessionScope.showTabs}"/>
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                            id="pt_oa200"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"
+                                                            rendered="#{sessionScope.SOAccessoAnonimo==true and sessionScope.showTabs}"/>
+                                            <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                            id="ol18"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="Raccomandazione: #{bindings.Descrizione1.inputValue==null? bindings.Descrizione.inputValue : bindings.Descrizione1.inputValue}"
+                                                            id="ol28"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pgl913" halign="end" rendered="#{bindings.Idint.attributeValue==null?false:true}">
+                                            <af:panelLabelAndMessage id="plam31">
+                                                <af:icon name="Intchiusi" id="i323332"
+                                                         styleClass="#{bindings.Intchiusi.inputValue==1?'checked_box':'unchecked_box'}"/>
+                                                <f:facet name="end">
+                                                    <af:outputLabel value="Intervento/i chiuso/i" id="ol33"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                </f:facet>
+                                            </af:panelLabelAndMessage>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                    <af:toolbar id="t23">
+                                        <af:button text="Anamnesi" id="b103" action="#{MenuUtilBean.doAction('acc_toMA_Anamnesi', RefMa_diagnosiAction, 'tsk=view_accMa_anamPageDef')}"
+                                                    rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Attivo.attributeValue=='1'?true:false)}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="100" height="10" id="s69"/>
+                                    <af:toolbar id="t1">
+                                        <af:button text="Chiudi" id="b3" action="#{RefMa_diagnosiAction.onRollback}" immediate="true"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" layout="scroll">
+                                <af:panelFormLayout id="pfl1" rows="7">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.CDxEsito.inputValue}"
+                                                        label="#{bindings.CDxEsito.label}"
+                                                        required="#{bindings.CDxEsito.hints.mandatory}"
+                                                        shortDesc="#{bindings.CDxEsito.hints.tooltip}" id="soc1"
+                                                        styleClass="choiceInTable" disabled="true"
+                                                        unselectedLabel="#{''}">
+                                        <f:selectItems value="#{bindings.CDxEsito.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.CDxEsito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.CSxEsito.inputValue}"
+                                                        label="#{bindings.CSxEsito.label}"
+                                                        required="#{bindings.CSxEsito.hints.mandatory}"
+                                                        shortDesc="#{bindings.CSxEsito.hints.tooltip}" id="soc2"
+                                                        styleClass="choiceInTable" disabled="true"
+                                                        unselectedLabel="#{''}">
+                                        <f:selectItems value="#{bindings.CSxEsito.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.CSxEsito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s1"/>
+                                    <af:selectOneChoice value="#{bindings.ADxEsito.inputValue}"
+                                                        label="#{bindings.ADxEsito.label}"
+                                                        required="#{bindings.ADxEsito.hints.mandatory}"
+                                                        shortDesc="#{bindings.ADxEsito.hints.tooltip}" id="soc3"
+                                                        styleClass="choiceInTable" disabled="true"
+                                                        unselectedLabel="#{''}">
+                                        <f:selectItems value="#{bindings.ADxEsito.items}" id="si3"/>
+                                        <f:validator binding="#{bindings.ADxEsito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.ASxEsito.inputValue}"
+                                                        label="#{bindings.ASxEsito.label}"
+                                                        required="#{bindings.ASxEsito.hints.mandatory}"
+                                                        shortDesc="#{bindings.ASxEsito.hints.tooltip}" id="soc4"
+                                                        styleClass="choiceInTable" disabled="true"
+                                                        unselectedLabel="#{''}">
+                                        <f:selectItems value="#{bindings.ASxEsito.items}" id="si4"/>
+                                        <f:validator binding="#{bindings.ASxEsito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s2"/>
+                                    <af:table value="#{bindings.Ref_SoInterventomammoDiagnosiView1.collectionModel}"
+                                              var="row" rows="#{bindings.Ref_SoInterventomammoDiagnosiView1.rangeSize}"
+                                              emptyText="#{bindings.Ref_SoInterventomammoDiagnosiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Ref_SoInterventomammoDiagnosiView1.rangeSize}"
+                                              id="t2" width="400px" columnStretching="last">
+                                        <af:column headerText="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.NInt.label}"
+                                                   id="c1">
+                                            <af:outputText value="#{row.NInt}"
+                                                           shortDesc="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.NInt.tooltip}"
+                                                           id="ot1">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.NInt.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.Dtistologia.label}"
+                                                   id="c2">
+                                            <af:outputText value="#{row.Dtistologia}"
+                                                           shortDesc="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.Dtistologia.tooltip}"
+                                                           id="ot2">
+                                                <af:convertDateTime pattern="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.Dtistologia.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.Descrizione.label}"
+                                                   id="c3" noWrap="false">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Ref_SoInterventomammoDiagnosiView1.hints.Descrizione.tooltip}"
+                                                           id="ot3"/>
+                                        </af:column>
+                                    </af:table>
+                                    <af:selectOneRadio value="#{bindings.DiagnosiPeggiore.inputValue}"
+                                                       label="#{bindings.DiagnosiPeggiore.label}"
+                                                       disabled="true"
+                                                       required="#{bindings.DiagnosiPeggiore.hints.mandatory}"
+                                                       shortDesc="#{bindings.DiagnosiPeggiore.hints.tooltip}" id="sor1">
+                                        <f:selectItems value="#{bindings.DiagnosiPeggiore.items}" id="si5"/>
+                                        <f:validator binding="#{bindings.DiagnosiPeggiore.validator}"/>
+                                    </af:selectOneRadio>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Diagnosi patologica peggiore"/>
+                <f:attribute name="navigation" value="#{RefMa_diagnosiAction}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

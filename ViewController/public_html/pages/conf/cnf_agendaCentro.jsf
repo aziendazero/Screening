@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_agendaCentro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.agendaForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="vertical" styleClass="AFStretchWidth">
+                                <af:link text="Agenda" id="l1" action="#{Cnf_centriAction.onAgendaGiorno}"/>
+                                <af:panelGridLayout id="pgl5">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="100%" marginEnd="5px" id="gc1"
+                                                     halign="center">
+                                            <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                                label="Centro di prelievo:"
+                                                                required="#{bindings.centro.hints.mandatory}"
+                                                                shortDesc="#{bindings.centro.hints.tooltip}" id="soc4"
+                                                                autoSubmit="true"
+                                                                valueChangeListener="#{viewScope.Cnf_agendaBean.selectCentro}"
+                                                                valuePassThru="true" styleClass="choiceInTable"
+                                                                unselectedLabel="Selezionare un centro di prelievo">
+                                                <f:selectItems value="#{bindings.centro.items}" id="si17"/>
+                                                <f:validator binding="#{bindings.centro.validator}"/>
+                                            </af:selectOneChoice>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                                <af:showDetail disclosed="#{'show'==sessionScope.hs_generazione_agenda}" id="sd1"
+                                               rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}"
+                                               disclosedText="Generazione automatica"
+                                               undisclosedText="Generazione automatica" styleClass="AFStretchWidth">
+                                    <af:decorativeBox id="db1" theme="dark" styleClass="AFStretchWidth">
+                                        <f:facet name="top"/>
+                                        <f:facet name="center">
+                                            <af:panelGroupLayout id="pgl3">
+                                                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                                    <af:inputText label="Genera n°" id="it1"
+                                                                  value="#{viewScope.Cnf_agendaBean.n_fasce}"/>
+                                                    <af:spacer width="10" height="10" id="s2"/>
+                                                    <af:inputText label="fasce di durata" id="it2"
+                                                                  value="#{viewScope.Cnf_agendaBean.durata}"/>
+                                                    <af:spacer width="10" height="10" id="s3"/>
+                                                    <af:inputText label="minuti a partire dalle ore" id="it3"
+                                                                  value="#{viewScope.Cnf_agendaBean.ore}"/>
+                                                    <af:inputText label=":" id="it4" value="#{viewScope.Cnf_agendaBean.minuti}"/>
+                                                </af:panelGroupLayout>
+                                                <af:spacer width="10" height="10" id="s4"/>
+                                                <af:panelGroupLayout id="pgl4" layout="horizontal">
+                                                    <af:inputText label="con disponibilità di n°" id="it5"
+                                                                  value="#{viewScope.Cnf_agendaBean.disponibilita}"/>
+                                                    <af:spacer width="10" height="10" id="s5"/>
+                                                    <af:selectOneChoice label="posti per il giorno"
+                                                                        value="#{viewScope.Cnf_agendaBean.giorno}" id="soc2"
+                                                                        styleClass="choiceInTable">
+                                                        <af:selectItem label="LUN-VEN" value="0" id="si2"/>
+                                                        <af:selectItem label="LUN" value="2" id="si3"/>
+                                                        <af:selectItem label="MAR" value="3" id="si4"/>
+                                                        <af:selectItem label="MER" value="4" id="si5"/>
+                                                        <af:selectItem label="GIO" value="5" id="si6"/>
+                                                        <af:selectItem label="VEN" value="6" id="si7"/>
+                                                        <af:selectItem label="SAB" value="7" id="si8"/>
+                                                        <af:selectItem label="DOM" value="1" id="si9"/>
+                                                    </af:selectOneChoice>
+                                                    <af:spacer width="10" height="10" id="s6"/>
+                                                    <af:selectBooleanCheckbox
+                                                                              label="nascoste al cittadino" id="sbc1"
+                                                                              value="#{viewScope.Cnf_agendaBean.nascosto}"
+                                                                              rendered="#{sessionScope.otp==true}"/>
+                                                    <af:spacer width="50" height="10" id="s8"/>
+                                                    <af:button text="Genera" id="b1"
+                                                               actionListener="#{viewScope.Cnf_agendaBean.generate}"/>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </f:facet>
+                                    </af:decorativeBox>
+                                </af:showDetail>
+                                <af:spacer width="10" height="10" id="s7"/>
+                                <af:table value="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.collectionModel}"
+                                          var="row" rows="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.rangeSize}"
+                                          emptyText="Nessuna fascia oraria inserita per il centro selezionato"
+                                          rowBandingInterval="0"
+                                          fetchSize="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.rangeSize}" id="t1"
+                                          styleClass="AFStretchWidth">
+                                    <af:column headerText="Giorno"
+                                               id="c1">
+                                        <af:selectOneChoice id="soc3" value="#{row.Ggsettimana}" readOnly="true"
+                                                            styleClass="choiceInTable">
+                                            <af:selectItem label="LUN" value="2" id="si10"/>
+                                            <af:selectItem label="MAR" value="3" id="si11"/>
+                                            <af:selectItem label="MER" value="4" id="si12"/>
+                                            <af:selectItem label="GIO" value="5" id="si13"/>
+                                            <af:selectItem label="VEN" value="6" id="si14"/>
+                                            <af:selectItem label="SAB" value="7" id="si15"/>
+                                            <af:selectItem label="DOM" value="1" id="si16"/>
+                                        </af:selectOneChoice>
+                                    </af:column>
+                                    <af:column headerText="Dalle ore"
+                                               id="c2">
+                                        <af:outputText value="#{row.Inizio}"
+                                                       shortDesc="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.hints.Inizio.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="Alle ore"
+                                               id="c3">
+                                        <af:outputText value="#{row.Fine}"
+                                                       shortDesc="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.hints.Fine.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="Disponibilità totale"
+                                               id="c4">
+                                        <af:outputText value="#{row.Disponibilita}"
+                                                       shortDesc="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.hints.Disponibilita.tooltip}"
+                                                       id="ot4">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Cnf_SoAgendaCentroSettimanaleView2.hints.Disponibilita.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                </af:table>
+                                <af:spacer width="10" height="20" id="s9"/>
+                                <af:panelCollection id="pc1" featuresOff="detach freeze wrap"
+                                                    styleClass="AFStretchWidth">
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t3" rendered="#{sessionScope.SOGestioneConfigurazioneCentri==true}">
+                                            <af:group id="g1">
+                                                <af:button text="Modifica" id="b2" action="creatEditAgenda" actionListener="#{Cnf_centriAction.onDettAgenda}">
+                                                    <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                                </af:button>
+                                                <af:button text="Cancella" id="b3">
+                                                    <af:showPopupBehavior popupId="p1"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                          partialTriggers="t2">
+                                                    <af:dialog id="d2" affirmativeTextAndAccessKey="Cancella"
+                                                               cancelTextAndAccessKey="Annulla"
+                                                               dialogListener="#{ParentBackingBean.deleteAction}"
+                                                               partialTriggers="t2" title="Cancella fascia">
+                                                        <f:facet name="buttonBar"/>
+                                                        <af:outputText value="Cancellare definitivamente la seguente fascia oraria?" id="ot1"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:group>
+                                            <af:button text="Nuovo" id="b4" action="creatEditAgenda">
+                                                <af:setPropertyListener from="create" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Cancella tutto" id="b5"
+                                                       actionListener="#{viewScope.Cnf_agendaBean.deleteAll}"
+                                                       partialTriggers="::t1"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <af:table value="#{bindings.Cnf_SoAgendacentroView2.collectionModel}" var="row"
+                                              rows="#{bindings.Cnf_SoAgendacentroView2.rangeSize}"
+                                              emptyText="Nessuna fascia oraria inserita per il centro selezionato"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Cnf_SoAgendacentroView2.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Cnf_SoAgendacentroView2.collectionModel.makeCurrent}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Cnf_SoAgendacentroView2.rangeSize}" id="t2"
+                                              autoHeightRows="10" scrollPolicy="page"
+                                              binding="#{Cnf_centriAction.tabAgenda}">
+                                        <af:column headerText="Giorno della settimana" id="c5">
+                                            <af:selectOneChoice id="soc1" readOnly="true"
+                                                                value="#{row.Ggsettimana}" styleClass="choiceInTable">
+                                                <af:selectItem label="LUN" value="2" id="si1"/>
+                                                <af:selectItem label="MAR" value="3" id="si18"/>
+                                                <af:selectItem label="MER" value="4" id="si19"/>
+                                                <af:selectItem label="GIO" value="5" id="si20"/>
+                                                <af:selectItem label="VEN" value="6" id="si21"/>
+                                                <af:selectItem label="SAB" value="7" id="si22"/>
+                                                <af:selectItem label="DOM" value="1" id="si23"/>
+                                            </af:selectOneChoice>
+                                        </af:column>
+                                        <af:column headerText="Orario" id="c6">
+                                            <af:outputText value="#{row.bindings.Oraapp.inputValue}:#{row.bindings.Minapp.inputValue}"
+                                                           shortDesc="#{bindings.Cnf_SoAgendacentroView2.hints.Oraapp.tooltip}"
+                                                           id="it7">
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="Disponibilità" id="c8">
+                                            <af:outputText value="#{row.bindings.Disporaria.inputValue}"
+                                                           shortDesc="#{bindings.Cnf_SoAgendacentroView2.hints.Disporaria.tooltip}"
+                                                           id="it9">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoAgendacentroView2.hints.Disporaria.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="Nascosto al cittadino" id="c9">
+                                            <af:selectBooleanCheckbox value="#{row.bindings.Nascosto.inputValue}"
+                                                                      label="#{row.bindings.Nascosto.label}"
+                                                                      shortDesc="#{bindings.Cnf_SoAgendacentroView2.hints.Nascosto.tooltip}"
+                                                                      id="sbc2" disabled="true"/>
+                                        </af:column>
+                                    </af:table>
+                                    <f:facet name="secondaryToolbar">
+                                        <af:toolbar id="t4">
+                                            <af:group id="g3">
+                                                <af:selectOneChoice label="Visualizza" id="soc5"
+                                                                    value="#{Cnf_agendaBean.filtro}"
+                                                                    autoSubmit="true"
+                                                                    valueChangeListener="#{Cnf_agendaBean.filter}"
+                                                                    styleClass="choiceInTable">
+                                                    <af:selectItem label="Tutti" value="0" id="si24"/>
+                                                    <af:selectItem label="LUN" value="2" id="si25"/>
+                                                    <af:selectItem label="MAR" value="3" id="si26"/>
+                                                    <af:selectItem label="MER" value="4" id="si27"/>
+                                                    <af:selectItem label="GIO" value="5" id="si28"/>
+                                                    <af:selectItem label="VEN" value="6" id="si29"/>
+                                                    <af:selectItem label="SAB" value="7" id="si30"/>
+                                                    <af:selectItem label="DOM" value="1" id="si31"/>
+                                                </af:selectOneChoice>
+                                            </af:group>
+                                        </af:toolbar>
+                                    </f:facet>
+                                </af:panelCollection>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Agenda teorica"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

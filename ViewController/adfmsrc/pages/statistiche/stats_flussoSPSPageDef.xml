@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="stats_flussoSPSPageDef"
+                Package="pages.statistiche">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempStatistichePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Stats_paramBeanDataControl"
+              id="Stats_paramBeanDataControlIterator"/>
+    <iterator Binds="ImpExp_SoAziendaView1" RangeSize="-1" DataControl="ImpExp_AppModuleDataControl"
+              id="ImpExp_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="25" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroPrelView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoCnfCentroPrelView1Iterator"/>
+    <iterator Binds="Cnf_SoAmbIstricView1" RangeSize="25" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoAmbIstricView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroRefView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoCnfCentroRefView1Iterator"/>
+    <iterator Binds="Impexp_SoLogTransferSPSView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoLogTransferSPSView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="SPS_ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="ImpExp_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="SPS_ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_dal">
+      <AttrNames>
+        <Item Value="SPS_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_al">
+      <AttrNames>
+        <Item Value="SPS_al"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="SPS_centro_prel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroPrelView1Iterator"
+          NullValueFlag="start" NullValueId="SPS_centro_prel_null">
+      <AttrNames>
+        <Item Value="SPS_centro_prel"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Cnf_SoAmbIstricView1Iterator" id="Cnf_SoAmbIstricView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoAmbIstricView" Name="Cnf_SoAmbIstricView10">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Descrbreve"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfCentroRefView1Iterator" id="Cnf_SoCnfCentroRefView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfCentroRefView" Name="Cnf_SoCnfCentroRefView10">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Descrbreve"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="SPS_centro_ref" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroRefView1Iterator"
+          NullValueFlag="start" NullValueId="SPS_centro_ref_null">
+      <AttrNames>
+        <Item Value="SPS_centro_ref"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="Stats_paramBeanDataControlIterator" id="SPS_prestazione1" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="SPS_prestazione1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_label1">
+      <AttrNames>
+        <Item Value="SPS_label1"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_paramBeanDataControlIterator" id="SPS_prestazione2" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="SPS_prestazione2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_label2">
+      <AttrNames>
+        <Item Value="SPS_label2"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_paramBeanDataControlIterator" id="SPS_prestazione3" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="SPS_prestazione3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_label3">
+      <AttrNames>
+        <Item Value="SPS_label3"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_paramBeanDataControlIterator" id="SPS_prestazione4" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="SPS_prestazione4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SPS_label4">
+      <AttrNames>
+        <Item Value="SPS_label4"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Cnf_SoCnfTpinvitoView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfTpinvitoView" Name="Cnf_SoCnfTpinvitoView10">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoLogTransferSPSView1Iterator" id="Impexp_SoLogTransferSPSView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoLogTransferView" Name="Impexp_SoLogTransferSPSView10">
+        <AttrNames>
+          <Item Value="Data"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Impexp_SoLogTransferSPSView1Iterator" id="Execute" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="pages.statistiche.common.stats_flussoSPSPageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

@@ -1,0 +1,563 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <af:document title="refCo_intermedio_dett.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:switcher id="s1" facetName="#{bindings.Ref_SoEndoscopiaIntermView1.estimatedRowCount gt 0?'esiste':'da_creare'}">
+                        <f:facet name="da_creare">
+                            <af:showDetailHeader messageType="info" text="Nessun referto intermedio inserito" disclosed="true"
+                                                 id="sdh1" styleClass="AFStretchWidth"
+                                                 inlineStyle="font-weight:bold; background-color:InfoBackground;">
+                                <af:outputFormatted value="Per inserire un referto intermedio cliccare su 'Nuovo referto'" id="of1"
+                                                    styleUsage="instruction" rendered="true"
+                                                    inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:button text="Nuovo referto" id="bcreateref"
+                                                   actionListener="#{RefCo_intermediDettAction.onCreateEndo}"/>
+                                        <af:button text="Chiudi" id="b2"
+                                                   action="#{RefCo_intermediDettAction.onRollback}"/>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:showDetailHeader>
+                        </f:facet>
+                        <f:facet name="esiste">
+                            <af:panelStretchLayout id="psl1" topHeight="110px">
+                                <f:facet name="start"/>
+                                <f:facet name="end"/>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pgl1" layout="vertical">
+                                        <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                                     inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                                     styleClass="no_border">
+                                            <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                                 inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                                 styleClass="AFStretchWidth">
+                                                <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                                     inlineStyle="background-color:#3a76cb;">
+                                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} nato il #{bindings.DataNascita.inputValue}"
+                                                                    id="pt_ol1" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                                    id="pt_ol112" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </af:panelBox>
+                                        <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                            <af:toolbar id="t1">
+                                                <af:button text="Conferma" id="b1"
+                                                           action="#{RefCo_referto1livAction.onConfirm}"
+                                                           disabled="#{bindings.Importata.inputValue=='1'?true:false}"/>
+                                                <af:button text="Annulla" id="b3"
+                                                           action="#{RefCo_intermediDettAction.onRollback}"
+                                                           immediate="true"/>
+                                                <af:button text="Applica" id="b4"
+                                                           disabled="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                           actionListener="#{RefCo_referto1livAction.onApply}"/>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pgl6" layout="horizontal" halign="end">
+                                            <af:toolbar id="t4">
+                                                <af:button text="Referto intermedio completo" id="b7"
+                                                           disabled="#{bindings.Importata.inputValue=='1' or bindings.Completa.inputValue=='1'?true:false}"
+                                                           actionListener="#{RefCo_intermediDettAction.onComplete}"/>
+                                                <af:button text="Importa" id="b5" disabled="#{bindings.Importata.inputValue=='1' or bindings.Completa.inputValue=='0'?true:false}"/>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="bottom"/>
+                                <f:facet name="center">
+                                    <af:panelGroupLayout id="pgl2" layout="scroll">
+                                        <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                                            featuresOff="detach freeze wrap">
+                                            <f:facet name="menus"/>
+                                            <f:facet name="toolbar">
+                                                <af:toolbar id="t5">
+                                                    <af:button text="Nuovo" id="b6"
+                                                               actionListener="#{RefCo_intermediDettAction.onInsertEndo}"/>
+                                                </af:toolbar>
+                                            </f:facet>
+                                            <f:facet name="statusbar"/>
+                                            <af:table value="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel}"
+                                                      var="row" rows="#{bindings.Ref_SoEndoscopiaIntermView1.rangeSize}"
+                                                      emptyText="#{bindings.Ref_SoEndoscopiaIntermView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      selectedRowKeys="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel.selectedRow}"
+                                                      selectionListener="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel.makeCurrent}"
+                                                      rowSelection="single"
+                                                      fetchSize="#{bindings.Ref_SoEndoscopiaIntermView1.rangeSize}"
+                                                      id="t2" columnStretching="last">
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.label}"
+                                                           id="c1">
+                                                    <af:outputText value="#{row.Dtendo}"
+                                                                   shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.tooltip}"
+                                                                   id="ot1">
+                                                        <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.label}"
+                                                           id="c2">
+                                                    <af:outputText value="#{row.Dtrefisto}"
+                                                                   shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.tooltip}"
+                                                                   id="ot2">
+                                                        <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.label}"
+                                                           id="c3">
+                                                    <af:outputText value="#{row.NPolipiPrelevati}"
+                                                                   shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.tooltip}"
+                                                                   id="ot3">
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Completa.label}"
+                                                           id="c4">
+                                                    <af:selectBooleanCheckbox selected="#{row.Completa eq 1}"
+                                                                              readOnly="true" id="sbc4"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Importata.label}"
+                                                           id="c5">
+                                                    <af:selectBooleanCheckbox selected="#{row.Importata eq 1}"
+                                                                              readOnly="true" id="sbc3"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.label}"
+                                                           id="c6">
+                                                    <af:outputText value="#{row.Dtimport}"
+                                                                   shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.tooltip}"
+                                                                   id="ot6">
+                                                        <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.format}"/>
+                                                    </af:outputText>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Errore.label}"
+                                                           id="c7">
+                                                    <af:outputText value="#{row.Errore}"
+                                                                   shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Errore.tooltip}"
+                                                                   id="ot7"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:panelCollection>
+                                        <af:panelGridLayout id="pgl4">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                                <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                                    <af:panelFormLayout id="pfl1" rows="9">
+                                                        <f:facet name="footer"/>
+                                                        <af:inputDate value="#{bindings.Dtendo.inputValue}"
+                                                                      label="#{bindings.Dtendo.hints.label}"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      required="#{bindings.Dtendo.hints.mandatory}"
+                                                                      columns="#{bindings.Dtendo.hints.displayWidth}"
+                                                                      shortDesc="#{bindings.Dtendo.hints.tooltip}"
+                                                                      id="id1">
+                                                            <f:validator binding="#{bindings.Dtendo.validator}"/>
+                                                            <af:convertDateTime pattern="#{bindings.Dtendo.format}"/>
+                                                        </af:inputDate>
+                                                        <af:selectOneChoice value="#{bindings.Idmedico.inputValue}"
+                                                                            label="#{bindings.Idmedico.label}"
+                                                                            readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                            required="#{bindings.Idmedico.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Idmedico.hints.tooltip}"
+                                                                            id="soc1">
+                                                            <f:selectItems value="#{bindings.Idmedico.items}" id="si1"/>
+                                                            <f:validator binding="#{bindings.Idmedico.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneChoice value="#{bindings.Qualita.inputValue}"
+                                                                            label="#{bindings.Qualita.label}"
+                                                                            readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                            required="#{bindings.Qualita.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Qualita.hints.tooltip}"
+                                                                            id="soc2">
+                                                            <f:selectItems value="#{bindings.Qualita.items}" id="si2"/>
+                                                            <f:validator binding="#{bindings.Qualita.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneChoice value="#{bindings.Regione.inputValue}"
+                                                                            label="#{bindings.Regione.label}"
+                                                                            readOnly="${bindings.Importata.inputValue=='1'?true:false}"
+                                                                            required="#{bindings.Regione.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Regione.hints.tooltip}"
+                                                                            id="soc3"
+                                                                            valueChangeListener="#{RefCo_intermediDettAction.onSetEstensione}"
+                                                                            valuePassThru="true" autoSubmit="true">
+                                                            <f:selectItems value="#{bindings.Regione.items}" id="si3"/>
+                                                            <f:validator binding="#{bindings.Regione.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneRadio value="#{bindings.Estensione.inputValue}"
+                                                                        disabled="true"
+                                                                      label="#{bindings.Estensione.hints.label}" id="sor1"
+                                                                           partialTriggers="soc3">
+                                                            <af:selectItem label="incompleta" value="0" id="si4"/>
+                                                            <af:selectItem label="completa" value="1" id="si5"/>
+                                                        </af:selectOneRadio>
+                                                        <af:selectOneChoice value="#{bindings.Motivo.inputValue}"
+                                                                            label="#{bindings.Motivo.label}"
+                                                                            required="#{bindings.Motivo.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Motivo.hints.tooltip}"
+                                                                            readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                            disabled="#{bindings.Estensione.inputValue=='1'}"
+                                                                            id="soc4" partialTriggers="soc3"
+                                                                            autoSubmit="true" valuePassThru="true">
+                                                            <f:selectItems value="#{bindings.Motivo.items}" id="si6"/>
+                                                            <f:validator binding="#{bindings.Motivo.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:inputText value="#{bindings.AltroMotivo.inputValue}"
+                                                                      label="#{bindings.AltroMotivo.hints.label}"
+                                                                      required="#{bindings.AltroMotivo.hints.mandatory}"
+                                                                      columns="60"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      disabled="#{bindings.Estensione.attributeValue=='1'?'true': bindings.Motivo.attributeValue!=ConstantsBean.cod_motivo_altro?'true':'false'}"
+                                                                      maximumLength="#{bindings.AltroMotivo.hints.precision}"
+                                                                      shortDesc="#{bindings.AltroMotivo.hints.tooltip}"
+                                                                      id="it1" rows="3" partialTriggers="soc3 soc4">
+                                                            <f:validator binding="#{bindings.AltroMotivo.validator}"/>
+                                                        </af:inputText>
+                                                        <af:inputText value="#{bindings.NPolipiPrelevati.inputValue}"
+                                                                      label="#{bindings.NPolipiPrelevati.hints.label}"
+                                                                      required="#{bindings.NPolipiPrelevati.hints.mandatory}"
+                                                                      columns="#{bindings.NPolipiPrelevati.hints.displayWidth}"
+                                                                      maximumLength="#{bindings.NPolipiPrelevati.hints.precision}"
+                                                                      shortDesc="#{bindings.NPolipiPrelevati.hints.tooltip}"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      id="it2">
+                                                            <f:validator binding="#{bindings.NPolipiPrelevati.validator}"/>
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.NPolipiPrelevati.format}"/>
+                                                        </af:inputText>
+                                                        <af:inputText value="#{bindings.NoteEndo.inputValue}"
+                                                                      label="#{bindings.NoteEndo.hints.label}"
+                                                                      required="#{bindings.NoteEndo.hints.mandatory}"
+                                                                      columns="60"
+                                                                      maximumLength="#{bindings.NoteEndo.hints.precision}"
+                                                                      shortDesc="#{bindings.NoteEndo.hints.tooltip}"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      id="it3" rows="3">
+                                                            <f:validator binding="#{bindings.NoteEndo.validator}"/>
+                                                        </af:inputText>
+                                                    </af:panelFormLayout>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                                    <af:panelFormLayout id="pfl2" rows="7">
+                                                        <f:facet name="footer"/>
+                                                        <af:selectOneRadio value="#{bindings.Sedazione.inputValue}"
+                                                                        disabled="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                        label="#{bindings.Sedazione.hints.label}" id="sor2"
+                                                                           autoSubmit="true" valuePassThru="true">
+                                                            <af:selectItem label="No" value="0" id="si7"/>
+                                                            <af:selectItem label="Cosciente" value="1" id="si8"/>
+                                                            <af:selectItem label="Profonda" value="2" id="si9"/>
+                                                        </af:selectOneRadio>
+                                                        <af:inputText value="#{bindings.FarmaciDosi.inputValue}"
+                                                                      label="#{bindings.FarmaciDosi.hints.label}"
+                                                                      required="#{bindings.FarmaciDosi.hints.mandatory}"
+                                                                      columns="60"
+                                                                      disabled="#{bindings.Sedazione.attributeValue=='0'}"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      maximumLength="#{bindings.FarmaciDosi.hints.precision}"
+                                                                      shortDesc="#{bindings.FarmaciDosi.hints.tooltip}"
+                                                                      id="it4" rows="3" partialTriggers="sor2">
+                                                            <f:validator binding="#{bindings.FarmaciDosi.validator}"/>
+                                                        </af:inputText>
+                                                        <af:selectOneRadio value="#{bindings.Procedura.inputValue}"
+                                                                        disabled="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                        label="#{bindings.Procedura.hints.label}" id="sor3">
+                                                            <af:selectItem label="non eseguita" value="0" id="si10"/>
+                                                            <af:selectItem label="eseguita non specificata" value="1"
+                                                                           id="si11"/>
+                                                            <af:selectItem label="biopsia" value="2" id="si12"/>
+                                                            <af:selectItem label="polipectomia" value="3" id="si13"/>
+                                                        </af:selectOneRadio>
+                                                        <af:selectOneChoice value="#{bindings.Complicanze.inputValue}"
+                                                                            label="#{bindings.Complicanze.label}"
+                                                                            required="#{bindings.Complicanze.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Complicanze.hints.tooltip}"
+                                                                            readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                            id="soc5">
+                                                            <f:selectItems value="#{bindings.Complicanze.items}"
+                                                                           id="si14"/>
+                                                            <f:validator binding="#{bindings.Complicanze.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:inputText value="#{bindings.AltreComplicanze.inputValue}"
+                                                                      label="#{bindings.AltreComplicanze.hints.label}"
+                                                                      required="#{bindings.AltreComplicanze.hints.mandatory}"
+                                                                      columns="60"
+                                                                      maximumLength="#{bindings.AltreComplicanze.hints.precision}"
+                                                                      disabled="#{bindings.Complicanze.attributeValue!=ConstantsBean.cod_compl_altro}"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      shortDesc="#{bindings.AltreComplicanze.hints.tooltip}"
+                                                                      id="it5" rows="3" partialTriggers="soc5">
+                                                            <f:validator binding="#{bindings.AltreComplicanze.validator}"/>
+                                                        </af:inputText>
+                                                        <af:selectOneChoice value="#{bindings.Indicazioni.inputValue}"
+                                                                            label="#{bindings.Indicazioni.label}"
+                                                                            required="#{bindings.Indicazioni.hints.mandatory}"
+                                                                            shortDesc="#{bindings.Indicazioni.hints.tooltip}"
+                                                                            readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                            id="soc6">
+                                                            <f:selectItems value="#{bindings.Indicazioni.items}"
+                                                                           id="si15"/>
+                                                            <f:validator binding="#{bindings.Indicazioni.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:inputText value="#{bindings.Controindicazioni.inputValue}"
+                                                                      label="#{bindings.Controindicazioni.hints.label}"
+                                                                      required="#{bindings.Controindicazioni.hints.mandatory}"
+                                                                      columns="60"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      maximumLength="#{bindings.Controindicazioni.hints.precision}"
+                                                                      shortDesc="#{bindings.Controindicazioni.hints.tooltip}"
+                                                                      id="it6" rows="3">
+                                                            <f:validator binding="#{bindings.Controindicazioni.validator}"/>
+                                                        </af:inputText>
+                                                    </af:panelFormLayout>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                        <af:panelHeader text="Polipi adenomatosi" id="ph1">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:panelGridLayout id="pgl5">
+                                                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+                                                    <af:gridCell marginStart="5px" width="50%" id="gc3">
+                                                        <af:panelFormLayout id="pfl3" rows="4">
+                                                            <f:facet name="footer"/>
+                                                            <af:inputDate value="#{bindings.Dtrefisto.inputValue}"
+                                                                          label="#{bindings.Dtrefisto.hints.label}"
+                                                                          required="#{bindings.Dtrefisto.hints.mandatory}"
+                                                                          columns="#{bindings.Dtrefisto.hints.displayWidth}"
+                                                                          shortDesc="#{bindings.Dtrefisto.hints.tooltip}"
+                                                                          readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                          id="id2">
+                                                                <f:validator binding="#{bindings.Dtrefisto.validator}"/>
+                                                                <af:convertDateTime pattern="#{bindings.Dtrefisto.format}"/>
+                                                            </af:inputDate>
+                                                            <af:selectOneChoice value="#{bindings.Patologo.inputValue}"
+                                                                                label="#{bindings.Patologo.label}"
+                                                                                required="#{bindings.Patologo.hints.mandatory}"
+                                                                                shortDesc="#{bindings.Patologo.hints.tooltip}"
+                                                                                readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                                id="soc7">
+                                                                <f:selectItems value="#{bindings.Patologo.items}"
+                                                                               id="si16"/>
+                                                                <f:validator binding="#{bindings.Patologo.validator}"/>
+                                                            </af:selectOneChoice>
+                                                            <af:inputText value="#{bindings.NPolipi.inputValue}"
+                                                                          label="#{bindings.NPolipi.hints.label}"
+                                                                          required="#{bindings.NPolipi.hints.mandatory}"
+                                                                          columns="#{bindings.NPolipi.hints.displayWidth}"
+                                                                          maximumLength="#{bindings.NPolipi.hints.precision}"
+                                                                          shortDesc="#{bindings.NPolipi.hints.tooltip}"
+                                                                          readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                          id="it7">
+                                                                <f:validator binding="#{bindings.NPolipi.validator}"/>
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.NPolipi.format}"/>
+                                                            </af:inputText>
+                                                            <af:selectOneChoice value="#{bindings.DiametroMax.inputValue}"
+                                                                                label="#{bindings.DiametroMax.label}"
+                                                                                required="#{bindings.DiametroMax.hints.mandatory}"
+                                                                                shortDesc="#{bindings.DiametroMax.hints.tooltip}"
+                                                                                readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                                id="soc8">
+                                                                <f:selectItems value="#{bindings.DiametroMax.items}"
+                                                                               id="si17"/>
+                                                                <f:validator binding="#{bindings.DiametroMax.validator}"/>
+                                                            </af:selectOneChoice>
+                                                        </af:panelFormLayout>
+                                                    </af:gridCell>
+                                                    <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                                                                 id="gc4">
+                                                        <af:inputText value="#{bindings.NoteIsto.inputValue}"
+                                                                      label="#{bindings.NoteIsto.hints.label}"
+                                                                      required="#{bindings.NoteIsto.hints.mandatory}"
+                                                                      columns="60"
+                                                                      readOnly="#{bindings.Importata.inputValue=='1'?true:false}"
+                                                                      maximumLength="#{bindings.NoteIsto.hints.precision}"
+                                                                      shortDesc="#{bindings.NoteIsto.hints.tooltip}"
+                                                                      id="it8" rows="3">
+                                                            <f:validator binding="#{bindings.NoteIsto.validator}"/>
+                                                        </af:inputText>
+                                                    </af:gridCell>
+                                                </af:gridRow>
+                                            </af:panelGridLayout>
+                                            <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                                                featuresOff="detach freeze wrap">
+                                                <f:facet name="menus"/>
+                                                <f:facet name="toolbar">
+                                                    <af:toolbar id="t7">
+                                                        <af:button text="Nuovo" id="b8"
+                                                                   actionListener="#{RefCo_intermediDettAction.onInsertPolipo}"/>
+                                                    </af:toolbar>
+                                                </f:facet>
+                                                <f:facet name="statusbar"/>
+                                                <af:table value="#{bindings.Ref_SoPolipiIntermView1.collectionModel}"
+                                                          var="row" rows="#{bindings.Ref_SoPolipiIntermView1.rangeSize}"
+                                                          emptyText="#{bindings.Ref_SoPolipiIntermView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Ref_SoPolipiIntermView1.collectionModel.selectedRow}"
+                                                          selectionListener="#{bindings.Ref_SoPolipiIntermView1.collectionModel.makeCurrent}"
+                                                          rowSelection="single"
+                                                          fetchSize="#{bindings.Ref_SoPolipiIntermView1.rangeSize}"
+                                                          id="t6">
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.IdPolipo.label}"
+                                                               id="c8" width="100">
+                                                        <af:outputText value="#{row.IdPolipo}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.IdPolipo.tooltip}"
+                                                                       id="ot4"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.DataPrelievo.label}"
+                                                               id="c9">
+                                                        <af:outputText value="#{row.DataPrelievo}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.DataPrelievo.tooltip}"
+                                                                       id="ot5">
+                                                            <af:convertDateTime pattern="#{bindings.Ref_SoPolipiIntermView1.hints.DataPrelievo.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione.label}"
+                                                               id="c10" width="120">
+                                                        <af:outputText value="#{row.Descrizione}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione.tooltip}"
+                                                                       id="ot8"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Diametro.label}"
+                                                               id="c11">
+                                                        <af:outputText value="#{row.Diametro}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Diametro.tooltip}"
+                                                                       id="ot9">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Ref_SoPolipiIntermView1.hints.Diametro.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione1.label}"
+                                                               id="c12" width="120">
+                                                        <af:outputText value="#{row.Descrizione1}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione1.tooltip}"
+                                                                       id="ot10"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione2.label}"
+                                                               id="c13" width="120">
+                                                        <af:outputText value="#{row.Descrizione2}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione2.tooltip}"
+                                                                       id="ot11"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione3.label}"
+                                                               id="c14" width="200">
+                                                        <af:outputText value="#{row.Descrizione3}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione3.tooltip}"
+                                                                       id="ot12"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Note.label}"
+                                                               id="c15" width="120">
+                                                        <af:outputText value="#{row.Note}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Note.tooltip}"
+                                                                       id="ot13"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Selezione.label}"
+                                                               id="c16">
+                                                        <af:outputText value="#{row.Selezione}"
+                                                                       shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Selezione.tooltip}"
+                                                                       id="ot14"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                            <af:panelHeader text="Dettaglio polipo" id="ph2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:panelFormLayout id="pfl4" rows="4">
+                                                    <f:facet name="footer"/>
+                                                    <af:inputText value="#{bindings.IdPolipo.inputValue}"
+                                                                  label="#{bindings.IdPolipo.hints.label}"
+                                                                  required="#{bindings.IdPolipo.hints.mandatory}"
+                                                                  columns="20"
+                                                                  maximumLength="#{bindings.IdPolipo.hints.precision}"
+                                                                  shortDesc="#{bindings.IdPolipo.hints.tooltip}"
+                                                                  id="it9" rows="1">
+                                                        <f:validator binding="#{bindings.IdPolipo.validator}"/>
+                                                    </af:inputText>
+                                                    <af:inputDate value="#{bindings.DataPrelievo.inputValue}"
+                                                                  label="#{bindings.DataPrelievo.hints.label}"
+                                                                  required="#{bindings.DataPrelievo.hints.mandatory}"
+                                                                  columns="#{bindings.DataPrelievo.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.DataPrelievo.hints.tooltip}"
+                                                                  id="id3">
+                                                        <f:validator binding="#{bindings.DataPrelievo.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.DataPrelievo.format}"/>
+                                                    </af:inputDate>
+                                                    <af:selectOneChoice value="#{bindings.Sede.inputValue}"
+                                                                        label="#{bindings.Sede.label}"
+                                                                        required="#{bindings.Sede.hints.mandatory}"
+                                                                        shortDesc="#{bindings.Sede.hints.tooltip}"
+                                                                        id="soc9">
+                                                        <f:selectItems value="#{bindings.Sede.items}" id="si18"/>
+                                                        <f:validator binding="#{bindings.Sede.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:inputText value="#{bindings.Diametro.inputValue}"
+                                                                  label="#{bindings.Diametro.hints.label}"
+                                                                  required="#{bindings.Diametro.hints.mandatory}"
+                                                                  columns="#{bindings.Diametro.hints.displayWidth}"
+                                                                  maximumLength="#{bindings.Diametro.hints.precision}"
+                                                                  shortDesc="#{bindings.Diametro.hints.tooltip}"
+                                                                  id="it10">
+                                                        <f:validator binding="#{bindings.Diametro.validator}"/>
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Diametro.format}"/>
+                                                    </af:inputText>
+                                                    <af:selectOneChoice value="#{bindings.Aspetto.inputValue}"
+                                                                        label="#{bindings.Aspetto.label}"
+                                                                        required="#{bindings.Aspetto.hints.mandatory}"
+                                                                        shortDesc="#{bindings.Aspetto.hints.tooltip}"
+                                                                        id="soc10">
+                                                        <f:selectItems value="#{bindings.Aspetto.items}" id="si19"/>
+                                                        <f:validator binding="#{bindings.Aspetto.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.Displasia.inputValue}"
+                                                                        label="#{bindings.Displasia.label}"
+                                                                        required="#{bindings.Displasia.hints.mandatory}"
+                                                                        shortDesc="#{bindings.Displasia.hints.tooltip}"
+                                                                        id="soc11">
+                                                        <f:selectItems value="#{bindings.Displasia.items}" id="si20"/>
+                                                        <f:validator binding="#{bindings.Displasia.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.Istologia.inputValue}"
+                                                                        label="#{bindings.Istologia.label}"
+                                                                        required="#{bindings.Istologia.hints.mandatory}"
+                                                                        shortDesc="#{bindings.Istologia.hints.tooltip}"
+                                                                        id="soc12">
+                                                        <f:selectItems value="#{bindings.Istologia.items}" id="si21"/>
+                                                        <f:validator binding="#{bindings.Istologia.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:inputText value="#{bindings.Note.inputValue}"
+                                                                  label="#{bindings.Note.hints.label}"
+                                                                  required="#{bindings.Note.hints.mandatory}"
+                                                                  columns="60"
+                                                                  maximumLength="#{bindings.Note.hints.precision}"
+                                                                  shortDesc="#{bindings.Note.hints.tooltip}" id="it11"
+                                                                  rows="3">
+                                                        <f:validator binding="#{bindings.Note.validator}"/>
+                                                    </af:inputText>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                        </af:panelHeader>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:switcher>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="funzionalita" value="Referto intermedio"/>
+                <f:attribute name="navigation" value="#{RefCo_intermediDettAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

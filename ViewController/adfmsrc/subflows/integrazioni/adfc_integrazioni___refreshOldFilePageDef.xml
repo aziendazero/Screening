@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="adfc_integrazioni___refreshOldFilePageDef" Package="subflows.integrazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <methodIterator Binds="findOLDFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findOLDFileListIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <methodAction id="findOLDFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findOLDFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findOLDFileList_ImpexpProviderDataControl_dataProvider_findOLDFileList_result"/>
+    <action IterBinding="findOLDFileListIterator" id="Execute" RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

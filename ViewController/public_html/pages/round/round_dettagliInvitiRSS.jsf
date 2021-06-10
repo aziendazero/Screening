@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.round.round_dettagliInvitiRSSBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.DETTAGLIO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Round_dettagliInvitiRSSAction.frmDetails}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelHeader text="#{viewcontrollerBundle.PRIMI_INVITI_DA_EFFETTUARE}" id="ph1">
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b1"
+                                               action="#{Round_dettagliInvitiRSSAction.onBack}"/>
+                                </af:group>
+                            </af:toolbar>
+                        </f:facet>
+                        <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                            featuresOff="detach freeze wrap">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3">
+                                    <af:group id="g2">
+                                        <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_ELENCO}" id="btprint1" useWindow="true" immediate="true"
+                                                windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                windowHeight="300" windowWidth="600" visible="#{sessionScope.SOStampaElenco}"
+                                                disabled="#{bindings.Round_SoSoggettiFilteredView4Iterator.estimatedRowCount>0?false:true}"
+                                                   action="dialog:printElencoSoggetti"/>
+                                        <!--af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_ELENCO}" id="b2"
+                                                   action="goToRetrieveStampa"                                                    
+                                                   disabled="#{bindings.Round_SoSoggettiFilteredView4.currentRow == null}"
+                                                   partialTriggers="t1">
+                                            <af:showPopupBehavior popupId="::underConstruction"/>
+                                        </af:button-->
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Round_SoSoggettiFilteredView4.collectionModel}" var="row"
+                                      rows="#{bindings.Round_SoSoggettiFilteredView4.rangeSize}"
+                                      emptyText="#{bindings.Round_SoSoggettiFilteredView4.viewable ? 'Nessun soggetto trovato.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      fetchSize="#{bindings.Round_SoSoggettiFilteredView4.rangeSize}" id="t1" 
+                                      summary='#{""}' scrollPolicy="page" columnStretching="multiple">
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Cognome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Cognome.label}"
+                                           width="10%"
+                                           id="c1" rowHeader="unstyled">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.Cognome.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Nome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Nome.label}"
+                                           width="10%"
+                                           id="c2">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.Nome.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.DataNascita.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.DataNascita.label}"
+                                           id="c3">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.DataNascita.tooltip}"
+                                                   id="ot3">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoSoggettiFilteredView4.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Sesso.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Sesso.label}"
+                                           id="c4">
+                                    <af:outputText value="#{row.Sesso}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.Sesso.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Residenza.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Residenza.label}"
+                                           width="10%"
+                                           id="c5">
+                                    <af:outputText value="#{row.Residenza}"
+                                                   shortDesc="#{row.Residenza}"
+                                                   id="ot5"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Domicilio.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Domicilio.label}"
+                                           width="10%"
+                                           id="c6">
+                                    <af:outputText value="#{row.Domicilio}"
+                                                   shortDesc="#{row.Domicilio}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.CognomeMed.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.CognomeMed.label}"
+                                           width="10%"
+                                           id="c7">
+                                    <af:outputText value="#{row.CognomeMed} #{row.NomeMed}"
+                                                   shortDesc="#{row.CognomeMed} #{row.NomeMed}"
+                                                   id="ot7"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Tel1.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Tel1.label}"
+                                           id="c8">
+                                    <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.Tel1.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Round_SoSoggettiFilteredView4.hints.Ulss.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Round_SoSoggettiFilteredView4.hints.Ulss.label}"
+                                           rendered="#{sessionScope.regionale?true:false}"
+                                           id="c10">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Round_SoSoggettiFilteredView4.hints.Ulss.tooltip}"
+                                                   id="ot10"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_INVITI}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

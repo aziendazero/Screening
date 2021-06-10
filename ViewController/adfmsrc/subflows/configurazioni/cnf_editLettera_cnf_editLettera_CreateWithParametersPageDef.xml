@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="cnf_editLettera_cnf_editLettera_CreateWithParametersPageDef" Package="subflows.configurazioni"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfLetteracentroView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfLetteracentroView2Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Cnf_SoCnfLetteracentroView2Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="Ulss" NDValue="#{sessionScope.ulss}" NDType="java.lang.String"/>
+      <NamedData NDName="Tpscr" NDValue="#{sessionScope.scr}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

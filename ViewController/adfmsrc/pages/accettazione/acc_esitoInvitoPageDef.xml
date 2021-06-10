@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="acc_esitoInvitoPageDef"
+                Package="pages.accettazione">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Acc_RicInvitiView1" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_RicInvitiView1Iterator"/>
+    <iterator Binds="Acc_SoInvitoView1" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SoInvitoView1Iterator"/>
+    <iterator Binds="Acc_SoSoggScrView2" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SoSoggScrView2Iterator"/>
+    <iterator Binds="Acc_SINONDView1" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SINONDView1Iterator"/>
+    <iterator Binds="Acc_SoAccCito1livView1" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SoAccCito1livView1Iterator"/>
+    <iterator Binds="Acc_EsitoView1" RangeSize="-1" DataControl="Acc_AppModuleDataControl" id="Acc_EsitoView1Iterator"/>
+    <iterator Binds="Acc_SoAccCito2livView1" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SoAccCito2livView1Iterator"/>
+    <iterator Binds="Acc_OstetricaView1" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_OstetricaView1Iterator"/>
+    <iterator Binds="Acc_DDLB_PrelHPV" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_DDLB_PrelHPVIterator"/>
+    <iterator Binds="Cnf_SoCnfTrialStatoView1" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Cnf_SoCnfTrialStatoView1Iterator"/>
+    <iterator Binds="Acc_Referto1livView1" RangeSize="25" DataControl="Acc_AppModuleDataControl"
+              id="Acc_Referto1livView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="Acc_SoSoggScrView2Iterator" ListIter="Acc_SINONDView1Iterator" id="Consenso">
+      <AttrNames>
+        <Item Value="Consenso"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list StaticList="false" IterBinding="Acc_SoSoggScrView2Iterator" ListIter="Acc_SINONDView1Iterator"
+          id="ConsensoCond">
+      <AttrNames>
+        <Item Value="ConsensoCond"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="DaConfermare">
+      <AttrNames>
+        <Item Value="DaConfermare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Dtoraapp">
+      <AttrNames>
+        <Item Value="Dtoraapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="TipoInvito">
+      <AttrNames>
+        <Item Value="TipoInvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="CodidsoggMx">
+      <AttrNames>
+        <Item Value="CodidsoggMx"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAccCito1livView1Iterator" id="Numvetrino">
+      <AttrNames>
+        <Item Value="Numvetrino"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAccCito1livView1Iterator" id="CodRichiesta">
+      <AttrNames>
+        <Item Value="CodRichiesta"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="Acc_SoInvitoView1Iterator" ListIter="Acc_EsitoView1Iterator"
+          id="Codesitoinvito" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Livesito"/>
+        <Item Value="Descrsugg"/>
+        <Item Value="MetodoCalcolo"/>
+        <Item Value="DataObbligatoria"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Livesito"/>
+        <Item Value="Descrsugg"/>
+        <Item Value="MetodoCalcolo"/>
+        <Item Value="DataObbligatoria"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <action IterBinding="Acc_RicInvitiView1Iterator" id="Previous"
+            InstanceName="Acc_AppModuleDataControl.Acc_RicInvitiView1" DataControl="Acc_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="Acc_RicInvitiView1Iterator" id="Next"
+            InstanceName="Acc_AppModuleDataControl.Acc_RicInvitiView1" DataControl="Acc_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="next"/>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Escl">
+      <AttrNames>
+        <Item Value="Escl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Sollecitare">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Dtesamerecente">
+      <AttrNames>
+        <Item Value="Dtesamerecente"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="DataObbligatoria">
+      <AttrNames>
+        <Item Value="DataObbligatoria"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="MetodoCalcolo">
+      <AttrNames>
+        <Item Value="MetodoCalcolo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Descrsugg">
+      <AttrNames>
+        <Item Value="Descrsugg"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoInvitoView1Iterator" id="Dtrichiamo">
+      <AttrNames>
+        <Item Value="Dtrichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAccCito2livView1Iterator" id="CodRichiesta2">
+      <AttrNames>
+        <Item Value="CodRichiesta"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Acc_SoAccCito1livView1Iterator" id="PrelievoHpv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLB_PrelHPVIterator">
+      <AttrNames>
+        <Item Value="PrelievoHpv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list StaticList="false" IterBinding="Acc_SoSoggScrView2Iterator" ListIter="Cnf_SoCnfTrialStatoView1Iterator"
+          id="IdstatoTrial">
+      <AttrNames>
+        <Item Value="IdstatoTrial"/>
+        <Item Value="Idtrial"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdstatoTrial"/>
+        <Item Value="Idtrial"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Acc_Referto1livView1Iterator" id="Acc_Referto1livView1">
+      <nodeDefinition DefName="model.accettazione.Acc_Referto1livView" Name="Acc_Referto1livView10">
+        <AttrNames>
+          <Item Value="Numaccap"/>
+          <Item Value="Dtprelievo"/>
+          <Item Value="Dtreferto"/>
+          <Item Value="Adepre"/>
+          <Item Value="Giudia"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Citoscreener"/>
+          <Item Value="Supervisore"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Acc_SoInvitoView1Iterator" id="Idostetrica" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_OstetricaView1Iterator">
+      <AttrNames>
+        <Item Value="Idostetrica"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Acc_SoSoggScrView2Iterator" id="InizioVal">
+      <AttrNames>
+        <Item Value="InizioVal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoSoggScrView2Iterator" id="InizioVal1">
+      <AttrNames>
+        <Item Value="InizioVal1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

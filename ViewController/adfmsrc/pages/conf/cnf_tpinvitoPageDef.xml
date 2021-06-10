@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_tpinvitoPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoRegionaleView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoRegionaleView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCategTpinvitoView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCategTpinvitoView1Iterator"/>
+    <iterator Binds="Cnf_LOVTpInvitoHPVView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_LOVTpInvitoHPVView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView2" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView2Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Codregionale">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Appuntamento">
+      <AttrNames>
+        <Item Value="Appuntamento"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Ordine">
+      <AttrNames>
+        <Item Value="Ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Ggsollecito">
+      <AttrNames>
+        <Item Value="Ggsollecito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Dtfinevalidita">
+      <AttrNames>
+        <Item Value="Dtfinevalidita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Codregionale1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoRegionaleView1Iterator"
+          NullValueFlag="start" NullValueId="Codregionale1_null">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codregionale"/>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Idcateg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCategTpinvitoView1Iterator"
+          NullValueFlag="start" NullValueId="Idcateg_null">
+      <AttrNames>
+        <Item Value="Idcateg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcateg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Livello" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value=" "/>
+        <Item Value="1"/>
+        <Item Value="2"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Hpv" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_LOVTpInvitoHPVView1Iterator">
+      <AttrNames>
+        <Item Value="Hpv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Valore"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="IdtpinvSoll" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoView2Iterator"
+          NullValueFlag="start" NullValueId="IdtpinvSoll_null">
+      <AttrNames>
+        <Item Value="IdtpinvSoll"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Esporta">
+      <AttrNames>
+        <Item Value="Esporta"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Ulss" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

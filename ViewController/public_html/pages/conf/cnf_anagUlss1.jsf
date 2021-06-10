@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_anagUlss1.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Codanagulss.inputValue}"
+                                              label="#{bindings.Codanagulss.hints.label}"
+                                              required="#{bindings.Codanagulss.hints.mandatory}"
+                                              columns="#{bindings.Codanagulss.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codanagulss.hints.precision}"
+                                              shortDesc="#{bindings.Codanagulss.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Codanagulss.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Codanagreg.inputValue}"
+                                                    label="#{bindings.Codanagreg.label}"
+                                                    required="#{bindings.Codanagreg.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codanagreg.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Codanagreg.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codanagreg.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc2"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Codice anagrafico dell'azienda sanitaria"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

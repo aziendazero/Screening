@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_periodicitaInvitiPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfPeriodicitaInvitiView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfPeriodicitaInvitiView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfPrimoInvito1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfPrimoInvito1Iterator"/>
+    <iterator Binds="Cnf_SoCnfClassePopView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfClassePopView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfPeriodicitaInvitiView1Iterator" id="Cnf_SoCnfPeriodicitaInvitiView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfPeriodicitaInvitiView" Name="Cnf_SoCnfPeriodicitaInvitiView10">
+        <AttrNames>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Codclassepop"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="GgPeriodismo"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Dtins"/>
+          <Item Value="Opins"/>
+          <Item Value="Dtultmod"/>
+          <Item Value="Opultmod"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfPeriodicitaInvitiView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfPeriodicitaInvitiView1"
+            DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="Cnf_SoCnfPrimoInvito1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfClassePopView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoAziendaView1Iterator" id="Descrizione1">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <list ListOperMode="navigation" IterBinding="Cnf_SoAziendaView1Iterator" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Codaz" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

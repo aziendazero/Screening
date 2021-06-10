@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_opmedici">
+    <page>/pages/conf/cnf_opmedici.jsf</page>
+  </view>
+  <view id="cnf_tpOpMedici">
+    <page>/pages/conf/cnf_tpOpMedici.jsf</page>
+  </view>
+  <view id="cnf_utentiOperatori">
+    <page>/pages/conf/cnf_utentiOperatori.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editOperatore">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editOperatore.xml</document>
+      <id>cnf_editOperatore</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editTipoOp">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editTipoOp.xml</document>
+      <id>cnf_editTipoOp</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editUtentiOp">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editUtentiOp.xml</document>
+      <id>cnf_editUtentiOp</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <method-call id="refreshOpmedici">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="refreshUtentiOp">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>opmedici</from-outcome>
+      <to-activity-id>cnf_opmedici</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>tpoperatori</from-outcome>
+      <to-activity-id>cnf_tpOpMedici</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>utentioperatori</from-outcome>
+      <to-activity-id>cnf_utentiOperatori</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__8">
+    <from-activity-id>cnf_opmedici</from-activity-id>
+    <control-flow-case id="__9">
+      <from-outcome>creatEditOperatore</from-outcome>
+      <to-activity-id>cnf_editOperatore</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__10">
+    <from-activity-id>cnf_tpOpMedici</from-activity-id>
+    <control-flow-case id="__11">
+      <from-outcome>creatEditTipoOp</from-outcome>
+      <to-activity-id>cnf_editTipoOp</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__16">
+    <from-activity-id>cnf_utentiOperatori</from-activity-id>
+    <control-flow-case id="__17">
+      <from-outcome>creatEditUtenteOp</from-outcome>
+      <to-activity-id>cnf_editUtentiOp</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__12">
+    <from-activity-id>cnf_editOperatore</from-activity-id>
+    <control-flow-case id="__13">
+      <to-activity-id>refreshOpmedici</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__14">
+    <from-activity-id>refreshOpmedici</from-activity-id>
+    <control-flow-case id="__15">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_opmedici</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__18">
+    <from-activity-id>cnf_editUtentiOp</from-activity-id>
+    <control-flow-case id="__19">
+      <to-activity-id>refreshUtentiOp</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__20">
+    <from-activity-id>refreshUtentiOp</from-activity-id>
+    <control-flow-case id="__21">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_utentiOperatori</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__5">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_operatori_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__6">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__7">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_operatori_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__22">
+    <managed-bean-name>UtentiAction</managed-bean-name>
+    <managed-bean-class>view.conf.UtentiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

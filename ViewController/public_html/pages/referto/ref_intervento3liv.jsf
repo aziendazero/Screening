@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.ref_intervento3livBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.REFERTAZIONE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Ref_intervento3liv.frmReferto}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl42" layout="scroll">
+                        <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                     inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                     styleClass="no_border">
+                            <af:panelGroupLayout id="pgl74" layout="horizontal"
+                                                 inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                 styleClass="AFStretchWidth">
+                                <af:panelGroupLayout id="pgl84">
+                                    <af:icon name="folder" id="i2" styleClass="banner_closed"
+                                             rendered="#{bindings.Completo1.inputValue=='1'?true:false}"/>
+                                    <af:icon name="folder" id="i1" styleClass="banner_open"
+                                             rendered="#{bindings.Completo1.inputValue=='1'?false:true}"/>
+                                </af:panelGroupLayout>
+                                <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                     inlineStyle="background-color:#3a76cb;">
+                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                    id="pt_ol1" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                    <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                    id="ol4" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                    <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                    id="ol1"
+                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                    <af:outputLabel value="Raccomandazione: #{bindings.Descrizione.inputValue}"
+                                                    id="ol2"
+                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                </af:panelGroupLayout>
+                                <af:panelGroupLayout id="pgl9131" halign="end" rendered="#{bindings.Idint.attributeValue==null?false:true}">
+                                    <af:panelLabelAndMessage id="plam311">
+                                        <af:icon name="Intchiusi" id="i323331"
+                                                 styleClass="#{bindings.Intchiusi.inputValue==1?'checked_box':'unchecked_box'}"/>
+                                        <f:facet name="end">
+                                            <af:outputLabel value="Intervento/i chiuso/i" id="ol331"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                        </f:facet>
+                                    </af:panelLabelAndMessage>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </af:panelBox>
+                        <af:switcher id="s1" facetName="#{bindings.Idint.inputValue==null?'da_creare':'esiste'}">
+                            <f:facet name="da_creare">
+                                <af:showDetailHeader messageType="info"
+                                                     text="Nessun intervento inserito" disclosed="true"
+                                                     id="sdh1" styleClass="AFStretchWidth"
+                                                     inlineStyle="font-weight:bold; background-color:InfoBackground;">
+                                    <af:outputFormatted value="Per inserire un intervento cliccare su 'Nuovo intervento'" id="of1"
+                                                        styleUsage="instruction" rendered="true"
+                                                        inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t3">
+                                            <af:button text="Nuovo intervento" id="bcreateref"
+                                                       actionListener="#{Ref_intervento3liv.onCreateIntervento}"/>
+                                            <af:button text="Chiudi" id="b2"
+                                                       action="to_ref_ricerca"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                </af:showDetailHeader>
+                            </f:facet>
+                            <f:facet name="esiste">
+                                <af:panelStretchLayout id="psl1" topHeight="120px">
+                                    <f:facet name="start">
+                                    </f:facet>
+                                    <f:facet name="end"/>
+                                    <f:facet name="top">
+                                                <af:panelGroupLayout id="pgl5" layout="vertical">
+                                                    <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                                        <af:toolbar id="t1">
+                                                    <af:button text="Conferma" id="b1"
+                                                               action="#{Ref_intervento3liv.onConfirm}"
+                                                               disabled="#{bindings.Completo1.inputValue=='1'?true:false}"/>
+                                                    <af:button text="Annulla" id="b3" action="to_ref_ricerca"
+                                                               immediate="true"/>
+                                                    <af:button text="Applica" id="b4"
+                                                               disabled="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                               actionListener="#{Ref_intervento3liv.onApply}"/>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                            <af:panelGroupLayout id="pgl6" layout="horizontal" halign="end">
+                                                <af:toolbar id="t4">
+                                                    <af:button text="Chiudi intervento/i" id="b5"
+                                                               rendered="#{bindings.Completo1.inputValue=='1'?false:true}"
+                                                               partialSubmit="false">
+                                                        <af:clientListener method="#{'closeReferto(\''.concat(0).concat('\',\' ').concat(bindings.Dtspedizione.attributeValue).concat('\', \'').concat(bindings.Idallegato.inputValue).concat('\')')}"
+                                                                           type="action"/>
+                                                        <af:serverListener type="onChiudi"
+                                                                           method="#{Ref_intervento3liv.onClose}"/>
+                                                    </af:button>
+                                                    <af:button text="Riapri intervento/i" id="b6"
+                                                               action="#{Ref_istochir3livAction.onReopen}"
+                                                               rendered="#{bindings.Completo1.inputValue!='1'?false: sessionScope.SORiaperturaReferti2Liv==true? true: sessionScope.ref_livello!='2' and sessionScope.SORiaperturaReferti1Liv==true?true:false}">
+                                                        <af:clientListener method="#{bindings.Dtspedizione.inputValue != null ? 'askBeforeGoingOn(\'Questo referto ha una lettera che risulta già stampata.\\n Procedere ugualmente con la riapertura?\')': true}"
+                                                                           type="action"/>
+                                                    </af:button>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                            <af:panelGroupLayout id="pgl7" halign="end" layout="horizontal">
+                                                <af:toolbar id="t5">
+                                                    <af:button text="Aggiungi intervento" id="b9"
+                                                                rendered="#{bindings.Completo1.inputValue=='1'?false:true}"
+                                                               actionListener="#{Ref_intervento3liv.onCreateIntervento}"/>
+                                                    <af:button text="Cancella intervento" id="b11" rendered="#{bindings.Completo1.inputValue=='1'?false:true}"
+                                                               action="#{Ref_intervento3liv.onDeleteIntervento}">
+                                                               <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente l\'intervento selezionato?')"
+                                                                           type="action"/>
+                                                    </af:button>
+                                                    <af:button text="Recupera lettera" id="b12"
+                                                               rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Completo1.inputValue!='1'?false:bindings.Idallegato.attributeValue==null?false:true)}">
+                                                        <af:clientListener method="#{bindings.Dtspedizione.inputValue == null ? 'askBeforeGoingOn(\'Dopo la visualizzazione la lettera risulterà stampata.\\n Visualizzare ugualmente la lettera?\')': true}"
+                                                                           type="action"/>
+                                                        <af:setPropertyListener from="#{bindings.Idreferto.inputValue}"
+                                                                                to="#{requestScope.print_referto_idref}"
+                                                                                type="action"/>
+                                                        <af:setPropertyListener from="#{'2'}"
+                                                                                to="#{requestScope.print_referto_livello}"
+                                                                                type="action"/>
+                                                        <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                                       filename="Referto#{bindings.Idreferto.inputValue}.pdf"/>
+                                                    </af:button>
+                                                    <af:button text="Report riassuntivo" id="b10"
+                                                               rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Completo1.inputValue!='1'?false:true)}">
+                                                        <af:fileDownloadActionListener method="#{Ref_intervento3liv.downloadRiassunto2liv}"
+                                                                                       filename="RefertoRiassuntivo#{bindings.Idreferto.inputValue}.pdf"/>
+                                                    </af:button>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="bottom"/>
+                                    <f:facet name="center">
+                                        <af:panelGroupLayout id="pgl2" layout="scroll">
+                                            <af:panelGroupLayout id="pgl8" layout="horizontal">
+                                                <af:decorativeBox id="db1" inlineStyle="background-color:Scrollbar;">
+                                                    <f:facet name="center">
+                                                        <af:outputText value="Intervento n°#{bindings.NInt.inputValue}"
+                                                                       id="of2"
+                                                                       inlineStyle="font-size:large; margin-left:200px; font-weight:bold; color:#3a76cb;"/>
+                                                    </f:facet>
+                                                </af:decorativeBox>
+                                                <af:toolbar id="t2">
+                                                    <af:button text="&#124;&lt;"
+                                                               disabled="#{!bindings.First.enabled}" partialSubmit="true"
+                                                               id="b71"
+                                                               actionListener="#{Ref_intervento3liv.onFirstIntervento}"/>
+                                                    <af:button actionListener="#{Ref_intervento3liv.onPreviousIntervento}" text="&lt;&lt;"
+                                                               disabled="#{!bindings.Previous.enabled}" partialSubmit="true"
+                                                               id="b8"/>
+                                                    <af:button text="&gt;&gt;"
+                                                               disabled="#{!bindings.Next.enabled}" partialSubmit="true"
+                                                               id="b7"
+                                                               actionListener="#{Ref_intervento3liv.onNextIntervento}"/>
+                                                    <af:button text="&gt;&#124;"
+                                                               disabled="#{!bindings.Last.enabled}" partialSubmit="true"
+                                                               id="b712"
+                                                               actionListener="#{Ref_intervento3liv.onLastIntervento}"/>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                            <af:panelGridLayout id="pgl4">
+                                                <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                                    <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                                        <af:panelFormLayout id="pfl3">
+                                                            <f:facet name="footer"/>
+                                                            <af:selectOneRadio value="#{bindings.Opzioneesec1.inputValue}"
+                                                                               label=""
+                                                                               disabled="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                               required="#{bindings.Opzioneesec1.hints.mandatory}"
+                                                                               shortDesc="#{bindings.Opzioneesec1.hints.tooltip}"
+                                                                               id="sor3" autoSubmit="true"
+                                                                               styleClass="#{bindings.Completo1.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                               valuePassThru="true"
+                                                                               valueChangeListener="#{Ref_intervento3liv.onEseguito}">
+                                                                <f:selectItems value="#{bindings.Opzioneesec1.items}"
+                                                                               id="si6"/>
+                                                                <f:validator binding="#{bindings.Opzioneesec1.validator}"/>
+                                                            </af:selectOneRadio>
+                                                        </af:panelFormLayout>
+                                                    </af:gridCell>
+                                                    <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                                        <af:panelFormLayout id="pfl4">
+                                                            <f:facet name="footer"/>
+                                                            <af:selectOneRadio value="#{bindings.Motivoesec.inputValue}"
+                                                                               label="#{bindings.Motivoesec.label}"
+                                                                               disabled="#{bindings.Opzioneesec1.attributeValue!=ConstantsBean.codice_intval_non_ex or bindings.Completo1.inputValue=='1' and bindings.Completo1.inputValue!='1'?true:false}"
+                                                                               styleClass="#{bindings.Completo1.inputValue=='1'?'ReadOnlyColor':null}"
+                                                                               required="#{bindings.Motivoesec.hints.mandatory}"
+                                                                               shortDesc="#{bindings.Motivoesec.hints.tooltip}"
+                                                                               id="sor4" partialTriggers="sor3"
+                                                                               valuePassThru="true" autoSubmit="true">
+                                                                <f:selectItems value="#{bindings.Motivoesec.items}"
+                                                                               id="si7"/>
+                                                                <f:validator binding="#{bindings.Motivoesec.validator}"/>
+                                                            </af:selectOneRadio>
+                                                        </af:panelFormLayout>
+                                                    </af:gridCell>
+                                                </af:gridRow>
+                                                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2" >
+                                                    <af:gridCell marginStart="5px" width="50%" id="gc3" >
+                                                        <af:panelGroupLayout id="pgl1" partialTriggers="sor3">
+                                                            <af:panelHeader text="Dati intervento" id="ph4"
+                                                                            rendered="#{bindings.Opzioneesec1.attributeValue!=ConstantsBean.codice_intval_non_ex &amp;&amp; bindings.Opzioneesec1.attributeValue!='0'?true:false}">
+                                                                <af:panelFormLayout id="pfl5" rows="6">
+                                                                    <f:facet name="footer"/>
+                                                                    <af:inputDate value="#{bindings.Dtintervento.inputValue}"
+                                                                                  label="#{bindings.Dtintervento.hints.label}"
+                                                                                  readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                  required="#{bindings.Dtintervento.hints.mandatory}"
+                                                                                  columns="#{bindings.Dtintervento.hints.displayWidth}"
+                                                                                  shortDesc="#{bindings.Dtintervento.hints.tooltip}"
+                                                                                  id="id2" autoSubmit="true">
+                                                                        <f:validator binding="#{bindings.Dtintervento.validator}"/>
+                                                                        <af:convertDateTime pattern="#{bindings.Dtintervento.format}"/>
+                                                                    </af:inputDate>
+                                                                    <af:selectOneChoice value="#{bindings.Medicoint1.inputValue}"
+                                                                                        label="#{bindings.Medicoint1.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Medicoint1.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Medicoint1.hints.tooltip}"
+                                                                                        id="soc2"
+                                                                                        styleClass="choiceInTable"
+                                                                                        autoSubmit="true"
+                                                                                        valuePassThru="true">
+                                                                        <f:selectItems value="#{bindings.Medicoint1.items}"
+                                                                                       id="si8"/>
+                                                                        <f:validator binding="#{bindings.Medicoint1.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                    <af:selectOneChoice value="#{bindings.Medicoint2.inputValue}"
+                                                                                        label="#{bindings.Medicoint2.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Medicoint2.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Medicoint2.hints.tooltip}"
+                                                                                        id="soc3"
+                                                                                        styleClass="choiceInTable"
+                                                                                        autoSubmit="true"
+                                                                                        valuePassThru="true">
+                                                                        <f:selectItems value="#{bindings.Medicoint2.items}"
+                                                                                       id="si9"/>
+                                                                        <f:validator binding="#{bindings.Medicoint2.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                    <af:selectOneChoice value="#{bindings.Tpintervento.inputValue}"
+                                                                                        label="#{bindings.Tpintervento.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Tpintervento.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Tpintervento.hints.tooltip}"
+                                                                                        id="soc4"
+                                                                                        styleClass="choiceInTable"
+                                                                                        valuePassThru="true"
+                                                                                        autoSubmit="true">
+                                                                        <f:selectItems value="#{bindings.Tpintervento.items}"
+                                                                                       id="si10"/>
+                                                                        <f:validator binding="#{bindings.Tpintervento.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                    <af:selectOneChoice value="#{bindings.Centroricovero.inputValue}"
+                                                                                        label="#{bindings.Centroricovero.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Centroricovero.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Centroricovero.hints.tooltip}"
+                                                                                        id="soc5"
+                                                                                        styleClass="choiceInTable"
+                                                                                        unselectedLabel="">
+                                                                        <f:selectItems value="#{bindings.Centroricovero.items}"
+                                                                                       id="si11"/>
+                                                                        <f:validator binding="#{bindings.Centroricovero.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                    <af:inputText value="#{bindings.NoteInterv.inputValue}"
+                                                                                  label="#{bindings.NoteInterv.hints.label}"
+                                                                                  required="#{bindings.NoteInterv.hints.mandatory}"
+                                                                                  columns="40"
+                                                                                  readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                  maximumLength="#{bindings.NoteInterv.hints.precision}"
+                                                                                  shortDesc="#{bindings.NoteInterv.hints.tooltip}"
+                                                                                  id="it2" rows="5">
+                                                                        <f:validator binding="#{bindings.NoteInterv.validator}"/>
+                                                                    </af:inputText>
+                                                                </af:panelFormLayout>
+                                                            </af:panelHeader>
+                                                        </af:panelGroupLayout>
+                                                    </af:gridCell>
+                                                    <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc4">
+                                                        <af:panelGroupLayout id="pgl9" partialTriggers="sor3">
+                                                            <af:panelHeader text="Raccomandazioni post-intervento" id="ph5"
+                                                                            rendered="#{bindings.Opzioneesec1.attributeValue!='0'?true:false}">
+                                                                <af:panelFormLayout id="pfl6" rows="3">
+                                                                    <f:facet name="footer"/>
+                                                                    <af:inputDate value="#{bindings.Dtraccomandazione.inputValue}"
+                                                                                  label="#{bindings.Dtraccomandazione.hints.label}"
+                                                                                  readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                  required="#{bindings.Dtraccomandazione.hints.mandatory}"
+                                                                                  columns="#{bindings.Dtraccomandazione.hints.displayWidth}"
+                                                                                  shortDesc="#{bindings.Dtraccomandazione.hints.tooltip}"
+                                                                                  autoSubmit="true" id="Dtraccomandazione"
+                                                                                  valueChangeListener="#{Ref_intervento3liv.onChangeDataRacc}">
+                                                                        <f:validator binding="#{bindings.Dtraccomandazione.validator}"/>
+                                                                        <af:convertDateTime pattern="#{bindings.Dtraccomandazione.format}"/>
+                                                                    </af:inputDate>
+                                                                    <af:selectOneChoice value="#{bindings.Medicoracc.inputValue}"
+                                                                                        label="#{bindings.Medicoracc.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Medicoracc.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Medicoracc.hints.tooltip}"
+                                                                                        id="soc6"
+                                                                                        styleClass="choiceInTable"
+                                                                                        autoSubmit="true"
+                                                                                        valuePassThru="true">
+                                                                        <f:selectItems value="#{bindings.Medicoracc.items}"
+                                                                                       id="si12"/>
+                                                                        <f:validator binding="#{bindings.Medicoracc.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                    <af:selectOneChoice value="#{bindings.Idsugg.inputValue}"
+                                                                                        label="#{bindings.Idsugg.label}"
+                                                                                        readOnly="#{bindings.Completo1.inputValue=='1'?true:false}"
+                                                                                        required="#{bindings.Idsugg.hints.mandatory}"
+                                                                                        shortDesc="#{bindings.Idsugg.hints.tooltip}"
+                                                                                        id="soc7" styleClass="choiceInTable"
+                                                                                        partialTriggers="Dtraccomandazione"
+                                                                                        valuePassThru="true"
+                                                                                        autoSubmit="true">
+                                                                        <f:selectItems value="#{bindings.Idsugg.items}"
+                                                                                       id="si13"/>
+                                                                        <f:validator binding="#{bindings.Idsugg.validator}"/>
+                                                                    </af:selectOneChoice>
+                                                                </af:panelFormLayout>
+                                                            </af:panelHeader>
+                                                        </af:panelGroupLayout>
+                                                    </af:gridCell>
+                                                </af:gridRow>
+                                            </af:panelGridLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                </af:panelStretchLayout>
+                            </f:facet>
+                        </af:switcher>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Intervento"/>
+                <f:attribute name="navigation" value="#{Ref_intervento3liv}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

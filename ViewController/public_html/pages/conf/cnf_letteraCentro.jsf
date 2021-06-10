@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_letteraCentro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Cancella" id="b4" action="delete" 
+                                               rendered="#{pageFlowScope.operation=='delete'?true:false}"
+                                               disabled="false"/>
+                                    <af:button text="Conferma" id="b3" action="confirm" rendered="#{pageFlowScope.operation=='delete'?false:true}"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply" rendered="#{pageFlowScope.operation=='delete'?false:true}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:showDetailHeader text="Cancellare definitivamente il seguente utilizzo di template?"
+                                                     id="ph1" messageType="info"
+                                                     rendered="#{pageFlowScope.operation=='delete'?true:false}"
+                                                     disclosed="true" styleClass="AFStretchWidth"
+                                                     inlineStyle="background-color:InfoBackground;">     
+                                </af:showDetailHeader>
+                                <af:panelFormLayout id="pfl1">
+                                    <af:selectOneChoice value="#{bindings.Ulss.inputValue}"
+                                                        label="#{bindings.Ulss.label}"
+                                                        required="#{bindings.Ulss.hints.mandatory}"
+                                                        rendered="${sessionScope.regionale?true:false}"
+                                                        shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc8"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}"
+                                                        autoSubmit="true"
+                                                        valueChangeListener="#{Cnf_docsAction.onChangeUlss}">
+                                        <f:selectItems value="#{bindings.Ulss.items}" id="si8"/>
+                                        <f:validator binding="#{bindings.Ulss.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Codtempl.inputValue}"
+                                                        label="#{bindings.Codtempl.label}"
+                                                        required="#{bindings.Codtempl.hints.mandatory}"
+                                                        shortDesc="#{bindings.Codtempl.hints.tooltip}" id="soc1"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}"
+                                                        partialTriggers="soc8">
+                                        <f:selectItems value="#{bindings.Codtempl.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.Codtempl.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Idtpinvito.inputValue}"
+                                                        label="#{bindings.Idtpinvito.label}"
+                                                        required="#{bindings.Idtpinvito.hints.mandatory}"
+                                                        shortDesc="#{bindings.Idtpinvito.hints.tooltip}" id="soc2"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.Idtpinvito.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.Idtpinvito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Idsugg.inputValue}"
+                                                        label="#{bindings.Idsugg.label}"
+                                                        required="#{bindings.Idsugg.hints.mandatory}"
+                                                        shortDesc="#{bindings.Idsugg.hints.tooltip}" id="soc3"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.Idsugg.items}" id="si3"/>
+                                        <f:validator binding="#{bindings.Idsugg.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Idsugg2l.inputValue}"
+                                                        label="#{bindings.Idsugg2l.label}"
+                                                        required="#{bindings.Idsugg2l.hints.mandatory}"
+                                                        shortDesc="#{bindings.Idsugg2l.hints.tooltip}" id="soc4"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.Idsugg2l.items}" id="si4"/>
+                                        <f:validator binding="#{bindings.Idsugg2l.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Idsugg3l.inputValue}"
+                                                        label="#{bindings.Idsugg3l.label}"
+                                                        required="#{bindings.Idsugg3l.hints.mandatory}"
+                                                        shortDesc="#{bindings.Idsugg3l.hints.tooltip}" id="soc5"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.Idsugg3l.items}" id="si5"/>
+                                        <f:validator binding="#{bindings.Idsugg3l.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:panelLabelAndMessage label="Età da" id="plam1">
+                                        <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle">
+                                            <af:inputText value="#{bindings.EtaDa.inputValue}"
+                                                          required="#{bindings.EtaDa.hints.mandatory}"
+                                                          columns="#{bindings.EtaDa.hints.displayWidth}"
+                                                          maximumLength="#{bindings.EtaDa.hints.precision}"
+                                                          shortDesc="#{bindings.EtaDa.hints.tooltip}" id="it9"
+                                                          disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                                <f:validator binding="#{bindings.EtaDa.validator}"/>
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.EtaDa.format}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.EtaA.inputValue}"
+                                                          required="#{bindings.EtaA.hints.mandatory}"
+                                                          columns="#{bindings.EtaA.hints.displayWidth}"
+                                                          maximumLength="#{bindings.EtaA.hints.precision}"
+                                                          shortDesc="#{bindings.EtaA.hints.tooltip}" id="it10"
+                                                          label="a"
+                                                          disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                                <f:validator binding="#{bindings.EtaA.validator}"/>
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.EtaA.format}"/>
+                                            </af:inputText>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:selectOneChoice value="#{bindings.TestProposto.inputValue}"
+                                                        label="#{bindings.TestProposto.label}"
+                                                        rendered="${sessionScope.HPV}"
+                                                        required="#{bindings.TestProposto.hints.mandatory}"
+                                                        shortDesc="#{bindings.TestProposto.hints.tooltip}" id="soc6"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.TestProposto.items}" id="si6"/>
+                                        <f:validator binding="#{bindings.TestProposto.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.Centro.inputValue}"
+                                                        label="#{bindings.Centro.label}"
+                                                        required="#{bindings.Centro.hints.mandatory}"
+                                                        shortDesc="#{bindings.Centro.hints.tooltip}" id="soc7"
+                                                        disabled="#{pageFlowScope.operation=='delete'?true:false}">
+                                        <f:selectItems value="#{bindings.Centro.items}" id="si7"/>
+                                        <f:validator binding="#{bindings.Centro.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Utilizzo di un template"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

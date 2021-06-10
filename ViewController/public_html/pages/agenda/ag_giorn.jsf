@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.agenda.ag_giornBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.AGENDA}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Ag_preGiornAction.frmagenda}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="60px" bottomHeight="0">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl4">
+                                <af:link text="Configurazione" id="l1" action="#{Ag_giornAction.onConfigurazione}"/>
+                                <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal"
+                                                     halign="right">
+                                    <af:toolbar id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                        <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b7"
+                                                   action="#{Ag_giornAction.onConf}"/>
+                                        <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b41" action="rb_daAgenda"
+                                                   immediate="true"/>
+                                        <af:button text="#{viewcontrollerBundle.APPLICA}" id="btappl"
+                                                   disabled="#{sessionScope.esclSalvata}"
+                                                   action="#{Ag_giornAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll">
+                                <af:showDetailHeader messageType="info" text="#{viewcontrollerBundle.INFORMAZIONE}"
+                                                     disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                     inlineStyle="font-weight:bold; background-color:InfoBackground; padding-bottom:10px; padding-left:20px; padding-right:20px; padding-top:10px;"
+                                                     rendered="#{sessionScope.appSel}">
+                                    <af:outputFormatted value="#{sessionScope.pazSel}" id="of1" styleUsage="instruction"
+                                                        rendered="true" inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>                   
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s9" rendered="#{sessionScope.appSel}"/>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                                    <af:selectOneChoice value="#{bindings.idCentro.inputValue}"
+                                                        label="#{bindings.idCentro.label}"
+                                                        required="#{bindings.idCentro.hints.mandatory}"
+                                                        disabled="#{!sessionScope.sposta_centro_invito and sessionScope.appSel}"
+                                                        styleClass="choiceInTable"
+                                                        autoSubmit="true"
+                                                        shortDesc="#{bindings.idCentro.hints.tooltip}" id="centro"
+                                                        valueChangeListener="#{Ag_giornAction.onCerca}">
+                                        <f:selectItems value="#{bindings.idCentro.items}" id="si7"/>
+                                        <f:validator binding="#{bindings.idCentro.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s1"/>
+                                    <af:spacer width="10" height="10" id="s3"/>
+                                    <af:inputDate value="#{sessionScope.dtAgenda}"
+                                                  label="#{viewcontrollerBundle.DATA}"
+                                                  id="Dtapp"
+                                                  valueChangeListener="#{Ag_giornAction.onCerca}"
+                                                  readOnly="false" autoSubmit="true" partialTriggers="btprev btnext btfirstday">
+                                        <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </af:inputDate>
+                                    <af:spacer width="10" height="10" id="s4"/>
+                                    <af:button text="#{viewcontrollerBundle.PREV}" id="btprev"
+                                               actionListener="#{Ag_giornAction.onPrev}"/>
+                                    <af:spacer width="10" height="10" id="s5"/>
+                                    <af:button text="#{viewcontrollerBundle.NEXT}" id="btnext"
+                                               actionListener="#{Ag_giornAction.onNext}"/>
+                                    <af:spacer width="10" height="10" id="s6"/>
+                                    <af:button text="#{viewcontrollerBundle.PRIMO_GIORNO_LIBERO}" id="btfirstday"
+                                               actionListener="#{Ag_giornAction.onPgl}"/>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s2"/>
+                                <af:panelSplitter id="ps2" orientation="horizontal" splitterPosition="400">
+                                    <f:facet name="first">
+                                        <af:panelHeader text="#{viewcontrollerBundle.ORARI}" id="ph1"
+                                                        styleClass="AFStretchWidth"
+                                                        partialTriggers="btprev btnext btfirstday centro Dtapp">
+                                            <af:panelCollection id="pc1" featuresOff="detach freeze wrap"
+                                                                styleClass="AFStretchWidth" partialTriggers="btnew"
+                                                                binding="#{Ag_giornAction.panelOrari}">
+                                                <f:facet name="toolbar">
+                                                    <af:toolbar id="t31" partialTriggers="t4 b10 b11 btnew">
+                                                        <af:button text="#{viewcontrollerBundle.SPOSTA_QUI}" id="b10" action="#{Ag_giornAction.onSpostaqui}"
+                                                                   disabled="#{!sessionScope.appSel or bindings.Agenda_SoAppuntamentoView1Iterator.currentRow == null}">
+                                                           <af:showPopupBehavior popupId="overbookingwarn"
+                                                                                 disabled="#{bindings.Slotoccup.inputValue.intValue() == null || bindings.Dispslot.inputValue.intValue() gt bindings.Slotoccup.inputValue.intValue()}"
+                                                                                  triggerType="action"/>
+                                                        </af:button>
+                                                        <af:button text="#{viewcontrollerBundle.CANCELLA}" id="b11"
+                                                                   disabled="#{bindings.Agenda_SoAppuntamentoView1Iterator.currentRow == null}">
+                                                            <af:showPopupBehavior popupId="confdel"
+                                                                                  triggerType="action"/>
+                                                        </af:button>
+                                                        <af:popup childCreation="deferred" autoCancel="disabled"
+                                                                  id="overbookingwarn">
+                                                            <af:dialog id="d22" title="#{viewcontrollerBundle.AVVISO}"
+                                                                       type="none">
+                                                                <f:facet name="buttonBar">
+                                                                    <af:panelGroupLayout id="pgl22" halign="end"
+                                                                                         layout="horizontal">
+                                                                        <af:toolbar id="t3191">
+                                                                            <af:button text="#{viewcontrollerBundle.SI}"
+                                                                                       id="b311"
+                                                                                       action="#{Ag_giornAction.onSpostaqui}">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:overbookingwarn', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                            <af:button text="#{viewcontrollerBundle.NO}"
+                                                                                       id="b611" action="closed">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:overbookingwarn', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                        </af:toolbar>
+                                                                    </af:panelGroupLayout>
+                                                                </f:facet>
+                                                                <af:outputFormatted value="#{viewcontrollerBundle.OVERBOOKINGWARN_MSG}"
+                                                                                    id="of311"/>
+                                                            </af:dialog>
+                                                        </af:popup>
+                                                        <af:popup childCreation="deferred" autoCancel="disabled"
+                                                                  id="confagg">
+                                                            <af:dialog id="d23" title="#{viewcontrollerBundle.AVVISO}"
+                                                                       type="none">
+                                                                <f:facet name="buttonBar">
+                                                                    <af:panelGroupLayout id="pgl23" halign="end"
+                                                                                         layout="horizontal">
+                                                                        <af:toolbar id="t3192">
+                                                                            <af:button text="#{viewcontrollerBundle.SI}"
+                                                                                       id="b312"
+                                                                                       action="#{Ag_giornAction.onSpostaqui}">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:confagg', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                            <af:button text="#{viewcontrollerBundle.NO}"
+                                                                                       id="b612" action="closed">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:confagg', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                        </af:toolbar>
+                                                                    </af:panelGroupLayout>
+                                                                </f:facet>
+                                                                <af:outputFormatted value="#{viewcontrollerBundle.CONFAGG_MSG}"
+                                                                                    id="of312"/>
+                                                            </af:dialog>
+                                                        </af:popup>
+                                                        <af:popup childCreation="deferred" autoCancel="disabled"
+                                                                  id="confdel">
+                                                            <af:dialog id="d21" title="#{viewcontrollerBundle.AVVISO}"
+                                                                       type="none">
+                                                                <f:facet name="buttonBar">
+                                                                    <af:panelGroupLayout id="pgl21" halign="end"
+                                                                                         layout="horizontal">
+                                                                        <af:toolbar id="t319">
+                                                                            <af:button text="#{viewcontrollerBundle.SI}"
+                                                                                       id="b31"
+                                                                                       action="#{Ag_giornAction.onCanc}">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:confdel', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                            <af:button text="#{viewcontrollerBundle.NO}"
+                                                                                       id="b61" action="closed">
+                                                                                <af:clientListener method="showHidePopup('pt1:pc1:confdel', false)"
+                                                                                                   type="action"/>
+                                                                            </af:button>
+                                                                        </af:toolbar>
+                                                                    </af:panelGroupLayout>
+                                                                </f:facet>
+                                                                <af:outputFormatted value="#{viewcontrollerBundle.MSG}"
+                                                                                    id="of31"/>
+                                                            </af:dialog>
+                                                        </af:popup>
+                                                        <af:button text="#{viewcontrollerBundle.NUOVO}" id="btnew"
+                                                                   disabled="#{sessionScope.creatoNuovo}"
+                                                                   actionListener="#{Ag_giornAction.onNuovo}"/>
+                                                    </af:toolbar>
+                                                </f:facet>
+                                                <af:table value="#{bindings.Agenda_SoAppuntamentoView1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Agenda_SoAppuntamentoView1.rangeSize}"
+                                                          emptyText="#{bindings.Agenda_SoAppuntamentoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Agenda_SoAppuntamentoView1.collectionModel.selectedRow}"
+                                                          selectionListener="#{bindings.Agenda_SoAppuntamentoView1.collectionModel.makeCurrent}"
+                                                          fetchSize="#{bindings.Agenda_SoAppuntamentoView1.rangeSize}"
+                                                          id="t4" columnStretching="last" summary='#{""}'
+                                                          rowSelection="#{sessionScope.creatoNuovo?'none':'single'}"
+                                                          partialTriggers="::btnew ::t4 :::btappl" scrollPolicy="page">
+                                                    <af:column headerText="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.label}"
+                                                               styleClass="#{row.RigaSalvata == 'S' ? (row.Stato=='FREE'? 'SlotLibero' : (row.Stato=='BUSY'? 'SlotPieno' : 'SlotOver')) : ''}"
+                                                               sortProperty="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.name}"
+                                                               id="c1" rowHeader="unstyled" width="80">
+                                                        <af:inputText value="#{row.bindings.Orario.inputValue}"
+                                                                      label="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.label}"
+                                                                      required="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.mandatory}"
+                                                                      columns="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.displayWidth}"
+                                                                      maximumLength="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.precision}"
+                                                                      shortDesc="#{bindings.Agenda_SoAppuntamentoView1.hints.Orario.tooltip}"
+                                                                      id="it1" readOnly="#{row.RigaSalvata == 'S'}">
+                                                            <f:validator binding="#{row.bindings.Orario.validator}"/>
+                                                            <af:setPropertyListener from="#{row.Orario}"
+                                                                                    to="#{requestScope.oraNew}"
+                                                                                    type="valueChange"/>
+                                                        </af:inputText>
+                                                    </af:column>
+                                                    <af:column sortProperty="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.name}"
+                                                               sortable="true"
+                                                               headerText="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.label}"
+                                                               id="c2">
+                                                        <af:inputText value="#{row.bindings.Dispslot.inputValue}"
+                                                                      label="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.label}"
+                                                                      required="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.mandatory}"
+                                                                      columns="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.displayWidth}"
+                                                                      maximumLength="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.precision}"
+                                                                      shortDesc="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.tooltip}"
+                                                                      readOnly="#{row.RigaSalvata == 'S' and row.bindings.Idapp.inputValue != bindings.Idapp.attributeValue}"
+                                                                      id="it2" partialTriggers="::t4">
+                                                            <f:validator binding="#{row.bindings.Dispslot.validator}"/>
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Agenda_SoAppuntamentoView1.hints.Dispslot.format}"/>
+                                                        </af:inputText>
+                                                    </af:column>
+                                                    <af:column sortProperty="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.name}"
+                                                               sortable="true"
+                                                               headerText="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.label}"
+                                                               id="c3" width="80">
+                                                        <af:inputText value="#{row.bindings.Slotoccup.inputValue}"
+                                                                      label="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.label}"
+                                                                      required="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.mandatory}"
+                                                                      columns="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.displayWidth}"
+                                                                      maximumLength="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.precision}"
+                                                                      shortDesc="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.tooltip}"
+                                                                      id="it3" readOnly="true">
+                                                            <f:validator binding="#{row.bindings.Slotoccup.validator}"/>
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Agenda_SoAppuntamentoView1.hints.Slotoccup.format}"/>
+                                                        </af:inputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Agenda_SoAppuntamentoView1.hints.Nascosto.label}"
+                                                               id="c4" width="70" rendered="#{sessionScope.otp==true}">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Nascosto.inputValue}"
+                                                                                  label="#{row.bindings.Nascosto.label}"
+                                                                                  readOnly="#{row.RigaSalvata == 'S' and row.bindings.Idapp.inputValue != bindings.Idapp.attributeValue}"
+                                                                                  shortDesc="#{bindings.Agenda_SoAppuntamentoView1.hints.Nascosto.tooltip}"
+                                                                                  id="sbc2"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:panelHeader>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <af:panelSplitter id="ps1" orientation="vertical" splitterPosition="350">
+                                            <f:facet name="first">
+                                                <af:panelHeader text="#{viewcontrollerBundle.APPUNTAMENTI}" id="ph2"
+                                                                styleClass="AFStretchWidth" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                                partialTriggers="btprev btnext btfirstday centro Dtapp">
+                                                    <af:panelCollection id="pc11" featuresOff="detach freeze wrap"
+                                                                        rendered="#{sessionScope.scr != 'CO'}"
+                                                                        partialTriggers="::pc1:t4"
+                                                                        styleClass="AFStretchWidth">
+                                                        <f:facet name="toolbar">
+                                                            <af:toolbar id="t311" partialTriggers="">
+                                                                <af:button text="#{viewcontrollerBundle.SPOSTA}"
+                                                                           id="b101"
+                                                                           rendered="#{bindings.Agenda_DettAppView1.estimatedRowCount gt 0}"
+                                                                           disabled="#{ bindings.Agenda_DettAppView1.estimatedRowCount==0 || sessionScope.creatoNuovo || sessionScope.appSel}"
+                                                                           actionListener="#{Ag_giornAction.onSposta}"/>
+                                                            </af:toolbar>
+                                                        </f:facet>
+                                                        <af:table value="#{bindings.Agenda_DettAppView1.collectionModel}"
+                                                                  var="row"
+                                                                  rows="#{bindings.Agenda_DettAppView1.rangeSize}"
+                                                                  emptyText="#{bindings.Agenda_DettAppView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                  rowBandingInterval="0"
+                                                                  selectedRowKeys="#{bindings.Agenda_DettAppView1.collectionModel.selectedRow}"
+                                                                  selectionListener="#{bindings.Agenda_DettAppView1.collectionModel.makeCurrent}"
+                                                                  rowSelection="single"
+                                                                  fetchSize="#{bindings.Agenda_DettAppView1.rangeSize}"
+                                                                  id="t5" columnStretching="last" summary='#{""}'
+                                                                  scrollPolicy="page"
+                                                                  binding="#{Ag_preGiornAction.tabResult}">
+                                                            <af:column headerText="#{bindings.Agenda_DettAppView1.hints.TestProposto.label}"
+                                                                       id="c5" width="80"
+                                                                       rendered="#{sessionScope.HPV}">
+                                                                <af:outputText value="#{row.TestProposto}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.TestProposto.tooltip}"
+                                                                               id="ot1"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Cognome.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato.value!= 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Cognome.label}"
+                                                                       id="c6" width="150">
+                                                                <af:outputText value="#{row.Cognome}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.Cognome.tooltip}"
+                                                                               id="ot2"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Nome.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato.value != 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Nome.label}"
+                                                                       id="c7" width="150">
+                                                                <af:outputText value="#{row.Nome}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.Nome.tooltip}"
+                                                                               id="ot3"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.DataNascita.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato.value != 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.DataNascita.label}"
+                                                                       id="c8">
+                                                                <af:outputText value="#{row.DataNascita}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.DataNascita.tooltip}"
+                                                                               id="ot4">
+                                                                    <af:convertDateTime pattern="#{bindings.Agenda_DettAppView1.hints.DataNascita.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Idtpinvito.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Idtpinvito.label}"
+                                                                       id="c9" width="80">
+                                                                <af:outputText value="#{row.Idtpinvito}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.Idtpinvito.tooltip}"
+                                                                               id="ot5"/>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Agenda_DettAppView1.hints.DocIdent.label}"
+                                                                       sortProperty="#{bindings.Agenda_DettAppView1.hints.DocIdent.name}"
+                                                                       id="c11" sortable="true">
+                                                                <af:outputText value="#{row.DocIdent}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.DocIdent.tooltip}"
+                                                                               id="ot7"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Tel1.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Tel1.label}"
+                                                                       id="c10">
+                                                                <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.Tel1.tooltip}"
+                                                                               id="ot6"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Cellulare.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Cellulare.label}"
+                                                                       id="c12">
+                                                                <af:outputText value="#{row.Cellulare}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppView1.hints.Cellulare.tooltip}"
+                                                                               id="ot8"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppView1.hints.Spostato.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppView1.hints.Spostato.label}"
+                                                                       id="c13" align="center">
+                                                                <af:selectBooleanCheckbox selected = "#{row.Spostato.value == 1}"
+                                                                                          label="#{bindings.Agenda_DettAppView1.hints.Spostato.label}"
+                                                                                          shortDesc="#{bindings.Agenda_DettAppView1.hints.Spostato.tooltip}"
+                                                                                          id="sbc1" readOnly="true"/>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                    <af:panelCollection id="pc119" featuresOff="detach freeze wrap"
+                                                                        rendered="#{sessionScope.scr == 'CO'}"
+                                                                        styleClass="AFStretchWidth" partialTriggers="">
+                                                        <af:table value="#{bindings.Agenda_DettAppColonView1.collectionModel}"
+                                                                  var="row"
+                                                                  rows="#{bindings.Agenda_DettAppColonView1.rangeSize}"
+                                                                  emptyText="#{bindings.Agenda_DettAppColonView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                  rowBandingInterval="0"
+                                                                  selectedRowKeys="#{bindings.Agenda_DettAppColonView1.collectionModel.selectedRow}"
+                                                                  selectionListener="#{bindings.Agenda_DettAppColonView1.collectionModel.makeCurrent}"
+                                                                  rowSelection="single"
+                                                                  fetchSize="#{bindings.Agenda_DettAppColonView1.rangeSize}"
+                                                                  id="t8" columnStretching="last" summary='#{""}'
+                                                                  scrollPolicy="page"
+                                                                  binding="#{Ag_preGiornAction.tabResultCo}">
+                                                            <af:column headerText="#{bindings.Agenda_DettAppColonView1.hints.DocIdent.label}"
+                                                                       sortProperty="#{bindings.Agenda_DettAppColonView1.hints.DocIdent.name}"
+                                                                       id="c119" sortable="true" rowHeader="unstyled">
+                                                                <af:outputText value="#{row.DocIdent}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.DocIdent.tooltip}"
+                                                                               id="ot79"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Idtpinvito.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Idtpinvito.label}"
+                                                                       id="c99">
+                                                                <af:outputText value="#{row.Idtpinvito}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Idtpinvito.tooltip}"
+                                                                               id="ot59"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Cognome.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato != 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Cognome.label}"
+                                                                       id="c69">
+                                                                <af:outputText value="#{row.Cognome}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Cognome.tooltip}"
+                                                                               id="ot29"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Nome.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato != 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Nome.label}"
+                                                                       id="c79">
+                                                                <af:outputText value="#{row.Nome}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Nome.tooltip}"
+                                                                               id="ot39"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.DataNascita.name}"
+                                                                       sortable="true"
+                                                                       styleClass="#{row.Confermato != 0?'AgendaConfermato':''}"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.DataNascita.label}"
+                                                                       id="c89">
+                                                                <af:outputText value="#{row.DataNascita}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.DataNascita.tooltip}"
+                                                                               id="ot49">
+                                                                    <af:convertDateTime pattern="#{bindings.Agenda_DettAppColonView1.hints.DataNascita.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Tel1.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Tel1.label}"
+                                                                       id="c109">
+                                                                <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Tel1.tooltip}"
+                                                                               id="ot69"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Cellulare.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Cellulare.label}"
+                                                                       id="c129">
+                                                                <af:outputText value="#{row.Cellulare}"
+                                                                               shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Cellulare.tooltip}"
+                                                                               id="ot89"/>
+                                                            </af:column>
+                                                            <af:column sortProperty="#{bindings.Agenda_DettAppColonView1.hints.Spostato.name}"
+                                                                       sortable="true"
+                                                                       headerText="#{bindings.Agenda_DettAppColonView1.hints.Spostato.label}"
+                                                                       id="c139" align="center">
+                                                                <af:selectBooleanCheckbox selected = "#{row.Spostato == 1}"
+                                                                                          label="#{bindings.Agenda_DettAppColonView1.hints.Spostato.label}"
+                                                                                          shortDesc="#{bindings.Agenda_DettAppColonView1.hints.Spostato.tooltip}"
+                                                                                          id="sbc19" readOnly="true"/>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                </af:panelHeader>
+                                            </f:facet>
+                                            <f:facet name="second">
+                                                <af:panelHeader text="#{viewcontrollerBundle.SINTESI_GIORNATA}" id="ph3"
+                                                                styleClass="AFStretchWidth"
+                                                                partialTriggers="btprev btnext btfirstday centro Dtapp"
+                                                                rendered="#{bindings.idCentro.inputValue != null ? true : false}">
+                                                    <af:listView value="#{bindings.Agenda_SintesiView1.collectionModel}"
+                                                                 var="item"
+                                                                 emptyText="#{bindings.Agenda_SintesiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                 fetchSize="#{bindings.Agenda_SintesiView1.rangeSize}"
+                                                                 id="lv1" inlineStyle="border:none">
+                                                        <af:listItem id="li1">
+                                                            <af:panelGroupLayout layout="horizontal" id="pgl6">
+                                                                <f:facet name="separator">
+                                                                    <af:spacer width="10" id="s8"/>
+                                                                    <af:outputLabel value="-" id="ol1"/>
+                                                                    <af:spacer width="10" height="10" id="s7"/>
+                                                                </f:facet>
+                                                                <af:outputFormatted value="#{item.bindings.Messaggio.inputValue}"
+                                                                                    id="of2"/>
+                                                            </af:panelGroupLayout>
+                                                        </af:listItem>
+                                                    </af:listView>
+                                                </af:panelHeader>
+                                            </f:facet>
+                                        </af:panelSplitter>
+                                    </f:facet>
+                                </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.AGENDA}"/>
+                <f:attribute name="navigation" value="#{Ag_giornAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

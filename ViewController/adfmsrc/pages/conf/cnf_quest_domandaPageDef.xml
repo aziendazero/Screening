@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_quest_domandaPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfQuestDomandeView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfQuestDomandeView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfQuestionarioView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfQuestionarioView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfDomandeView2" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfDomandeView2Iterator"/>
+    <iterator Binds="Cnf_SoCnfQuestDomandeView2" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfQuestDomandeView2Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Sezione">
+      <AttrNames>
+        <Item Value="Sezione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Ordine">
+      <AttrNames>
+        <Item Value="Ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="CodiceDom">
+      <AttrNames>
+        <Item Value="CodiceDom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Obbligatorio">
+      <AttrNames>
+        <Item Value="Obbligatorio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfQuestionarioView1Iterator" id="DescrBreve">
+      <AttrNames>
+        <Item Value="DescrBreve"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Idcnfdom" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfDomandeView2Iterator">
+      <AttrNames>
+        <Item Value="Idcnfdom"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfdom"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Domanda"/>
+        <Item Value="Note"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Livello" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="2"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Capostipite" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfQuestDomandeView2Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Capostipite"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfdom"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Domanda"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

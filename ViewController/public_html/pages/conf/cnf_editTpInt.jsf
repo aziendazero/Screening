@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_editTpInt.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl2">
+                                <af:inputText value="#{bindings.Idintervento.inputValue}"
+                                              label="#{bindings.Idintervento.hints.label}"
+                                              required="#{bindings.Idintervento.hints.mandatory}"
+                                              columns="#{bindings.Idintervento.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idintervento.hints.precision}"
+                                              shortDesc="#{bindings.Idintervento.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idintervento.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idintervento.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Ulss1.inputValue}" label="#{bindings.Ulss1.label}"
+                                                    required="#{bindings.Ulss1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Ulss1.hints.tooltip}" id="soc1"
+                                                    rendered="#{sessionScope.ulss == '050000'}">
+                                    <f:selectItems value="#{bindings.Ulss1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Ulss1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Ordine.inputValue}"
+                                              label="#{bindings.Ordine.hints.label}"
+                                              required="#{bindings.Ordine.hints.mandatory}"
+                                              columns="#{bindings.Ordine.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ordine.hints.precision}"
+                                              shortDesc="#{bindings.Ordine.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Ordine.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ordine.format}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Tipo di intervento"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

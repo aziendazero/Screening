@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="refCo_intermedi_ricerca.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:button text="Indietro" id="b1" action="to_refCo_ricerca"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelFormLayout id="pfl1" rows="1">
+                                    <f:facet name="footer">
+                                        <af:toolbar id="t1">
+                                            <af:button text="Cerca" id="b2"
+                                                       actionListener="#{RefCo_intermediRicercaAction.onCerca}"/>
+                                            <af:button text="Reimposta" id="b3"
+                                                       actionListener="#{bindings.resetIntermedi.execute}"
+                                                       disabled="#{!bindings.resetIntermedi.enabled}"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <af:inputDate value="#{bindings.interm_dal.inputValue}"
+                                                  label="Dalla data"
+                                                  required="#{bindings.interm_dal.hints.mandatory}"
+                                                  columns="#{bindings.interm_dal.hints.displayWidth}"
+                                                  shortDesc="#{bindings.interm_dal.hints.tooltip}" id="id1">
+                                        <f:validator binding="#{bindings.interm_dal.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.interm_dal.format}"/>
+                                    </af:inputDate>
+                                    <af:selectBooleanCheckbox value="#{bindings.interm_completi.inputValue}"
+                                                              label="Completo"
+                                                              shortDesc="#{bindings.interm_completi.hints.tooltip}"
+                                                              id="sbc1"/>
+                                    <af:selectBooleanCheckbox value="#{bindings.iterm_errore.inputValue}"
+                                                              label="Non importati per errori"
+                                                              shortDesc="#{bindings.iterm_errore.hints.tooltip}"
+                                                              id="sbc2"/>
+                                </af:panelFormLayout>
+                                <af:spacer width="10" height="20" id="s1"/>
+                                <af:panelHeader text="Referti intermedi" id="ph1">
+                                    <af:panelCollection id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                                        <f:facet name="menus"/>
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t4">
+                                                <af:button text="Dettagli" id="b4"
+                                                           action="#{RefCo_intermediRicercaAction.onIntermedio}"/>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="statusbar"/>
+                                        <af:table value="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel}"
+                                                  var="row" rows="#{bindings.Ref_SoEndoscopiaIntermView1.rangeSize}"
+                                                  emptyText="#{bindings.Ref_SoEndoscopiaIntermView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Ref_SoEndoscopiaIntermView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Ref_SoEndoscopiaIntermView1.rangeSize}" id="t2"
+                                                  scrollPolicy="page" columnStretching="last">
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Cognome.label}"
+                                                       id="c40" rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                                <af:outputText value="#{row.Cognome}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Cognome.tooltip}"
+                                                               id="ot40"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Nome.label}"
+                                                       id="c43" rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                                <af:outputText value="#{row.Nome}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Nome.tooltip}"
+                                                               id="ot43"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.DataNascita.label}"
+                                                       id="c44" rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                                <af:outputText value="#{row.DataNascita}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.DataNascita.tooltip}"
+                                                               id="ot44">
+                                                    <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.DataNascita.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.label}"
+                                                       id="c6">
+                                                <af:outputText value="#{row.Dtendo}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.tooltip}"
+                                                               id="ot6">
+                                                    <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtendo.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.label}"
+                                                       id="c26">
+                                                <af:outputText value="#{row.Dtrefisto}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.tooltip}"
+                                                               id="ot26">
+                                                    <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtrefisto.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.label}"
+                                                       id="c28">
+                                                <af:outputText value="#{row.NPolipiPrelevati}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.tooltip}"
+                                                               id="ot28">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.NPolipiPrelevati.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Completa.label}"
+                                                       id="c34">
+                                                <af:selectBooleanCheckbox selected="#{row.Completa eq 1}" readOnly="true"
+                                                                  id="sbc4"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Importata.label}"
+                                                       id="c37">
+                                                <af:selectBooleanCheckbox selected="#{row.Importata eq 1}" readOnly="true"
+                                                                  id="sbc3"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.label}"
+                                                       id="c38">
+                                                <af:outputText value="#{row.Dtimport}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.tooltip}"
+                                                               id="ot38">
+                                                    <af:convertDateTime pattern="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Dtimport.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Errore.label}"
+                                                       id="c39">
+                                                <af:outputText value="#{row.Errore}"
+                                                               shortDesc="#{bindings.Ref_SoEndoscopiaIntermView1.hints.Errore.tooltip}"
+                                                               id="ot39"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelCollection>
+                                </af:panelHeader>
+                                <af:panelHeader text="Polipi" id="ph2">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:table value="#{bindings.Ref_SoPolipiIntermView1.collectionModel}" var="row"
+                                              rows="#{bindings.Ref_SoPolipiIntermView1.rangeSize}"
+                                              emptyText="#{bindings.Ref_SoPolipiIntermView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Ref_SoPolipiIntermView1.rangeSize}" id="t3"
+                                              partialTriggers="::pc1:t2">
+                                        <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.IdPolipo.label}"
+                                                   id="c47">
+                                            <af:outputText value="#{row.IdPolipo}"
+                                                           shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.IdPolipo.tooltip}"
+                                                           id="ot47"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione3.label}"
+                                                   id="c77">
+                                            <af:outputText value="#{row.Descrizione3}"
+                                                           shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Descrizione3.tooltip}"
+                                                           id="ot77"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Ref_SoPolipiIntermView1.hints.Selezione.label}"
+                                                   id="c60">
+                                            <af:outputText value="#{row.Selezione}"
+                                                           shortDesc="#{bindings.Ref_SoPolipiIntermView1.hints.Selezione.tooltip}"
+                                                           id="ot60"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="funzionalita" value="Ricerca referti intermedi"/>
+                <f:attribute name="navigation" value="#{RefCo_intermediRicercaAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

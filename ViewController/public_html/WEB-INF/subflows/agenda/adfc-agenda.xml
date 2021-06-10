@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="ag_giorn">
+    <page>/pages/agenda/ag_giorn.jsf</page>
+  </view>
+  <view id="ag_mese">
+    <page>/pages/agenda/ag_mese.jsf</page>
+  </view>
+  <view id="ag_riassegna">
+    <page>/pages/agenda/ag_riassegna.jsf</page>
+  </view>
+  <method-call id="ag_cercagg">
+    <method>#{Ag_cercaggAction.findForward}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="rb_daAgenda">
+    <method>#{Rb_daAgendaAction.findForward}</method>
+    <outcome>
+      <to-string/>
+    </outcome>
+  </method-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>ag_preMese</from-outcome>
+      <to-activity-id>ag_mese</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>ag_preRiass</from-outcome>
+      <to-activity-id>ag_riassegna</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>ag_preGiorn</from-outcome>
+      <to-activity-id>ag_giorn</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__18">
+      <from-outcome>rb_daAgenda</from-outcome>
+      <to-activity-id>rb_daAgenda</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__14">
+    <from-activity-id>ag_cercagg</from-activity-id>
+    <control-flow-case id="__15">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>ag_giorn</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__16">
+    <from-activity-id>ag_giorn</from-activity-id>
+    <control-flow-case id="__17">
+      <from-outcome>goCerca</from-outcome>
+      <to-activity-id>ag_cercagg</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__5">
+    <managed-bean-name>Ag_daMenuAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_daMenuAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__6">
+    <managed-bean-name>Ag_preGiornAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_preGiornAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__7">
+      <property-name>agendaObject</property-name>
+      <property-class>view.agenda.Agenda</property-class>
+      <value>#{pageFlowScope.agendaObject != null and not requestScope.hasMenuAction ? pageFlowScope.agendaObject : requestScope.hasMenuAction ? Ag_daMenuAction : null}</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__8">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>agenda_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__9">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__10">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/menu/agenda_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__11">
+    <managed-bean-name>Ag_daInvitoAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_daInvitoAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__12">
+    <managed-bean-name>Ag_giornAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_giornAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__13">
+    <managed-bean-name>Ag_cercaggAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_cercaggAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__19">
+    <managed-bean-name>Rb_daAgendaAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Rb_daAgendaAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__20">
+    <managed-bean-name>Ag_preMeseAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_preMeseAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__21">
+    <managed-bean-name>Ag_meseAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_meseAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__22">
+    <managed-bean-name>AgendaUtils</managed-bean-name>
+    <managed-bean-class>model.commons.AgendaUtils</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__23">
+    <managed-bean-name>Ag_preRiassAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_preRiassAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__24">
+    <managed-bean-name>Ag_riassegnaAction</managed-bean-name>
+    <managed-bean-class>view.agenda.Ag_riassegnaAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

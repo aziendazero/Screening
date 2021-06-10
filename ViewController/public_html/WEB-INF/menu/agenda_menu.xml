@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<menu xmlns="http://myfaces.apache.org/trinidad/menu">
+    <groupNode id="itemNode_agenda" label="#{adfBundle['view.agenda_menuBundle']['label_agenda']}"
+               idref="itemNode_ag_giorn" icon="/images/calendar.png" rendered="#{sessionScope.SOAgenda==true}">
+        <itemNode id="itemNode_ag_giorn" label="#{adfBundle['view.agenda_menuBundle']['label_ag_giorn']}"
+                  action="ag_preGiorn" focusViewId="/ag_giorn" defaultOutcome="ag_preGiorn"/>
+        <itemNode id="itemNode_ag_mese" label="#{adfBundle['view.agenda_menuBundle']['label_ag_mese']}"
+                  action="ag_preMese" focusViewId="/ag_mese" defaultOutcome="ag_preMese"/>
+        <itemNode id="itemNode_ag_riassegna" label="#{adfBundle['view.agenda_menuBundle']['label_ag_riassegna']}"
+                  action="ag_preRiass" focusViewId="/ag_riassegna" defaultOutcome="ag_preRiass"
+                  rendered="#{sessionScope.agDaMenu and !sessionScope.SONoDatiSensibili==true}"/>
+    </groupNode>
+</menu>

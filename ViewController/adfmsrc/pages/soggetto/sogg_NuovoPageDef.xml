@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="sogg_NuovoPageDef"
+                Package="pages.soggetto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Sogg_SoSoggettoView1" RangeSize="10" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggettoView1Iterator"/>
+    <iterator Binds="Sogg_SoInvitoView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoInvitoView1Iterator"/>
+    <iterator Binds="Sogg_CprelInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_CprelInvitoView1Iterator"/>
+    <iterator Binds="Sogg_OrariDispView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_OrariDispView1Iterator"/>
+    <iterator Binds="Sogg_TipoInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_TipoInvitoView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Sogg_NuovoParamDataControl"
+              id="Sogg_NuovoParamDataControlIterator"/>
+    <iterator Binds="Sogg_StInvitiAllegView2" RangeSize="10" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_StInvitiAllegView2Iterator"/>
+    <iterator Binds="Sogg_SoSoggScrView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggScrView1Iterator"/>
+    <iterator Binds="Sogg_SoCnfClassePopView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfClassePopView1Iterator"/>
+    <iterator Binds="SoCnfRef1LivMTEXECView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="SoCnfRef1LivMTEXECView1Iterator"/>
+    <iterator Binds="Sogg_EsitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_EsitoView1Iterator"/>
+    <iterator Binds="Sogg_EsitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_EsitoView1Iterator1"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="Idcentroprelievo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_CprelInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoInvitoView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="Idapp" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Sogg_OrariDispView1Iterator"
+          NullValueFlag="start" NullValueId="Idapp_null">
+      <AttrNames>
+        <Item Value="Idapp"/>
+        <Item Value="Oraapp"/>
+        <Item Value="Minapp"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idapp"/>
+        <Item Value="Oraapp"/>
+        <Item Value="Minapp"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Orario"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="Idtpinvito" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Sogg_TipoInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoInvitoView1Iterator" id="Noteinvito">
+      <AttrNames>
+        <Item Value="Noteinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="TestProposto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="TestProposto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="HPV"/>
+        <Item Value="PAP Test"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Sogg_SoInvitoView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Sogg_NuovoParamDataControlIterator" id="regLett" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="regLett"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Sogg_SoInvitoView1Iterator" id="RaccLettInvito" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RaccLettInvito"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Sogg_StInvitiAllegView2Iterator" id="Idallegato">
+      <AttrNames>
+        <Item Value="Idallegato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_StInvitiAllegView2Iterator" id="Dtstampa">
+      <AttrNames>
+        <Item Value="Dtstampa"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_NuovoParamDataControlIterator" id="codClassePop" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfClassePopView1Iterator">
+      <AttrNames>
+        <Item Value="codClassePop"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codclasse"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list StaticList="false" IterBinding="Sogg_SoInvitoView1Iterator" ListIter="SoCnfRef1LivMTEXECView1Iterator"
+          id="MotivoidCnfRef">
+      <AttrNames>
+        <Item Value="MotivoIdcnfref"/>
+        <Item Value="MotivoGruppo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cellulare">
+      <AttrNames>
+        <Item Value="Cellulare"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Sogg_SoSoggettoView1Iterator" id="CellConfermato" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="CellConfermato"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="Codesitoinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_EsitoView1Iterator">
+      <AttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Livesito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Livesito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoInvitoView1Iterator" id="Codesitoinvito1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_EsitoView1Iterator1">
+      <AttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Livesito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Descrsugg"/>
+        <Item Value="MetodoCalcolo"/>
+        <Item Value="DataObbligatoria"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Livesito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Descrsugg"/>
+        <Item Value="MetodoCalcolo"/>
+        <Item Value="DataObbligatoria"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoInvitoView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

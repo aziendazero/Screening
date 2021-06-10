@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="sogg_documentoPageDef"
+                Package="pages.soggetto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Sogg_SoDocumentiSoggView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoDocumentiSoggView1Iterator"/>
+    <iterator Binds="Sogg_SoCnfTipiDocView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfTipiDocView1Iterator"/>
+    <iterator Binds="Sogg_SoSoggettoView1" RangeSize="10" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggettoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="DocIdent">
+      <AttrNames>
+        <Item Value="DocIdent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtrilascio">
+      <AttrNames>
+        <Item Value="Dtrilascio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtfinevalidita">
+      <AttrNames>
+        <Item Value="Dtfinevalidita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="DocIdentAnag">
+      <AttrNames>
+        <Item Value="DocIdentAnag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="IdIstComp">
+      <AttrNames>
+        <Item Value="IdIstComp"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="IdTipoDoc" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfTipiDocView1Iterator">
+      <AttrNames>
+        <Item Value="IdTipoDoc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdTipoDoc"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

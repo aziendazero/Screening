@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="cnf_editCentro">
+    <default-activity>CreateOrEdit</default-activity>
+    <transaction>
+      <requires-transaction/>
+    </transaction>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <router id="CreateOrEdit">
+      <case id="__1">
+        <expression>#{requestScope.action=='create'}</expression>
+        <outcome>create</outcome>
+      </case>
+      <case id="__2">
+        <expression>#{requestScope.action=='edit'}</expression>
+        <outcome>edit</outcome>
+      </case>
+      <case id="__18">
+        <expression>#{requestScope.action=='delete'}</expression>
+        <outcome>delete</outcome>
+      </case>
+      <default-outcome>inValidAction</default-outcome>
+    </router>
+    <view id="cnf_centro">
+      <page>/pages/conf/cnf_centro.jsf</page>
+    </view>
+    <method-call id="CreateWithParameters">
+      <method>#{bindings.CreateWithParams.execute}</method>
+      <outcome>
+        <fixed-outcome>CreateWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="cancel">
+      <outcome>
+        <name>cancel</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="commit">
+      <outcome>
+        <name>commit</name>
+        <commit/>
+      </outcome>
+    </task-flow-return>
+    <method-call id="Commit">
+      <method>#{bindings.Commit.execute}</method>
+      <outcome>
+        <fixed-outcome>Commit</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Delete">
+      <method>#{bindings.Delete.execute}</method>
+      <outcome>
+        <fixed-outcome>Delete</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="RefreshCentri2Liv">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome>
+        <fixed-outcome>RefreshCentri2Liv</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="RefreshCentriReferto">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome>
+        <fixed-outcome>RefreshCentriReferto</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id>CreateOrEdit</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>cnf_centro</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__5">
+        <from-outcome>create</from-outcome>
+        <to-activity-id>CreateWithParameters</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__15">
+        <from-outcome>delete</from-outcome>
+        <to-activity-id>Delete</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__6">
+      <from-activity-id>CreateWithParameters</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome>CreateWithParams</from-outcome>
+        <to-activity-id>cnf_centro</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__8">
+      <from-activity-id>*</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome>cancel</from-outcome>
+        <to-activity-id>cancel</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__10">
+      <from-activity-id>cnf_centro</from-activity-id>
+      <control-flow-case id="__11">
+        <from-outcome>confirm</from-outcome>
+        <to-activity-id>commit</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__12">
+        <from-outcome>apply</from-outcome>
+        <to-activity-id>Commit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id>Delete</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome>Delete</from-outcome>
+        <to-activity-id>commit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__19">
+      <from-activity-id>RefreshCentri2Liv</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome>RefreshCentri2Liv</from-outcome>
+        <to-activity-id>RefreshCentriReferto</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+      <from-activity-id>Commit</from-activity-id>
+      <control-flow-case id="__22">
+        <from-outcome>Commit</from-outcome>
+        <to-activity-id>RefreshCentri2Liv</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__23">
+      <from-activity-id>RefreshCentriReferto</from-activity-id>
+      <control-flow-case id="__24">
+        <from-outcome>RefreshCentriReferto</from-outcome>
+        <to-activity-id>cnf_centro</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

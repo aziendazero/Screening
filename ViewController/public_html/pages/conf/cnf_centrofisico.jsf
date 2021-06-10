@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_centrofisico.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Idcentro.inputValue}"
+                                              label="ID" disabled="true"
+                                              required="#{bindings.Idcentro.hints.mandatory}"
+                                              columns="#{bindings.Idcentro.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idcentro.hints.precision}"
+                                              shortDesc="#{bindings.Idcentro.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idcentro.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idcentro.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.DescrBreve.inputValue}"
+                                              label="Descrizione breve"
+                                              required="#{bindings.DescrBreve.hints.mandatory}"
+                                              columns="#{bindings.DescrBreve.hints.displayWidth}"
+                                              maximumLength="#{bindings.DescrBreve.hints.precision}"
+                                              shortDesc="#{bindings.DescrBreve.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.DescrBreve.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idcentro1liv.inputValue}"
+                                                    label="Centro di 1 liv."
+                                                    required="#{bindings.Idcentro1liv.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro1liv.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentro1liv.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idcentro1liv.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idcentro2liv.inputValue}"
+                                                    label="Centro di 2 liv."
+                                                    required="#{bindings.Idcentro2liv.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idcentro2liv.hints.tooltip}" id="soc2"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idcentro2liv.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Idcentro2liv.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc3"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Centro fisico"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

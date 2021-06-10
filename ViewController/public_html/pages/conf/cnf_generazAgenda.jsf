@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_generazAgenda.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_centriAction.agendaGenForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl2">
+                        <af:link text="Agenda" id="l2" action="#{Cnf_centriAction.onAgendaGiorno}"/>
+                        <af:panelGridLayout id="pgl1">
+                            <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                <af:gridCell marginStart="5px" width="100%" marginEnd="5px" id="gc1" halign="center">
+                                    <af:panelFormLayout id="pfl1">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                            label="Centro di prelievo"
+                                                            required="#{bindings.centro.hints.mandatory}"
+                                                            shortDesc="#{bindings.centro.hints.tooltip}" id="soc1"
+                                                            autoSubmit="true"
+                                                            valueChangeListener="#{viewScope.Cnf_agendaBean.selectCentro}"
+                                                            styleClass="choiceInTable" unselectedLabel="Selezionare un centro di prelievo">
+                                            <f:selectItems value="#{bindings.centro.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.centro.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputDate label="Generare la disponibilità a partire dal" id="id1"
+                                                      value="#{viewScope.Cnf_agendaBean.gen_dal}">
+                                            <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </af:inputDate>
+                                        <af:inputDate label="fino al (escluso)" id="id2"
+                                                      value="#{viewScope.Cnf_agendaBean.gen_al}">
+                                            <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </af:inputDate>
+                                        <af:selectOneChoice label="Comportamento in caso di disponibilità già generata"
+                                                            id="soc2" value="#{viewScope.Cnf_agendaBean.option}"
+                                                            styleClass="choiceInTable">
+                                            <af:selectItem label="non sovrascrivere" value="stop" id="si2"/>
+                                            <af:selectItem label="sovrascrivi solo se non ci sono appuntamenti"
+                                                           value="override_slot" id="si3"/>
+                                            <af:selectItem label="sovrascrivi in ogni caso" value="override_all"
+                                                           id="si4"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                </af:gridCell>
+                            </af:gridRow>
+                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+                                <af:gridCell marginStart="5px" width="100%" marginEnd="5px" id="gc2" halign="center">
+                                    <af:button text="Genera" id="b1"
+                                               disabled="#{sessionScope.SOGestioneConfigurazioneCentri!=true}"
+                                               actionListener="#{viewScope.Cnf_agendaBean.generateAgenda}"/>
+                                </af:gridCell>
+                            </af:gridRow>
+                        </af:panelGridLayout>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Generazione agenda fisica"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="impexp_anagrafePageDef"
+                Package="pages.impexp">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ImpExp_SoAziendaView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="ImpExp_SoAziendaView1Iterator"/>
+    <iterator Binds="Impexp_SoCnfImpexpView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoCnfImpexpView1Iterator"/>
+    <iterator Binds="Impexp_SoLogTransferView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoLogTransferView1Iterator"/>
+    <iterator Binds="Impexp_CodaProcessiView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_CodaProcessiView1Iterator"/>
+    <iterator Binds="Impexp_SoStPoptarget1" RangeSize="10" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoStPoptarget1Iterator"/>
+    <iterator Binds="Impexp_SoStPoptargetAnagView1" RangeSize="25" DataControl="ImpExp_AppModuleDataControl"
+              id="Impexp_SoStPoptargetAnagView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ImpExp_SoAziendaView1Iterator" id="Dtultagganag">
+      <AttrNames>
+        <Item Value="Dtultagganag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dtimport">
+      <AttrNames>
+        <Item Value="Dtimport"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Impexp_SoCnfImpexpView1Iterator" id="Dttransfer">
+      <AttrNames>
+        <Item Value="Dttransfer"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Impexp_SoLogTransferView1Iterator" id="Impexp_SoLogTransferView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoLogTransferView" Name="Impexp_SoLogTransferView10">
+        <AttrNames>
+          <Item Value="Data"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_CodaProcessiView1Iterator" id="Impexp_CodaProcessiView1">
+      <nodeDefinition DefName="model.impexp.Impexp_CodaProcessiView" Name="Impexp_CodaProcessiView10">
+        <AttrNames>
+          <Item Value="Pid"/>
+          <Item Value="Decstato"/>
+          <Item Value="Priorita"/>
+          <Item Value="Tpscr"/>
+          <Item Value="ErrorMessage"/>
+          <Item Value="DataSchedulazione"/>
+          <Item Value="UtenteSchedulazione"/>
+          <Item Value="InizioEsecuzione"/>
+          <Item Value="FineEsecuzione"/>
+          <Item Value="LinkLog"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoStPoptarget1Iterator" id="Impexp_SoStPoptarget1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoStPoptarget" Name="Impexp_SoStPoptarget10">
+        <AttrNames>
+          <Item Value="Idstorico"/>
+          <Item Value="Codaz"/>
+          <Item Value="Totsoggetti"/>
+          <Item Value="Totdonne"/>
+          <Item Value="Totuomini"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Data"/>
+          <Item Value="TotsogettiFf"/>
+          <Item Value="TotdonneFf"/>
+          <Item Value="TotuominiFf"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Impexp_SoStPoptargetAnagView1Iterator" id="Impexp_SoStPoptargetAnagView1">
+      <nodeDefinition DefName="model.impexp.Impexp_SoStPoptargetAnagView" Name="Impexp_SoStPoptargetAnagView10">
+        <AttrNames>
+          <Item Value="Idstorico"/>
+          <Item Value="Codaz"/>
+          <Item Value="Codanagreg"/>
+          <Item Value="Totsoggetti"/>
+          <Item Value="Totdonne"/>
+          <Item Value="Totuomini"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Data"/>
+          <Item Value="TotsogettiFf"/>
+          <Item Value="TotdonneFf"/>
+          <Item Value="TotuominiFf"/>
+          <Item Value="Sigla"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Impexp_SoStPoptarget1Iterator" id="Execute" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="Impexp_SoLogTransferView1Iterator" id="Execute1" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action id="Commit" DataControl="ImpExp_AppModuleDataControl" RequiresUpdateModel="true"
+            Action="commitTransaction"/>
+    <action IterBinding="Impexp_CodaProcessiView1Iterator" id="Execute2" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

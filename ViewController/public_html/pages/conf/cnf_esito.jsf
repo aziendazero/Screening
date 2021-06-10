@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_esito.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Codesitoinvito.inputValue}"
+                                              label="#{bindings.Codesitoinvito.hints.label}"
+                                              required="#{bindings.Codesitoinvito.hints.mandatory}"
+                                              columns="#{bindings.Codesitoinvito.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codesitoinvito.hints.precision}"
+                                              shortDesc="#{bindings.Codesitoinvito.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Codesitoinvito.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Livesito1.inputValue}"  
+                                                    label="#{bindings.Livesito1.label}"
+                                                    required="#{bindings.Livesito1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Livesito1.hints.tooltip}" id="soc6"
+                                                    valueChangeListener="#{Cnf_esitiBean.changeLivEsito}" autoSubmit="true"
+                                                    binding="#{Cnf_esitiBean.selectedLiv}">
+                                    <f:selectItems value="#{bindings.Livesito1.items}" id="si8"/>
+                                    <f:validator binding="#{bindings.Livesito1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Esitoinvito.inputValue}"
+                                              label="#{bindings.Esitoinvito.hints.label}"
+                                              required="#{bindings.Esitoinvito.hints.mandatory}"
+                                              columns="#{bindings.Esitoinvito.hints.displayWidth}"
+                                              maximumLength="#{bindings.Esitoinvito.hints.precision}"
+                                              shortDesc="#{bindings.Esitoinvito.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Esitoinvito.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrbreve.inputValue}"
+                                              label="#{bindings.Descrbreve.hints.label}"
+                                              required="#{bindings.Descrbreve.hints.mandatory}"
+                                              columns="#{bindings.Descrbreve.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrbreve.hints.precision}"
+                                              shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Descrbreve.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrsugg.inputValue}"
+                                              label="#{bindings.Descrsugg.hints.label}"
+                                              required="#{bindings.Descrsugg.hints.mandatory}"
+                                              columns="#{bindings.Descrsugg.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrsugg.hints.precision}"
+                                              shortDesc="#{bindings.Descrsugg.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Descrsugg.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Catesito.inputValue}"
+                                              label="#{bindings.Catesito.hints.label}"
+                                              required="#{bindings.Catesito.hints.mandatory}"
+                                              columns="#{bindings.Catesito.hints.displayWidth}"
+                                              maximumLength="#{bindings.Catesito.hints.precision}"
+                                              shortDesc="#{bindings.Catesito.hints.tooltip}" id="it7">
+                                    <f:validator binding="#{bindings.Catesito.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Tipoesito.inputValue}"
+                                              label="#{bindings.Tipoesito.hints.label}"
+                                              required="#{bindings.Tipoesito.hints.mandatory}"
+                                              columns="#{bindings.Tipoesito.hints.displayWidth}"
+                                              maximumLength="#{bindings.Tipoesito.hints.precision}"
+                                              shortDesc="#{bindings.Tipoesito.hints.tooltip}" id="it8">
+                                    <f:validator binding="#{bindings.Tipoesito.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Ggrichiamo.inputValue}"
+                                              label="#{bindings.Ggrichiamo.hints.label}"
+                                              required="#{bindings.Ggrichiamo.hints.mandatory}"
+                                              columns="#{bindings.Ggrichiamo.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ggrichiamo.hints.precision}"
+                                              shortDesc="#{bindings.Ggrichiamo.hints.tooltip}" id="it10">
+                                    <f:validator binding="#{bindings.Ggrichiamo.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ggrichiamo.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito.inputValue}"
+                                                    label="#{bindings.Idtpinvito.label}"
+                                                    required="#{bindings.Idtpinvito.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito.hints.tooltip}" id="soc2"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Idtpinvito.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Idtpinvito.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Codregionale.inputValue}"
+                                              label="#{bindings.Codregionale.hints.label}"
+                                              rendered="#{sessionScope.regionale==true}"
+                                              required="#{bindings.Codregionale.hints.mandatory}"
+                                              columns="#{bindings.Codregionale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codregionale.hints.precision}"
+                                              shortDesc="#{bindings.Codregionale.hints.tooltip}" id="it11">
+                                    <f:validator binding="#{bindings.Codregionale.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Codregionale1.inputValue}"
+                                                    label="#{bindings.Codregionale1.label}"
+                                                    rendered="#{sessionScope.regionale!=true}"
+                                                    required="#{bindings.Codregionale1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codregionale1.hints.tooltip}" id="soc3"
+                                                    styleClass="choiceInTable" partialTriggers="soc6" >
+                                    <f:selectItems value="#{bindings.Codregionale1.items}" id="si4"/>
+                                    <f:validator binding="#{bindings.Codregionale1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Ordine.inputValue}"
+                                              label="#{bindings.Ordine.hints.label}"
+                                              required="#{bindings.Ordine.hints.mandatory}"
+                                              columns="#{bindings.Ordine.hints.displayWidth}"
+                                              maximumLength="#{bindings.Ordine.hints.precision}"
+                                              shortDesc="#{bindings.Ordine.hints.tooltip}" id="it12">
+                                    <f:validator binding="#{bindings.Ordine.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Ordine.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.MetodoCalcolo.inputValue}"
+                                                    label="#{bindings.MetodoCalcolo.hints.label}" id="soc4"
+                                                    styleClass="choiceInTable">
+                                    <af:selectItem label="Standard" id="si5" value=""/> 
+                                    <af:selectItem label="A partire dalla data esame recente" value="D" id="si6"/>
+                                </af:selectOneChoice>
+                                <af:selectBooleanCheckbox value="#{bindings.DataObbligatoria.inputValue}"
+                                                          label="#{bindings.DataObbligatoria.hints.label}"
+                                                          required="#{bindings.DataObbligatoria.hints.mandatory}"
+                                                          shortDesc="#{bindings.DataObbligatoria.hints.tooltip}"
+                                                          id="it14"></af:selectBooleanCheckbox>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc5"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si7"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputDate value="#{bindings.Dtfinevalidita.inputValue}"
+                                              label="#{bindings.Dtfinevalidita.hints.label}"
+                                              required="#{bindings.Dtfinevalidita.hints.mandatory}"
+                                              columns="#{bindings.Dtfinevalidita.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtfinevalidita.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.Dtfinevalidita.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Dtfinevalidita.format}"/>
+                                </af:inputDate>
+                                <af:selectBooleanCheckbox value="#{bindings.Portale.inputValue}"
+                                                          label="#{bindings.Portale.hints.label}"
+                                                          required="#{bindings.Portale.hints.mandatory}"
+                                                          shortDesc="#{bindings.Portale.hints.tooltip}" id="it16"></af:selectBooleanCheckbox>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Esiti degli inviti"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

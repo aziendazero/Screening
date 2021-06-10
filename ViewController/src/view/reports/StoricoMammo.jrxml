@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="StoricoMammo"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SOGGETTO_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="INVITI_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ESCLUSIONI_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cod_ts" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="INTERVENTO_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REFERTO1LIV_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REFERTO2LIV_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ulss" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["050000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ordStorico" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="DOCUMENTI_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString><![CDATA[SELECT
+    SO_SOGGETTO.CODTS,
+    SO_SOGGETTO.ULSS,
+    SO_DOCUMENTI_SOGG.DOC_IDENT
+ FROM SO_SOGGETTO , SO_DOCUMENTI_SOGG
+ WHERE SO_SOGGETTO.CODTS=$P{cod_ts}
+ and SO_SOGGETTO.ULSS=$P{ulss}
+ AND SO_SOGGETTO.CODTS=SO_DOCUMENTI_SOGG.CODTS(+)
+ AND SO_SOGGETTO.ULSS=SO_DOCUMENTI_SOGG.ULSS(+)
+ AND (SO_DOCUMENTI_SOGG.ID_TIPO_DOC = 'TS' OR SO_DOCUMENTI_SOGG.ID_TIPO_DOC IS NULL)]]></queryString>
+
+	<field name="CODTS" class="java.lang.String"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="DOC_IDENT" class="java.lang.String"/>
+
+
+		<group  name="soggetto" isStartNewPage="true" isResetPageNumber="true" >
+			<groupExpression><![CDATA[$F{CODTS}]]></groupExpression>
+			<groupHeader>
+			<band height="80"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="112"
+						y="6"
+						width="313"
+						height="39"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SCREENING MAMMOGRAFICO
+STORIA SCREENING]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-29"
+						y="47"
+						width="593"
+						height="25"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-1"/>
+					<subreportParameter  name="num_tessera">
+						<subreportParameterExpression><![CDATA[$F{CODTS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ulss">
+						<subreportParameterExpression><![CDATA[$F{ULSS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="tpscr">
+						<subreportParameterExpression><![CDATA["MA"]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="DOCUMENTI_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{DOCUMENTI_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{SOGGETTO_DETAIL}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="16"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-27"
+						y="5"
+						width="588"
+						height="10"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-3"
+						isRemoveLineWhenBlank="true"/>
+					<subreportParameter  name="cod_ts">
+						<subreportParameterExpression><![CDATA[$F{CODTS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ulss">
+						<subreportParameterExpression><![CDATA[$F{ULSS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="tpscr">
+						<subreportParameterExpression><![CDATA["MA"]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ordStorico">
+						<subreportParameterExpression><![CDATA[$P{ordStorico}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{ESCLUSIONI_DETAIL}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="39"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Group" evaluationGroup="soggetto"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="482"
+						y="13"
+						width="53"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Oblique" size="10" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["di "+$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="425"
+						y="13"
+						width="52"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Oblique" size="10" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" pag."+$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="289"
+						y="13"
+						width="133"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4">
+							<printWhenExpression><![CDATA[$F{DOC_IDENT}==null?Boolean.FALSE: Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Oblique" size="10" isItalic="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Tessera n°"+$F{DOC_IDENT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="9"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-30"
+						y="2"
+						width="595"
+						height="4"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-2"/>
+					<subreportParameter  name="cod_ts">
+						<subreportParameterExpression><![CDATA[$F{CODTS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="INTERVENTO_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{INTERVENTO_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="REFERTO1LIV_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{REFERTO1LIV_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="REFERTO2LIV_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{REFERTO2LIV_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ulss">
+						<subreportParameterExpression><![CDATA[$F{ULSS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ordStorico">
+						<subreportParameterExpression><![CDATA[$P{ordStorico}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{INVITI_DETAIL}]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="17"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="1"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

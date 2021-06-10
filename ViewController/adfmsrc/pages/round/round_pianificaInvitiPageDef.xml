@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="round_pianificaInvitiPageDef"
+                Package="pages.round">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Sogg_SoCnfClassePopView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Sogg_SoCnfClassePopView1Iterator"/>
+    <page id="ptb1" path="templates.tempApplicationPageDef" Refresh="ifNeeded"/>
+    <iterator Binds="Round_SoCentro1livView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCentro1livView1Iterator"/>
+    <iterator Binds="Round_SoCnfTpinvitoView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Round_invitiBeanDataControl"
+              id="Round_invitiBeanDataControlIterator"/>
+    <iterator Binds="Round_SoPianificazioneInvitiView1" RangeSize="25" DataControl="Round_AppModuleDataControl"
+              id="Round_SoPianificazioneInvitiView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Sogg_SoCnfClassePopView1Iterator" ListOperMode="multiSelect"
+          ListIter="Sogg_SoCnfClassePopView1Iterator" id="Sogg_SoCnfClassePopView1" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codclasse"/>
+      </AttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_SoCentro1livView1Iterator" ListOperMode="multiSelect"
+          ListIter="Round_SoCentro1livView1Iterator" id="Round_SoCentro1livView1" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+      </AttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="tpInvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoCnfTpinvitoView1Iterator">
+      <AttrNames>
+        <Item Value="tpInvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Round_SoPianificazioneInvitiView1Iterator" id="Round_SoPianificazioneInvitiView1">
+      <nodeDefinition DefName="model.round.Round_SoTipiInvitiDaGenerareView" Name="Round_SoPianificazioneInvitiView10">
+        <AttrNames>
+          <Item Value="TipoTest"/>
+          <Item Value="Conteggio"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

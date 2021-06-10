@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Ref_SoEndoIstologieView"
+   Version="11.1.2.62.76"
+   SelectList="Ref_SoEndoscopia.IDENDO, 
+       Ref_SoEndoscopia.IDREFERTO, 
+       Ref_SoEndoscopia.N_ENDO, 
+       Ref_SoEndoscopia.DTENDO, 
+       Ref_SoCnfRef2liv.DESCRIZIONE, 
+       Ref_SoCnfRef2liv.IDCNFREF2L, 
+       Ref_SoCnfRef2liv.GRUPPO, 
+       Ref_SoCnfRef2liv.ULSS, 
+       Ref_SoCnfRef2liv.TPSCR, 
+       Ref_SoCnfRef2liv1.DESCRIZIONE AS DESCRIZIONE1, 
+       Ref_SoCnfRef2liv1.IDCNFREF2L AS IDCNFREF2L1, 
+       Ref_SoCnfRef2liv1.GRUPPO AS GRUPPO1, 
+       Ref_SoCnfRef2liv1.ULSS AS ULSS1, 
+       Ref_SoCnfRef2liv1.TPSCR AS TPSCR1, 
+       Ref_SoCnfRef2liv2.DESCRIZIONE AS DESCRIZIONE2, 
+       Ref_SoCnfRef2liv2.IDCNFREF2L AS IDCNFREF2L2, 
+       Ref_SoCnfRef2liv2.GRUPPO AS GRUPPO2, 
+       Ref_SoCnfRef2liv2.ULSS AS ULSS2, 
+       Ref_SoCnfRef2liv2.TPSCR AS TPSCR2, 
+       Ref_SoCnfRef2liv3.DESCRIZIONE AS DESCRIZIONE3, 
+       Ref_SoCnfRef2liv3.IDCNFREF2L AS IDCNFREF2L3, 
+       Ref_SoCnfRef2liv3.GRUPPO AS GRUPPO3, 
+       Ref_SoCnfRef2liv3.ULSS AS ULSS3, 
+       Ref_SoCnfRef2liv3.TPSCR AS TPSCR3"
+   FromList="SO_ENDOSCOPIA Ref_SoEndoscopia, SO_CNF_REF2LIV Ref_SoCnfRef2liv, SO_CNF_REF2LIV Ref_SoCnfRef2liv1, SO_CNF_REF2LIV Ref_SoCnfRef2liv2, SO_CNF_REF2LIV Ref_SoCnfRef2liv3"
+   Where="(Ref_SoEndoscopia.GR_ISTOLOGIA =Ref_SoCnfRef2liv.gruppo(+) and  Ref_SoEndoscopia.P1_ISTOLOGIA=Ref_SoCnfRef2liv.idcnfref2l(+) and  Ref_SoEndoscopia.ULSS=Ref_SoCnfRef2liv.ulss(+) and Ref_SoEndoscopia.TPSCR=Ref_SoCnfRef2liv.TPSCR(+)) AND (Ref_SoEndoscopia.GR_ISTOLOGIA =Ref_SoCnfRef2liv1.gruppo(+) and  Ref_SoEndoscopia.P2_ISTOLOGIA=Ref_SoCnfRef2liv1.idcnfref2l(+) and  Ref_SoEndoscopia.ULSS=Ref_SoCnfRef2liv1.ulss(+) and Ref_SoEndoscopia.TPSCR=Ref_SoCnfRef2liv1.TPSCR(+)) AND (Ref_SoEndoscopia.GR_ISTOLOGIA =Ref_SoCnfRef2liv2.gruppo(+) and  Ref_SoEndoscopia.P3_ISTOLOGIA=Ref_SoCnfRef2liv2.idcnfref2l(+) and  Ref_SoEndoscopia.ULSS=Ref_SoCnfRef2liv2.ulss(+) and Ref_SoEndoscopia.TPSCR=Ref_SoCnfRef2liv2.TPSCR(+)) AND (Ref_SoEndoscopia.GR_C_ISTOLOGIA =Ref_SoCnfRef2liv3.gruppo(+) and  Ref_SoEndoscopia.C_ISTOLOGIA=Ref_SoCnfRef2liv3.idcnfref2l(+) and  Ref_SoEndoscopia.ULSS=Ref_SoCnfRef2liv3.ulss(+) and Ref_SoEndoscopia.TPSCR=Ref_SoCnfRef2liv3.TPSCR(+))"
+   OrderBy="Ref_SoEndoscopia.N_ENDO"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.referto.Ref_SoEndoIstologieViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Ref_SoEndoscopia"
+      Entity="model.referto.Ref_SoEndoscopia" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef2liv"
+      Entity="model.referto.Ref_SoCnfRef2liv"
+      SourceUsage="model.referto.Ref_SoEndoIstologieView.Ref_SoEndoscopia"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef2liv1"
+      Entity="model.referto.Ref_SoCnfRef2liv"
+      SourceUsage="model.referto.Ref_SoEndoIstologieView.Ref_SoCnfRef2liv"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef2liv2"
+      Entity="model.referto.Ref_SoCnfRef2liv"
+      SourceUsage="model.referto.Ref_SoEndoIstologieView.Ref_SoCnfRef2liv1"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Ref_SoCnfRef2liv3"
+      Entity="model.referto.Ref_SoCnfRef2liv"
+      SourceUsage="model.referto.Ref_SoEndoIstologieView.Ref_SoCnfRef2liv2"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idendo"
+      IsNotNull="true"
+      EntityAttrName="Idendo"
+      EntityUsage="Ref_SoEndoscopia"
+      AliasName="IDENDO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsUnique="true"
+      IsNotNull="true"
+      EntityAttrName="Idreferto"
+      EntityUsage="Ref_SoEndoscopia"
+      AliasName="IDREFERTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NEndo"
+      IsNotNull="true"
+      EntityAttrName="NEndo"
+      EntityUsage="Ref_SoEndoscopia"
+      AliasName="N_ENDO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtendo"
+      EntityAttrName="Dtendo"
+      EntityUsage="Ref_SoEndoscopia"
+      AliasName="DTENDO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IstoP1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="IDCNFREF2L" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="GRUPPO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef2liv"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IstoP2"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef2liv1"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l1"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCnfRef2liv1"
+      AliasName="IDCNFREF2L1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo1"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef2liv1"
+      AliasName="GRUPPO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef2liv1"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef2liv1"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IstoP3"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef2liv2"
+      AliasName="DESCRIZIONE2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l2"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCnfRef2liv2"
+      AliasName="IDCNFREF2L2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo2"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef2liv2"
+      AliasName="GRUPPO2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef2liv2"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr2"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef2liv2"
+      AliasName="TPSCR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IstoC"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Ref_SoCnfRef2liv3"
+      AliasName="DESCRIZIONE3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfref2l3"
+      IsNotNull="true"
+      EntityAttrName="Idcnfref2l"
+      EntityUsage="Ref_SoCnfRef2liv3"
+      AliasName="IDCNFREF2L3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gruppo3"
+      IsNotNull="true"
+      EntityAttrName="Gruppo"
+      EntityUsage="Ref_SoCnfRef2liv3"
+      AliasName="GRUPPO3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Ref_SoCnfRef2liv3"
+      AliasName="ULSS3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr3"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Ref_SoCnfRef2liv3"
+      AliasName="TPSCR3" >
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idendo" />
+   </AttrArray>
+</ViewObject>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_consensoBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GESTIONE_CONSENSO}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOption('pt1:Consenso')" type="load"/>
+        <af:clientListener method="removeEmptyOption('pt1:ConsensoCond')" type="load"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="50px" bottomHeight="0">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal"
+                                                 halign="right">
+                                <af:toolbar rendered="#{sessionScope.sogg_documento_mode=='delete'?false:true}" id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                    <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b2"
+                                               action="#{Sogg_consensoAction.onSave}"/>
+                                    <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b4"
+                                               action="#{Sogg_consensoAction.onCancel}" immediate="true"/>
+                                    <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b7"
+                                               action="#{Sogg_consensoAction.onClose}"
+                                               rendered="#{sessionScope.backConsensoOK==true?true:false}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll">
+                                <af:panelFormLayout id="pfl1">
+                                    <af:selectOneChoice value="#{bindings.Consenso.inputValue}"
+                                                        label="#{viewcontrollerBundle.CONSENSO_GENERALE_AL_TRATTAMENTO_DEI_DATI__DATI_PERSONALI_E_SENSIBILI_}"
+                                                        styleClass="choiceInTable"
+                                                        required="#{bindings.Consenso.hints.mandatory}"
+                                                        shortDesc="#{bindings.Consenso.hints.tooltip}" id="Consenso"
+                                                        valueChangeListener="#{Sogg_consensoAction.onUpdateConsenso}"
+                                                        autoSubmit="true">
+                                        <f:selectItems value="#{bindings.Consenso.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.Consenso.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:panelLabelAndMessage label="#{viewcontrollerBundle.PROPAGA_CONSENSO_GENERALE_A}" id="plam1"
+                                                             rendered="#{sessionScope.consensoMA || sessionScope.consensoCI || sessionScope.consensoCO}">
+                                        <af:selectBooleanCheckbox value="#{bindings.propagaMA.attributeValue}"
+                                                                  label="#{viewcontrollerBundle.SCREENING_MAMMOGRAFICO}"
+                                                                  shortDesc="#{bindings.propagaMA.hints.tooltip}"
+                                                                  id="sbc1" rendered="#{sessionScope.consensoMA}"/>
+                                        <af:selectBooleanCheckbox value="#{bindings.propagaCI.attributeValue}"
+                                                                  label="#{viewcontrollerBundle.SCREENING_CERVICALE}"
+                                                                  shortDesc="#{bindings.propagaCI.hints.tooltip}"
+                                                                  id="sbc2" rendered="#{sessionScope.consensoCI}"/>
+                                        <af:selectBooleanCheckbox value="#{bindings.propagaCO.attributeValue}"
+                                                                  label="#{viewcontrollerBundle.SCREENING_DEL_COLON_RETTO}"
+                                                                  shortDesc="#{bindings.propagaCO.hints.tooltip}"
+                                                                  id="sbc3" rendered="#{sessionScope.consensoCO}"/>
+                                    </af:panelLabelAndMessage>
+                                    <af:selectOneChoice value="#{bindings.ConsensoCond.inputValue}"
+                                                        label="#{viewcontrollerBundle.CONSENSO_ALLA_CONDIVISIONE_DEI_DATI_CON_LE_ULSS_CONVENZIONATE}"
+                                                        required="#{bindings.ConsensoCond.hints.mandatory}"
+                                                        styleClass="choiceInTable"
+                                                        shortDesc="#{bindings.ConsensoCond.hints.tooltip}" id="ConsensoCond"
+                                                        rendered="#{sessionScope.scr eq 'CI' or sessionScope.scr eq 'PF'}"
+                                                        disabled="#{bindings.Consenso.inputValue.intValue() lt 2}"
+                                                        partialTriggers="Consenso">
+                                        <f:selectItems value="#{bindings.ConsensoCond.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.ConsensoCond.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_CONSENSO}"/>
+                <f:attribute name="viewSubmenu"
+                             value="#{sessionScope.showTabs and !sessionScope.LINK_ACC and !sessionScope.LINK_REF}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="navigation" value="#{Sogg_consensoAction}"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue, bindings.Nome.inputValue, bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>   

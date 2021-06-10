@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoRoundInScadenzaView"
+   Version="12.2.1.11.57"
+   SelectList="Round_SoComune.CODCOM, 
+       Round_SoComune.DESCRIZIONE, 
+       Round_SoComune.ULSS, 
+       Round_SoRoundorg.CODCOM AS CODCOM1, 
+       Round_SoRoundorg.CODSCR, 
+       Round_SoRoundorg.NUMROUND, 
+       Round_SoRoundorg.DTINIZIO, 
+       Round_SoRoundorg.DTFINE, 
+       Round_SoRoundorg.DTPRIMOINVITO, 
+       Round_SoRoundorg.DTULTINVITO, 
+       Round_SoRoundorg.DTULTSOLLECITO, 
+       A_SoCnfTpscr.DURATA, 
+       A_SoCnfTpscr.CODSCR AS CODSCR1, 
+       A_SoAzienda.CODAZ, 
+       A_SoAzienda.GG_CHIUSURA_ROUND, 
+       A_SoAzienda.DURATA_MSG_CHIUSURA_ROUND, 
+       ADD_MONTHS(Round_SoRoundorg.DTINIZIO,A_SoCnfTpscr.DURATA*12) AS SCADENZA, 
+       Round_SoComune.RELEASE_CODE, 
+       Round_SoRoundorg.RELEASE_CODE_COM"
+   FromList="SO_COMUNE Round_SoComune, SO_ROUNDORG Round_SoRoundorg, SO_AZIENDA A_SoAzienda, SO_CNF_TPSCR A_SoCnfTpscr"
+   Where="(Round_SoComune.CODCOM = Round_SoRoundorg.CODCOM(+)) and NOT EXISTS (SELECT 1 FROM SO_ROUNDORG R WHERE R.codcom= Round_SoComune.CODCOM AND  R.codscr=Round_SoRoundorg.CODSCR AND R.numround&#62;Round_SoRoundorg.NUMROUND) and  Round_SoComune.ULSS=A_SoAzienda.CODAZ AND Round_SoRoundorg.CODSCR=A_SoCnfTpscr.CODSCR and ADD_MONTHS(Round_SoRoundorg.DTINIZIO,A_SoCnfTpscr.DURATA*12)+A_SoAzienda.GG_CHIUSURA_ROUND&#60;=SYSDATE AND ADD_MONTHS(Round_SoRoundorg.DTINIZIO,A_SoCnfTpscr.DURATA*12)+A_SoAzienda.GG_CHIUSURA_ROUND+A_SoAzienda.DURATA_MSG_CHIUSURA_ROUND&#62;=SYSDATE"
+   OrderBy="&#34;SCADENZA&#34;,Round_SoComune.DESCRIZIONE"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.round.Round_SoRoundInScadenzaViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Round_SoComune"
+      Entity="model.round.Round_SoComune" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Round_SoRoundorg"
+      Entity="model.round.Round_SoRoundorg"
+      SourceUsage="model.round.Round_SoRoundInScadenzaView.Round_SoComune"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAzienda"
+      Entity="model.global.A_SoAzienda"
+      SourceUsage="model.round.Round_SoRoundInScadenzaView.Round_SoRoundorg"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoCnfTpscr"
+      Entity="model.global.A_SoCnfTpscr"
+      SourceUsage="model.round.Round_SoRoundInScadenzaView.A_SoAzienda"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoComune"
+      AliasName="CODCOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Round_SoComune"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Round_SoComune"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codscr"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="CODSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numround"
+      IsNotNull="true"
+      EntityAttrName="Numround"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="NUMROUND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinizio"
+      IsNotNull="true"
+      EntityAttrName="Dtinizio"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTINIZIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfine"
+      EntityAttrName="Dtfine"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTFINE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprimoinvito"
+      EntityAttrName="Dtprimoinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTPRIMOINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultinvito"
+      EntityAttrName="Dtultinvito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultsollecito"
+      EntityAttrName="Dtultsollecito"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="DTULTSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Durata"
+      IsNotNull="true"
+      EntityAttrName="Durata"
+      EntityUsage="A_SoCnfTpscr"
+      AliasName="DURATA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codscr1"
+      IsNotNull="true"
+      EntityAttrName="Codscr"
+      EntityUsage="A_SoCnfTpscr"
+      AliasName="CODSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codaz"
+      IsNotNull="true"
+      EntityAttrName="Codaz"
+      EntityUsage="A_SoAzienda"
+      AliasName="CODAZ" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GgChiusuraRound"
+      EntityAttrName="GgChiusuraRound"
+      EntityUsage="A_SoAzienda"
+      AliasName="GG_CHIUSURA_ROUND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DurataMsgChiusuraRound"
+      EntityAttrName="DurataMsgChiusuraRound"
+      EntityUsage="A_SoAzienda"
+      AliasName="DURATA_MSG_CHIUSURA_ROUND" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Scadenza"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="SCADENZA"
+      Expression="ADD_MONTHS(Round_SoRoundorg.DTINIZIO,A_SoCnfTpscr.DURATA*12)"
+      SQLType="DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Round_SoComune"
+      AliasName="RELEASE_CODE"/>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeCom"
+      EntityUsage="Round_SoRoundorg"
+      AliasName="RELEASE_CODE_COM"/>
+</ViewObject>

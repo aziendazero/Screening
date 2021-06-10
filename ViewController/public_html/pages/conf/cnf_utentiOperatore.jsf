@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_utentiOperatore.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Username.inputValue}"
+                                              label="#{bindings.Username.hints.label}"
+                                              required="#{bindings.Username.hints.mandatory}"
+                                              columns="#{bindings.Username.hints.displayWidth}"
+                                              maximumLength="#{bindings.Username.hints.precision}"
+                                              shortDesc="#{bindings.Username.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Username.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.tipoOperatore.inputValue}"
+                                                    label="Tipo operatore"
+                                                    required="#{bindings.tipoOperatore.hints.mandatory}"
+                                                    shortDesc="#{bindings.tipoOperatore.hints.tooltip}" id="soc2"
+                                                    valueChangeListener="#{Cnf_operatoriMediciBean.selectTpOp}"
+                                                    valuePassThru="true" autoSubmit="true">
+                                    <f:selectItems value="#{bindings.tipoOperatore.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.tipoOperatore.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc3" 
+                                                    rendered="#{sessionScope.regionale}" autoSubmit="true"
+                                                    valuePassThru="true"
+                                                    valueChangeListener="#{Cnf_operatoriMediciBean.selectUlss}">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Operatore.inputValue}"
+                                                    label="#{bindings.Operatore.label}"
+                                                    required="#{bindings.Operatore.hints.mandatory}"
+                                                    shortDesc="#{bindings.Operatore.hints.tooltip}" id="soc1"
+                                                    partialTriggers="soc2 soc3">
+                                    <f:selectItems value="#{bindings.Operatore.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Operatore.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Associazione utente-operatore medico"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,413 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="impexp_anagrafe.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" halign="center" layout="scroll">
+                        <af:panelGroupLayout id="pgl4" layout="vertical" halign="right"
+                                             inlineStyle="padding-bottom:20px; padding-top:0px;">
+                            <af:button text="Ultimo log" id="b9">
+                                <af:fileDownloadActionListener method="#{Impexp_anagrafeAction.downloadLogListener}"
+                                                                       filename="LogImportAnagrafe.pdf"/>
+                            </af:button>
+                        </af:panelGroupLayout>
+                        <af:panelBox text="Istruzioni" id="pb1">
+                            <f:facet name="toolbar"/>
+                            <af:panelList id="pl1">
+                                <h:outputText value="Per richiedere l'aggiornamento dell'anagrafica cliccare su 'Schedula import'"
+                                              rendered="${!sessionScope.impAnagManuale}" id="ot1"/>
+                                <h:outputText value="Per eseguire l'aggiornamento dell'anagrafica cliccare su 'Importa dati'"
+                                              rendered="${sessionScope.impAnagManuale}" id="ot2"/>
+                            </af:panelList>
+                        </af:panelBox>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:button text="Schedula import" id="b1" rendered="${!sessionScope.impAnagManuale}" disabled="${sessionScope.SOImportAnagrafe!=true}"
+                                   actionListener="#{Impexp_anagrafeAction.schedule}" partialSubmit="false"/>
+                        <af:panelFormLayout id="pfl1">
+                            <f:facet name="footer"/>
+                            <af:inputDate value="#{bindings.Dtultagganag.inputValue}"
+                                          label="Ultimo import con modifica ai dati"
+                                          required="#{bindings.Dtultagganag.hints.mandatory}"
+                                          columns="#{bindings.Dtultagganag.hints.displayWidth}"
+                                          shortDesc="#{bindings.Dtultagganag.hints.tooltip}" id="id1" readOnly="true">
+                                <f:validator binding="#{bindings.Dtultagganag.validator}"/>
+                                <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </af:inputDate>
+                            <af:inputDate value="#{bindings.Dtimport.inputValue}"
+                                          label="Ultimo import"
+                                          required="#{bindings.Dtimport.hints.mandatory}"
+                                          columns="#{bindings.Dtimport.hints.displayWidth}"
+                                          shortDesc="#{bindings.Dtimport.hints.tooltip}" id="id2" readOnly="true">
+                                <f:validator binding="#{bindings.Dtimport.validator}"/>
+                                <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </af:inputDate>
+                            <af:inputDate value="#{bindings.Dttransfer.inputValue}"
+                                          label="Ultimo trasferimento del file di dati dall'anagrafe sanitaria"
+                                          required="#{bindings.Dttransfer.hints.mandatory}"
+                                          columns="#{bindings.Dttransfer.hints.displayWidth}"
+                                          shortDesc="#{bindings.Dttransfer.hints.tooltip}" id="id3" readOnly="true">
+                                <f:validator binding="#{bindings.Dttransfer.validator}"/>
+                                <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </af:inputDate>
+                            <h:outputText value="Aggiornamento anagrafe MAI eseguito" id="ot3"
+                                    rendered="${bindings.Dtultagganag.attributeValue!='' &amp;&amp; bindings.Dtultagganag.attributeValue!=null?false:true}"/>
+                        </af:panelFormLayout>
+                        <af:spacer width="10" height="10" id="s2"/>
+                        <af:panelAccordion discloseMany="true" id="pa1" styleClass="AFStretchWidth" discloseNone="true">
+                            <af:showDetailItem id="pane1" text="Storico">
+                                <af:panelGroupLayout id="pgl3" halign="left" layout="scroll">
+                                    <af:panelGridLayout id="pgl2">
+                                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                            <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                                <af:panelHeader text="Popolazione target complessiva" id="ph1" size="2">
+                                                    <f:facet name="context"/>
+                                                    <f:facet name="toolbar"/>
+                                                    <f:facet name="menuBar"/>
+                                                    <f:facet name="legend"/>
+                                                    <f:facet name="info"/>
+                                                    <af:panelCollection id="pc1" featuresOff="detach freeze wrap">
+                                                        <f:facet name="menus"/>
+                                                        <f:facet name="toolbar">
+                                                            <af:toolbar id="t5">
+                                                                <af:button actionListener="#{bindings.Execute.execute}"
+                                                                           text="Aggiorna"
+                                                                           disabled="#{!bindings.Execute.enabled}"
+                                                                           id="b8"/>
+                                                            </af:toolbar>
+                                                        </f:facet>
+                                                        <f:facet name="statusbar"/>
+                                                        <af:table id="md1"
+                                                                  rows="#{bindings.Impexp_SoStPoptarget1.rangeSize}"
+                                                                  fetchSize="#{bindings.Impexp_SoStPoptarget1.rangeSize}"
+                                                                  emptyText="#{bindings.Impexp_SoStPoptarget1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                  var="row"
+                                                                  value="#{bindings.Impexp_SoStPoptarget1.collectionModel}"
+                                                                  rowBandingInterval="0"
+                                                                  selectedRowKeys="#{bindings.Impexp_SoStPoptarget1.collectionModel.selectedRow}"
+                                                                  selectionListener="#{bindings.Impexp_SoStPoptarget1.collectionModel.makeCurrent}"
+                                                                  rowSelection="single" autoHeightRows="10"
+                                                                  partialTriggers="::b8" scrollPolicy="page"
+                                                                  width="600">
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.Data.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.Data.name}"
+                                                                       sortable="false" id="c7">
+                                                                <af:outputText value="#{row.Data}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.Data.tooltip}"
+                                                                               id="ot10">
+                                                                    <af:convertDateTime pattern="#{bindings.Impexp_SoStPoptarget1.hints.Data.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.Totsoggetti.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.Totsoggetti.name}"
+                                                                       sortable="false" id="c3">
+                                                                <af:outputText value="#{row.Totsoggetti}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.Totsoggetti.tooltip}"
+                                                                               id="ot6">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.Totsoggetti.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.TotsogettiFf.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.TotsogettiFf.name}"
+                                                                       sortable="false" id="c8">
+                                                                <af:outputText value="#{row.TotsogettiFf}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.TotsogettiFf.tooltip}"
+                                                                               id="ot11">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.TotsogettiFf.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.Totdonne.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.Totdonne.name}"
+                                                                       sortable="false" id="c4">
+                                                                <af:outputText value="#{row.Totdonne}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.Totdonne.tooltip}"
+                                                                               id="ot7">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.Totdonne.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.TotdonneFf.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.TotdonneFf.name}"
+                                                                       sortable="false" id="c9">
+                                                                <af:outputText value="#{row.TotdonneFf}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.TotdonneFf.tooltip}"
+                                                                               id="ot12">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.TotdonneFf.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.Totuomini.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.Totuomini.name}"
+                                                                       sortable="false" id="c5"
+                                                                       rendered="#{sessionScope.scr=='CO'}">
+                                                                <af:outputText value="#{row.Totuomini}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.Totuomini.tooltip}"
+                                                                               id="ot8">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.Totuomini.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoStPoptarget1.hints.TotuominiFf.label}"
+                                                                       sortProperty="#{bindings.Impexp_SoStPoptarget1.hints.TotuominiFf.name}"
+                                                                       sortable="false" id="c10"
+                                                                       rendered="#{sessionScope.scr=='CO'}">
+                                                                <af:outputText value="#{row.TotuominiFf}"
+                                                                               shortDesc="#{bindings.Impexp_SoStPoptarget1.hints.TotuominiFf.tooltip}"
+                                                                               id="ot13">
+                                                                    <af:convertNumber groupingUsed="false"
+                                                                                      pattern="#{bindings.Impexp_SoStPoptarget1.hints.TotuominiFf.format}"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                </af:panelHeader>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                                <af:panelHeader text="Popolazione target per situazione anagrafica"
+                                                                id="ph2" size="3" inlineStyle="margin-left:20px;">
+                                                    <f:facet name="context"/>
+                                                    <f:facet name="toolbar"/>
+                                                    <f:facet name="menuBar"/>
+                                                    <f:facet name="legend"/>
+                                                    <f:facet name="info"/>
+                                                    <af:table rows="#{bindings.Impexp_SoStPoptargetAnagView1.rangeSize}"
+                                                              fetchSize="#{bindings.Impexp_SoStPoptargetAnagView1.rangeSize}"
+                                                              emptyText="#{bindings.Impexp_SoStPoptargetAnagView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              var="row"
+                                                              value="#{bindings.Impexp_SoStPoptargetAnagView1.collectionModel}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Impexp_SoStPoptargetAnagView1.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Impexp_SoStPoptargetAnagView1.collectionModel.makeCurrent}"
+                                                              rowSelection="single" id="t1" width="600">
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Sigla.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Sigla.name}"
+                                                                   sortable="false" id="c35">
+                                                            <af:outputText value="#{row.Sigla}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Sigla.tooltip}"
+                                                                           id="ot38"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totsoggetti.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totsoggetti.name}"
+                                                                   sortable="false" id="c14">
+                                                            <af:outputText value="#{row.Totsoggetti}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totsoggetti.tooltip}"
+                                                                           id="ot17">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totsoggetti.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotsogettiFf.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotsogettiFf.name}"
+                                                                   sortable="false" id="c32">
+                                                            <af:outputText value="#{row.TotsogettiFf}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotsogettiFf.tooltip}"
+                                                                           id="ot35">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotsogettiFf.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totdonne.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totdonne.name}"
+                                                                   sortable="false" id="c28">
+                                                            <af:outputText value="#{row.Totdonne}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totdonne.tooltip}"
+                                                                           id="ot31">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totdonne.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotdonneFf.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotdonneFf.name}"
+                                                                   sortable="false" id="c33">
+                                                            <af:outputText value="#{row.TotdonneFf}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotdonneFf.tooltip}"
+                                                                           id="ot36">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotdonneFf.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totuomini.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totuomini.name}"
+                                                                   sortable="false" id="c29"
+                                                                   rendered="#{sessionScope.scr=='CO'}">
+                                                            <af:outputText value="#{row.Totuomini}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totuomini.tooltip}"
+                                                                           id="ot32">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.Totuomini.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotuominiFf.label}"
+                                                                   sortProperty="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotuominiFf.name}"
+                                                                   sortable="false" id="c34"
+                                                                   rendered="#{sessionScope.scr=='CO'}">
+                                                            <af:outputText value="#{row.TotuominiFf}"
+                                                                           shortDesc="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotuominiFf.tooltip}"
+                                                                           id="ot37">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Impexp_SoStPoptargetAnagView1.hints.TotuominiFf.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelHeader>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                    </af:panelGridLayout>
+                                </af:panelGroupLayout>
+                            </af:showDetailItem>
+                            <af:showDetailItem id="pane2" text="Log">
+                                <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                                    featuresOff="detach freeze wrap">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t6">
+                                            <af:button text="Pulizia log" id="b3"
+                                                       actionListener="#{Impexp_anagrafeAction.cleanLog}"/>
+                                            <af:button actionListener="#{bindings.Execute1.execute}" text="Aggiorna"
+                                                       disabled="#{!bindings.Execute1.enabled}" id="b2"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.Impexp_SoLogTransferView1.collectionModel}" var="row"
+                                              rows="#{bindings.Impexp_SoLogTransferView1.rangeSize}"
+                                              emptyText="#{bindings.Impexp_SoLogTransferView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Impexp_SoLogTransferView1.rangeSize}" id="t3"
+                                              autoHeightRows="10" columnStretching="last" partialTriggers="::b2">
+                                        <af:column headerText="#{bindings.Impexp_SoLogTransferView1.hints.Data.label}"
+                                                   id="c15" width="200">
+                                            <af:outputText value="#{row.Data}"
+                                                           shortDesc="#{bindings.Impexp_SoLogTransferView1.hints.Data.tooltip}"
+                                                           id="ot18">
+                                                <af:convertDateTime pattern="#{bindings.Impexp_SoLogTransferView1.hints.Data.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_SoLogTransferView1.hints.Descrizione.label}"
+                                                   id="c16">
+                                            <af:outputText value="#{row.Descrizione}"
+                                                           shortDesc="#{bindings.Impexp_SoLogTransferView1.hints.Descrizione.tooltip}"
+                                                           id="ot19"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_SoLogTransferView1.hints.Ulss.label}"
+                                                   id="c17" rendered="#{sessionScope.regionale==true}">
+                                            <af:outputText value="#{row.Ulss}"
+                                                           shortDesc="#{bindings.Impexp_SoLogTransferView1.hints.Ulss.tooltip}"
+                                                           id="ot20"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelCollection>
+                            </af:showDetailItem>
+                            <af:showDetailItem id="pane3" text="Processi">
+                                <af:panelCollection id="pc3" styleClass="AFStretchWidth"
+                                                    featuresOff="detach freeze wrap">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t7">
+                                            <af:button text="Annulla schedulazione" id="b5"
+                                                       actionListener="#{Impexp_anagrafeAction.annulla}"/>
+                                            <af:button actionListener="#{bindings.Execute2.execute}" text="Aggiorna"
+                                                       disabled="#{!bindings.Execute2.enabled}" id="b4"/>
+                                            <af:button text="Cancella processi" id="b7" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                                       actionListener="#{Impexp_anagrafeAction.cancella}"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.Impexp_CodaProcessiView1.collectionModel}" var="row"
+                                              rows="#{bindings.Impexp_CodaProcessiView1.rangeSize}"
+                                              emptyText="#{bindings.Impexp_CodaProcessiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Impexp_CodaProcessiView1.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Impexp_CodaProcessiView1.collectionModel.makeCurrent}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Impexp_CodaProcessiView1.rangeSize}" id="t4"
+                                              partialTriggers="::b4">
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.Pid.label}"
+                                                   id="c18">
+                                            <af:outputText value="#{row.Pid}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.Pid.tooltip}"
+                                                           id="ot21">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Impexp_CodaProcessiView1.hints.Pid.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.Decstato.label}"
+                                                   id="c19">
+                                            <af:outputText value="#{row.Decstato}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.Decstato.tooltip}"
+                                                           id="ot22"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.Priorita.label}"
+                                                   id="c20">
+                                            <af:outputText value="#{row.Priorita}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.Priorita.tooltip}"
+                                                           id="ot23">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Impexp_CodaProcessiView1.hints.Priorita.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.Tpscr.label}"
+                                                   id="c21">
+                                            <af:outputText value="#{row.Tpscr}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.Tpscr.tooltip}"
+                                                           id="ot24"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.ErrorMessage.label}"
+                                                   id="c22" width="100">
+                                            <af:outputText value="#{row.ErrorMessage}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.ErrorMessage.tooltip}"
+                                                           id="ot25"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.DataSchedulazione.label}"
+                                                   id="c23" width="200">
+                                            <af:outputText value="#{row.DataSchedulazione}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.DataSchedulazione.tooltip}"
+                                                           id="ot26">
+                                                <af:convertDateTime pattern="#{bindings.Impexp_CodaProcessiView1.hints.DataSchedulazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.UtenteSchedulazione.label}"
+                                                   id="c24" width="150">
+                                            <af:outputText value="#{row.UtenteSchedulazione}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.UtenteSchedulazione.tooltip}"
+                                                           id="ot27"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.InizioEsecuzione.label}"
+                                                   id="c25" width="200">
+                                            <af:outputText value="#{row.InizioEsecuzione}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.InizioEsecuzione.tooltip}"
+                                                           id="ot28">
+                                                <af:convertDateTime pattern="#{bindings.Impexp_CodaProcessiView1.hints.InizioEsecuzione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Impexp_CodaProcessiView1.hints.FineEsecuzione.label}"
+                                                   id="c26" width="200">
+                                            <af:outputText value="#{row.FineEsecuzione}"
+                                                           shortDesc="#{bindings.Impexp_CodaProcessiView1.hints.FineEsecuzione.tooltip}"
+                                                           id="ot29">
+                                                <af:convertDateTime pattern="#{bindings.Impexp_CodaProcessiView1.hints.FineEsecuzione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText=""
+                                                   id="c27">
+                                            <af:button text="Log" id="b6" disabled="#{row.LinkLog!=null?false:true}">
+                                                <af:fileDownloadActionListener method="#{Impexp_anagrafeAction.downloadScheduledLog}"
+                                                                               filename="#{row.LinkLog}"/>
+                                            </af:button>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelCollection>
+                            </af:showDetailItem>
+                        </af:panelAccordion>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Import dati anagrafici"/>
+                <f:attribute name="navigation" value="#{Impexp_anagrafeAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Acc_Referto1livView"
+   Version="11.1.2.62.76"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.accettazione.Acc_Referto1livViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT
+ REFE.NUMACCAP ,
+ REFE.DTPRELIEVO ,
+ REFE.DTREFERTO ,
+ CODREFADE.IDCNFREF IDADE,
+ CODREFGIU.IDCNFREF IDGIU ,
+ SUGG.DESCRIZIONE,
+ OPMEDICITO.COGNOME || ' ' || OPMEDICITO.NOME CITOSCREENER,
+ OPMEDISUPER.TITOLO || ' ' || OPMEDISUPER.COGNOME SUPERVISORE,
+ REFE.ULSS,
+ REFE.TPSCR,
+ REFE.IDINVITO,
+ GIU.DESCRIZIONE GIUDIA,
+ ADE.DESCRIZIONE ADEPRE
+ 
+FROM
+   SO_REFERTOCITO1LIV REFE
+ , SO_CNF_SUGG_1LIV SUGG
+ , SO_CODREF1LIVC CODREFGIU
+ , SO_CODREF1LIVC CODREFADE
+ , SO_OPMEDICO OPMEDICITO
+ , SO_OPMEDICO OPMEDISUPER
+ , SO_CNF_REF1LIV GIU
+ , SO_CNF_REF1LIV ADE
+WHERE
+     (CODREFADE.IDREFERTO (+) = REFE.IDREFERTO)
+ AND (CODREFADE.GRUPPO (+) = 'ADEPRE')
+ AND (CODREFGIU.IDREFERTO (+) = REFE.IDREFERTO)
+ AND (CODREFGIU.GRUPPO (+) = 'GIUDIA')
+ AND (SUGG.IDSUGG = REFE.IDSUGG)
+ AND (SUGG.ULSS = REFE.ULSS)
+ AND (SUGG.TPSCR = REFE.TPSCR)
+ AND (OPMEDICITO.IDOP (+) = REFE.IDCITOSCREENER)
+ AND (OPMEDISUPER.IDOP (+) = REFE.IDMEDREF)
+ AND GIU.IDCNFREF1L (+) = CODREFGIU.IDCNFREF
+ AND GIU.GRUPPO (+) = CODREFGIU.GRUPPO
+ AND GIU.ULSS (+) = CODREFGIU.ULSS
+ AND GIU.TPSCR (+) = CODREFGIU.TPSCR
+ AND ADE.IDCNFREF1L (+) = CODREFADE.IDCNFREF
+ AND ADE.GRUPPO (+) = CODREFADE.GRUPPO
+ AND ADE.ULSS (+) = CODREFADE.ULSS
+ AND ADE.TPSCR (+) = CODREFADE.TPSCR
+and REFE.IDINVITO=:1
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Numaccap"
+      IsPersistent="false"
+      Precision="6"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="NUMACCAP"
+      Expression="NUMACCAP"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprelievo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTPRELIEVO"
+      Expression="DTPRELIEVO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFERTO"
+      Expression="DTREFERTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idade"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDADE"
+      Expression="IDADE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idgiu"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDGIU"
+      Expression="IDGIU"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Citoscreener"
+      IsPersistent="false"
+      Precision="61"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CITOSCREENER"
+      Expression="CITOSCREENER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="61" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Supervisore"
+      IsPersistent="false"
+      Precision="61"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SUPERVISORE"
+      Expression="SUPERVISORE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="61" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Giudia"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="GIUDIA"
+      Expression="GIUDIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Adepre"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ADEPRE"
+      Expression="ADEPRE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

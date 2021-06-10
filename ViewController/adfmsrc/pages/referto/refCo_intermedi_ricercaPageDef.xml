@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCo_intermedi_ricercaPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Ref_SearchBeanDataControl"
+              id="Ref_SearchBeanDataControlIterator"/>
+    <iterator Binds="Ref_SoEndoscopiaIntermView1" RangeSize="10" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoEndoscopiaIntermView1Iterator"/>
+    <iterator Binds="Ref_SoPolipiIntermView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoPolipiIntermView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="interm_dal">
+      <AttrNames>
+        <Item Value="interm_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="interm_completi" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="interm_completi"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="iterm_errore" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="iterm_errore"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <methodAction id="resetIntermedi" RequiresUpdateModel="true" Action="invokeMethod" MethodName="resetIntermedi"
+                  IsViewObjectMethod="false" DataControl="Ref_SearchBeanDataControl"
+                  InstanceName="data.Ref_SearchBeanDataControl.dataProvider"/>
+    <tree IterBinding="Ref_SoEndoscopiaIntermView1Iterator" id="Ref_SoEndoscopiaIntermView1">
+      <nodeDefinition DefName="model.referto.Ref_SoEndoscopiaIntermView" Name="Ref_SoEndoscopiaIntermView10">
+        <AttrNames>
+          <Item Value="IdInterm"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Codts"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Dtendo"/>
+          <Item Value="Qualita"/>
+          <Item Value="GrQualita"/>
+          <Item Value="Idmedico"/>
+          <Item Value="Estensione"/>
+          <Item Value="Regione"/>
+          <Item Value="GrRegione"/>
+          <Item Value="Motivo"/>
+          <Item Value="GrMotivo"/>
+          <Item Value="AltroMotivo"/>
+          <Item Value="Sedazione"/>
+          <Item Value="FarmaciDosi"/>
+          <Item Value="Complicanze"/>
+          <Item Value="GrComplicanze"/>
+          <Item Value="AltreComplicanze"/>
+          <Item Value="Controindicazioni"/>
+          <Item Value="Indicazioni"/>
+          <Item Value="GrIndicazioni"/>
+          <Item Value="Procedura"/>
+          <Item Value="NoteEndo"/>
+          <Item Value="Dtrefisto"/>
+          <Item Value="Patologo"/>
+          <Item Value="NPolipiPrelevati"/>
+          <Item Value="NPolipi"/>
+          <Item Value="DiametroMax"/>
+          <Item Value="GrDiametro"/>
+          <Item Value="NoteIsto"/>
+          <Item Value="Dtultimamod"/>
+          <Item Value="Completa"/>
+          <Item Value="TipoSceltaPolipi"/>
+          <Item Value="Opscelta"/>
+          <Item Value="Importata"/>
+          <Item Value="Dtimport"/>
+          <Item Value="Errore"/>
+          <Item Value="Cognome"/>
+          <Item Value="Codts1"/>
+          <Item Value="Ulss1"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Ref_SoPolipiIntermView1Iterator" id="Ref_SoPolipiIntermView1">
+      <nodeDefinition DefName="model.referto.Ref_SoPolipiIntermView" Name="Ref_SoPolipiIntermView10">
+        <AttrNames>
+          <Item Value="IdIntermP"/>
+          <Item Value="IdInterm"/>
+          <Item Value="IdPolipo"/>
+          <Item Value="DataPrelievo"/>
+          <Item Value="GrAspetto"/>
+          <Item Value="GrDisplasia"/>
+          <Item Value="GrIstologia"/>
+          <Item Value="GrRegione"/>
+          <Item Value="Sede"/>
+          <Item Value="Diametro"/>
+          <Item Value="Aspetto"/>
+          <Item Value="Displasia"/>
+          <Item Value="Istologia"/>
+          <Item Value="Note"/>
+          <Item Value="Dtultimamod"/>
+          <Item Value="Selezione"/>
+          <Item Value="Ulss"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Idcnfref2l"/>
+          <Item Value="Gruppo"/>
+          <Item Value="Ulss1"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Idcnfref2l1"/>
+          <Item Value="Gruppo1"/>
+          <Item Value="Ulss2"/>
+          <Item Value="Tpscr1"/>
+          <Item Value="Descrizione2"/>
+          <Item Value="Idcnfref2l2"/>
+          <Item Value="Gruppo2"/>
+          <Item Value="Ulss3"/>
+          <Item Value="Tpscr2"/>
+          <Item Value="Descrizione3"/>
+          <Item Value="Idcnfref2l3"/>
+          <Item Value="Gruppo3"/>
+          <Item Value="Ulss4"/>
+          <Item Value="Tpscr3"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

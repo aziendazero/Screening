@@ -1,0 +1,753 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle"
+           value="#{adfBundle['viewcontroller.pages.statistiche.stats_dynamicFiltersBundle']}"/>
+    <af:panelGroupLayout id="pgl1" layout="vertical" binding="#{Stats_invitiEsitiAction.panelDynamicSearch}">
+        <af:panelHeader text="#{viewcontrollerBundle.FILTRI_PERSONALIZZATI}"
+                        id="ph1">
+            <f:facet name="toolbar">
+                <af:toolbar id="t2" inlineStyle='padding-right: 13px'>
+                    <af:button text="#{viewcontrollerBundle.RECUPERA_DATI}" id="btcerca"
+                               disabled="#{sessionScope.SOStatULSS!=true}" clientComponent="true">
+                        <af:setPropertyListener from="dynamic" to="#{pageFlowScope.todo}" type="action"/>
+                    </af:button>
+                    <af:button text="#{viewcontrollerBundle.REIMPOSTA_TUTTO}"
+                               action="#{Stats_invitiEsitiAction.onReimpDynamicFilter}" id="btreset"></af:button>
+                </af:toolbar>
+            </f:facet>
+            <af:panelGridLayout id="pgrl1" partialTriggers="btreset">
+                <af:gridRow id="gr1">
+                    <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc1">
+                        <af:panelFormLayout id="pfl2" partialTriggers="btreset">
+                            <af:selectOneChoice value="#{bindings.ulss.inputValue}"
+                                                label="#{viewcontrollerBundle.AZIENDA_SANITARIA}" required="true"
+                                                shortDesc="#{bindings.ulss.hints.tooltip}" id="listUlss"
+                                                rendered="#{sessionScope.regionale?true :false}" autoSubmit="true"
+                                                valueChangeListener="#{Stats_invitiEsitiAction.onChangeUlss}"
+                                                styleClass="choiceInTable">
+                                <af:selectItem value="#{'-1'}" label="" id="s18"/>
+                                <f:selectItems value="#{bindings.ulss.items}" id="si3"/>
+                                <f:validator binding="#{bindings.ulss.validator}"/>
+                            </af:selectOneChoice>
+                            <af:panelLabelAndMessage label="#{viewcontrollerBundle.PERIODO_DAL}" id="plam1"
+                                                     styleClass="pmInTable">
+                                <af:inputDate value="#{bindings.periodo_dal.inputValue}"
+                                              label="#{viewcontrollerBundle.PERIODO_DAL}"
+                                              required="#{bindings.periodo_dal.hints.mandatory}" simple="true"
+                                              columns="#{bindings.periodo_dal.hints.displayWidth}"
+                                              shortDesc="#{bindings.periodo_dal.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.periodo_dal.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.periodo_dal.format}"/>
+                                </af:inputDate>
+                                <f:facet name="end">
+                                    <af:inputDate value="#{bindings.periodo_al.inputValue}"
+                                                  label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                                  required="#{bindings.periodo_al.hints.mandatory}"
+                                                  columns="#{bindings.periodo_al.hints.displayWidth}"
+                                                  shortDesc="#{bindings.periodo_al.hints.tooltip}" id="id2">
+                                        <f:validator binding="#{bindings.periodo_al.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.periodo_al.format}"/>
+                                    </af:inputDate>
+                                </f:facet>
+                            </af:panelLabelAndMessage>
+                            <af:selectOneChoice value="#{bindings.comune.inputValue}"
+                                                label="#{viewcontrollerBundle.COMUNE}" autoSubmit="true"
+                                                required="#{bindings.comune.hints.mandatory}"
+                                                shortDesc="#{bindings.comune.hints.tooltip}" id="comune"
+                                                styleClass="choiceInTable">
+                                <f:selectItems value="#{bindings.comune.items}" id="si5"/>
+                                <f:validator binding="#{bindings.comune.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.zona.inputValue}" label="#{viewcontrollerBundle.ZONA}"
+                                                required="#{bindings.zona.hints.mandatory}"
+                                                shortDesc="#{bindings.zona.hints.tooltip}" id="zona"
+                                                styleClass="choiceInTable" autoSubmit="true">
+                                <f:selectItems value="#{bindings.zona.items}" id="si6"/>
+                                <f:validator binding="#{bindings.zona.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.medico.inputValue}"
+                                                label="#{viewcontrollerBundle.MEDICO}"
+                                                required="#{bindings.medico.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true"
+                                                shortDesc="#{bindings.medico.hints.tooltip}" id="medico">
+                                <f:selectItems value="#{bindings.medico.items}" id="asssssa"/>
+                                <f:validator binding="#{bindings.medico.validator}"/>
+                            </af:selectOneChoice>
+                            <af:panelLabelAndMessage label="#{viewcontrollerBundle.ET_U00E0_DA}" id="plam2"
+                                                     styleClass="pmInTable">
+                                <af:inputText value="#{bindings.eta_da.inputValue}" simple="true"
+                                              label="#{bindings.eta_da.hints.label}"
+                                              required="#{bindings.eta_da.hints.mandatory}" columns="5"
+                                              maximumLength="#{bindings.eta_da.hints.precision}"
+                                              shortDesc="#{bindings.eta_da.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.eta_da.validator}"/>
+                                </af:inputText>
+                                <f:facet name="end">
+                                    <af:inputText value="#{bindings.eta_a.inputValue}"
+                                                  required="#{bindings.eta_a.hints.mandatory}" columns="5"
+                                                  maximumLength="#{bindings.eta_a.hints.precision}"
+                                                  shortDesc="#{bindings.eta_a.hints.tooltip}" id="it2"
+                                                  label="#{viewcontrollerBundle.A}" inlineStyle="padding-top:0px">
+                                        <f:validator binding="#{bindings.eta_a.validator}"/>
+                                    </af:inputText>
+                                </f:facet>
+                            </af:panelLabelAndMessage>
+                            <af:selectOneChoice value="#{bindings.sesso.inputValue}"
+                                                label="#{viewcontrollerBundle.SESSO}"
+                                                rendered="#{sessionScope.scr=='CO'}"
+                                                styleClass="choiceInTable" id="sex" autoSubmit="true">
+                                <af:selectItem label="#{viewcontrollerBundle.ENTRA_0MBI}" id="si90" value="#{-1}"/>
+                                <af:selectItem label="#{viewcontrollerBundle.MA_0SCHI}" id="si91" value="M"/>
+                                <af:selectItem label="#{viewcontrollerBundle.FEMMINE}" id="si92" value="F"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.round_indiv.inputValue}"
+                                                label="#{viewcontrollerBundle.ROUND_INDIVIDUA_0LE}"
+                                                required="#{bindings.round_indiv.hints.mandatory}"
+                                                shortDesc="#{bindings.round_indiv.hints.tooltip}" id="roundInd"
+                                                styleClass="choiceInTable" autoSubmit="true">
+                                <f:selectItems value="#{bindings.round_indiv.items}" id="si8"/>
+                                <f:validator binding="#{bindings.round_indiv.validator}"/>
+                            </af:selectOneChoice>
+                            <af:inputText value="#{bindings.round_comune.inputValue}"
+                                          label="#{viewcontrollerBundle.ROUND_ORGA_0NIZZA_0TIVO}"
+                                          required="#{bindings.round_comune.hints.mandatory}" columns="5"
+                                          maximumLength="#{bindings.round_comune.hints.precision}"
+                                          shortDesc="#{bindings.round_comune.hints.tooltip}" id="it4">
+                                <f:validator binding="#{bindings.round_comune.validator}"/>
+                            </af:inputText>
+                            <af:inputText value="#{bindings.round_inviti.inputValue}"
+                                          label="#{viewcontrollerBundle.ROUND_INVITI}"
+                                          required="#{bindings.round_inviti.hints.mandatory}" columns="5"
+                                          maximumLength="#{bindings.round_inviti.hints.precision}"
+                                          shortDesc="#{bindings.round_inviti.hints.tooltip}" id="it5">
+                                <f:validator binding="#{bindings.round_inviti.validator}"/>
+                            </af:inputText>
+                            <af:selectOneChoice value="#{bindings.accesso.inputValue}"
+                                                label="#{viewcontrollerBundle.A_0CCESSO}"
+                                                required="#{bindings.accesso.hints.mandatory}"
+                                                shortDesc="#{bindings.accesso.hints.tooltip}" id="accesso"
+                                                styleClass="choiceInTable" autoSubmit="true">
+                                <f:selectItems value="#{bindings.accesso.items}" id="si9"/>
+                                <f:validator binding="#{bindings.accesso.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.alto_rischio.inputValue}"
+                                                label="#{viewcontrollerBundle.SOGGETTI}"
+                                                rendered="#{sessionScope.scr=='CO'}"
+                                                styleClass="choiceInTable" id="richio" autoSubmit="true">
+                                <af:selectItem label="#{viewcontrollerBundle.TUTTI}" id="si9023" value="#{-1}"/>
+                                <af:selectItem label="#{viewcontrollerBundle.NON_A_0D_A_0LTO_RISCHIO}" id="si9132"
+                                               value="#{0}"/>
+                                <af:selectItem label="#{viewcontrollerBundle.D_A_0LTO_RISCHIO}" id="si9232"
+                                               value="#{1}"/>
+                            </af:selectOneChoice>
+                        </af:panelFormLayout>
+                    </af:gridCell>
+                    <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc2">
+                        <af:panelFormLayout id="pfl3" partialTriggers="btreset">
+                            <af:selectBooleanCheckbox value="#{bindings.esclusi.inputValue}"
+                                                      label="#{viewcontrollerBundle.SOGGETTI_ESCLUSI}" autoSubmit="true"
+                                                      shortDesc="#{bindings.esclusi.hints.tooltip}" id="sbc1"/>
+                            <af:selectOneChoice value="#{bindings.tpescl.inputValue}"
+                                                label="#{viewcontrollerBundle.ESCLUSIONE}"
+                                                required="#{bindings.tpescl.hints.mandatory}"
+                                                disabled="#{bindings.esclusi.inputValue!=true}"
+                                                shortDesc="#{bindings.tpescl.hints.tooltip}" id="tpescl"
+                                                styleClass="choiceInTable" autoSubmit="true">
+                                <af:selectItem label="#{viewcontrollerBundle.TUTTI_I_TIPI}" id="si9023s" value="#{-1}"/>
+                                <af:selectItem label="#{viewcontrollerBundle.DEFINITIVA_0}" id="si9132a" value="D"/>
+                                <af:selectItem label="#{viewcontrollerBundle.TEMPORA_0NEA_0}" id="si9232s" value="T"/>
+                            </af:selectOneChoice>
+                            <af:selectBooleanCheckbox value="#{bindings.invitati.inputValue}"
+                                                      label="#{viewcontrollerBundle.SOGGETTI_INVITA_0TI}"
+                                                      autoSubmit="true"
+                                                      shortDesc="#{bindings.invitati.hints.tooltip}" id="sbc2"/>
+                            <af:selectOneChoice value="#{bindings.centro_invito.inputValue}"
+                                                label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}"
+                                                required="#{bindings.centro_invito.hints.mandatory}"
+                                                shortDesc="#{bindings.centro_invito.hints.tooltip}" id="centroPrel"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true">
+                                <f:selectItems value="#{bindings.centro_invito.items}" id="si7"/>
+                                <f:validator binding="#{bindings.centro_invito.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.centro_ref.inputValue}"
+                                                label="#{viewcontrollerBundle.CENTRO_REFERTA_0NTE}"
+                                                required="#{bindings.centro_ref.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.centro_ref.hints.tooltip}" id="centroRef">
+                                <f:selectItems value="#{bindings.centro_ref.items}" id="si1"/>
+                                <f:validator binding="#{bindings.centro_ref.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.cat_invito.inputValue}"
+                                                label="#{viewcontrollerBundle.CA_0TEGORIA_0_DI_INVITO}"
+                                                required="#{bindings.cat_invito.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.cat_invito.hints.tooltip}" id="catInv">
+                                <f:selectItems value="#{bindings.cat_invito.items}" id="si2"/>
+                                <f:validator binding="#{bindings.cat_invito.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.tipo_invito.inputValue}"
+                                                label="#{viewcontrollerBundle.TIPO_DI_INVITO}"
+                                                required="#{bindings.tipo_invito.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.tipo_invito.hints.tooltip}" id="tpInvito">
+                                <f:selectItems value="#{bindings.tipo_invito.items}" id="si4"/>
+                                <f:validator binding="#{bindings.tipo_invito.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.esito.inputValue}"
+                                                label="#{viewcontrollerBundle.ESITO}"
+                                                required="#{bindings.esito.hints.mandatory}" styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.esito.hints.tooltip}" id="esito">
+                                <f:selectItems value="#{bindings.esito.items}" id="si10"/>
+                                <f:validator binding="#{bindings.esito.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.tipo_richiamo.inputValue}"
+                                                label="#{viewcontrollerBundle.TIPO_DI_RICHIA_0MO}"
+                                                required="#{bindings.tipo_richiamo.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.tipo_richiamo.hints.tooltip}" id="tprichiamo">
+                                <f:selectItems value="#{bindings.tipo_richiamo.items}" id="si11"/>
+                                <f:validator binding="#{bindings.tipo_richiamo.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.livello.inputValue}"
+                                                label="#{viewcontrollerBundle.LIVELLO}"
+                                                required="#{bindings.livello.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                shortDesc="#{bindings.livello.hints.tooltip}" id="livello">
+                                <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s34"/>
+                                <af:selectItem label="1" id="si94" value="1"/>
+                                <af:selectItem label="2" id="si95" value="2"/>
+                                <f:validator binding="#{bindings.livello.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectBooleanCheckbox value="#{bindings.referto.inputValue}"
+                                                      label="#{viewcontrollerBundle.REFERTO_PRESENTE}"
+                                                      styleClass="choiceInTable"
+                                                      disabled="#{bindings.invitati.inputValue!=true || bindings.livello.inputValue==-1 || bindings.livello.inputValue==0}"
+                                                      autoSubmit="true" shortDesc="#{bindings.referto.hints.tooltip}"
+                                                      id="sbc3" partialTriggers="sbc2"/>
+                        </af:panelFormLayout>
+                    </af:gridCell>
+                </af:gridRow>
+                <af:gridRow id="gr2">
+                    <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc3">
+                        <af:panelFormLayout id="pfl4"
+                                            rendered="#{bindings.livello.inputValue==1 &amp;&amp; bindings.referto.inputValue==true &amp;&amp; bindings.invitati.inputValue==true}"
+                                            partialTriggers="sbc3">
+                            <af:selectOneChoice value="#{bindings.completo.inputValue}"
+                                                label="#{viewcontrollerBundle.REFERTO}"
+                                                required="#{bindings.completo.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.completo.hints.tooltip}"
+                                                id="completo">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s35"/>
+                                <af:selectItem label="#{viewcontrollerBundle.COMPLETO}" id="si96" value="1"/>
+                                <af:selectItem label="#{viewcontrollerBundle.INSERITO__MA_0_NON_COMPLETO}" id="si97"
+                                               value="0"/>
+                                <f:validator binding="#{bindings.completo.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.adepre.inputValue}"
+                                                label="#{viewcontrollerBundle.A_0DEGUA_0TEZZA_0}"
+                                                required="#{bindings.adepre.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" rendered="#{sessionScope.scr=='CI'}"
+                                                shortDesc="#{bindings.adepre.hints.tooltip}" id="adepre">
+                                <f:selectItems value="#{bindings.adepre.items}" id="si12"/>
+                                <f:validator binding="#{bindings.adepre.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.inalim.inputValue}"
+                                                label="#{viewcontrollerBundle.MOTIVO_DI_INA_0DEGUA_0TEZZA_0}"
+                                                required="#{bindings.inalim.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.inalim.hints.tooltip}"
+                                                id="inalim">
+                                <f:selectItems value="#{bindings.inalim.items}" id="si13"/>
+                                <f:validator binding="#{bindings.inalim.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.giudia.inputValue}"
+                                                label="#{viewcontrollerBundle.GIUDIZIO_DIA_0GNOSTICO}"
+                                                required="#{bindings.giudia.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.giudia.hints.tooltip}"
+                                                id="giudia">
+                                <f:selectItems value="#{bindings.giudia.items}" id="si14"/>
+                                <f:validator binding="#{bindings.giudia.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.positi.inputValue}"
+                                                label="#{viewcontrollerBundle.TIPO_DI_POSITIVIT_U00E0}"
+                                                required="#{bindings.positi.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.positi.hints.tooltip}"
+                                                id="positi">
+                                <f:selectItems value="#{bindings.positi.items}" id="si15"/>
+                                <f:validator binding="#{bindings.positi.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.mx_esito.inputValue}"
+                                                label="#{viewcontrollerBundle.ESITO_DEL_REFERTO}"
+                                                required="#{bindings.mx_esito.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='MA'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.mx_esito.hints.tooltip}"
+                                                id="mx_esito">
+                                <f:selectItems value="#{bindings.mx_esito.items}" id="si16"/>
+                                <f:validator binding="#{bindings.mx_esito.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.quantita.inputValue}"
+                                                label="#{viewcontrollerBundle.ESITO_DEL_REFERTO}"
+                                                required="#{bindings.quantita.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CO'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.quantita.hints.tooltip}"
+                                                id="quantita">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s41"/>
+                                <af:selectItem value="1" label="#{viewcontrollerBundle._LT_100}" id="s42"/>
+                                <af:selectItem value="2" label="#{viewcontrollerBundle._GT__100}" id="s43"/>
+                                <af:selectItem value="3" label="#{viewcontrollerBundle.TRA_0_90_E_100}" id="s44"/>
+                                <af:selectItem value="4" label="#{viewcontrollerBundle.TRA_0_100_E_110}" id="s45"/>
+                                <af:selectItem value="5" label="#{viewcontrollerBundle._GT__110}" id="s46"/>
+                                <f:validator binding="#{bindings.quantita.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.idsugg1l.inputValue}"
+                                                label="#{viewcontrollerBundle.SUGGERIMENTO_CONCLUSIVO}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" required="#{bindings.idsugg1l.hints.mandatory}"
+                                                shortDesc="#{bindings.idsugg1l.hints.tooltip}" id="idsugg1l">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s47"/>
+                                <f:selectItems value="#{bindings.idsugg1l.items}" id="si17"/>
+                                <f:validator binding="#{bindings.idsugg1l.validator}"/>
+                            </af:selectOneChoice>
+                        </af:panelFormLayout>
+                        <af:panelFormLayout id="pfl5"
+                                            rendered="#{bindings.referto.inputValue==true &amp;&amp; bindings.livello.inputValue==2 &amp;&amp; bindings.invitati.inputValue==true}"
+                                            partialTriggers="btreset">
+                            <af:selectOneChoice value="#{bindings.completo.inputValue}"
+                                                label="#{viewcontrollerBundle.REFERTO}"
+                                                required="#{bindings.completo.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.completo.hints.tooltip}"
+                                                id="completo1">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s48"/>
+                                <af:selectItem label="#{viewcontrollerBundle.COMPLETO}" id="si197" value="1"/>
+                                <af:selectItem label="#{viewcontrollerBundle.INSERITO__MA_0_NON_COMPLETO}" id="si1197"
+                                               value="0"/>
+                                <f:validator binding="#{bindings.completo.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.colpvl.inputValue}"
+                                                label="#{viewcontrollerBundle.COLPOSCOPIA_0}"
+                                                required="#{bindings.colpvl.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.colpvl.hints.tooltip}"
+                                                id="colpvl">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s49"/>
+                                <f:selectItems value="#{bindings.colpvl.items}" id="si18"/>
+                                <f:validator binding="#{bindings.colpvl.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.colpes.inputValue}"
+                                                label="#{viewcontrollerBundle.ESITO_COLPOSCOPIA_0}"
+                                                required="#{bindings.colpes.hints.mandatory}"
+                                                rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.colpes.hints.tooltip}"
+                                                id="colpes">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s50"/>
+                                <f:selectItems value="#{bindings.colpes.items}" id="si19"/>
+                                <f:validator binding="#{bindings.colpes.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="#{viewcontrollerBundle.LesionedaHPV}"
+                                                value="#{bindings.lesione_hpv.inputValue}"
+                                                required="#{bindings.lesione_hpv.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.lesione_hpv.hints.tooltip}"
+                                                id="lesione_hpv" rendered="#{sessionScope.scr=='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s51"/>
+                                <af:selectItem value="0" label="#{viewcontrollerBundle.datonondisponibile}" id="s52"/>
+                                <af:selectItem value="1" label="rilevata" id="s53"/>
+                                <f:validator binding="#{bindings.lesione_hpv.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="#{viewcontrollerBundle.Istologiabioptica}"
+                                                value="#{bindings.ist_bio.inputValue}"
+                                                required="#{bindings.ist_bio.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.ist_bio.hints.tooltip}"
+                                                id="ist_bio" rendered="#{sessionScope.scr=='CI'}">
+                                <af:selectItem value="-1" label="qualsiasi" id="s54"/>
+                                <af:selectItem value="0" label="non eseguita" id="s55"/>
+                                <af:selectItem value="1" label="eseguita" id="s56"/>
+                                <f:validator binding="#{bindings.ist_bio.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.ist_bio_diagnosi.inputValue}"
+                                                label="#{viewcontrollerBundle.Diagnosi}"
+                                                required="#{bindings.ist_bio_diagnosi.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.ist_bio_diagnosi.hints.tooltip}"
+                                                id="ist_bio_diagnosi" rendered="#{sessionScope.scr=='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s57"/>
+                                <f:selectItems value="#{bindings.ist_bio_diagnosi.items}" id="si20"/>
+                                <f:validator binding="#{bindings.ist_bio_diagnosi.validator}"/>
+                            </af:selectOneChoice>
+                            <!-- 20081210 fine mod-->
+                            <af:selectOneChoice value="#{bindings.racdia.inputValue}"
+                                                rendered="#{sessionScope.scr=='CI'}"
+                                                required="#{bindings.racdia.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.racdia.hints.tooltip}"
+                                                id="racdia" label="#{viewcontrollerBundle.Diagnosiistologicapeggiore}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s58"/>
+                                <f:selectItems value="#{bindings.racdia.items}" id="si21"/>
+                                <f:validator binding="#{bindings.racdia.validator}"/>
+                            </af:selectOneChoice>
+                            <!--colon retto -->
+                            <af:selectOneChoice value="#{bindings.rxcolon.inputValue}"
+                                                required="#{bindings.rxcolon.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.rxcolon.hints.tooltip}"
+                                                id="rxcolon" label="#{viewcontrollerBundle.Rxcolon}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <f:validator binding="#{bindings.rxcolon.validator}"/>
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s59"/>
+                                <af:selectItem label="#{viewcontrollerBundle.noneseguito}" value="0" id="s60"/>
+                                <af:selectItem label="#{viewcontrollerBundle.eseguito}" value="1" id="s61"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.rx_conclusioni.inputValue}"
+                                                required="#{bindings.rx_conclusioni.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.rx_conclusioni.hints.tooltip}"
+                                                id="rx_conclusioni" label="#{viewcontrollerBundle.Conclusionirxcolon}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s62"/>
+                                <f:selectItems value="#{bindings.rx_conclusioni.items}" id="si22"/>
+                                <f:validator binding="#{bindings.rx_conclusioni.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.endo_estensione.inputValue}"
+                                                required="#{bindings.endo_estensione.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.endo_estensione.hints.tooltip}"
+                                                id="endo_estensione"
+                                                label="#{viewcontrollerBundle.Estensioneendoscopia}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s63"/>
+                                <af:selectItem label="#{viewcontrollerBundle.incompleta}" value="0" id="s64"/>
+                                <af:selectItem label="#{viewcontrollerBundle.completa}" value="1" id="s65"/>
+                                <f:validator binding="#{bindings.endo_estensione.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.motivo.inputValue}"
+                                                required="#{bindings.motivo.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.motivo.hints.tooltip}"
+                                                id="motivo" label="#{viewcontrollerBundle.Motivodiincompletezza}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s66"/>
+                                <f:validator binding="#{bindings.motivo.validator}"/>
+                                <f:selectItems value="#{bindings.motivo.items}" id="si23"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.procedura.inputValue}"
+                                                label="#{viewcontrollerBundle.Proceduraoperativa}"
+                                                rendered="#{sessionScope.scr=='CO'}"
+                                                required="#{bindings.procedura.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.procedura.hints.tooltip}"
+                                                id="procedura">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s67"/>
+                                <af:selectItem label="#{viewcontrollerBundle.noneseguita}" value="0" id="s68"/>
+                                <af:selectItem label="#{viewcontrollerBundle.eseguita}" value="1" id="s69"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.endo_complicanze.inputValue}"
+                                                required="#{bindings.endo_complicanze.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.endo_complicanze.hints.tooltip}"
+                                                id="endo_complicanze"
+                                                label="#{viewcontrollerBundle.Complicanzeendoscopia}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s70"/>
+                                <f:validator binding="#{bindings.endo_complicanze.validator}"/>
+                                <f:selectItems value="#{bindings.endo_complicanze.items}" id="si24"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.conclusioni2l.inputValue}"
+                                                required="#{bindings.conclusioni2l.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.conclusioni2l.hints.tooltip}"
+                                                id="conclusioni2l" label="#{viewcontrollerBundle.Conclusionidi2livello}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s71"/>
+                                <f:validator binding="#{bindings.conclusioni2l.validator}"/>
+                                <f:selectItems value="#{bindings.conclusioni2l.items}" id="si25"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.diagnosi_co.inputValue}"
+                                                required="#{bindings.diagnosi_co.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.diagnosi_co.hints.tooltip}"
+                                                id="diagnosi_co"
+                                                label="#{viewcontrollerBundle.Diagnosiistologicapeggiore}"
+                                                rendered="#{sessionScope.scr=='CO'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s72"/>
+                                <f:validator binding="#{bindings.diagnosi_co.validator}"/>
+                                <f:selectItems value="#{bindings.diagnosi_co.items}" id="si26"/>
+                            </af:selectOneChoice>
+                            <!-- mammografico -->
+                            <af:selectOneChoice value="#{bindings.mammo.inputValue}"
+                                                required="#{bindings.mammo.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.mammo.hints.tooltip}" id="mammo"
+                                                label="#{viewcontrollerBundle.Mammografia}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s73"/>
+                                <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s74"/>
+                                <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s75"/>
+                                <f:validator binding="#{bindings.mammo.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.eco.inputValue}"
+                                                required="#{bindings.eco.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.eco.hints.tooltip}" id="eco"
+                                                label="#{viewcontrollerBundle.Ecografia}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s76"/>
+                                <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s77"/>
+                                <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s78"/>
+                                <f:validator binding="#{bindings.eco.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.clinico.inputValue}"
+                                                required="#{bindings.clinico.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.clinico.hints.tooltip}"
+                                                id="clinico" label="#{viewcontrollerBundle.Esameclinico}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s79"/>
+                                <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguito}" id="s80"/>
+                                <af:selectItem value="1" label="#{viewcontrollerBundle.eseguito}" id="s81"/>
+                                <f:validator binding="#{bindings.clinico.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.citologia.inputValue}"
+                                                required="#{bindings.citologia.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.citologia.hints.tooltip}"
+                                                id="citologia" label="#{viewcontrollerBundle.Esamecitologico}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{''}" id="s82"/>
+                                <f:validator binding="#{bindings.citologia.validator}"/>
+                                <f:selectItems value="#{bindings.citologia.items}" id="si27"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.esito_cito.inputValue}"
+                                                required="#{bindings.esito_cito.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.esito_cito.hints.tooltip}"
+                                                id="esito_cito" label="#{viewcontrollerBundle.Esitocitologia}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s83"/>
+                                <f:validator binding="#{bindings.esito_cito.validator}"/>
+                                <f:selectItems value="#{bindings.esito_cito.items}" id="si28"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.agobiopsia.inputValue}"
+                                                required="#{bindings.agobiopsia.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.agobiopsia.hints.tooltip}"
+                                                id="agobiopsia" label="#{viewcontrollerBundle.Agobiopsiaesame}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s84"/>
+                                <f:validator binding="#{bindings.agobiopsia.validator}"/>
+                                <f:selectItems value="#{bindings.agobiopsia.items}" id="si29"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.esito_agob.inputValue}"
+                                                required="#{bindings.esito_agob.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.esito_agob.hints.tooltip}"
+                                                id="esito_agob" label="#{viewcontrollerBundle.Esitoagobiopsia}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s85"/>
+                                <f:validator binding="#{bindings.esito_agob.validator}"/>
+                                <f:selectItems value="#{bindings.esito_agob.items}" id="si30"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.racdia.inputValue}"
+                                                rendered="#{sessionScope.scr=='MA'}"
+                                                required="#{bindings.racdia.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.racdia.hints.tooltip}"
+                                                id="racdia1" label="#{viewcontrollerBundle.Diagnosipatologicapeggiore}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s86"/>
+                                <f:selectItems value="#{bindings.racdia.items}" id="si31"/>
+                                <f:validator binding="#{bindings.racdia.validator}"/>
+                            </af:selectOneChoice>
+                            <!--comuni-->
+                            <af:selectOneChoice value="#{bindings.idsugg2l.inputValue}"
+                                                required="#{bindings.idsugg2l.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.idsugg2l.hints.tooltip}"
+                                                id="idsugg2l"
+                                                label="#{viewcontrollerBundle.Suggerimentoconclusivo2livello}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s87"/>
+                                <f:selectItems value="#{bindings.idsugg2l.items}" id="si32"/>
+                                <f:validator binding="#{bindings.idsugg2l.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.intchiusi.inputValue}"
+                                                required="#{bindings.intchiusi.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.intchiusi.hints.tooltip}"
+                                                id="intchiusi" label="#{viewcontrollerBundle.Interventi}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s88"/>
+                                <af:selectItem label="#{viewcontrollerBundle.chiusi}" value="1" id="s89"/>
+                                <af:selectItem label="#{viewcontrollerBundle.inseritimaNONchiusi}" value="0" id="s90"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.intval.inputValue}"
+                                                required="#{bindings.intval.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.intval.hints.tooltip}"
+                                                id="intval" label="#{viewcontrollerBundle.Intervento}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s91"/>
+                                <f:selectItems value="#{bindings.intval.items}" id="si33"/>
+                                <f:validator binding="#{bindings.intval.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.tipo_int.inputValue}"
+                                                required="#{bindings.tipo_int.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.tipo_int.hints.tooltip}"
+                                                id="tipo_int" label="#{viewcontrollerBundle.Tipodiintervento}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s92"/>
+                                <f:selectItems value="#{bindings.tipo_int.items}" id="si34"/>
+                                <f:validator binding="#{bindings.tipo_int.validator}"/>
+                            </af:selectOneChoice>
+                            <!-- 20081210 MOD versione 1.2-->
+                            <af:selectOneChoice label="#{viewcontrollerBundle.Istologiachirurgica}"
+                                                value="#{bindings.ist_chir.inputValue}"
+                                                required="#{bindings.ist_chir.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.ist_chir.hints.tooltip}"
+                                                id="ist_chir" rendered="#{sessionScope.scr=='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s93"/>
+                                <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s94"/>
+                                <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s95"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.ist_chir_diagnosi.inputValue}"
+                                                label="#{viewcontrollerBundle.Diagnosi}"
+                                                required="#{bindings.ist_chir_diagnosi.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true"
+                                                shortDesc="#{bindings.ist_chir_diagnosi.hints.tooltip}"
+                                                id="ist_chir_diagnosi" rendered="#{sessionScope.scr=='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s96"/>
+                                <f:selectItems value="#{bindings.ist_chir_diagnosi.items}" id="si35"/>
+                                <f:validator binding="#{bindings.ist_chir_diagnosi.validator}"/>
+                            </af:selectOneChoice>
+                            <!-- 20081210 fine mod-->
+                            <af:selectOneChoice value="#{bindings.pn.inputValue}"
+                                                required="#{bindings.pn.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.pn.hints.tooltip}" id="pn"
+                                                label="#{viewcontrollerBundle.pN}" rendered="#{sessionScope.scr!='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s97"/>
+                                <f:selectItems value="#{bindings.pn.items}" id="si36"/>
+                                <f:validator binding="#{bindings.pn.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.pt.inputValue}"
+                                                required="#{bindings.pt.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.pt.hints.tooltip}" id="pt"
+                                                label="#{viewcontrollerBundle.pT}" rendered="#{sessionScope.scr!='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s98"/>
+                                <f:selectItems value="#{bindings.pt.items}" id="si37"/>
+                                <f:validator binding="#{bindings.pt.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.pm.inputValue}"
+                                                required="#{bindings.pm.hints.mandatory}" styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.pm.hints.tooltip}" id="pm"
+                                                label="#{viewcontrollerBundle.pM}" rendered="#{sessionScope.scr!='CI'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s99"/>
+                                <f:selectItems value="#{bindings.pm.items}" id="si38"/>
+                                <f:validator binding="#{bindings.pm.validator}"/>
+                            </af:selectOneChoice>
+                            <!-- mammografico -->
+                            <af:selectOneChoice value="#{bindings.ascella.inputValue}"
+                                                required="#{bindings.ascella.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.ascella.hints.tooltip}"
+                                                id="ascella" label="#{viewcontrollerBundle.Tipointerventosuascella}"
+                                                rendered="#{sessionScope.scr=='MA'}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s100"/>
+                                <f:selectItems value="#{bindings.ascella.items}" id="si39"/>
+                                <f:validator binding="#{bindings.ascella.validator}"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice value="#{bindings.idsugg3l.inputValue}"
+                                                required="#{bindings.idsugg3l.hints.mandatory}"
+                                                styleClass="choiceInTable"
+                                                autoSubmit="true" shortDesc="#{bindings.idsugg3l.hints.tooltip}"
+                                                id="idsugg3l"
+                                                label="#{viewcontrollerBundle.Suggerimentopostintervento}">
+                                <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s101"/>
+                                <f:selectItems value="#{bindings.idsugg3l.items}" id="si40"/>
+                                <f:validator binding="#{bindings.idsugg3l.validator}"/>
+                            </af:selectOneChoice>
+                        </af:panelFormLayout>
+                    </af:gridCell>
+                    <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc4">
+                        <af:panelFormLayout id="pfl6">
+                            <af:selectOneRadio value="#{bindings.filtro_2.inputValue}"
+                                               label="#{viewcontrollerBundle.FILTRI_SULL_INVITO_SUCCESSIVO}"
+                                               required="#{bindings.filtro_2.hints.mandatory}"
+                                               autoSubmit="true"
+                                               shortDesc="#{bindings.filtro_2.hints.tooltip}" id="sor1"
+                                               rendered="#{bindings.esclusi.inputValue!=true &amp;&amp; bindings.invitati.inputValue==true}">
+                                <af:selectItem label="#{viewcontrollerBundle.NO}" id="si98" value="0"/>
+                                <af:selectItem label="#{viewcontrollerBundle.SI}" id="si99" value="1"/>
+                                <f:validator binding="#{bindings.filtro_2.validator}"/>
+                            </af:selectOneRadio>
+                        </af:panelFormLayout>
+                        <af:panelFormLayout id="pfl7"
+                                            rendered="#{bindings.filtro_2.inputValue==1 &amp;&amp; bindings.esclusi.inputValue!=true &amp;&amp; bindings.invitati.inputValue==true}">
+                                    <!--20080710 MOD: reimposta fa sparire i risultati-->
+                                    <af:selectOneChoice value="#{bindings.cat_invito_2.inputValue}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true"
+                                                   label="#{viewcontrollerBundle.CA_0TEGORIA_0_DI_INVITO}"
+                                                        id="cat_invito_2">
+                                        <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s361"/>
+                                        <f:selectItems value="#{bindings.cat_invito_2.items}" id="si101"/>
+                                        <f:validator binding="#{bindings.cat_invito_2.validator}"/>
+                                    </af:selectOneChoice>
+                                    <!--20080710 FINE MOD-->
+                                    <af:selectOneChoice value="#{bindings.tipo_invito_2.inputValue}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true"
+                                                   label="#{viewcontrollerBundle.TIPO_DI_INVITO}" id="tipo_invito_2">
+                                        <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s362"/>
+                                        <f:selectItems value="#{bindings.tipo_invito_2.items}" id="si102"/>
+                                        <f:validator binding="#{bindings.tipo_invito_2.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="${bindings.esito_2.inputValue}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true" 
+                                                   label="#{viewcontrollerBundle.ESITO}" id="esito_2">
+                                        <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s363"/>
+                                        <f:selectItems value="#{bindings.esito_2.items}" id="si103"/>
+                                        <f:validator binding="#{bindings.esito_2.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice value="#{bindings.tipo_richiamo_2.inputValue}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true" 
+                                                   label="#{viewcontrollerBundle.TIPO_DI_RICHIA_0MO}"
+                                                        id="tipo_richiamo_2">
+                                        <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s364"/>
+                                        <f:selectItems value="#{bindings.tipo_richiamo_2.items}" id="si104"/>
+                                        <f:validator binding="#{bindings.tipo_richiamo_2.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectOneChoice model="${bindings.livello_2.inputValue}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true" 
+                                                   label="#{viewcontrollerBundle.LIVELLO}" id="livello_2">
+                                        <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s365"/>
+                                        <af:selectItem value="#{1}" label="1" id="s366"/>
+                                        <af:selectItem value="#{2}" label="2" id="s3667"/>
+                                        <f:validator binding="#{bindings.livello_2.validator}"/>
+                                    </af:selectOneChoice>
+                                      <!--20110714 Serra-->
+                            <af:selectBooleanCheckbox value="#{bindings.referto2.inputValue}"
+                                                      label="#{bindings.referto2.label}"
+                                                      styleClass="choiceInTable"
+                                                      autoSubmit="true"
+                                                      shortDesc="#{bindings.referto2.hints.tooltip}" id="sbc4"/>
+                                    <!--spacer height="20" width="20"/>
+                                    <submitButton text="Reimposta questo filtro"
+                                                  rendered="#{bindings.filtro_2'].inputValue==1}"
+                                                  model="${bindings.resetFilter2}"
+                                                  id="resetFilter11"
+                                                  event="action"/>
+                                  </contents-->
+                        </af:panelFormLayout>
+                    </af:gridCell>
+                </af:gridRow>
+            </af:panelGridLayout>
+        </af:panelHeader>
+    </af:panelGroupLayout>
+</ui:composition>

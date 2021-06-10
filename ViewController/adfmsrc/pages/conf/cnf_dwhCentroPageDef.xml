@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_dwhCentroPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfDwhCentriView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfDwhCentriView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfDwhCentriView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfDwhCentriView1Iterator1"/>
+    <iterator Binds="Cnf_SoCentroPrelRefView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfDwhCentriView1Iterator" id="Codice">
+      <AttrNames>
+        <Item Value="Codice"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDwhCentriView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfDwhCentriView1Iterator" id="Idcentro1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCentroPrelRefView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfDwhCentriView1Iterator1" id="Ulss" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

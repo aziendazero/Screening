@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.62.76" id="welcomePageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Sec_SecCnfUsersUlssView3" DataControl="Sec_AppModuleDataControl"
+              id="Sec_SecCnfUsersUlssView3Iterator"/>
+    <iterator Binds="Sec_SoWarningView1" RangeSize="25" DataControl="Sec_AppModuleDataControl"
+              id="Sec_SoWarningView1Iterator"/>
+    <iterator Binds="Sec_SoWarningWelcome1" RangeSize="25" DataControl="Sec_AppModuleDataControl"
+              id="Sec_SoWarningWelcome1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Sec_SecCnfUsersUlssView3Iterator" ListOperMode="navigation"
+          ListIter="Sec_SecCnfUsersUlssView3Iterator" id="Sec_SecCnfUsersUlssView3" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="Sec_SoWarningView1Iterator" id="Sec_SoWarningView1">
+      <nodeDefinition DefName="model.sicurezze.Sec_SoWarningView" Name="Sec_SoWarningView10">
+        <AttrNames>
+          <Item Value="Titolo"/>
+          <Item Value="Testo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Sec_SoWarningView1Iterator" id="Sec_SoWarningView11">
+      <nodeDefinition DefName="model.sicurezze.Sec_SoWarningView" Name="Sec_SoWarningView110">
+        <AttrNames>
+          <Item Value="Titolo"/>
+          <Item Value="Testo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Sec_SoWarningWelcome1Iterator" id="Sec_SoWarningWelcome1">
+      <nodeDefinition DefName="model.sicurezze.Sec_SoWarningWelcome" Name="Sec_SoWarningWelcome10">
+        <AttrNames>
+          <Item Value="Titolo"/>
+          <Item Value="Testo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

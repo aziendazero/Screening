@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoRoundorg"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_ROUNDORG"
+   AliasName="Round_SoRoundorg"
+   BindingStyle="Oracle"
+   RowClass="model.round.Round_SoRoundorgImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Codcom"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="CODCOM"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_ROUNDORG"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Codscr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="CODSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_ROUNDORG"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Numround"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      ColumnName="NUMROUND"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_ROUNDORG"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtinizio"
+      IsNotNull="true"
+      ColumnName="DTINIZIO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_ROUNDORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtfine"
+      ColumnName="DTFINE"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_ROUNDORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtprimoinvito"
+      ColumnName="DTPRIMOINVITO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_ROUNDORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtultinvito"
+      ColumnName="DTULTINVITO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_ROUNDORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtultsollecito"
+      ColumnName="DTULTSOLLECITO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_ROUNDORG" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      ColumnName="RELEASE_CODE_COM"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_ROUNDORG"
+      PrimaryKey="true"/>
+   <AccessorAttribute
+      Name="Cnf_SoComune"
+      Association="model.FkSoRoundHaRoundSoComunAssoc"
+      AssociationEnd="model.FkSoRoundHaRoundSoComunAssoc.Cnf_SoComune"
+      AssociationOtherEnd="model.FkSoRoundHaRoundSoComunAssoc.Round_SoRoundorg"
+      Type="model.conf.Cnf_SoComuneImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Round_SoCnfTpscr"
+      Association="model.FkSoRoundSiRifASoCnfTAssoc"
+      AssociationEnd="model.FkSoRoundSiRifASoCnfTAssoc.Round_SoCnfTpscr"
+      AssociationOtherEnd="model.FkSoRoundSiRifASoCnfTAssoc.Round_SoRoundorg"
+      Type="model.round.Round_SoCnfTpscrImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <Key
+      Name="PkSoRoundorg"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_ROUNDORG"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoRoundorg.Codscr" />
+         <Item Value="model.round.Round_SoRoundorg.Numround" />
+         <Item Value="model.round.Round_SoRoundorg.ReleaseCodeCom"/>
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoRoundHaRoundSoComun" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_COMUNE"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_ROUND_HA_ROUND_SO_COMUN"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoRoundorg.ReleaseCodeCom"/>
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoRoundSiRifASoCnfT" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CNF_TPSCR"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_ROUND_SI_RIF_A_SO_CNF_T"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoRoundorg.Codscr"/>
+      </AttrArray>
+   </Key>
+</Entity>

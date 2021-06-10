@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="med_dettPageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Med_SoMedicoView1" RangeSize="25" DataControl="Med_AppModuleDataControl"
+              id="Med_SoMedicoView1Iterator"/>
+    <iterator Binds="Med_ProvinceView1" RangeSize="-1" DataControl="Med_AppModuleDataControl"
+              id="Med_ProvinceView1Iterator"/>
+    <iterator id="Med_ComuneView1Iterator" Binds="Med_ComuneView1" DataControl="Med_AppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Codiceregmedico">
+      <AttrNames>
+        <Item Value="Codiceregmedico"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Codicefiscale">
+      <AttrNames>
+        <Item Value="Codicefiscale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Dtadesione">
+      <AttrNames>
+        <Item Value="Dtadesione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="DtadesCo">
+      <AttrNames>
+        <Item Value="DtadesCo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="DtadesMa">
+      <AttrNames>
+        <Item Value="DtadesMa"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Dtfinevalop">
+      <AttrNames>
+        <Item Value="Dtfinevalop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Codcom">
+      <AttrNames>
+        <Item Value="Codcom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Descom">
+      <AttrNames>
+        <Item Value="Descom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="IndirizzoRes">
+      <AttrNames>
+        <Item Value="IndirizzoRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Tel">
+      <AttrNames>
+        <Item Value="Tel"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Cell">
+      <AttrNames>
+        <Item Value="Cell"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="Desaz">
+      <AttrNames>
+        <Item Value="Desaz"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" DataControl="Med_AppModuleDataControl" RequiresUpdateModel="false"
+            Action="rollbackTransaction"/>
+    <list IterBinding="Med_SoMedicoView1Iterator" id="Codpr" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Med_ProvinceView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Codpr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codpr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Med_SoMedicoView1Iterator" id="DtadesCa">
+      <AttrNames>
+        <Item Value="DtadesCa"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

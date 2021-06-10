@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Ref_SoSuggerimentiView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.referto.Ref_SoSuggerimentiViewImpl"
+   PageIterMode="Partial"
+   OrderBy='"ORDINE"'>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT ESITOSUGG, DESCRIZIONE, ULSS, TPSCR, MIN(ORDINE) ORDINE    
+FROM    
+(SELECT IDSUGG, ESITOSUGG, DESCRIZIONE, 'LIV1' LIVELLO, ULSS, TPSCR, ORDINE    
+FROM SO_CNF_SUGG_1LIV    
+UNION    
+SELECT IDSUGG2L, ESITOSUGG, DESCRIZIONE, 'LIV2' LIVELLO, ULSS, TPSCR, ORDINE    
+FROM SO_CNF_SUGG_2LIV    
+UNION    
+SELECT IDSUGG3L, ESITOSUGG, DESCRIZIONE, 'LIV3' LIVELLO, ULSS, TPSCR, ORDINE    
+FROM SO_CNF_SUGG_3LIV    
+)    
+GROUP BY ESITOSUGG, DESCRIZIONE, ULSS, TPSCR]]></SQLQuery>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOSUGG"
+      Expression="ESITOSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE"
+      Expression="DESCRIZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ORDINE"
+      Expression="ORDINE"
+      SQLType="NUMERIC"/>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Esitosugg" />
+      <Item Value="Descrizione" />
+      <Item Value="Ulss" />
+   </AttrArray>
+</ViewObject>

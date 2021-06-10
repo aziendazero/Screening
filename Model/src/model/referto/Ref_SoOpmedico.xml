@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Ref_SoOpmedico"
+   Version="11.1.2.62.76"
+   DBObjectType="table"
+   DBObjectName="SO_OPMEDICO"
+   AliasName="Ref_SoOpmedico"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="model.referto.Ref_SoOpmedicoImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Idop"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDOP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Codop"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      ColumnName="CODOP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentro"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTRO"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Cognome"
+      IsNotNull="true"
+      Precision="40"
+      ColumnName="COGNOME"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Nome"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="NOME"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Titolo"
+      Precision="20"
+      ColumnName="TITOLO"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtfinevalopmedico"
+      ColumnName="DTFINEVALOPMEDICO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_OPMEDICO"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_OPMEDICO"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Cf"
+      Precision="16"
+      ColumnName="CF"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16"/>
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idpool"
+      ColumnName="IDPOOL"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO"/>
+   <AccessorAttribute
+      Name="Cnf_SoCnfTpopmedico"
+      Association="model.FkSoOpmedHaTipoOSoCnfTAssoc"
+      AssociationEnd="model.FkSoOpmedHaTipoOSoCnfTAssoc.Cnf_SoCnfTpopmedico"
+      AssociationOtherEnd="model.FkSoOpmedHaTipoOSoCnfTAssoc.Ref_SoOpmedico"
+      Type="model.conf.Cnf_SoCnfTpopmedicoImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Print_SoCentroPrelRef"
+      Association="model.FkSoOpmedRifCentrSoCentrAssoc"
+      AssociationEnd="model.FkSoOpmedRifCentrSoCentrAssoc.Print_SoCentroPrelRef"
+      AssociationOtherEnd="model.FkSoOpmedRifCentrSoCentrAssoc.Ref_SoOpmedico"
+      Type="model.print.Print_SoCentroPrelRefImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoInterventocito"
+      Association="model.FkSoInterFkIntervSoOpmedAssoc"
+      AssociationEnd="model.FkSoInterFkIntervSoOpmedAssoc.Ref_SoInterventocito"
+      AssociationOtherEnd="model.FkSoInterFkIntervSoOpmedAssoc.Ref_SoOpmedico"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoInterventocito1"
+      Association="model.FkSoInterSoOpmed1Assoc"
+      AssociationEnd="model.FkSoInterSoOpmed1Assoc.Ref_SoInterventocito1"
+      AssociationOtherEnd="model.FkSoInterSoOpmed1Assoc.Ref_SoOpmedico1"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoInterventocito2"
+      Association="model.FkSoInterSoOpmed2Assoc"
+      AssociationEnd="model.FkSoInterSoOpmed2Assoc.Ref_SoInterventocito2"
+      AssociationOtherEnd="model.FkSoInterSoOpmed2Assoc.Ref_SoOpmedico2"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv7"
+      Association="model.FkSoRef2lSoOpmed1Assoc"
+      AssociationEnd="model.FkSoRef2lSoOpmed1Assoc.Ref_SoRefertocito2liv7"
+      AssociationOtherEnd="model.FkSoRef2lSoOpmed1Assoc.Ref_SoOpmedico7"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv8"
+      Association="model.FkSoRef2lSoOpmed2Assoc"
+      AssociationEnd="model.FkSoRef2lSoOpmed2Assoc.Ref_SoRefertocito2liv8"
+      AssociationOtherEnd="model.FkSoRef2lSoOpmed2Assoc.Ref_SoOpmedico8"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="SoRefertocolon1liv"
+      Association="model.FkSoRefcolon1livLettoreAssoc"
+      AssociationEnd="model.FkSoRefcolon1livLettoreAssoc.SoRefertocolon1liv"
+      AssociationOtherEnd="model.FkSoRefcolon1livLettoreAssoc.Ref_SoOpmedico"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocolon2liv"
+      Association="model.FkSoRefcolon2lMedicoAssoc"
+      AssociationEnd="model.FkSoRefcolon2lMedicoAssoc.Ref_SoRefertocolon2liv"
+      AssociationOtherEnd="model.FkSoRefcolon2lMedicoAssoc.Ref_SoOpmedico"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito1liv"
+      Association="model.FkSoReferHaCitoscSoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaCitoscSoOpmedAssoc.Ref_SoRefertocito1liv"
+      AssociationOtherEnd="model.FkSoReferHaCitoscSoOpmedAssoc.Ref_SoOpmedico"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv"
+      Association="model.FkSoReferHaMbio1SoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaMbio1SoOpmedAssoc.Ref_SoRefertocito2liv"
+      AssociationOtherEnd="model.FkSoReferHaMbio1SoOpmedAssoc.Ref_SoOpmedico"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv1"
+      Association="model.FkSoReferHaMbio2SoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaMbio2SoOpmedAssoc.Ref_SoRefertocito2liv1"
+      AssociationOtherEnd="model.FkSoReferHaMbio2SoOpmedAssoc.Ref_SoOpmedico1"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv2"
+      Association="model.FkSoReferHaMcol1SoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaMcol1SoOpmedAssoc.Ref_SoRefertocito2liv2"
+      AssociationOtherEnd="model.FkSoReferHaMcol1SoOpmedAssoc.Ref_SoOpmedico2"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv4"
+      Association="model.FkSoReferHaMedicoSoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaMedicoSoOpmedAssoc.Ref_SoRefertocito2liv4"
+      AssociationOtherEnd="model.FkSoReferHaMedicoSoOpmedAssoc.Ref_SoOpmedico4"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito1liv1"
+      Association="model.FkSoReferHaMrefSoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaMrefSoOpmedAssoc.Ref_SoRefertocito1liv1"
+      AssociationOtherEnd="model.FkSoReferHaMrefSoOpmedAssoc.Ref_SoOpmedico1"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Ref_SoRefertocito2liv5"
+      Association="model.FkSoReferHaPato1SoOpmedAssoc"
+      AssociationEnd="model.FkSoReferHaPato1SoOpmedAssoc.Ref_SoRefertocito2liv5"
+      AssociationOtherEnd="model.FkSoReferHaPato1SoOpmedAssoc.Ref_SoOpmedico5"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="PkSoOpmedico"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_OPMEDICO"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.referto.Ref_SoOpmedico.Idop" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoOpmedHaTipoOSoCnfT" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CNF_TPOPMEDICO"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_OPMED_HA_TIPO_O_SO_CNF_T"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.referto.Ref_SoOpmedico.Codop" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoOpmedRifCentrSoCentr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_OPMED_RIF_CENTR_SO_CENTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.referto.Ref_SoOpmedico.Idcentro" />
+      </AttrArray>
+   </Key>
+</Entity>

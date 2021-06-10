@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_esclusionePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfEsclusioneView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfEsclusioneView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoRegionaleView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoRegionaleView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfEsclusioneRegionaleView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfEsclusioneRegionaleView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Tpescl">
+      <AttrNames>
+        <Item Value="Tpescl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Idcnfescl">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Numgiorni">
+      <AttrNames>
+        <Item Value="Numgiorni"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Esito">
+      <AttrNames>
+        <Item Value="Esito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Propagabile">
+      <AttrNames>
+        <Item Value="Propagabile"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Codregionale">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="MergeIgnore">
+      <AttrNames>
+        <Item Value="MergeIgnore"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Idtpinvito1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpinvitoRegionaleView1Iterator">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoAziendaView1Iterator"
+          NullValueFlag="start"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="Codregionale1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfEsclusioneRegionaleView1Iterator">
+      <AttrNames>
+        <Item Value="Codregionale"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfescl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

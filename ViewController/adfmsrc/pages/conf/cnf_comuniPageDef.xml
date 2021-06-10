@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_comuniPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoComuneView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoComuneView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfComuneView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfComuneView2Iterator"/>
+    <iterator Binds="Cnf_SoComDistrettiZoneView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoComDistrettiZoneView2Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfComuneView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfComuneView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoComuneView1Iterator" id="Cnf_SoComuneView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoComuneView" Name="Cnf_SoComuneView10">
+        <AttrNames>
+          <Item Value="Codcom"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Cap"/>
+          <Item Value="Codpr"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfComuneView2Iterator" id="Cnf_SoCnfComuneView2">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfComuneView" Name="Cnf_SoCnfComuneView20">
+        <AttrNames>
+          <Item Value="Descrbreve"/>
+          <Item Value="Descrbreve1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoComDistrettiZoneView2Iterator" id="Cnf_SoComDistrettiZoneView2">
+      <nodeDefinition DefName="model.conf.Cnf_SoComDistrettiZoneView" Name="Cnf_SoComDistrettiZoneView20">
+        <AttrNames>
+          <Item Value="Coddistrzona"/>
+          <Item Value="Descrizione1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoComuneView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoComuneView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="Cnf_SoComuneView1Iterator" id="Codcom">
+      <AttrNames>
+        <Item Value="Codcom"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+    <action IterBinding="Cnf_SoCnfComuneView2Iterator" id="Delete1"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfComuneView2" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="Cnf_SoComDistrettiZoneView2Iterator" id="Delete2"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoComDistrettiZoneView2" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

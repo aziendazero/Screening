@@ -1,0 +1,1227 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_anagBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GESTIONE_SOGGETTO}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOption('pt1:codanag')" type="load"/>
+        <af:clientListener method="setFocus('pt1:cf', false)" type="load"/>
+        <af:form id="f1" binding="#{Sogg_preanagAction.frmanag}">
+            <af:pageTemplate partialTriggers="b21" viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="50px" bottomHeight="15px">
+                        <f:facet name="top">
+                            <af:panelGridLayout id="pgl4">
+                                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr3">
+                                    <af:gridCell marginStart="5px" width="50%" id="gc7"/>
+                                    <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc8" halign="end">
+                                        <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="horizontal"
+                                                             halign="right"> 
+                                            <af:button text="#{sessionScope.FROM_PAGE.backTitle}" id="b21"
+                                                       rendered="#{sessionScope.FROM_PAGE!=null}"
+                                                       action="#{Sogg_anagAction.onBack}">
+                                                <af:setPropertyListener from="#{1==1}" to="#{sessionScope.fromDett}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:spacer width="30" height="10" id="s4"/>
+                                            <af:toolbar id="t2" inlineStyle="padding: 5px 20px 5px 5px;">
+                                                <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b2"
+                                                           disabled="#{not sessionScope.SODatiAnagraficiScrWrite and not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                           action="#{Sogg_anagAction.onConf}">
+                                                    <af:setPropertyListener from="confirm"
+                                                                            to="#{viewScope.btnClicked}"
+                                                                            type="action"/>
+                                                </af:button>
+                                                
+                                                <!--af:popup childCreation="deferred" autoCancel="disabled" id="confCellWarning"
+                                                          binding="#{Sogg_anagAction.confCellWarning}">
+                                                        <af:dialog id="confCellWarningDialog" 
+                                                                   title="ATTENZIONE"
+                                                                   type="none">
+                                                            <f:facet name="buttonBar">
+                                                                <af:panelGroupLayout id="pgl21confCellWarning" halign="end"
+                                                                                     layout="horizontal">
+                                                                    <af:toolbar id="t5confCellWarning">
+                                                                        <af:button text="SI" id="b69confCellWarning" rendered="#{viewScope.btnClicked=='applica' and !requestScope.isNavigation}" action="#{Sogg_anagAction.onAppl}">
+                                                                            <af:setPropertyListener from="SI" to="#{requestScope.checkCellulare}"
+                                                                                type="action"/>
+                                                                            <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="SI" id="b699confCellWarning" rendered="#{viewScope.btnClicked=='confirm' and !requestScope.isNavigation}" action="#{Sogg_anagAction.onConf}">
+                                                                            <af:setPropertyListener from="SI" to="#{requestScope.bypassCheckCF}"
+                                                                                type="action"/>
+                                                                            <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="SI"
+                                                                                   id="ctb11"
+                                                                                   rendered="#{requestScope.isNavigation}"
+                                                                                   action="#{Sogg_anagAction.onNavigate}">
+                                                                            <af:setPropertyListener from="#{viewScope.destNav}" to="#{requestScope.destination}"
+                                                                                                    type="action"/>
+                                                                            <af:setPropertyListener from="Commit" to="#{requestScope.todo}" type="action"/>
+                                                                            <af:setPropertyListener from="#{viewScope.agendaObject}" to="#{requestScope.agendaObject}" type="action"/>
+                                                                            <af:setPropertyListener from="SI" to="#{requestScope.checkCellulare}"
+                                                                                type="action"/>
+                                                                            <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="NO" id="b69confCellWarning1" rendered="#{viewScope.btnClicked=='applica' and !requestScope.isNavigation}" action="#{Sogg_anagAction.onAppl}">
+                                                                            <af:setPropertyListener from="NO" to="#{requestScope.checkCellulare}"
+                                                                                type="action"/>
+                                                                         <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="NO" id="b699confCellWarning2" rendered="#{viewScope.btnClicked=='confirm' and !requestScope.isNavigation}" action="#{Sogg_anagAction.onConf}">
+                                                                            <af:setPropertyListener from="NO" to="#{requestScope.checkCellulare}"
+                                                                                type="action"/>
+                                                                            <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="NO"
+                                                                                   id="ctb113"
+                                                                                   rendered="#{requestScope.isNavigation}"
+                                                                                   action="#{Sogg_anagAction.onNavigate()}">
+                                                                            <af:setPropertyListener from="#{viewScope.destNav}" to="#{requestScope.destination}"
+                                                                                                    type="action"/>
+                                                                            <af:setPropertyListener from="Commit" to="#{requestScope.todo}" type="action"/>
+                                                                            <af:setPropertyListener from="#{viewScope.agendaObject}" to="#{requestScope.agendaObject}" type="action"/>
+                                                                            <af:setPropertyListener from="NO" to="#{requestScope.checkCellulare}"
+                                                                                type="action"/>
+                                                                            <af:clientListener method="showHidePopup('confCellWarning', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                    </af:toolbar>
+                                                                </af:panelGroupLayout>
+                                                            </f:facet>
+                                                            <af:panelGroupLayout id="pgl3confCellWarning" layout="horizontal">
+                                                                <af:icon name="warning" id="i32confCellWarning"
+                                                                         shortDesc="Conferma numero di cellulare"/>
+                                                                <af:spacer width="20" height="20" id="s6confCellWarning"/>
+                                                                <af:outputText value="Confermare il numero di cellulare #{bindings.Cellulare.inputValue} per l'invio di sms?"
+                                                                               id="ot38confCellWarning"/>
+                                                            </af:panelGroupLayout>
+                                                        </af:dialog>
+                                                    </af:popup-->
+                                                            
+                                                <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b4"
+                                                           rendered="#{sessionScope.LINK_ACC!=true and !sessionScope.FROM_AUR}" action="rbSogg"
+                                                           immediate="true"/>
+                                                <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b5"
+                                                           rendered="#{sessionScope.LINK_ACC==true and !sessionScope.FROM_AUR}"
+                                                           action="#{Sogg_anagAction.onUndoAcc}"/>
+                                                <af:button text="#{viewcontrollerBundle.ANNULLA}" id="b51"
+                                                           rendered="#{sessionScope.FROM_AUR==true}"
+                                                           action="#{Sogg_anagAction.onUndoAur}" immediate="true"/>
+                                                <af:button text="#{viewcontrollerBundle.APPLICA}" id="b7"
+                                                           disabled="#{not sessionScope.SODatiAnagraficiScrWrite and not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                           action="#{Sogg_anagAction.onAppl}">
+                                                    <af:setPropertyListener from="applica"
+                                                                            to="#{viewScope.btnClicked}"
+                                                                            type="action"/>
+                                                </af:button>
+                                                <af:button actionListener="#{bindings.updateAURAnag.execute}" rendered="#{sessionScope.showTabs and Sogg_ricercaAction.aurEnabled}"
+                                                           disabled="#{not sessionScope.SODatiAnagraficiScrWrite and not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                           text="Aggiorna da AUR" id="b10"/>
+
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="cfWarn"
+                                                          binding="#{Sogg_anagAction.cfWarnPopup}">
+                                                        <af:dialog id="d2" 
+                                                                   title="ATTENZIONE"
+                                                                   type="none">
+                                                            <f:facet name="buttonBar">
+                                                                <af:panelGroupLayout id="pgl21" halign="end"
+                                                                                     layout="horizontal">
+                                                                    <af:toolbar id="t5">
+                                                                        <af:button text="Conferma ANOMALIA" id="b69" rendered="#{viewScope.btnClicked=='applica'}" action="#{Sogg_anagAction.onAppl}">
+                                                                            <af:setPropertyListener from="#{1==1}" to="#{viewScope.bypassCheckCF}"
+                                                                                type="action"/>
+                                                                        <af:clientListener method="showHidePopup('cfWarn', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="Conferma ANOMALIA" id="b699" rendered="#{viewScope.btnClicked=='confirm'}" action="#{Sogg_anagAction.onConf}">
+                                                                            <af:setPropertyListener from="#{1==1}" to="#{viewScope.bypassCheckCF}"
+                                                                                type="action"/>
+                                                                        <af:clientListener method="showHidePopup('cfWarn', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="Verifica ANOMALIA" id="b78">
+                                                                            <af:clientListener method="showHidePopup('cfWarn', false)"
+                                                                                                   type="action"/>
+                                                                        </af:button>
+                                                                    </af:toolbar>
+                                                                </af:panelGroupLayout>
+                                                            </f:facet>
+                                                        <af:panelGroupLayout id="pgl3" layout="horizontal">
+                                                            <af:icon name="warning" id="i32"
+                                                                     shortDesc="Codice fiscale non risulta conforme."/>
+                                                            <af:spacer width="20" height="20" id="s6"/>
+                                                            <af:outputText value="Codice fiscale non conforme."
+                                                                           id="ot38"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:dialog>
+                                                    </af:popup>
+                                                    <af:popup childCreation="deferred" autoCancel="disabled" id="classePopWarn"
+                                                          binding="#{Sogg_anagAction.classePopWarnPopup}">
+                                                        <af:dialog id="d22" 
+                                                                   title="ATTENZIONE"
+                                                                   type="none">
+                                                            <f:facet name="buttonBar">
+                                                                <af:panelGroupLayout id="pgl221" halign="end"
+                                                                                     layout="horizontal">
+                                                                    <af:toolbar id="t52">
+                                                                        <af:button text="Conferma ANOMALIA" id="b629" rendered="#{viewScope.btnClicked=='applica'}" action="#{Sogg_anagAction.onAppl}">
+                                                                            <af:setPropertyListener from="#{1==1}" to="#{viewScope.bypassCheckPop}"
+                                                                                type="action"/>
+                                                                        <af:clientListener method="showHidePopup('classePopWarn', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="Conferma ANOMALIA" id="b6929" rendered="#{viewScope.btnClicked=='confirm'}" action="#{Sogg_anagAction.onConf}">
+                                                                            <af:setPropertyListener from="#{1==1}" to="#{viewScope.bypassCheckPop}"
+                                                                                type="action"/>
+                                                                        <af:clientListener method="showHidePopup('classePopWarn', false)"
+                                                                                               type="action"/>
+                                                                        </af:button>
+                                                                        <af:button text="Verifica ANOMALIA" id="b728">
+                                                                            <af:clientListener method="showHidePopup('classePopWarn', false)"
+                                                                                                   type="action"/>
+                                                                        </af:button>
+                                                                    </af:toolbar>
+                                                                </af:panelGroupLayout>
+                                                            </f:facet>
+                                                        <af:panelGroupLayout id="pg2l3" layout="horizontal">
+                                                            <af:icon name="warning" id="i322"
+                                                                     shortDesc="Attenzione"/>
+                                                            <af:spacer width="20" height="20" id="s62"/>
+                                                            <af:outputText value="La categoria del cittadino (#{viewScope.descClassePop}) non è più valida."
+                                                                           id="ot382"/>
+                                                        </af:panelGroupLayout>
+                                                        </af:dialog>
+                                                    </af:popup>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth" layout="scroll">
+                                <af:showDetailHeader text="#{viewcontrollerBundle.ANAGRAFE}" id="ph1" disclosed="true"
+                                                     styleClass="AFStretchWidth">
+                                    <af:panelFormLayout id="pfl2" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <f:facet name="footer"/>
+                                        <af:inputText value="#{bindings.Codts.inputValue}"
+                                                      label="#{bindings.Codts.hints.label}"
+                                                      required="#{bindings.Codts.hints.mandatory}" readOnly="true"
+                                                      columns="20" maximumLength="#{bindings.Codts.hints.precision}"
+                                                      shortDesc="#{bindings.Codts.hints.tooltip}" id="it1">
+                                            <f:validator binding="#{bindings.Codts.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Cf.inputValue}"
+                                                      label="#{bindings.Cf.hints.label}" clientComponent="true"
+                                                      required="#{bindings.Cf.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Cf.hints.precision}"
+                                                      shortDesc="#{bindings.Cf.hints.tooltip}" id="cf"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}">
+                                            <f:validator binding="#{bindings.Cf.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl4" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150" styleClass="AFStretchWidth">
+                                        <f:facet name="footer"/>
+                                        <af:inputText value="#{bindings.CodidsoggMx.inputValue}"
+                                                      label="#{bindings.CodidsoggMx.hints.label}"
+                                                      required="#{bindings.CodidsoggMx.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.CodidsoggMx.hints.precision}"
+                                                      shortDesc="#{bindings.CodidsoggMx.hints.tooltip}" id="it136"
+                                                      readOnly="#{(not sessionScope.SODatiAnagraficiScrWrite and not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite) or sessionScope.idmxAuto}">
+                                            <f:validator binding="#{bindings.CodidsoggMx.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Idinterno.inputValue}"
+                                                      label="#{bindings.Idinterno.hints.label}"
+                                                      required="#{bindings.Idinterno.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Idinterno.hints.precision}"
+                                                      shortDesc="#{bindings.Idinterno.hints.tooltip}" id="it11"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Idinterno.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl3" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <f:facet name="footer"/>
+                                        <af:inputText value="#{bindings.Cognome.inputValue}"
+                                                      label="#{bindings.Cognome.hints.label}"
+                                                      required="#{bindings.Cognome.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Cognome.hints.precision}"
+                                                      shortDesc="#{bindings.Cognome.hints.tooltip}" id="it12"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                      contentStyle="text-transform: uppercase;">
+                                            <f:validator binding="#{bindings.Cognome.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Nome.inputValue}"
+                                                      label="#{bindings.Nome.hints.label}"
+                                                      required="#{bindings.Nome.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Nome.hints.precision}"
+                                                      shortDesc="#{bindings.Nome.hints.tooltip}" id="it13"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                      contentStyle="text-transform: uppercase;">
+                                            <f:validator binding="#{bindings.Nome.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl5" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150" styleClass="AFStretchWidth">
+                                        <f:facet name="footer"/>
+                                        <af:inputText value="#{bindings.CognomeConiuge.inputValue}"
+                                                      label="#{bindings.CognomeConiuge.hints.label}"
+                                                      required="#{bindings.CognomeConiuge.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.CognomeConiuge.hints.precision}"
+                                                      shortDesc="#{bindings.CognomeConiuge.hints.tooltip}" id="it14"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.CognomeConiuge.validator}"/>
+                                        </af:inputText>
+                                        <af:selectOneChoice label="#{bindings.Sesso.label}" id="soc2"
+                                                            required="#{bindings.Sesso.hints.mandatory}"
+                                                            shortDesc="#{bindings.Sesso.hints.tooltip}"
+                                                            value="#{bindings.Sesso.inputValue}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                            styleClass="choiceInTable">
+                                            <af:selectItem label="Maschio" value="M" id="si2"/>
+                                            <af:selectItem label="Femmina" value="F" id="si3"/>
+                                            <f:validator binding="#{bindings.Sesso.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl1" fieldWidth="350" labelWidth="150" rows="1"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputDate value="#{bindings.DataNascita.inputValue}"
+                                                      label="#{bindings.DataNascita.hints.label}"
+                                                      required="#{bindings.DataNascita.hints.mandatory}"
+                                                      columns="#{bindings.DataNascita.hints.displayWidth}"
+                                                      shortDesc="#{bindings.DataNascita.hints.tooltip}" id="DataNascita"
+                                                      valueChangeListener="#{Sogg_anagAction.chDataNascita}"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                      partialTriggers="DataNascita" autoSubmit="true">
+                                            <f:validator binding="#{bindings.DataNascita.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.DataNascita.format}"/>
+                                        </af:inputDate>
+                                        <af:panelLabelAndMessage label="#{bindings.Cittadinanza.hints.label}"
+                                                                 id="plam1">
+                                            <af:inputText value="#{bindings.Cittadinanza.inputValue}"
+                                                          label="#{bindings.Cittadinanza.hints.label}"
+                                                          required="#{bindings.Cittadinanza.hints.mandatory}"
+                                                          columns="20"
+                                                          maximumLength="#{bindings.Cittadinanza.hints.precision}"
+                                                          shortDesc="#{bindings.Cittadinanza.hints.tooltip}"
+                                                          id="Cittadinanza" simple="true"
+                                                          binding="#{Sogg_anagAction.cittadinanzaLOV}"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                          contentStyle="text-transform: uppercase;"
+                                                          partialTriggers="b7">
+                                                <f:validator binding="#{bindings.Cittadinanza.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l1\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l1" icon="../images/search_16.png" iconPosition="leading"
+                                                         action="#{Sogg_anagAction.onChCittadinanza}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{viewcontrollerBundle.CITTADINANZA}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovCittadinanzaReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                                    <af:setPropertyListener from="#{bindings.Cittadinanza.inputValue != null ? bindings.Cittadinanza.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                    
+                                    <af:panelFormLayout id="pfl6" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.Codpr1.inputValue}"
+                                                            label="#{viewcontrollerBundle.PROVINCIA}"
+                                                            required="#{bindings.Codpr1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Codpr1.hints.tooltip}" id="Codpr1"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            valueChangeListener="#{Sogg_anagAction.onChProv}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                            autoSubmit="true">
+                                            <f:selectItems value="#{bindings.Codpr1.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.Codpr1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText value="#{bindings.Codcomnascita.inputValue}"
+                                                      label="#{bindings.Codcomnascita.hints.label}"
+                                                      required="#{bindings.Codcomnascita.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Codcomnascita.hints.precision}"
+                                                      shortDesc="#{bindings.Codcomnascita.hints.tooltip}"
+                                                      id="codcomnasc" readOnly="true"
+                                                      binding="#{Sogg_anagAction.codcomnasc}"
+                                                      partialTriggers="Codpr1 DataNascita">
+                                            <f:validator binding="#{bindings.Codcomnascita.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl7" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Descrizione.hints.label}" id="plam2"
+                                                                 partialTriggers="DataNascita Codpr1">
+                                            <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                                          label="#{bindings.Descrizione.hints.label}"
+                                                          required="#{bindings.Descrizione.hints.mandatory}"
+                                                          columns="20"
+                                                          maximumLength="#{bindings.Descrizione.hints.precision}"
+                                                          shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it59"
+                                                          simple="true" binding="#{Sogg_anagAction.descrizioneLOV}"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                          contentStyle="text-transform: uppercase;">
+                                                <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l19\')'})"
+                                                                   type="valueChange"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l19" icon="../images/search_16.png" iconPosition="leading"
+                                                         action="#{Sogg_anagAction.onChComNasc}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Descrizione.hints.tooltip}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovDescrizioneReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}">
+                                                    <af:setPropertyListener from="#{bindings.Descrizione.inputValue != null ? bindings.Descrizione.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Descrizione"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Sogg_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.Codst.inputValue}"
+                                                      label="#{bindings.Codst.hints.label}"
+                                                      required="#{bindings.Codst.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Codst.hints.precision}"
+                                                      shortDesc="#{bindings.Codst.hints.tooltip}" id="codst"
+                                                      readOnly="true" binding="#{Sogg_anagAction.codst}"
+                                                      partialTriggers="DataNascita">
+                                            <f:validator binding="#{bindings.Codst.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl8" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150" partialTriggers="DataNascita">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Desstato.hints.label}" id="plam3">
+                                            <af:inputText value="#{bindings.Desstato.inputValue}"
+                                                          label="#{bindings.Desstato.hints.label}"
+                                                          required="#{bindings.Desstato.hints.mandatory}" columns="20"
+                                                          maximumLength="#{bindings.Desstato.hints.precision}"
+                                                          shortDesc="#{bindings.Desstato.hints.tooltip}" id="it593"
+                                                          simple="true" binding="#{Sogg_anagAction.desstatoLOV}"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                          contentStyle="text-transform: uppercase;">
+                                                <f:validator binding="#{bindings.Desstato.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l191\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l191" icon="../images/search_16.png" iconPosition="leading"
+                                                         action="#{Sogg_anagAction.onChStato}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Desstato.hints.tooltip}" useWindow="true"
+                                                         windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovDesstatoReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                                    <af:setPropertyListener from="#{bindings.Desstato.inputValue != null ? bindings.Desstato.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputDate value="#{bindings.Dtdecesso.inputValue}"
+                                                      label="#{bindings.Dtdecesso.hints.label}"
+                                                      required="#{bindings.Dtdecesso.hints.mandatory}"
+                                                      columns="#{bindings.Dtdecesso.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtdecesso.hints.tooltip}" id="id5"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}">
+                                            <f:validator binding="#{bindings.Dtdecesso.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtdecesso.format}"/>
+                                        </af:inputDate>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl9" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150">
+                                        <af:switcher id="s1" facetName="#{bindings.Codanagreg1.inputValue}"
+                                                     defaultFacet="99">
+                                            <f:facet name="11">
+                                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.SITUAZIONE_ANAGRAFICA}"
+                                                                         id="plam4">
+                                                    <af:outputText value="#{viewcontrollerBundle.NP_NON_PERVENUTO}"
+                                                                   id="ot1"/>
+                                                </af:panelLabelAndMessage>
+                                            </f:facet>
+                                            <f:facet name="15">
+                                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.SITUAZIONE_ANAGRAFICA}"
+                                                                         id="plam6">
+                                                    <af:outputText value="#{viewcontrollerBundle.ME_DEPRECATO_PER_MERGE}"
+                                                                   id="ot11"/>
+                                                </af:panelLabelAndMessage>
+                                            </f:facet>
+                                            <f:facet name="99">
+                                                <af:selectOneChoice value="#{bindings.Codanagreg.inputValue}"
+                                                                    label="#{viewcontrollerBundle.SITUAZIONE_ANAGRAFICA}"
+                                                                    required="#{bindings.Codanagreg.hints.mandatory}"
+                                                                    readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                                    shortDesc="#{bindings.Codanagreg.hints.tooltip}"
+                                                                    id="codanag" styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.Codanagreg.items}" id="si4"/>
+                                                    <f:validator binding="#{bindings.Codanagreg.validator}"/>
+                                                </af:selectOneChoice>
+                                            </f:facet>
+                                        </af:switcher>
+                                        <af:inputText value="#{bindings.Codiceregmedico.inputValue}"
+                                                      label="#{bindings.Codiceregmedico.hints.label}"
+                                                      required="#{bindings.Codiceregmedico.hints.mandatory}"
+                                                      columns="20"
+                                                      maximumLength="#{bindings.Codiceregmedico.hints.precision}"
+                                                      shortDesc="#{bindings.Codiceregmedico.hints.tooltip}" id="it64"
+                                                      readOnly="true" binding="#{Sogg_anagAction.codiceregmedico}">
+                                            <f:validator binding="#{bindings.Codiceregmedico.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Codiceregmedico.format}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl10" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Cognmed.hints.label}" id="plam5">
+                                            <af:inputText value="#{bindings.Cognmed.inputValue}"
+                                                          label="#{bindings.Cognmed.hints.label}"
+                                                          required="#{bindings.Cognmed.hints.mandatory}" columns="20"
+                                                          maximumLength="#{bindings.Cognmed.hints.precision}"
+                                                          shortDesc="#{bindings.Cognmed.hints.tooltip}" id="it594"
+                                                          simple="true" binding="#{Sogg_anagAction.cognmedLOV}"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                          contentStyle="text-transform: uppercase;">
+                                                <f:validator binding="#{bindings.Cognmed.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l192\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l192" icon="../images/search_16.png" iconPosition="leading"
+                                                         action="#{Sogg_anagAction.onChMed}" inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Cognmed.hints.tooltip}" useWindow="true"
+                                                         windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovCognmedReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}">
+                                                    <af:setPropertyListener from="#{bindings.Cognmed.inputValue != null ? bindings.Cognmed.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Cognmed"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.Nomemed.inputValue}"
+                                                      label="#{bindings.Nomemed.hints.label}"
+                                                      required="#{bindings.Nomemed.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Nomemed.hints.precision}"
+                                                      readOnly="true" shortDesc="#{bindings.Nomemed.hints.tooltip}"
+                                                      id="it44" binding="#{Sogg_anagAction.nomemed}">
+                                            <f:validator binding="#{bindings.Nomemed.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl11" rows="1" maxColumns="2" fieldWidth="350"
+                                                        labelWidth="150">
+                                        <af:inputDate value="#{bindings.Dtultmodifica.inputValue}"
+                                                      label="#{bindings.Dtultmodifica.hints.label}"
+                                                      required="#{bindings.Dtultmodifica.hints.mandatory}"
+                                                      columns="#{bindings.Dtultmodifica.hints.displayWidth}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.Dtultmodifica.hints.tooltip}" id="id9">
+                                            <f:validator binding="#{bindings.Dtultmodifica.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtultmodifica.format}"/>
+                                        </af:inputDate>
+                                        <af:inputText value="#{bindings.Noteanag.inputValue}"
+                                                      label="#{bindings.Noteanag.hints.label}"
+                                                      required="#{bindings.Noteanag.hints.mandatory}" columns="60"
+                                                      maximumLength="#{bindings.Noteanag.hints.precision}"
+                                                      shortDesc="#{bindings.Noteanag.hints.tooltip}" id="it96" rows="5"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.Noteanag.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s2"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.PRIVACY}" id="ph2" disclosed="true"
+                                                     styleClass="AFStretchWidth">
+                                    <af:panelGridLayout id="pgl5">
+                                        <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                            <af:gridCell marginStart="5px" id="gc1" valign="middle">
+                                                <af:outputLabel value="#{viewcontrollerBundle.CONSENSO_GENERALE_AL_TRATTAMENTO_DEI_DATI__DATI_PERSONALI_E_SENSIBILI_}"
+                                                                id="ol1"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" id="gc2" valign="middle">
+                                                <af:selectOneChoice value="#{bindings.Consenso1.inputValue}"
+                                                                    label="#{bindings.Consenso1.label}" readOnly="true"
+                                                                    required="#{bindings.Consenso1.hints.mandatory}"
+                                                                    shortDesc="#{bindings.Consenso1.hints.tooltip}"
+                                                                    id="soc1"
+                                                                    unselectedLabel="#{viewcontrollerBundle.DATO_NON_DISPONIBILE}"
+                                                                    simple="true">
+                                                    <f:selectItems value="#{bindings.Consenso1.items}" id="si5"/>
+                                                    <f:validator binding="#{bindings.Consenso1.validator}"/>
+                                                </af:selectOneChoice>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" id="gc21" valign="middle" halign="center">
+                                                <af:button text="#{viewcontrollerBundle.MODIFICA}" id="b1"
+                                                           action="#{Sogg_anagAction.onGoConsenso}"/>
+                                                <af:spacer width="30" height="10" id="s3"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" marginEnd="5px" id="gc3" valign="middle">
+                                                <af:inputDate value="#{bindings.InizioVal.inputValue}" readOnly="true"
+                                                              label="#{bindings.InizioVal.hints.label}"
+                                                              required="#{bindings.InizioVal.hints.mandatory}"
+                                                              columns="#{bindings.InizioVal.hints.displayWidth}"
+                                                              shortDesc="#{bindings.InizioVal.hints.tooltip}" id="id1">
+                                                    <f:validator binding="#{bindings.InizioVal.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.InizioVal.format}"/>
+                                                </af:inputDate>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2"
+                                                    rendered="#{sessionScope.scr eq 'CI' or sessionScope.scr eq 'PF'}">
+                                            <af:gridCell marginStart="5px" id="gc4" valign="middle">
+                                                <af:outputLabel value="#{viewcontrollerBundle.CONSENSO_ALLA_CONDIVISIONE_DEI_DATI_CON_LE_ULSS_CONVENZIONATE}"
+                                                                id="ol11"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" id="gc5" valign="middle">
+                                                <af:selectOneChoice value="#{bindings.ConsensoCond1.inputValue}"
+                                                                    label="#{bindings.ConsensoCond1.label}"
+                                                                    readOnly="true"
+                                                                    required="#{bindings.ConsensoCond1.hints.mandatory}"
+                                                                    unselectedLabel="#{viewcontrollerBundle.DATO_NON_DISPONIBILE}"
+                                                                    shortDesc="#{bindings.ConsensoCond1.hints.tooltip}"
+                                                                    id="soc3" simple="true">
+                                                    <f:selectItems value="#{bindings.ConsensoCond1.items}" id="si6"/>
+                                                    <f:validator binding="#{bindings.ConsensoCond1.validator}"/>
+                                                </af:selectOneChoice>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" id="gc22" valign="middle">
+                                                
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" marginEnd="5px" id="gc6" valign="middle">
+                                                <af:inputDate value="#{bindings.InizioVal1.inputValue}"
+                                                              label="#{bindings.InizioVal1.hints.label}" readOnly="true"
+                                                              required="#{bindings.InizioVal1.hints.mandatory}"
+                                                              columns="#{bindings.InizioVal1.hints.displayWidth}"
+                                                              shortDesc="#{bindings.InizioVal1.hints.tooltip}" id="id2">
+                                                    <f:validator binding="#{bindings.InizioVal1.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.InizioVal1.format}"/>
+                                                </af:inputDate>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                    </af:panelGridLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s7"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.DOCUMENTI}" id="ph3" disclosed="true"
+                                                     styleClass="AFStretchWidth">
+                                    <af:panelCollection id="pc1" featuresOff="detach freeze wrap"
+                                                        styleClass="AFStretchWidth">
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t3" rendered="#{sessionScope.anagEsiste}"
+                                                        partialTriggers="t1">
+                                                <af:button action="goDocumento"
+                                                           text="#{viewcontrollerBundle.NUOVO}"
+                                                           disabled="#{!bindings.Create.enabled or not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite)}"
+                                                           id="b3"/>
+                                            </af:toolbar>
+                                            <af:toolbar id="t6">
+                                                <af:button text="#{viewcontrollerBundle.MODIFICA}" disabled="#{!sessionScope.anagEsiste or not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) or bindings.Sogg_SoDocumentiSoggView1.estimatedRowCount==0}" id="b6"
+                                                           action="goDocumentoEdit">
+                                                    <af:setPropertyListener from='#{"edit"}' to="#{sessionScope.sogg_documento_mode}"
+                                                                type="action"/>
+                                                </af:button>
+                                                <af:button text="#{viewcontrollerBundle.STORICIZZA}" disabled="#{!sessionScope.anagEsiste or not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) or bindings.Sogg_SoDocumentiSoggView1.estimatedRowCount==0}" id="b8"
+                                                           action="goDocumentoEdit">
+                                                    <af:setPropertyListener from='#{"delete"}' to="#{sessionScope.sogg_documento_mode}"
+                                                                type="action"/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <af:table value="#{bindings.Sogg_SoDocumentiSoggView1.collectionModel}"
+                                                  var="row" rows="#{bindings.Sogg_SoDocumentiSoggView1.rangeSize}"
+                                                  emptyText="#{bindings.Sogg_SoDocumentiSoggView1.viewable ? viewcontrollerBundle.NESSUN_DATO_TROVATO : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Sogg_SoDocumentiSoggView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Sogg_SoDocumentiSoggView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Sogg_SoDocumentiSoggView1.rangeSize}" id="t1"
+                                                  columnStretching="last" scrollPolicy="page" summary='#{""}'
+                                                  partialTriggers="::b3">
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.DescrizioneTipoDoc.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.Descrizione.label}"
+                                                       id="c1" rowHeader="unstyled" width="150" noWrap="false">
+                                                <af:outputText value="#{row.DescrizioneTipoDoc}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.Descrizione.tooltip}"
+                                                               id="ot2"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdTipoDoc.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdTipoDoc.label}"
+                                                       id="c2">
+                                                <af:outputText value="#{row.IdTipoDoc}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdTipoDoc.tooltip}"
+                                                               id="ot3"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdent.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdent.label}"
+                                                       id="c3" width="150">
+                                                <af:outputText value="#{row.DocIdent}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdent.tooltip}"
+                                                               id="ot4"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtrilascio.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtrilascio.label}"
+                                                       id="c4">
+                                                <af:outputText value="#{row.Dtrilascio}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtrilascio.tooltip}"
+                                                               id="ot5">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtrilascio.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtfinevalidita.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtfinevalidita.label}"
+                                                       id="c5">
+                                                <af:outputText value="#{row.Dtfinevalidita}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtfinevalidita.tooltip}"
+                                                               id="ot6">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtfinevalidita.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdentAnag.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdentAnag.label}"
+                                                       id="c6">
+                                                <af:outputText value="#{row.DocIdentAnag}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.DocIdentAnag.tooltip}"
+                                                               id="ot7"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdIstComp.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdIstComp.label}"
+                                                       id="c7">
+                                                <af:outputText value="#{row.IdIstComp}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.IdIstComp.tooltip}"
+                                                               id="ot8"/>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtinserimento.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtinserimento.label}"
+                                                       id="c8">
+                                                <af:outputText value="#{row.Dtinserimento}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtinserimento.tooltip}"
+                                                               id="ot9">
+                                                    <af:convertDateTime pattern="#{bindings.Sogg_SoDocumentiSoggView1.hints.Dtinserimento.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column sortProperty="#{bindings.Sogg_SoDocumentiSoggView1.hints.Opinserimento.name}"
+                                                       sortable="true"
+                                                       headerText="#{bindings.Sogg_SoDocumentiSoggView1.hints.Opinserimento.label}"
+                                                       id="c9">
+                                                <af:outputText value="#{row.Opinserimento}"
+                                                               shortDesc="#{bindings.Sogg_SoDocumentiSoggView1.hints.Opinserimento.tooltip}"
+                                                               id="ot10"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelCollection>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s8"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.RESIDENZA}" id="ph4" disclosed="true"
+                                                     styleClass="AFStretchWidth">
+                                    <af:panelFormLayout id="pfl21" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="3" styleClass="AFStretchWidth">
+                                        <af:selectOneChoice value="#{bindings.Provres1.inputValue}"
+                                                            label="#{viewcontrollerBundle.PROVINCIA_DI_RESIDENZA}"
+                                                            required="#{bindings.Provres1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Provres1.hints.tooltip}" id="Provres1"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            valueChangeListener="#{Sogg_anagAction.onChProvres}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                            autoSubmit="true">
+                                            <f:selectItems value="#{bindings.Provres1.items}" id="si7"/>
+                                            <f:validator binding="#{bindings.Provres1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText value="#{bindings.Codcomres.inputValue}"
+                                                      label="#{bindings.Codcomres.hints.label}"
+                                                      required="#{bindings.Codcomres.hints.mandatory}"
+                                                      columns="#{bindings.Codcomres.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Codcomres.hints.precision}"
+                                                      binding="#{Sogg_anagAction.codcomres}"
+                                                      shortDesc="#{bindings.Codcomres.hints.tooltip}" id="it2"
+                                                      readOnly="true" partialTriggers="Provres1">
+                                            <f:validator binding="#{bindings.Codcomres.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl22" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:panelLabelAndMessage label="#{bindings.Descomres.hints.label}" id="plam32">
+                                            <af:inputText value="#{bindings.Descomres.inputValue}"
+                                                          label="#{bindings.Descomres.hints.label}"
+                                                          columns="40"
+                                                          maximumLength="#{bindings.Descomres.hints.precision}"
+                                                          shortDesc="#{bindings.Descomres.hints.tooltip}" id="Descomres"
+                                                          simple="true" binding="#{Sogg_anagAction.descomresLOV}"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                          partialTriggers="Provres1" clientComponent="true">
+                                                <f:validator binding="#{bindings.Descomres.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l1911\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l1911" icon="../images/search_16.png"
+                                                         iconPosition="leading" action="#{Sogg_anagAction.onChComRes}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Descomres.hints.tooltip}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovDescomresReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                                    <af:setPropertyListener from="#{bindings.Descomres.inputValue != null ? bindings.Descomres.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Descomres"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Sogg_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.IndirizzoRes.inputValue}"
+                                                      label="#{bindings.IndirizzoRes.hints.label}"
+                                                      required="#{bindings.IndirizzoRes.hints.mandatory}" columns="40"
+                                                      maximumLength="#{bindings.IndirizzoRes.hints.precision}"
+                                                      shortDesc="#{bindings.IndirizzoRes.hints.tooltip}" id="it3"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.IndirizzoRes.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl23" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputText value="#{bindings.CapComres.inputValue}"
+                                                      label="#{bindings.CapComres.hints.label}"
+                                                      required="#{bindings.CapComres.hints.mandatory}"
+                                                      columns="#{bindings.CapComres.hints.displayWidth}"
+                                                      maximumLength="#{bindings.CapComres.hints.precision}"
+                                                      shortDesc="#{bindings.CapComres.hints.tooltip}" id="it4"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.CapComres.validator}"/>
+                                        </af:inputText>
+                                        <af:selectOneChoice value="#{bindings.Coddistrzona1.inputValue}"
+                                                            label="#{bindings.Coddistrzona1.label}"
+                                                            required="#{bindings.Coddistrzona1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Coddistrzona1.hints.tooltip}"
+                                                            id="soc4" styleClass="choiceInTable"
+                                                            readOnly="#{(not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite) or !(bindings.Codcomres.inputValue != '')}">
+                                            <f:selectItems value="#{bindings.Coddistrzona1.items}" id="si8"/>
+                                            <f:validator binding="#{bindings.Coddistrzona1.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s9"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.DOMICILIO}" id="ph5" disclosed="true"
+                                                     styleClass="AFStretchWidth">
+                                    <af:panelFormLayout id="pfl211" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:selectOneChoice value="#{bindings.Provdom1.inputValue}"
+                                                            label="#{viewcontrollerBundle.PROVINCIA_DI_DOMICILIO}"
+                                                            required="#{bindings.Provdom1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Provdom1.hints.tooltip}" id="Provdom1"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            valueChangeListener="#{Sogg_anagAction.onChProvDom}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                            autoSubmit="true">
+                                            <f:selectItems value="#{bindings.Provdom1.items}" id="si9"/>
+                                            <f:validator binding="#{bindings.Provdom1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText value="#{bindings.Codcomdom.inputValue}"
+                                                      label="#{bindings.Codcomdom.hints.label}"
+                                                      required="#{bindings.Codcomdom.hints.mandatory}"
+                                                      columns="#{bindings.Codcomdom.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Codcomdom.hints.precision}"
+                                                      binding="#{Sogg_anagAction.codcomdom}"
+                                                      shortDesc="#{bindings.Codcomdom.hints.tooltip}" id="Codcomdom"
+                                                      readOnly="true" partialTriggers="Provdom1">
+                                            <f:validator binding="#{bindings.Codcomdom.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl221" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:panelLabelAndMessage label="#{bindings.Descomdom.hints.label}" id="plam321">
+                                            <af:inputText value="#{bindings.Descomdom.inputValue}"
+                                                          label="#{bindings.Descomdom.hints.label}"
+                                                          columns="40"
+                                                          maximumLength="#{bindings.Descomdom.hints.precision}"
+                                                          shortDesc="#{bindings.Descomdom.hints.tooltip}" id="Descomdom"
+                                                          simple="true"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}"
+                                                          contentStyle="text-transform: uppercase;"
+                                                          partialTriggers="Provres1"
+                                                          binding="#{Sogg_anagAction.descomdomLOV}"
+                                                          clientComponent="true">
+                                                <f:validator binding="#{bindings.Descomdom.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l19111\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l19111" icon="../images/search_16.png"
+                                                         iconPosition="leading" action="#{Sogg_anagAction.onChComDom}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Descomdom.hints.tooltip}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovDescomdomReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                                    <af:setPropertyListener from="#{bindings.Descomdom.inputValue != null ? bindings.Descomdom.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Descomdom"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Sogg_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.IndirizzoDom.inputValue}"
+                                                      label="#{bindings.IndirizzoDom.hints.label}"
+                                                      required="#{bindings.IndirizzoDom.hints.mandatory}" columns="40"
+                                                      maximumLength="#{bindings.IndirizzoDom.hints.precision}"
+                                                      shortDesc="#{bindings.IndirizzoDom.hints.tooltip}" id="it31"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.IndirizzoDom.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl231" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputText value="#{bindings.CapComdom.inputValue}"
+                                                      label="#{bindings.CapComdom.hints.label}"
+                                                      required="#{bindings.CapComdom.hints.mandatory}"
+                                                      columns="#{bindings.CapComdom.hints.displayWidth}"
+                                                      maximumLength="#{bindings.CapComdom.hints.precision}"
+                                                      shortDesc="#{bindings.CapComdom.hints.tooltip}" id="it41"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not sessionScope.SODatiAnagraficiNewWrite}">
+                                            <f:validator binding="#{bindings.CapComdom.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s10"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.RECAPITO_DI_SCREENING}" id="ph6"
+                                                     disclosed="true" styleClass="AFStretchWidth">
+                                    <af:showDetailHeader messageType="warning" text="#{viewcontrollerBundle.AVVERTENZA}"
+                                                         disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                         inlineStyle="font-weight:bold; background-color:InfoBackground;">
+                                        <af:panelList id="pl1" maxColumns="1" rows="2"
+                                                      inlineStyle="background-color:transparent;">
+                                            <af:outputLabel value="#{viewcontrollerBundle.AVVISO_1}" id="pt_ol11"
+                                                            inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                            <af:outputLabel value="#{viewcontrollerBundle.SE_PER_IL_SOGGETTO_VIENE_SPECIFICATO_L_INDIRIZZO_DI_SCREENING_TUTTE_LE_LETTERE_INDIRIZZATE_AL_SOGGETTO_VERRANNO_SPEDITE_A_TALE_INDIRIZZO_}"
+                                                            id="pt_ol2"
+                                                            inlineStyle="font-size: 14px; font-stretch: ultra-expanded;"/>
+                                        </af:panelList>
+                                    </af:showDetailHeader>
+                                    <af:panelFormLayout id="pfl2111" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:selectOneChoice value="#{bindings.Provscr1.inputValue}"
+                                                            label="#{viewcontrollerBundle.PROVINCIA_DI_SCREENING}"
+                                                            required="#{bindings.Provscr1.hints.mandatory}"
+                                                            shortDesc="#{bindings.Provscr1.hints.tooltip}" id="Provscr1"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            valueChangeListener="#{Sogg_anagAction.onChProvScr}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}"
+                                                            autoSubmit="true" valuePassThru="true">
+                                            <f:selectItems value="#{bindings.Provscr1.items}" id="si10"/>
+                                            <f:validator binding="#{bindings.Provscr1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText value="#{bindings.Codcomscr.inputValue}"
+                                                      label="#{bindings.Codcomscr.hints.label}"
+                                                      required="#{bindings.Codcomscr.hints.mandatory}"
+                                                      columns="#{bindings.Codcomscr.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Codcomscr.hints.precision}"
+                                                      binding="#{Sogg_anagAction.codcomscr}"
+                                                      shortDesc="#{bindings.Codcomscr.hints.tooltip}" id="Codcomscr"
+                                                      readOnly="true" partialTriggers="Provscr1">
+                                            <f:validator binding="#{bindings.Codcomscr.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl2211" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:panelLabelAndMessage label="#{bindings.Descomscr.hints.label}"
+                                                                 id="plam3211">
+                                            <af:inputText value="#{bindings.Descomscr.inputValue}"
+                                                          label="#{bindings.Descomscr.hints.label}" columns="40"
+                                                          maximumLength="#{bindings.Descomscr.hints.precision}"
+                                                          shortDesc="#{bindings.Descomscr.hints.tooltip}" id="Descomscr"
+                                                          simple="true"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}"
+                                                          contentStyle="text-transform: uppercase;"
+                                                          partialTriggers="Provres1"
+                                                          binding="#{Sogg_anagAction.descomscrLOV}"
+                                                          clientComponent="true">
+                                                <f:validator binding="#{bindings.Descomscr.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l191111\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_anagAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l191111" icon="../images/search_16.png"
+                                                         iconPosition="leading" action="#{Sogg_anagAction.onChComScr}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{bindings.Descomscr.hints.tooltip}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_anagAction.lovDescomscrReturnListener}"
+                                                         disabled="#{not sessionScope.SODatiAnagraficiScrWrite}">
+                                                    <af:setPropertyListener from="#{bindings.Descomscr.inputValue != null ? bindings.Descomscr.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_Descomscr"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Sogg_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.IndirizzoScr.inputValue}"
+                                                      label="#{bindings.IndirizzoScr.hints.label}"
+                                                      required="#{bindings.IndirizzoScr.hints.mandatory}" columns="40"
+                                                      maximumLength="#{bindings.IndirizzoScr.hints.precision}"
+                                                      shortDesc="#{bindings.IndirizzoScr.hints.tooltip}" id="it311"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}">
+                                            <f:validator binding="#{bindings.IndirizzoScr.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl2311" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputText value="#{bindings.CapComsrc.inputValue}"
+                                                      label="#{bindings.CapComsrc.hints.label}"
+                                                      required="#{bindings.CapComsrc.hints.mandatory}"
+                                                      columns="#{bindings.CapComsrc.hints.displayWidth}"
+                                                      maximumLength="#{bindings.CapComsrc.hints.precision}"
+                                                      shortDesc="#{bindings.CapComsrc.hints.tooltip}" id="it411"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}">
+                                            <f:validator binding="#{bindings.CapComsrc.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s11"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.RECAPITI_TELEFONICI___EMAIL}" id="ph7"
+                                                     disclosed="true" styleClass="AFStretchWidth">
+                                    <af:panelFormLayout id="pfl21111" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputText value="#{bindings.Tel1.inputValue}"
+                                                      label="#{bindings.Tel1.hints.label}"
+                                                      required="#{bindings.Tel1.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Tel1.hints.precision}"
+                                                      shortDesc="#{bindings.Tel1.hints.tooltip}" id="Tel1"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}">
+                                            <f:validator binding="#{bindings.Tel1.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Tel2.inputValue}"
+                                                      label="#{bindings.Tel2.hints.label}"
+                                                      required="#{bindings.Tel2.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Tel2.hints.precision}"
+                                                      shortDesc="#{bindings.Tel2.hints.tooltip}" id="Tel2"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiScrWrite}">
+                                            <f:validator binding="#{bindings.Tel2.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pfl2212" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:panelLabelAndMessage label="#{bindings.Cellulare.hints.label}" id="plam7">
+                                            <af:inputText value="#{bindings.Cellulare.inputValue}"
+                                                          label="#{bindings.Cellulare.hints.label}"
+                                                          required="#{bindings.Cellulare.hints.mandatory}" columns="20"
+                                                          maximumLength="#{bindings.Cellulare.hints.precision}"
+                                                          shortDesc="#{bindings.Cellulare.hints.tooltip}" id="Cellulare"
+                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) and not sessionScope.SODatiAnagraficiScrWrite}"
+                                                          simple="true">
+                                                <f:validator binding="#{bindings.Cellulare.validator}"/>
+                                                <af:clientListener method="trim()" type="blur"/>
+                                                <af:validateRegExp pattern="\+?[0-9 ]*"
+                                                                   messageDetailNoMatch="#{viewcontrollerBundle.FORMATO_ERRATO}"/>
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:selectBooleanCheckbox value="#{bindings.CellConfermato.inputValue}"
+                                                                          label="#{bindings.CellConfermato.label}"
+                                                                          shortDesc="#{bindings.CellConfermato.hints.tooltip}"
+                                                                          readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) and not sessionScope.SODatiAnagraficiScrWrite}"
+                                                                          id="sbc1" 
+                                                                          styleClass="inputCheckInPanel"/>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:inputText value="#{bindings.Email.inputValue}"
+                                                      label="#{bindings.Email.hints.label}"
+                                                      required="#{bindings.Email.hints.mandatory}" columns="20"
+                                                      maximumLength="#{bindings.Email.hints.precision}"
+                                                      shortDesc="#{bindings.Email.hints.tooltip}" id="Email"
+                                                      readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) and not sessionScope.SODatiAnagraficiScrWrite}">
+                                            <f:validator binding="#{bindings.Email.validator}"/>
+                                            <af:clientListener method="trim()" type="blur"/>
+                                            <af:validateRegExp pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+                                                               messageDetailNoMatch="#{viewcontrollerBundle.FORMATO_ERRATO}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s12"
+                                           rendered="#{!sessionScope.modalita_centri &amp;&amp; !sessionScope.centri_rich_cnf?false:true}"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.CONFIGURAZIONE_RICHIAMI}" id="ph8"
+                                                     disclosed="true" styleClass="AFStretchWidth"
+                                                     rendered="#{!sessionScope.modalita_centri &amp;&amp; !sessionScope.centri_rich_cnf?false:true}">
+                                    <af:panelFormLayout id="pfl30" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:selectOneChoice value="#{bindings.Idcentro1liv1.inputValue}"
+                                                            label="#{bindings.Idcentro1liv1.label}"
+                                                            required="#{bindings.Idcentro1liv1.hints.mandatory}"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            shortDesc="#{bindings.Idcentro1liv1.hints.tooltip}"
+                                                            id="soc5"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiScrWrite || bindings.Codts1.inputValue==''?'true':'false'}">
+                                            <f:selectItems value="#{bindings.Idcentro1liv1.items}" id="si11"/>
+                                            <f:validator binding="#{bindings.Idcentro1liv1.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.Idcentro2liv1.inputValue}"
+                                                            label="#{bindings.Idcentro2liv1.label}"
+                                                            required="#{bindings.Idcentro2liv1.hints.mandatory}"
+                                                            unselectedLabel="#{''}" styleClass="choiceInTable"
+                                                            shortDesc="#{bindings.Idcentro2liv1.hints.tooltip}"
+                                                            id="soc6"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiScrWrite || bindings.Codts1.inputValue==''?'true':'false'}">
+                                            <f:selectItems value="#{bindings.Idcentro2liv1.items}" id="si13"/>
+                                            <f:validator binding="#{bindings.Idcentro2liv1.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s13" rendered="#{sessionScope.SOMx45==true}"/>
+                                <af:showDetailHeader text="#{viewcontrollerBundle.PROGETTO_STUDIO_45_MX}" id="ph9"
+                                                     disclosed="true" styleClass="AFStretchWidth"
+                                                     rendered="#{sessionScope.SOMx45==true}">
+                                    <af:panelFormLayout id="pfl31" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:inputText value="#{bindings.Mx45Braccio.inputValue}"
+                                                      label="#{bindings.Mx45Braccio.hints.label}"
+                                                      columns="#{bindings.Mx45Braccio.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Mx45Braccio.hints.precision}"
+                                                      shortDesc="#{bindings.Mx45Braccio.hints.tooltip}" id="it5"
+                                                      readOnly="true">
+                                            <f:validator binding="#{bindings.Mx45Braccio.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.Mx45Codice.inputValue}"
+                                                      label="#{bindings.Mx45Codice.hints.label}"
+                                                      columns="#{bindings.Mx45Codice.hints.displayWidth}"
+                                                      maximumLength="#{bindings.Mx45Codice.hints.precision}"
+                                                      shortDesc="#{bindings.Mx45Codice.hints.tooltip}" id="it6"
+                                                      readOnly="true">
+                                            <f:validator binding="#{bindings.Mx45Codice.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s5"/>
+                                <af:showDetailHeader text="Configurazioni popolazione" disclosed="true" id="sdh2" styleClass="AFStretchWidth"
+                                                     rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}">
+                                    <af:panelFormLayout id="pfl12" rows="1" fieldWidth="350" labelWidth="150"
+                                                        maxColumns="2" styleClass="AFStretchWidth">
+                                        <af:selectOneChoice value="#{bindings.Codclassepop.inputValue}"
+                                                            label="Sottogruppo"
+                                                            required="#{bindings.Codclassepop.hints.mandatory}"
+                                                            shortDesc="#{bindings.Codclassepop.hints.tooltip}"
+                                                            readOnly="#{not sessionScope.SODatiAnagraficiStandardWrite and not (empty bindings.Idinterno.inputValue and sessionScope.SODatiAnagraficiNewWrite) and not sessionScope.SODatiAnagraficiScrWrite}"
+                                                            id="soc7" unselectedLabel="" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.Codclassepop.items}" id="si12"/>
+                                            <f:validator binding="#{bindings.Codclassepop.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:panelFormLayout>
+                                </af:showDetailHeader>
+                                <af:spacer width="10" height="10" id="s66" rendered="#{sessionScope.SOLogEventi}"/>
+                                <af:outputFormatted rendered="#{sessionScope.SOLogEventi}" value="SOGGETTO INSERTO IL #{bindings.Dtcreazione.inputValue} DA #{bindings.Opcreazione.inputValue} -  MODIFICATO IL #{bindings.Dtultmodifica.inputValue} DA #{bindings.Opultmodifica.inputValue}" id="of1"
+                                                    inlineStyle="font-weight:bold; font-style:italic;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_SOGGETTO}"/>
+                <f:attribute name="viewSubmenu"
+                             value="#{sessionScope.showTabs and !sessionScope.LINK_ACC and !sessionScope.LINK_REF}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="navigation" value="#{Sogg_anagAction}"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue, bindings.Nome.inputValue, bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

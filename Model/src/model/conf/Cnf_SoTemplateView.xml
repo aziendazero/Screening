@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoTemplateView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoTemplate.CODTEMPL, 
+       Cnf_SoTemplate.IDTPLETTERA, 
+       Cnf_SoTemplate.CODTEMPLREG, 
+       Cnf_SoTemplate.NOMEFILE, 
+       Cnf_SoTemplate.FILEXML, 
+       Cnf_SoTemplate.DTCREAZIONE, 
+       Cnf_SoTemplate.AUTORE, 
+       Cnf_SoTemplate.DTULTMOD, 
+       Cnf_SoTemplate.OPULTMOD, 
+       Cnf_SoTemplate.DTFINEVALTEMPL, 
+       Cnf_SoTemplate.ULSS, 
+       Cnf_SoTemplate.TPSCR, 
+       Cnf_SoTemplate.DESCRIZIONE, 
+       Cnf_SoCnfTplettera.DESCRIZIONE AS DESCRIZIONE1, 
+       Cnf_SoCnfTplettera.IDTPLETTERA AS IDTPLETTERA1, 
+       Cnf_SoTemplate.COMPILED"
+   FromList="SO_TEMPLATE Cnf_SoTemplate, SO_CNF_TPLETTERA Cnf_SoCnfTplettera"
+   Where="Cnf_SoTemplate.IDTPLETTERA = Cnf_SoCnfTplettera.IDTPLETTERA"
+   OrderBy="Cnf_SoCnfTplettera.DESCRIZIONE,Cnf_SoTemplate.DESCRIZIONE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   RowClass="model.conf.Cnf_SoTemplateViewRowImpl"
+   ComponentClass="model.conf.Cnf_SoTemplateViewImpl"
+   RowInterface="model.common.Cnf_SoTemplateViewRow"
+   ClientRowProxyName="model.client.Cnf_SoTemplateViewRowClient"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg|Prog" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoTemplate"
+      Entity="model.conf.Cnf_SoTemplate" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTplettera"
+      Entity="model.conf.Cnf_SoCnfTplettera"
+      Association="model.FkSoTemplHaTipoLSoCnfTAssoc"
+      AssociationEnd="model.FkSoTemplHaTipoLSoCnfTAssoc.Cnf_SoCnfTplettera"
+      SourceUsage="model.conf.Cnf_SoTemplateView.Cnf_SoTemplate"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoTemplate.Idtplettera" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfTplettera.Idtplettera" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codtempl"
+      IsNotNull="true"
+      EntityAttrName="Codtempl"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="CODTEMPL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtplettera"
+      IsNotNull="true"
+      EntityAttrName="Idtplettera"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="IDTPLETTERA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idtplettera_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codtemplreg"
+      EntityAttrName="Codtemplreg"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="CODTEMPLREG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nomefile"
+      IsNotNull="true"
+      EntityAttrName="Nomefile"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="NOMEFILE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Nomefile_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Filexml"
+      IsQueriable="false"
+      IsNotNull="true"
+      EntityAttrName="Filexml"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="FILEXML" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsNotNull="true"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="DTCREAZIONE"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Autore"
+      EntityAttrName="Autore"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="AUTORE"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Autore_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultmod"
+      EntityAttrName="Dtultmod"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="DTULTMOD"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtultmod_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtultmod_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtultmod_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opultmod"
+      EntityAttrName="Opultmod"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="OPULTMOD"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Opultmod_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevaltempl"
+      EntityAttrName="Dtfinevaltempl"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="DTFINEVALTEMPL" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevaltempl_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtfinevaltempl_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevaltempl_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfTplettera"
+      AliasName="DESCRIZIONE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtplettera1"
+      IsNotNull="true"
+      EntityAttrName="Idtplettera"
+      EntityUsage="Cnf_SoCnfTplettera"
+      AliasName="IDTPLETTERA1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Compiled"
+      IsQueriable="false"
+      EntityAttrName="Compiled"
+      EntityUsage="Cnf_SoTemplate"
+      AliasName="COMPILED" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Cnf_SoTemplateView"
+      ViewLink="model.FkSoTemplRifTemplSoTemplLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+    <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoTemplateViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

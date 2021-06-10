@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.acc_intPrecBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.INTERVENTI}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOptionList(['pt1:Idopanamnesi'])"
+                       type="load"/> 
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="80px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl10" layout="vertical">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="#{viewcontrollerBundle.Precedente}" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_intPrecAction.onPrev}"/>
+                                        <af:button text="#{viewcontrollerBundle.Successivo}" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_intPrecAction.onNext}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="#{viewcontrollerBundle.ETICHETTE}" id="b2"
+                                                   rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="600"
+                                                   windowWidth="600" action="dialog:printPianoLavoro">
+                                            <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                    to="#{pageFlowScope.pl_centro}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                    to="#{pageFlowScope.pl_data}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                    to="#{pageFlowScope.pl_codts}" type="action"/>
+                                            <af:setPropertyListener from="single" to="#{pageFlowScope.pl_type}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b4"
+                                                   disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{Acc_intPrecAction.onConf}"/>
+                                        <af:button text="#{viewcontrollerBundle.Annulla}" id="b5" action="#{Acc_intPrecAction.onRollback}" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="#{viewcontrollerBundle.Applica}" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{Acc_intPrecAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s16"/>
+                                <af:outputText value="#{viewcontrollerBundle.SOGGETTO_ESCLUSO}" id="ot1"
+                                               rendered="#{bindings.Escl.inputValue != null}"
+                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                 <af:spacer width="30" height="10" id="s5" rendered="#{bindings.Escl.inputValue != null}"/>
+                                <af:outputText value="#{viewcontrollerBundle.SOLLECITARE}" id="ot2"
+                                               rendered="#{bindings.Sollecitare == '1'}"
+                                               inlineStyle="color:Red; font-size:large;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelSplitter id="ps1" splitterPosition="600">
+                                    <f:facet name="first">
+                                        <af:panelHeader text="#{viewcontrollerBundle.INTERVENTI_PRECEDENTI}" id="ph2">
+                                            <af:panelCollection id="pc1" featuresOff="detach freeze wrap viewMenu" styleClass="AFStretchWidth">
+                                                <af:table value="#{bindings.Acc_IntervPrecElencoFull1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Acc_IntervPrecElencoFull1.rangeSize}"
+                                                          emptyText="#{bindings.Acc_IntervPrecElencoFull1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Acc_IntervPrecElencoFull1.collectionModel.selectedRow}"
+                                                          selectionListener="#{bindings.Acc_IntervPrecElencoFull1.collectionModel.makeCurrent}"
+                                                          rowSelection="single"
+                                                          fetchSize="#{bindings.Acc_IntervPrecElencoFull1.rangeSize}"
+                                                          id="t3" columnStretching="column:c2" summary="#{''}"                                                          
+                                                          binding="#{Acc_intPrecAction.tabInterventi}"
+                                                          editingMode="clickToEdit">
+                                                    <af:column sortProperty="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.name}"
+                                                               sortable="true"
+                                                               headerText="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.label}"
+                                                               id="c2" rowHeader="unstyled">
+                                                        <af:inputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                      label="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.label}"
+                                                                      required="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.mandatory}"
+                                                                      columns="10"
+                                                                      maximumLength="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.precision}"
+                                                                      shortDesc="#{bindings.Acc_IntervPrecElencoFull1.hints.Descrizione.tooltip}"
+                                                                      id="it2" readOnly="true">
+                                                            <f:validator binding="#{row.bindings.Descrizione.validator}"/>
+                                                        </af:inputText>
+                                                    </af:column>
+                                                    <af:column sortProperty="#{bindings.Acc_IntervPrecElencoFull1.hints.Effettuato.name}"
+                                                               sortable="true"
+                                                               headerText="#{bindings.Acc_IntervPrecElencoFull1.hints.Effettuato.label}"
+                                                               id="c3" noWrap="false" align="center">
+                                                               
+                                                        <af:switcher id="s1" defaultFacet="InActive"
+                                                           facetName="#{Acc_intPrecAction.tabInterventi.rowKey eq Acc_intPrecAction.tabInterventi.activeRowKey ? 'Active':'InActive'}">
+                                                            <f:facet name="InActive">
+                                                                <af:icon name="Sollecitare" id="i3233"
+                                                                         styleClass="#{row.Effettuato==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                                            </f:facet>
+                                                            <f:facet name="Active">
+                                                                <af:selectBooleanCheckbox value="#{row.bindings.Effettuato.inputValue}"
+                                                                                          autoSubmit="true"
+                                                                                          shortDesc="#{bindings.Acc_IntervPrecElencoFull1.hints.Effettuato.tooltip}"
+                                                                                          id="sbc1"
+                                                                                          styleClass="checkbox">
+                                                                    <af:setPropertyListener type="valueChange" from="#{row.Effettuato==0?row.Annointervento:null}"
+                                                                                            to="#{row.Annointervento}"/>
+                                                                </af:selectBooleanCheckbox>
+                                                            </f:facet>
+                                                        </af:switcher>
+                                                    </af:column>     
+                                                    <af:column sortProperty="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.name}"
+                                                               sortable="true"
+                                                               headerText="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.label}"
+                                                               id="c4" noWrap="false" align="center">
+                                                        <af:inputText value="#{row.bindings.Annointervento.inputValue}" partialTriggers="sbc1"
+                                                                      label="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.label}"
+                                                                      required="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.mandatory}"
+                                                                      columns="4" maximumLength="4"
+                                                                      autoSubmit="true"
+                                                                      shortDesc="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.tooltip}"
+                                                                      id="it4">
+                                                            <f:validator binding="#{row.bindings.Annointervento.validator}"/>
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Acc_IntervPrecElencoFull1.hints.Annointervento.format}"/>
+                                                        </af:inputText>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelCollection>
+                                        </af:panelHeader>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <af:panelHeader text="* #{viewcontrollerBundle.MOTIVO_ULTIMO_INTERVENTO}"
+                                                        id="ph1">
+                                            <af:panelFormLayout id="pfl1">
+                                                <f:facet name="footer"/>
+                                                <af:selectOneRadio value="#{bindings.Idmot.inputValue}"
+                                                                   label="#{bindings.Idmot.label}" simple="true"
+                                                                   required="#{bindings.Idmot.hints.mandatory}"
+                                                                   shortDesc="#{bindings.Idmot.hints.tooltip}"
+                                                                   id="sor1">
+                                                    <f:selectItems value="#{bindings.Idmot.items}" id="si1"/>
+                                                    <f:validator binding="#{bindings.Idmot.validator}"/>
+                                                </af:selectOneRadio>
+                                                <af:inputText value="#{bindings.Altromotultint.inputValue}"
+                                                              label="#{bindings.Altromotultint.hints.label}"
+                                                              required="#{bindings.Altromotultint.hints.mandatory}"
+                                                              columns="#{bindings.Altromotultint.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Altromotultint.hints.precision}"
+                                                              shortDesc="#{bindings.Altromotultint.hints.tooltip}"
+                                                              id="it1">
+                                                    <f:validator binding="#{bindings.Altromotultint.validator}"/>
+                                                </af:inputText>
+                                            </af:panelFormLayout>
+                                        </af:panelHeader>
+                                    </f:facet>
+                                </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="funzionalita"
+                             value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue,bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{Acc_intPrecAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

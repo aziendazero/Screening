@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.ref_diagnosiPeggioreBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.REFERTAZIONE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Ref_diagnosiPeggioreAction.frmReferto}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="160px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="vertical">
+                                <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                             inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                             styleClass="no_border">
+                                    <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                         inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                         styleClass="AFStretchWidth">
+                                        <af:panelGroupLayout id="pgl58">
+                                            <af:icon name="folder" id="i2" styleClass="banner_closed"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                            <af:icon name="folder" id="i1" styleClass="banner_open"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?false:true}"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                             inlineStyle="background-color:#3a76cb;">
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                            id="pt_ol1" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                    id="ol4" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                                    inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                            id="ol1"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="Raccomandazione: #{bindings.Descrizione.inputValue}"
+                                                            id="ol2"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b3" action="to_ref_ricerca"
+                                                   immediate="true"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelGridLayout id="pgl5">
+                                    <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                        <af:gridCell marginStart="5px" width="100%" id="gc1" columnSpan="2">
+                                            <af:panelGroupLayout id="pgl4" halign="center">
+                                                <af:message id="m2" messageType="warning"
+                                                            message="#{viewcontrollerBundle.VERIFICARE_LA_CORRETTEZZA_DELLA_DIAGNOSI_PEGGIORE}"/>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc3">
+                                            <af:panelGroupLayout id="pfl1" layout="vertical">
+                                                <af:panelHeader text="#{viewcontrollerBundle.ISTOLOGIA_BIOPTICA}"
+                                                                id="ph1">
+                                                    <af:table value="#{bindings.Ref_SoCodref2livc2BIODIAView1.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Ref_SoCodref2livc2BIODIAView1.rangeSize}"
+                                                              emptyText="#{bindings.Ref_SoCodref2livc2BIODIAView1.viewable ? 'Non eseguita.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Ref_SoCodref2livc2BIODIAView1.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Ref_SoCodref2livc2BIODIAView1.collectionModel.makeCurrent}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.Ref_SoCodref2livc2BIODIAView1.rangeSize}"
+                                                              id="t2" summary="#{''}" columnStretching="last"
+                                                              width="400">
+                                                        <af:column headerText="#{viewcontrollerBundle.DATA}" id="c1"
+                                                                   rowHeader="unstyled">
+                                                            <af:outputText value="#{bindings.Dtbiopsia.inputValue}"
+                                                                           shortDesc="#{bindings.Dtbiopsia.hints.tooltip}"
+                                                                           id="ot2">
+                                                                <af:convertDateTime pattern="#{bindings.Dtbiopsia.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{viewcontrollerBundle.DIAGNOSI}"
+                                                                   id="c2">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Ref_SoCodref2livc2BIODIAView1.hints.Descrizione.tooltip}"
+                                                                           id="ot1"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelHeader>
+                                                <af:spacer width="10" height="10" id="s1"/>
+                                                <af:panelHeader text="#{viewcontrollerBundle.ISTOLOGIE_CHIRURGICHE}"
+                                                                id="ph2">
+                                                    <af:table value="#{bindings.Ref_SoInterventocitoISTDIAView1.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Ref_SoInterventocitoISTDIAView1.rangeSize}"
+                                                              emptyText="#{bindings.Ref_SoInterventocitoISTDIAView1.viewable ? 'Nessuna istologia chirurgica eseguita.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Ref_SoInterventocitoISTDIAView1.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Ref_SoInterventocitoISTDIAView1.collectionModel.makeCurrent}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.Ref_SoInterventocitoISTDIAView1.rangeSize}"
+                                                              id="t3" columnStretching="last" summary="#{''}"
+                                                              width="400">
+                                                        <af:column headerText="#{viewcontrollerBundle.DATA}" id="c3"
+                                                                   rowHeader="unstyled">
+                                                            <af:outputText value="#{row.Dtistchir}"
+                                                                           shortDesc="#{bindings.Ref_SoInterventocitoISTDIAView1.hints.Dtistchir.tooltip}"
+                                                                           id="ot3">
+                                                                <af:convertDateTime pattern="#{bindings.Ref_SoInterventocitoISTDIAView1.hints.Dtistchir.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column headerText="#{viewcontrollerBundle.DIAGNOSI}"
+                                                                   id="c4">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Ref_SoInterventocitoISTDIAView1.hints.Descrizione.tooltip}"
+                                                                           id="ot4"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelHeader>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc4">
+                                            <af:selectOneRadio value="#{bindings.diagnosi_peggiore.attributeValue}"
+                                                               label="#{viewcontrollerBundle.DIAGNOSI_PEGGIORE}"
+                                                               required="#{bindings.diagnosi_peggiore.hints.mandatory}"
+                                                               shortDesc="#{bindings.diagnosi_peggiore.hints.tooltip}"
+                                                               disabled="true" id="sor1" styleClass="choiceInTable">
+                                                <f:selectItems value="#{bindings.diagnosi_peggiore.items}" id="si1"/>
+                                                <f:validator binding="#{bindings.diagnosi_peggiore.validator}"/>
+                                            </af:selectOneRadio>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.DIAGNOSI_ISTOLOGICA_PEGGIORE}"/>
+                <f:attribute name="navigation" value="#{Ref_diagnosiPeggioreAction}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

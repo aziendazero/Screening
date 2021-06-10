@@ -1,0 +1,548 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="AccMa_SoInvitoView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   PageIterMode="Partial"
+   RowClass="model.accettazione.AccMa_SoInvitoViewRowImpl"
+   ComponentClass="model.accettazione.AccMa_SoInvitoViewImpl"
+   RowInterface="model.accettazione.common.AccMa_SoInvitoViewRow"
+   ClientRowProxyName="model.accettazione.client.AccMa_SoInvitoViewRowClient"
+   MsgBundleClass="model.accettazione.common.AccMa_SoInvitoViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT AccMa_SoInvito.IDINVITO,  
+       AccMa_SoInvito.CODTS,  
+       AccMa_SoInvito.IDTPINVITO,  
+       AccMa_SoInvito.CODESITOINVITO,  
+       AccMa_SoInvito.LIVESITO,  
+       AccMa_SoInvito.ATTIVO,  
+       AccMa_SoInvito.IDCENTROPRELIEVO,  
+       AccMa_SoInvito.IDCENTRORICHIAMO,  
+       AccMa_SoInvito.IDCENTROREF1LIV,  
+       AccMa_SoInvito.IDCENTROREF2LIV,  
+       AccMa_SoInvito.IDAPP,  
+       AccMa_SoInvito.DTAPP,  
+       AccMa_SoInvito.ORAAPP,  
+       AccMa_SoInvito.MINAPP,  
+       AccMa_SoInvito.CONSENSO,  
+       AccMa_SoInvito.DTESAMERECENTE,  
+       AccMa_SoInvito.DTRICHIAMO,  
+       AccMa_SoInvito.DTINVIORICHIAMO,  
+       AccMa_SoInvito.OPMEDICO,  
+       AccMa_SoInvito.DTINVIOSOLLECITO,  
+       AccMa_SoInvito.ROUNDCOMUNE,  
+       AccMa_SoInvito.ROUNDINDIV,  
+       AccMa_SoInvito.VOLONTARIA,  
+       AccMa_SoInvito.DTBLOCCO,  
+       AccMa_SoInvito.CHIUSURAROUNDINDIV,  
+       AccMa_SoInvito.DTULTIMAMOD,  
+       AccMa_SoInvito.DTCREAZIONE,  
+       AccMa_SoInvito.OPINSERIMENTO,  
+       AccMa_SoInvito.DTMODESCLUSIONE,  
+       AccMa_SoInvito.OPMODIFICA,  
+       AccMa_SoInvito.FUORIFASCIA,  
+       AccMa_SoInvito.NOTEINVITO,  
+       AccMa_SoInvito.ULSS,  
+       AccMa_SoInvito.TPSCR,  
+       AccMa_SoInvito.ROUNDINVITI,  
+       AccMa_SoInvito.TPRICHIAMO,  
+       AccMa_SoInvito.LIVELLO,  
+       AccMa_SoInvito.IDOSTETRICA,  
+       AccMa_SoInvito.CODRESIDENZA,  
+       AccMa_SoInvito.CODDOMICILIO,  
+       AccMa_SoInvito.VIARESIDENZA,  
+       AccMa_SoInvito.VIADOMICILIO,  
+       AccMa_SoInvito.STATOANAG,  
+       AccMa_SoInvito.ZONA,  
+       AccMa_SoInvito.DTRITCONT,  
+       AccMa_SoInvito.DTCONSCONT,  
+       AccMa_SoInvito.DA_CONFERMARE, 
+       AccMa_SoInvito.DTAPP + (NVL(AccMa_SoInvito.ORAAPP,0) + NVL(AccMa_SoInvito.MINAPP,0)/60)/24 DTORAAPP, 
+       SO_CENTRO_PREL_REF.DESCRBREVE, 
+       SO_CNF_TPINVITO.IDTPINVITO || ' ' || SO_CNF_TPINVITO.DESCRIZIONE TIPO_INVITO, 
+       SO_CNF_ESITOINVITO.DESCRSUGG DESCRSUGG, 
+       SO_CNF_ESITOINVITO.METODO_CALCOLO METODO_CALCOLO, 
+       SO_CNF_ESITOINVITO.DATA_OBBLIGATORIA DATA_OBBLIGATORIA, 
+       AccMa_SoInvito.DTAPPINIZIALE, 
+       AccMa_SoInvito.NON_SPEDIRE_REFERTO, 
+       AccMa_SoInvito.OTP 
+ 
+FROM SO_INVITO AccMa_SoInvito,SO_CENTRO_PREL_REF,SO_CNF_TPINVITO 
+,SO_CNF_ESITOINVITO 
+where SO_CENTRO_PREL_REF.IDCENTRO (+) = AccMa_SoInvito.IDCENTROPRELIEVO 
+and SO_CNF_TPINVITO.IDTPINVITO (+) = AccMa_SoInvito.IDTPINVITO 
+and SO_CNF_TPINVITO.ULSS (+) = AccMa_SoInvito.ULSS 
+and SO_CNF_TPINVITO.TPSCR (+) = AccMa_SoInvito.TPSCR 
+and SO_CNF_ESITOINVITO.CODESITOINVITO (+) = AccMa_SoInvito.CODESITOINVITO  
+and SO_CNF_ESITOINVITO.LIVESITO (+) = AccMa_SoInvito.LIVESITO  
+and SO_CNF_ESITOINVITO.ULSS (+) = AccMa_SoInvito.ULSS  
+and SO_CNF_ESITOINVITO.TPSCR (+) = AccMa_SoInvito.TPSCR 
+and AccMa_SoInvito.IDINVITO=:1]]></SQLQuery>
+   <EntityUsage
+      Name="AccMa_SoInvito"
+      Entity="model.accettazione.AccMa_SoInvito" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idinvito"
+      IsNotNull="true"
+      EntityAttrName="Idinvito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDTPINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codesitoinvito"
+      EntityAttrName="Codesitoinvito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CODESITOINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codesitoinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livesito"
+      EntityAttrName="Livesito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="LIVESITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Attivo"
+      EntityAttrName="Attivo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ATTIVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      EntityAttrName="Idcentroprelievo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDCENTROPRELIEVO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentrorichiamo"
+      EntityAttrName="Idcentrorichiamo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDCENTRORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref1liv"
+      EntityAttrName="Idcentroref1liv"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDCENTROREF1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref2liv"
+      EntityAttrName="Idcentroref2liv"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDCENTROREF2LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idapp"
+      EntityAttrName="Idapp"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      EntityAttrName="Dtapp"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      EntityAttrName="Oraapp"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ORAAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="MINAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Consenso"
+      EntityAttrName="Consenso"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CONSENSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtesamerecente"
+      EntityAttrName="Dtesamerecente"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTESAMERECENTE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtesamerecente_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtesamerecente_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtesamerecente_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTRICHIAMO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtrichiamo_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtrichiamo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtrichiamo_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviorichiamo"
+      EntityAttrName="Dtinviorichiamo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTINVIORICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmedico"
+      EntityAttrName="Opmedico"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="OPMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinviosollecito"
+      EntityAttrName="Dtinviosollecito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTINVIOSOLLECITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsNotNull="true"
+      EntityAttrName="Roundcomune"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ROUNDCOMUNE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      EntityAttrName="Roundindiv"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Volontaria"
+      IsNotNull="true"
+      EntityAttrName="Volontaria"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="VOLONTARIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtblocco"
+      EntityAttrName="Dtblocco"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTBLOCCO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Chiusuraroundindiv"
+      EntityAttrName="Chiusuraroundindiv"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CHIUSURAROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultimamod"
+      IsNotNull="true"
+      EntityAttrName="Dtultimamod"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTULTIMAMOD" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsNotNull="true"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTCREAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opinserimento"
+      IsNotNull="true"
+      EntityAttrName="Opinserimento"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="OPINSERIMENTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtmodesclusione"
+      EntityAttrName="Dtmodesclusione"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTMODESCLUSIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      IsNotNull="true"
+      EntityAttrName="Opmodifica"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="OPMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Fuorifascia"
+      EntityAttrName="Fuorifascia"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="FUORIFASCIA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Noteinvito"
+      EntityAttrName="Noteinvito"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="NOTEINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      EntityAttrName="Roundinviti"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ROUNDINVITI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tprichiamo"
+      EntityAttrName="Tprichiamo"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="TPRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsNotNull="true"
+      EntityAttrName="Livello"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="LIVELLO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idostetrica"
+      EntityAttrName="Idostetrica"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="IDOSTETRICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codresidenza"
+      EntityAttrName="Codresidenza"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CODRESIDENZA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddomicilio"
+      EntityAttrName="Coddomicilio"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="CODDOMICILIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Viaresidenza"
+      EntityAttrName="Viaresidenza"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="VIARESIDENZA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Viadomicilio"
+      EntityAttrName="Viadomicilio"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="VIADOMICILIO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Statoanag"
+      EntityAttrName="Statoanag"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="STATOANAG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Zona"
+      EntityAttrName="Zona"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="ZONA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtritcont"
+      EntityAttrName="Dtritcont"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTRITCONT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtconscont"
+      EntityAttrName="Dtconscont"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTCONSCONT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DaConfermare"
+      EntityAttrName="DaConfermare"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DA_CONFERMARE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtoraapp"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Timestamp"
+      ColumnType="DATE"
+      AliasName="DTORAAPP"
+      Expression="DTORAAPP"
+      SQLType="TIMESTAMP" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtoraapp_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtoraapp_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtoraapp_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsPersistent="false"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRBREVE"
+      Expression="DESCRBREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TipoInvito"
+      IsPersistent="false"
+      Precision="103"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPO_INVITO"
+      Expression="TIPO_INVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="103" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="TipoInvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrsugg"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRSUGG"
+      Expression="DESCRSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrsugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MetodoCalcolo"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="METODO_CALCOLO"
+      Expression="METODO_CALCOLO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataObbligatoria"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DATA_OBBLIGATORIA"
+      Expression="DATA_OBBLIGATORIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtappiniziale"
+      EntityAttrName="Dtappiniziale"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="DTAPPINIZIALE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NonSpedireReferto"
+      EntityAttrName="NonSpedireReferto"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="NON_SPEDIRE_REFERTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NonSpedireReferto_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Otp"
+      PrecisionRule="true"
+      EntityAttrName="Otp"
+      EntityUsage="AccMa_SoInvito"
+      AliasName="OTP"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.accettazione.common.AccMa_SoInvitoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

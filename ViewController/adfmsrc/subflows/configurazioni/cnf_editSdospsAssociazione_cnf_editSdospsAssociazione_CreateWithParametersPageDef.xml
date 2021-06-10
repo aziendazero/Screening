@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="cnf_editSdospsAssociazione_cnf_editSdospsAssociazione_CreateWithParametersPageDef"
+                Package="subflows.configurazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfSdospsEsclElencoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsEsclElencoView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSdospsEsclView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsEsclView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams" InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfSdospsEsclView1"
+            DataControl="Cnf_AppModuleDataControl">
+      <NamedData NDName="TipoFlusso" NDValue="SDO" NDType="java.lang.String"/>
+      <NamedData NDName="Ulss" NDValue="#{sessionScope.ulss}" NDType="java.lang.String"/>
+      <NamedData NDName="Tpscr" NDValue="#{sessionScope.scr}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

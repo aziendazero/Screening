@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoComuneView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoComune.CODCOM, 
+       Cnf_SoComune.DESCRIZIONE, 
+       Cnf_SoComune.ULSS, 
+       Cnf_SoComune.CODPR, 
+       Cnf_SoComune.CAP, 
+       Cnf_SoComune.RELEASE_CODE_PR, 
+       Cnf_SoComune.DTFINEVALIDITA, 
+       Cnf_SoComune.DTINIZIOVALIDITA, 
+       Cnf_SoComune.RELEASE_CODE AS RELEASE_CODE1"
+   FromList="SO_COMUNE Cnf_SoComune"
+   OrderBy="Cnf_SoComune.DESCRIZIONE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoComuneViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   MsgBundleClass="model.conf.common.Cnf_SoComuneViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoComune"
+      Entity="model.conf.Cnf_SoComune" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Cnf_SoComune"
+      AliasName="CODCOM">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codcom_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoComune"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoComune"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="Cnf_SoComune"
+      AliasName="CODPR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codpr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      EntityAttrName="Cap"
+      EntityUsage="Cnf_SoComune"
+      AliasName="CAP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodePr"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodePr"
+      EntityUsage="Cnf_SoComune"
+      AliasName="RELEASE_CODE_PR">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="ReleaseCodePr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalidita"
+      EntityUsage="Cnf_SoComune"
+      AliasName="DTFINEVALIDITA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtfinevalidita_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtfinevalidita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtfinevalidita_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtiniziovalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtiniziovalidita"
+      EntityUsage="Cnf_SoComune"
+      AliasName="DTINIZIOVALIDITA">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtiniziovalidita_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtiniziovalidita_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtiniziovalidita_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsUnique="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="Cnf_SoComune"
+      AliasName="RELEASE_CODE1"/>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfComuneView"
+      ViewLink="model.FkSoCnfCHaRunCnSoComunLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Cnf_SoComDistrettiZoneView"
+      ViewLink="model.FkSoComDComDistrSoComunLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoComuneViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

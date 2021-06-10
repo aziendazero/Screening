@@ -1,0 +1,899 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.print.print_refertiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.STAMPE}" id="d1" initialFocusId="pt1:cognome">
+        <af:clientListener method="removeEmptyOptionList(['pt1:soc1', 'pt1:soc2', 'pt1:soc3', 'pt1:soc44', 'pt1:soc4', 'pt1:soc6', 'pt1:soc10', 'pt1:soc11', 'pt1:soc12', 'pt1:soc14'])"
+                           type="load"/>    
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Print_refertiAction.frm}" defaultCommand="pt1:btcerca">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                        <af:panelHeader text="#{viewcontrollerBundle.FILTRI}" id="ph1" partialTriggers="breset">
+                            <af:panelFormLayout id="pfl1" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.nuovi.inputValue}"
+                                                    label="#{viewcontrollerBundle.VISUALIZZA_REFERTI}"
+                                                    required="#{bindings.nuovi.hints.mandatory}"
+                                                    shortDesc="#{bindings.nuovi.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItem id="si1978"
+                                                  itemLabel="tutti"
+                                                  itemValue="tutti"/>
+                                    <f:selectItem id="si1917878"
+                                                  itemValue="da stampare"
+                                                  itemLabel="da stampare"/>
+                                    <f:selectItem id="si191178"
+                                                  itemValue="gia stampati"
+                                                  itemLabel="già stampati"/>
+                                    <!--f:selectItems value="#{bindings.nuovi.items}" id="si1"/-->
+                                    <f:validator binding="#{bindings.nuovi.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.tpsugg.inputValue}"
+                                                    label="#{viewcontrollerBundle.TIPO_DI_ESITO}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.tpsugg.hints.mandatory}"
+                                                    shortDesc="#{bindings.tpsugg.hints.tooltip}" id="soc14">
+                                    <f:selectItem id="si199" itemLabel="#{viewcontrollerBundle.TUTTI}" itemValue="-9999999"/>
+                                    <f:selectItems value="#{bindings.tpsugg.items}" id="si14"/>
+                                    <f:validator binding="#{bindings.tpsugg.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl2" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.da_spedire.inputValue}"
+                                                    label="#{viewcontrollerBundle.STAMPA_PER}"
+                                                    required="#{bindings.da_spedire.hints.mandatory}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{sessionScope.scr=='MA'}"
+                                                    shortDesc="#{bindings.da_spedire.hints.tooltip}" id="soc13"
+                                                    unselectedLabel="#{''}">
+                                    <f:selectItems value="#{bindings.da_spedire.items}" id="si13"/>
+                                    <f:validator binding="#{bindings.da_spedire.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.raccomandata.inputValue}"
+                                                    label="#{viewcontrollerBundle.TIPO_DI_SPEDIZIONE}"
+                                                    required="#{bindings.raccomandata.hints.mandatory}"
+                                                    styleClass="choiceInTable" rendered="#{sessionScope.scr=='MA'}"
+                                                    shortDesc="#{bindings.raccomandata.hints.tooltip}" id="soc2">
+                                    <f:validator binding="#{bindings.raccomandata.validator}"/>
+                                    <f:selectItem id="si19" itemLabel="#{''}" itemValue="-1"/>
+                                    <f:selectItem id="si191" itemValue="0"
+                                                  itemLabel="#{viewcontrollerBundle.STANDARD}"/>
+                                    <f:selectItem id="si1911" itemValue="1"
+                                                  itemLabel="#{viewcontrollerBundle.RACCOMANDATA}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl221" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                                                rendered="#{sessionScope.scr!='CA'}">
+                                <af:selectOneChoice value="#{bindings.livello.inputValue}"
+                                                    label="#{viewcontrollerBundle.LIVELLO_REFERTI}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{sessionScope.scr!='CA'}"
+                                                    required="#{bindings.livello.hints.mandatory}"
+                                                    shortDesc="#{bindings.livello.hints.tooltip}" id="soc15">
+                                    <f:selectItems value="#{bindings.livello.items}" id="si15"/>
+                                    <f:validator binding="#{bindings.livello.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.centro_ref.inputValue}"
+                                                    label="#{viewcontrollerBundle.CENTRO_DI_REFERTAZIONE}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{sessionScope.scr!='CA'}"
+                                                    required="#{bindings.centro_ref.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro_ref.hints.tooltip}" id="soc4">
+                                    <f:selectItem id="si191111" 
+                                                  itemLabel="#{viewcontrollerBundle.TUTTI}"
+                                                  itemValue="-1"/>
+                                    <f:selectItems value="#{bindings.centro_ref.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.centro_ref.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl21" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                    label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{(sessionScope.centro_f==null and sessionScope.covid19==false)?'true':'false'}"
+                                                    required="#{bindings.centro.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro.hints.tooltip}" id="soc44">
+                                    <f:selectItem id="si1911112" 
+                                                  itemLabel="#{viewcontrollerBundle.TUTTI}"
+                                                  itemValue="-1"/>
+                                    <f:selectItems value="#{bindings.centro.items}" id="si32"/>
+                                    <f:validator binding="#{bindings.centro.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                    label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{(sessionScope.centro_f!=null and sessionScope.covid19==false)?'true':'false'}"
+                                                    required="#{bindings.centro.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro.hints.tooltip}" id="soc5">
+                                    <f:selectItems value="#{bindings.centro.items}" id="si4"/>
+                                    <f:validator binding="#{bindings.centro.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectManyListbox value="#{Print_refertiAction.selectedCentri}"
+                                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}"
+                                                      label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}" id="sml2">
+                                    <f:selectItems value="#{bindings.Print_SoCentroPrelRefView1.items}" id="si5"/>
+                                    <f:validator binding="#{bindings.Print_SoCentroPrelRefView1.validator}"/>
+                                </af:selectManyListbox>
+                                <af:selectManyListbox value="#{Print_refertiAction.selectedItems}"
+                                                      rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}"
+                                                      label="Sottogruppo" id="sml1" autoSubmit="true" valuePassThru="true"
+                                                      valueChangeListener="#{Print_refertiAction.onChangeCodClassePop}">
+                                    <f:selectItems value="#{bindings.Print_SoCnfClassePopView1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Print_SoCnfClassePopView1.validator}"/>
+                                </af:selectManyListbox>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl2123" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:inputDate value="#{bindings.data_app.inputValue}"
+                                              label="#{viewcontrollerBundle.APPUNTAMENTO_DAL}"
+                                              required="#{bindings.data_app.hints.mandatory}"
+                                              columns="#{bindings.data_app.hints.displayWidth}"
+                                              shortDesc="#{bindings.data_app.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.data_app.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.data_app.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.data_app_al.inputValue}"
+                                              label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                              required="#{bindings.data_app_al.hints.mandatory}"
+                                              columns="#{bindings.data_app_al.hints.displayWidth}"
+                                              shortDesc="#{bindings.data_app_al.hints.tooltip}" id="id2">
+                                    <f:validator binding="#{bindings.data_app_al.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.data_app_al.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl4" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:inputText value="#{bindings.cognome.inputValue}"
+                                              label="#{viewcontrollerBundle.COGNOME_DESTINATARIO}"
+                                              required="#{bindings.cognome.hints.mandatory}"
+                                              columns="#{bindings.cognome.hints.displayWidth}"
+                                              contentStyle="text-transform: uppercase;"
+                                              maximumLength="#{bindings.cognome.hints.precision}"
+                                              shortDesc="#{bindings.cognome.hints.tooltip}" id="cognome">
+                                    <f:validator binding="#{bindings.cognome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.nome.inputValue}"
+                                              label="#{viewcontrollerBundle.NOME_DESTINATARIO}"
+                                              required="#{bindings.nome.hints.mandatory}"
+                                              columns="#{bindings.nome.hints.displayWidth}"
+                                              maximumLength="#{bindings.nome.hints.precision}"
+                                              contentStyle="text-transform: uppercase;"
+                                              shortDesc="#{bindings.nome.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.nome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl51" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:inputDate value="#{bindings.creato.inputValue}"
+                                              label="#{viewcontrollerBundle.CREATO_DAL}"
+                                              required="#{bindings.creato.hints.mandatory}"
+                                              columns="#{bindings.creato.hints.displayWidth}"
+                                              shortDesc="#{bindings.creato.hints.tooltip}" id="id3">
+                                    <f:validator binding="#{bindings.creato.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.creato.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.creato_al.inputValue}"
+                                              label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                              required="#{bindings.creato_al.hints.mandatory}"
+                                              columns="#{bindings.creato_al.hints.displayWidth}"
+                                              shortDesc="#{bindings.creato_al.hints.tooltip}" id="id4">
+                                    <f:validator binding="#{bindings.creato_al.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.creato_al.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl5" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:inputDate value="#{bindings.stampate_dal.inputValue}"
+                                              label="#{viewcontrollerBundle.STAMPATI_DAL}"
+                                              required="#{bindings.stampate_dal.hints.mandatory}"
+                                              columns="#{bindings.stampate_dal.hints.displayWidth}"
+                                              shortDesc="#{bindings.stampate_dal.hints.tooltip}" id="id5">
+                                    <f:validator binding="#{bindings.stampate_dal.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.stampate_dal.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.stampate_al.inputValue}"
+                                              label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                              required="#{bindings.stampate_al.hints.mandatory}"
+                                              columns="#{bindings.stampate_al.hints.displayWidth}"
+                                              shortDesc="#{bindings.stampate_al.hints.tooltip}" id="id6">
+                                    <f:validator binding="#{bindings.stampate_al.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.stampate_al.format}"/>
+                                </af:inputDate>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl6" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                                                rendered="#{sessionScope.trial > 0}">
+                                <af:selectOneChoice value="#{bindings.idStatoTrial.inputValue}"
+                                                    label="#{viewcontrollerBundle.STATO_TRIAL}"
+                                                    required="#{bindings.idStatoTrial.hints.mandatory}"
+                                                    shortDesc="#{bindings.idStatoTrial.hints.tooltip}" id="soc7"
+                                                    styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.idStatoTrial.items}" id="si6"/>
+                                    <f:validator binding="#{bindings.idStatoTrial.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.idBraccioTrial.inputValue}"
+                                                    label="#{viewcontrollerBundle.BRACCIO_TRIAL}"
+                                                    required="#{bindings.idBraccioTrial.hints.mandatory}"
+                                                    styleClass="choiceInTable"
+                                                    shortDesc="#{bindings.idBraccioTrial.hints.tooltip}" id="soc8">
+                                    <f:selectItems value="#{bindings.idBraccioTrial.items}" id="si7"/>
+                                    <f:validator binding="#{bindings.idBraccioTrial.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl7" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.prelievoHpv.inputValue}"
+                                                    label="#{viewcontrollerBundle.PRELIEVO_HPV}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.prelievoHpv.hints.mandatory}"
+                                                    shortDesc="#{bindings.prelievoHpv.hints.tooltip}" id="soc3"
+                                                    rendered="#{sessionScope.HPV}">
+                                    <f:selectItem id="si1999" itemLabel="#{''}" itemValue="-1"/>
+                                    <f:selectItems value="#{bindings.prelievoHpv.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.prelievoHpv.validator}"/>
+                                </af:selectOneChoice>
+                                <f:facet name="footer">
+                                    <af:toolbar id="t3">
+                                        <af:button action="#{Print_refertiAction.onFiltra}"
+                                                   disabled="#{sessionScope.SORefertazione!=true}"
+                                                   text="#{viewcontrollerBundle.FILTRA}" id="btcerca" clientComponent="true">
+                                        </af:button>
+                                        <af:spacer width="10" height="10" id="s1"/>
+                                        <af:button actionListener="#{Print_refertiAction.onReset}"
+                                                   text="#{viewcontrollerBundle.REIMPOSTA}"
+                                                   disabled="#{!bindings.reset.enabled}" id="breset"/>
+                                        <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_SINGOLA}"
+                                                   id="btSinglePrintHidden"
+                                                   disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefView1.currentRowIndex>=0?false:true}"
+                                                   partialTriggers="pc1:t1 pc2:t12" binding="#{Print_refStampaAction.btnStampaHidden}"
+                                                   clientComponent="true" inlineStyle="visibility: hidden;">
+                                        </af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:panelFormLayout>
+                        </af:panelHeader>
+                        <af:panelHeader text="#{viewcontrollerBundle.PARAMETRI_DI_STAMPA}" id="ph2">
+                            <af:panelFormLayout id="pfl11" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.cosaStampare.inputValue}"
+                                                    label="#{viewcontrollerBundle.STAMPARE}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.cosaStampare.hints.mandatory}"
+                                                    shortDesc="#{bindings.cosaStampare.hints.tooltip}" id="soc10"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.cosaStampare.items}" id="si9"/>
+                                    <f:validator binding="#{bindings.cosaStampare.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.etichetta.inputValue}"
+                                                    label="#{viewcontrollerBundle.TIPO_DI_ETICHETTA_DA_USARE}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.etichetta.hints.mandatory}"
+                                                    shortDesc="#{bindings.etichetta.hints.tooltip}" id="soc11"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.etichetta.items}" id="si10"/>
+                                    <f:validator binding="#{bindings.etichetta.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl12" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneRadio value="#{bindings.tpStampa.inputValue}"
+                                                    styleClass="choiceInTable"
+                                                   label="#{viewcontrollerBundle.TIPO_DI_STAMPA}"
+                                                   required="#{bindings.tpStampa.hints.mandatory}"
+                                                   rendered="#{sessionScope.SOPostel==true}"
+                                                   shortDesc="#{bindings.tpStampa.hints.tooltip}" id="sor1"
+                                                   autoSubmit="true">
+                                    <f:selectItems value="#{bindings.tpStampa.items}" id="si11"/>
+                                    <f:validator binding="#{bindings.tpStampa.validator}"/>
+                                </af:selectOneRadio>
+                                <af:selectOneChoice value="#{bindings.inserto.inputValue}"
+                                                    label="#{viewcontrollerBundle.INSERTO}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.inserto.hints.mandatory}"
+                                                    shortDesc="#{bindings.inserto.hints.tooltip}" id="soc12"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.inserto.items}" id="si12"/>
+                                    <f:validator binding="#{bindings.inserto.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </af:panelHeader>
+                        <af:spacer width="10" height="10" id="s2"/>
+                        <af:panelCollection id="pc1" rendered="#{sessionScope.scr=='CI'}"
+                                            featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t2" partialTriggers="t1 ::btcerca ::breset">
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_SINGOLA}" id="b2"
+                                               actionListener="#{Print_refStampaAction.downloadListener}"
+                                               partialTriggers="t1"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefView1.currentRowIndex>=0?false:true}">
+                                        <af:setPropertyListener from="selection" to="#{requestScope.quanti}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="Print_SoAllegatoRefView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPE}" id="b11"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefView1.currentRowIndex>=0?false:true}"
+                                               partialTriggers="t1"
+                                               actionListener="#{Print_refStampaAction.downloadListener}">
+                                        <af:setPropertyListener from="Print_SoAllegatoRefView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:group id="g2">
+                                        <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="btprint"
+                                                   useWindow="true" immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" visible="#{sessionScope.SOStampaElenco}"
+                                                   disabled="#{bindings.Print_SoAllegatoRefView1.currentRowIndex>=0?false:true}"
+                                                   windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" partialTriggers="t1"/>
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Print_SoAllegatoRefView1.collectionModel}" var="row"
+                                      rows="#{bindings.Print_SoAllegatoRefView1.rangeSize}"
+                                      emptyText="#{bindings.Print_SoAllegatoRefView1.viewable ? 'Nessuna lettera di referto trovata.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Print_SoAllegatoRefView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Print_SoAllegatoRefView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Print_SoAllegatoRefView1.rangeSize}" id="t1"
+                                      columnStretching="last" scrollPolicy="page" summary="#''}">
+                                <af:column headerText="#{bindings.Print_SoAllegatoRefView1.hints.StatoTrialDescr.label}"
+                                           id="c76" width="50" noWrap="false" rendered="#{sessionScope.trial > 0}">
+                                    <af:outputText value="#{row.StatoTrialDescr}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.StatoTrialDescr.tooltip}"
+                                                   id="ot76"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Print_SoAllegatoRefView1.hints.BraccioTrialDescr.label}"
+                                           id="c77" width="50" noWrap="false" rendered="#{sessionScope.trial > 0}">
+                                    <af:outputText value="#{row.BraccioTrialDescr}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.BraccioTrialDescr.tooltip}"
+                                                   id="ot77"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Cognome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Cognome.label}"
+                                           id="c18" noWrap="false" rowHeader="unstyled" width="80">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Cognome.tooltip}"
+                                                   id="ot18"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Nome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Nome.label}"
+                                           id="c19" noWrap="false" width="80">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Nome.tooltip}"
+                                                   id="ot19"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.DataNascita.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.DataNascita.label}"
+                                           id="c20" noWrap="false">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.DataNascita.tooltip}"
+                                                   id="ot20">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione2.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione2.label}"
+                                           id="c37" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione2.tooltip}"
+                                                   id="ot37"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione1.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione1.label}"
+                                           id="c35" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione1}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Descrizione1.tooltip}"
+                                                   id="ot35"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Tel1.name}"
+                                           sortable="true"
+                                           headerText="#{viewcontrollerBundle.TEL_}"
+                                           id="c22" noWrap="false">
+                                    <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Tel1.tooltip}"
+                                                   id="ot22"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Data_ora_order.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Data_ora_order.label}"
+                                           id="c43" noWrap="false">
+                                    <af:outputText value="#{row.Data_ora_order}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Data_ora_order.tooltip}"
+                                                   id="ot43">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefView1.hints.Data_ora_order.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Dtcreazione.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Dtcreazione.label}"
+                                           id="c5" noWrap="false">
+                                    <af:outputText value="#{row.Dtcreazione}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Dtcreazione.tooltip}"
+                                                   id="ot5">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefView1.hints.Dtcreazione.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Dtstampa.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Dtstampa.label}"
+                                           id="c6" noWrap="false">
+                                    <af:outputText value="#{row.Dtstampa}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Dtstampa.tooltip}"
+                                                   id="ot6">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefView1.hints.Dtstampa.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortable="false"
+                                           rendered="#{sessionScope.SOPostel==true}"
+                                           headerText="Postel"
+                                           id="c7" noWrap="false" align="center">
+                                    <af:icon name="Stampapostel" id="i3"
+                                          styleClass="#{row.Stampapostel==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefView1.hints.Ulss.name}"
+                                           sortable="true"
+                                           rendered="#{sessionScope.regionale?true:false}"
+                                           headerText="#{bindings.Print_SoAllegatoRefView1.hints.Ulss.label}" id="c8"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefView1.hints.Ulss.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+
+                        <af:panelCollection id="pc2" rendered="#{sessionScope.scr=='MA'}"
+                                            featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t22" partialTriggers="t12 ::btcerca ::breset">
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_SINGOLA}" id="b22"
+                                               actionListener="#{Print_refStampaAction.downloadListener}"
+                                               partialTriggers="t12"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefMAView1.currentRowIndex>=0?false:true}">
+                                        <af:setPropertyListener from="selection" to="#{requestScope.quanti}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="Print_SoAllegatoRefMAView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPE}" id="b112"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefMAView1.currentRowIndex>=0?false:true}"
+                                               partialTriggers="t12"
+                                               actionListener="#{Print_refStampaAction.downloadListener}">
+                                        <af:setPropertyListener from="Print_SoAllegatoRefMAView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:group id="g22">
+                                        <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="btprint2"
+                                                   useWindow="true" immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" visible="#{sessionScope.SOStampaElenco}"
+                                                   disabled="#{bindings.Print_SoAllegatoRefMAView1.currentRowIndex>=0?false:true}"
+                                                   windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" partialTriggers="t12"/>
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Print_SoAllegatoRefMAView1.collectionModel}" var="row"
+                                      rows="#{bindings.Print_SoAllegatoRefMAView1.rangeSize}"
+                                      emptyText="#{bindings.Print_SoAllegatoRefMAView1.viewable ? 'Nessuna lettera di referto trovata.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Print_SoAllegatoRefMAView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Print_SoAllegatoRefMAView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Print_SoAllegatoRefMAView1.rangeSize}" id="t12"
+                                      columnStretching="last" scrollPolicy="page" summary="#''}">
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Cognome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Cognome.label}"
+                                           id="c182" noWrap="false" rowHeader="unstyled" width="80">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Cognome.tooltip}"
+                                                   id="ot182"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Nome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Nome.label}" id="c192"
+                                           noWrap="false" width="80">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Nome.tooltip}"
+                                                   id="ot192"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.DataNascita.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.DataNascita.label}"
+                                           id="c202" noWrap="false">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.DataNascita.tooltip}"
+                                                   id="ot202">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefMAView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Sesso.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Sesso.label}"
+                                           id="c2022" noWrap="false">
+                                    <af:outputText value="#{row.Sesso}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Sesso.tooltip}"
+                                                   id="ot2022">
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione2.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione2.label}"
+                                           id="c372" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione2.tooltip}"
+                                                   id="ot372"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione1.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione1.label}"
+                                           id="c352" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione1}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Descrizione1.tooltip}"
+                                                   id="ot352"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Tel1.name}"
+                                           sortable="true" headerText="#{viewcontrollerBundle.TEL_}" id="c222"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Tel1.tooltip}"
+                                                   id="ot222"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Data_ora_order.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Data_ora_order.label}"
+                                           id="c432" noWrap="false">
+                                    <af:outputText value="#{row.Data_ora_order}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Data_ora_order.tooltip}"
+                                                   id="ot432">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefMAView1.hints.Data_ora_order.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtcreazione.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtcreazione.label}"
+                                           id="c52" noWrap="false">
+                                    <af:outputText value="#{row.Dtcreazione}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtcreazione.tooltip}"
+                                                   id="ot52">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtcreazione.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtstampa.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtstampa.label}"
+                                           id="c62" noWrap="false">
+                                    <af:outputText value="#{row.Dtstampa}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtstampa.tooltip}"
+                                                   id="ot62">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefMAView1.hints.Dtstampa.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortable="false" rendered="#{sessionScope.SOPostel==true}"
+                                           headerText="Postel" id="c72" noWrap="false" align="center">
+                                    <af:icon name="Stampapostel" id="i32"
+                                             styleClass="#{row.Stampapostel==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefMAView1.hints.Ulss.name}"
+                                           sortable="true" rendered="#{sessionScope.regionale?true:false}"
+                                           headerText="#{bindings.Print_SoAllegatoRefMAView1.hints.Ulss.label}" id="c82"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefMAView1.hints.Ulss.tooltip}"
+                                                   id="ot82"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+
+                        <af:panelCollection id="pc23" rendered="#{sessionScope.scr=='CO'}"
+                                            featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t223" partialTriggers="t123 ::btcerca ::breset">
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_SINGOLA}" id="b223"
+                                               actionListener="#{Print_refStampaAction.downloadListener}"
+                                               partialTriggers="t123"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefCOView1.currentRowIndex>=0?false:true}">
+                                        <af:setPropertyListener from="selection" to="#{requestScope.quanti}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="Print_SoAllegatoRefCOView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPE}" id="b1123"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefCOView1.currentRowIndex>=0?false:true}"
+                                               partialTriggers="t123"
+                                               actionListener="#{Print_refStampaAction.downloadListener}">
+                                        <af:setPropertyListener from="Print_SoAllegatoRefCOView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:group id="g223">
+                                        <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="btprint23"
+                                                   useWindow="true" immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" visible="#{sessionScope.SOStampaElenco}"
+                                                   disabled="#{bindings.Print_SoAllegatoRefCOView1.currentRowIndex>=0?false:true}"
+                                                   windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" partialTriggers="t123"/>
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Print_SoAllegatoRefCOView1.collectionModel}" var="row"
+                                      rows="#{bindings.Print_SoAllegatoRefCOView1.rangeSize}"
+                                      emptyText="#{bindings.Print_SoAllegatoRefCOView1.viewable ? 'Nessuna lettera di referto trovata.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Print_SoAllegatoRefCOView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Print_SoAllegatoRefCOView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Print_SoAllegatoRefCOView1.rangeSize}" id="t123"
+                                      columnStretching="last" scrollPolicy="page" summary="#''}">
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Cognome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Cognome.label}"
+                                           id="c1823" noWrap="false" rowHeader="unstyled" width="80">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Cognome.tooltip}"
+                                                   id="ot1823"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Nome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Nome.label}" id="c1923"
+                                           noWrap="false" width="80">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Nome.tooltip}"
+                                                   id="ot1923"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.DataNascita.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.DataNascita.label}"
+                                           id="c2023" noWrap="false">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.DataNascita.tooltip}"
+                                                   id="ot2023">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCOView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Sesso.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Sesso.label}"
+                                           id="c20223" noWrap="false">
+                                    <af:outputText value="#{row.Sesso}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Sesso.tooltip}"
+                                                   id="ot20223">
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione2.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione2.label}"
+                                           id="c3723" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione2.tooltip}"
+                                                   id="ot3723"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione1.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione1.label}"
+                                           id="c3523" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione1}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Descrizione1.tooltip}"
+                                                   id="ot3523"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Tel1.name}"
+                                           sortable="true" headerText="#{viewcontrollerBundle.TEL_}" id="c2223"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Tel1.tooltip}"
+                                                   id="ot2223"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Data_ora_order.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Data_ora_order.label}"
+                                           id="c4323" noWrap="false">
+                                    <af:outputText value="#{row.Data_ora_order}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Data_ora_order.tooltip}"
+                                                   id="ot4323">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCOView1.hints.Data_ora_order.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtcreazione.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtcreazione.label}"
+                                           id="c523" noWrap="false">
+                                    <af:outputText value="#{row.Dtcreazione}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtcreazione.tooltip}"
+                                                   id="ot523">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtcreazione.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtstampa.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtstampa.label}"
+                                           id="c623" noWrap="false">
+                                    <af:outputText value="#{row.Dtstampa}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtstampa.tooltip}"
+                                                   id="ot623">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCOView1.hints.Dtstampa.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortable="false" rendered="#{sessionScope.SOPostel==true}"
+                                           headerText="Postel" id="c723" noWrap="false" align="center">
+                                    <af:icon name="Stampapostel" id="i323"
+                                             styleClass="#{row.Stampapostel==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCOView1.hints.Ulss.name}"
+                                           sortable="true" rendered="#{sessionScope.regionale?true:false}"
+                                           headerText="#{bindings.Print_SoAllegatoRefCOView1.hints.Ulss.label}" id="c823"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCOView1.hints.Ulss.tooltip}"
+                                                   id="ot823"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>                    
+
+                        <af:panelCollection id="pc233" rendered="#{sessionScope.scr=='CA'}"
+                                            featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t2233" partialTriggers="t1233 ::btcerca ::breset">
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_SINGOLA}" id="b2233"
+                                               actionListener="#{Print_refStampaAction.downloadListener}"
+                                               partialTriggers="t1233"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefCAView1.currentRowIndex>=0?false:true}">
+                                        <af:setPropertyListener from="selection" to="#{requestScope.quanti}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="Print_SoAllegatoRefCAView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPE}" id="b11233"
+                                               disabled="#{sessionScope.SOGestioneStampe!=true || bindings.Print_SoAllegatoRefCAView1.currentRowIndex>=0?false:true}"
+                                               partialTriggers="t1233"
+                                               actionListener="#{Print_refStampaAction.downloadListener}">
+                                        <af:setPropertyListener from="Print_SoAllegatoRefCAView1" to="#{requestScope.vo}"
+                                                                type="action"/>            
+                                        <af:setPropertyListener from="pt1:btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:group id="g2233">
+                                        <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="btprint233"
+                                                   useWindow="true" immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" visible="#{sessionScope.SOStampaElenco}"
+                                                   disabled="#{bindings.Print_SoAllegatoRefCAView1.currentRowIndex>=0?false:true}"
+                                                   windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" partialTriggers="t1233"/>
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Print_SoAllegatoRefCAView1.collectionModel}" var="row"
+                                      rows="#{bindings.Print_SoAllegatoRefCAView1.rangeSize}"
+                                      emptyText="#{bindings.Print_SoAllegatoRefCAView1.viewable ? 'Nessuna lettera di referto trovata.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Print_SoAllegatoRefCAView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Print_SoAllegatoRefCAView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Print_SoAllegatoRefCAView1.rangeSize}" id="t1233"
+                                      columnStretching="last" scrollPolicy="page" summary="#''}">
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Cognome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Cognome.label}"
+                                           id="c18233" noWrap="false" rowHeader="unstyled" width="80">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Cognome.tooltip}"
+                                                   id="ot18233"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Nome.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Nome.label}" id="c19233"
+                                           noWrap="false" width="80">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Nome.tooltip}"
+                                                   id="ot19233"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.DataNascita.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.DataNascita.label}"
+                                           id="c20233" noWrap="false">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.DataNascita.tooltip}"
+                                                   id="ot20233">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCAView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Sesso.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Sesso.label}"
+                                           id="c202233" noWrap="false">
+                                    <af:outputText value="#{row.Sesso}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Sesso.tooltip}"
+                                                   id="ot202233">
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione2.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione2.label}"
+                                           id="c37233" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione2.tooltip}"
+                                                   id="ot37233"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione1.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione1.label}"
+                                           id="c35233" noWrap="false">
+                                    <af:outputText value="#{row.Descrizione1}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Descrizione1.tooltip}"
+                                                   id="ot35233"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Tel1.name}"
+                                           sortable="true" headerText="#{viewcontrollerBundle.TEL_}" id="c22233"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Tel1.tooltip}"
+                                                   id="ot22233"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtapp.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtapp.label}"
+                                           id="c43233" noWrap="false">
+                                    <af:outputText value="#{row.Dtapp}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtapp.tooltip}"
+                                                   id="ot43233">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtapp.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtcreazione.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtcreazione.label}"
+                                           id="c5233" noWrap="false">
+                                    <af:outputText value="#{row.Dtcreazione}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtcreazione.tooltip}"
+                                                   id="ot5233">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtcreazione.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtstampa.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtstampa.label}"
+                                           id="c6233" noWrap="false">
+                                    <af:outputText value="#{row.Dtstampa}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtstampa.tooltip}"
+                                                   id="ot6233">
+                                        <af:convertDateTime pattern="#{bindings.Print_SoAllegatoRefCAView1.hints.Dtstampa.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortable="false"
+                                           headerText="Postel" id="c7233" noWrap="false" align="center">
+                                    <af:icon name="Stampapostel" id="i3233"
+                                             styleClass="#{row.Stampapostel==1?'checked_box_uncolor':'unchecked_box_uncolor'}"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Print_SoAllegatoRefCAView1.hints.Ulss.name}"
+                                           sortable="true" rendered="#{sessionScope.regionale?true:false}"
+                                           headerText="#{bindings.Print_SoAllegatoRefCAView1.hints.Ulss.label}" id="c8233"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Print_SoAllegatoRefCAView1.hints.Ulss.tooltip}"
+                                                   id="ot8233"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>                    
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenuLevel" value="1"/>
+                <f:attribute name="navigation" value="#{Print_refertiAction}"/>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.STAMPA_LETTERE_DI_REFERTO}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

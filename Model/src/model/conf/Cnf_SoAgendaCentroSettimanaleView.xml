@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoAgendaCentroSettimanaleView"
+   Version="12.2.1.11.57"
+   OrderBy="ggsettimana"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.conf.Cnf_SoAgendaCentroSettimanaleViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+select idcentro,ggsettimana,
+to_char(min(to_date('01/01/2000 '||lpad(oraapp,2,'0')||':'||lpad(minapp,2,'0'),'dd/MM/yyyy HH24:mi')),'HH24:mi') inizio,
+to_char(max(to_date('01/01/2000 '||lpad(oraapp,2,'0')||':'||lpad(minapp,2,'0'),'dd/MM/yyyy HH24:mi')),'HH24:mi') fine,
+sum(disporaria) disponibilita
+from so_agendacentro
+group by idcentro,ggsettimana
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idcentro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTRO"
+      Expression="IDCENTRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ggsettimana"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="GGSETTIMANA"
+      Expression="GGSETTIMANA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Inizio"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INIZIO"
+      Expression="INIZIO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Fine"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FINE"
+      Expression="FINE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Disponibilita"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="DISPONIBILITA"
+      Expression="DISPONIBILITA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   
+</ViewObject>

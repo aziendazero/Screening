@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="med_gestionePageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Med_ElencoMediciView1" RangeSize="10" DataControl="Med_AppModuleDataControl"
+              id="Med_ElencoMediciView1Iterator"/>
+    <iterator id="Med_ComuneView1Iterator" Binds="Med_ComuneView1" DataControl="Med_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Med_ElencoSoggView2" RangeSize="10" DataControl="Med_AppModuleDataControl"
+              id="Med_ElencoSoggView2Iterator"/>
+    <iterator id="Med_SoMedicoView1Iterator" Binds="Med_SoMedicoView1" DataControl="Med_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Med_RicParamDataControl" id="Med_RicParamDataControlIterator"/>
+    <iterator id="Med_TemplateView1Iterator" Binds="Med_TemplateView1" DataControl="Med_AppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Med_ElencoMediciView1Iterator" id="Med_ElencoMediciView1">
+      <nodeDefinition DefName="model.medico.Med_ElencoMediciView" Name="Med_ElencoMediciView10">
+        <AttrNames>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="Codiceregmedico"/>
+          <Item Value="Dtfinevalop"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Med_ElencoSoggView2Iterator" id="Med_ElencoSoggView2">
+      <nodeDefinition DefName="model.medico.Med_ElencoSoggView" Name="Med_ElencoSoggView20">
+        <AttrNames>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Escl"/>
+          <Item Value="Dtapp"/>
+          <Item Value="DescTpinv"/>
+          <Item Value="DescEsito"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="codCom">
+      <AttrNames>
+        <Item Value="codCom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="desCom">
+      <AttrNames>
+        <Item Value="desCom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Med_RicParamDataControlIterator" id="codMedico">
+      <AttrNames>
+        <Item Value="codMedico"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="Med_SoMedicoView1Iterator" id="CreateInsert"
+            InstanceName="Med_AppModuleDataControl.Med_SoMedicoView1" DataControl="Med_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

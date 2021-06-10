@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="A_SoStato"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SO_STATO"
+  AliasName="A_SoStato"
+  BindingStyle="OracleName">
+  <Attribute
+    Name="Codst"
+    IsNotNull="true"
+    Precision="3"
+    ColumnName="CODST"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_STATO"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="3"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Descrizione"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="DESCRIZIONE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_STATO">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Iso"
+    Precision="2"
+    ColumnName="ISO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_STATO">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ReleaseCode"
+    IsNotNull="true"
+    ColumnName="RELEASE_CODE"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="SO_STATO"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Dtiniziovalidita"
+    ColumnName="DTINIZIOVALIDITA"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_STATO"/>
+  <Attribute
+    Name="Dtfinevalidita"
+    ColumnName="DTFINEVALIDITA"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_STATO"/>
+  <AccessorAttribute
+    Name="A_SoSoggetto"
+    Association="model.global.FkSoggeHaStResAssoc"
+    AssociationEnd="model.global.FkSoggeHaStResAssoc.A_SoSoggetto"
+    AssociationOtherEnd="model.global.FkSoggeHaStResAssoc.A_SoStato"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="A_SoSoggetto1"
+    Association="model.global.FkSoggeHaStNasAssoc"
+    AssociationEnd="model.global.FkSoggeHaStNasAssoc.A_SoSoggetto1"
+    AssociationOtherEnd="model.global.FkSoggeHaStNasAssoc.A_SoStato1"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <AccessorAttribute
+    Name="A_SoSoggetto2"
+    Association="model.global.FkSoggeHaStDomAssoc"
+    AssociationEnd="model.global.FkSoggeHaStDomAssoc.A_SoSoggetto2"
+    AssociationOtherEnd="model.global.FkSoggeHaStDomAssoc.A_SoStato2"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="PkSoStato"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SO_STATO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.global.A_SoStato.ReleaseCode"/>
+    </AttrArray>
+  </Key>
+</Entity>

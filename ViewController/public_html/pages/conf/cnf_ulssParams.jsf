@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_ulssParams.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="Azienda sanitaria - parametri per lo screening"/>
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"/>
+                                    <af:button text="Annulla" id="b2" action="cancel"/>
+                                    <af:button text="Applica" id="b3" action="apply" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGridLayout id="pgl2">
+                                <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                    <af:gridCell marginStart="5px" width="60%" id="gc1">
+                                        <af:panelFormLayout id="pfl1">
+                                            <af:inputText value="#{bindings.denominazione.inputValue}"
+                                                          label="Denominazione azienda o segreteria di screening"
+                                                          required="#{bindings.denominazione.hints.mandatory}"
+                                                          columns="80"
+                                                          maximumLength="#{bindings.denominazione.hints.precision}"
+                                                          shortDesc="#{bindings.denominazione.hints.tooltip}" id="it1"
+                                                          rows="4">
+                                                <f:validator binding="#{bindings.denominazione.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.luogo.inputValue}"
+                                                          label="Luogo"
+                                                          required="#{bindings.luogo.hints.mandatory}"
+                                                          columns="50"
+                                                          maximumLength="#{bindings.luogo.hints.precision}"
+                                                          shortDesc="#{bindings.luogo.hints.tooltip}" id="it2">
+                                                <f:validator binding="#{bindings.luogo.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.indirizzo.inputValue}"
+                                                          label="Indirizzo"
+                                                          required="#{bindings.indirizzo.hints.mandatory}"
+                                                          columns="50"
+                                                          maximumLength="#{bindings.indirizzo.hints.precision}"
+                                                          shortDesc="#{bindings.indirizzo.hints.tooltip}" id="it3">
+                                                <f:validator binding="#{bindings.indirizzo.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.telefono.inputValue}"
+                                                          label="Recapito telefonico"
+                                                          required="#{bindings.telefono.hints.mandatory}"
+                                                          columns="20"
+                                                          maximumLength="#{bindings.telefono.hints.precision}"
+                                                          shortDesc="#{bindings.telefono.hints.tooltip}" id="it4">
+                                                <f:validator binding="#{bindings.telefono.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.giorni_orari.inputValue}"
+                                                          label="Orari e giorni in cui telefonare"
+                                                          required="#{bindings.giorni_orari.hints.mandatory}"
+                                                          columns="50"
+                                                          maximumLength="#{bindings.giorni_orari.hints.precision}"
+                                                          shortDesc="#{bindings.giorni_orari.hints.tooltip}" id="it5">
+                                                <f:validator binding="#{bindings.giorni_orari.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.intestazione.inputValue}"
+                                                          label="Intestazione"
+                                                          required="#{bindings.intestazione.hints.mandatory}"
+                                                          columns="80"
+                                                          maximumLength="#{bindings.intestazione.hints.precision}"
+                                                          shortDesc="#{bindings.intestazione.hints.tooltip}" id="it6"
+                                                          rows="4">
+                                                <f:validator binding="#{bindings.intestazione.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.pieDiPagina.inputValue}"
+                                                          label="Piè di pagina"
+                                                          required="#{bindings.pieDiPagina.hints.mandatory}"
+                                                          columns="80"
+                                                          maximumLength="#{bindings.pieDiPagina.hints.precision}"
+                                                          shortDesc="#{bindings.pieDiPagina.hints.tooltip}" id="it7"
+                                                          rows="4">
+                                                <f:validator binding="#{bindings.pieDiPagina.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.fax.inputValue}"
+                                                          label="Fax"
+                                                          required="#{bindings.fax.hints.mandatory}"
+                                                          columns="20"
+                                                          maximumLength="#{bindings.fax.hints.precision}"
+                                                          shortDesc="#{bindings.fax.hints.tooltip}" id="it8">
+                                                <f:validator binding="#{bindings.fax.validator}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.email.inputValue}"
+                                                          label="E-mail"
+                                                          required="#{bindings.email.hints.mandatory}"
+                                                          columns="50"
+                                                          maximumLength="#{bindings.email.hints.precision}"
+                                                          shortDesc="#{bindings.email.hints.tooltip}" id="it9">
+                                                <f:validator binding="#{bindings.email.validator}"/>
+                                            </af:inputText>
+                                        </af:panelFormLayout>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="40%" marginEnd="5px" id="gc2">
+                                        <af:panelHeader text="Firme" id="ph1">
+                                            <f:facet name="context"/>
+                                            <f:facet name="toolbar"/>
+                                            <f:facet name="menuBar"/>
+                                            <f:facet name="legend"/>
+                                            <f:facet name="info"/>
+                                            <af:panelFormLayout id="pfl2" fieldWidth="120">
+                                                <f:facet name="footer"/>
+                                                <af:inputText value="#{bindings.int_firma_inviti.inputValue}"
+                                                              label="Intestazione alla firma sugli inviti"
+                                                              required="#{bindings.int_firma_inviti.hints.mandatory}"
+                                                              columns="#{bindings.int_firma_inviti.hints.displayWidth}"
+                                                              maximumLength="#{bindings.int_firma_inviti.hints.precision}"
+                                                              shortDesc="#{bindings.int_firma_inviti.hints.tooltip}"
+                                                              id="it10">
+                                                    <f:validator binding="#{bindings.int_firma_inviti.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.firma_inviti.inputValue}"
+                                                              label="Firma sugli inviti"
+                                                              required="#{bindings.firma_inviti.hints.mandatory}"
+                                                              columns="#{bindings.firma_inviti.hints.displayWidth}"
+                                                              maximumLength="#{bindings.firma_inviti.hints.precision}"
+                                                              shortDesc="#{bindings.firma_inviti.hints.tooltip}"
+                                                              id="it11">
+                                                    <f:validator binding="#{bindings.firma_inviti.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.int_firma_ref1.inputValue}"
+                                                              label="Intestazione alla prima firma sui referti"
+                                                              required="#{bindings.int_firma_ref1.hints.mandatory}"
+                                                              columns="#{bindings.int_firma_ref1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.int_firma_ref1.hints.precision}"
+                                                              shortDesc="#{bindings.int_firma_ref1.hints.tooltip}"
+                                                              id="it12">
+                                                    <f:validator binding="#{bindings.int_firma_ref1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.firma_ref1.inputValue}"
+                                                              label="Prima firma sui referti"
+                                                              required="#{bindings.firma_ref1.hints.mandatory}"
+                                                              columns="#{bindings.firma_ref1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.firma_ref1.hints.precision}"
+                                                              shortDesc="#{bindings.firma_ref1.hints.tooltip}"
+                                                              id="it13">
+                                                    <f:validator binding="#{bindings.firma_ref1.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.int_firma_ref2.inputValue}"
+                                                              label="Intestazione alla seconda firma sui referti"
+                                                              required="#{bindings.int_firma_ref2.hints.mandatory}"
+                                                              columns="#{bindings.int_firma_ref2.hints.displayWidth}"
+                                                              maximumLength="#{bindings.int_firma_ref2.hints.precision}"
+                                                              shortDesc="#{bindings.int_firma_ref2.hints.tooltip}"
+                                                              id="it14">
+                                                    <f:validator binding="#{bindings.int_firma_ref2.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.firma_ref2.inputValue}"
+                                                              label="Seconda firma sui referti"
+                                                              required="#{bindings.firma_ref2.hints.mandatory}"
+                                                              columns="#{bindings.firma_ref2.hints.displayWidth}"
+                                                              maximumLength="#{bindings.firma_ref2.hints.precision}"
+                                                              shortDesc="#{bindings.firma_ref2.hints.tooltip}"
+                                                              id="it15">
+                                                    <f:validator binding="#{bindings.firma_ref2.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.int_firma_lmed.inputValue}"
+                                                              label="Intestazione alla firma sulle lettere ai medici"
+                                                              required="#{bindings.int_firma_lmed.hints.mandatory}"
+                                                              columns="#{bindings.int_firma_lmed.hints.displayWidth}"
+                                                              maximumLength="#{bindings.int_firma_lmed.hints.precision}"
+                                                              shortDesc="#{bindings.int_firma_lmed.hints.tooltip}"
+                                                              id="it16">
+                                                    <f:validator binding="#{bindings.int_firma_lmed.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.firma_lmed.inputValue}"
+                                                              label="Firma sulle lettere ai medici"
+                                                              required="#{bindings.firma_lmed.hints.mandatory}"
+                                                              columns="#{bindings.firma_lmed.hints.displayWidth}"
+                                                              maximumLength="#{bindings.firma_lmed.hints.precision}"
+                                                              shortDesc="#{bindings.firma_lmed.hints.tooltip}"
+                                                              id="it17">
+                                                    <f:validator binding="#{bindings.firma_lmed.validator}"/>
+                                                </af:inputText>
+                                            </af:panelFormLayout>
+                                        </af:panelHeader>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

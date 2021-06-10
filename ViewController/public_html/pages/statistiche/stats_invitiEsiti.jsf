@@ -1,0 +1,1731 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.statistiche.stats_invitiEsitiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.STATISTICHE}" id="d1">
+        <af:clientListener method="removeEmptyOptionList(['pt1:comune', 'pt1:zona', 'pt1:centroPrel', 'pt1:sex', 'pt1:roundInd', 'pt1:accesso', 'pt1:giudia', 'pt1:tpescl', 'pt1:lesione', 'pt1:lesione1', 'pt1:listUlss'])"
+                           type="load"/>
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Stats_toInvitiEsitiAction.frmSearch}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempStatistiche.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:navigationPane hint="tabs" id="np2" value="#{requestScope.selectedTab}">
+                        <af:commandNavigationItem id="ni1" text="#{viewcontrollerBundle.STORICO_INVITI}"
+                                                  styleClass="#{bindings.stats_tab == '0' ? 'tabSelected' : ''}">
+                            <af:setPropertyListener from="0" to="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{bindings.stats_tab.inputValue}"
+                                                    from="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{requestScope.descrTab}"
+                                                    from="#{viewcontrollerBundle.VOLUME}" type="action"/>
+                        </af:commandNavigationItem>
+                        <af:commandNavigationItem id="ni2" text="#{viewcontrollerBundle.COORTI}"
+                                                  styleClass="#{bindings.stats_tab == '1' ? 'tabSelected' : ''}">
+                            <af:setPropertyListener from="1" to="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{bindings.stats_tab.inputValue}"
+                                                    from="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{requestScope.descrTab}"
+                                                    from="#{viewcontrollerBundle.COORTI__I_FILTRI_SI_A_1PPLICA_1NO_A_1L_PRIMO_LIVELLO_}" type="action"/>
+                        </af:commandNavigationItem>
+                        <af:commandNavigationItem id="ni3" text="#{viewcontrollerBundle.FILTRI_PERSONA_1LIZZA_1TI}"
+                                                  styleClass="#{bindings.stats_tab == '2' ? 'tabSelected' : ''}">
+                            <af:setPropertyListener from="2" to="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{bindings.stats_tab.inputValue}"
+                                                    from="#{requestScope.selectedTab}" type="action"/>
+                            <af:setPropertyListener to="#{requestScope.descrTab}"
+                                                    from="#{viewcontrollerBundle.FILTRI_PERSONA_1LIZZA_1TI}" type="action"/>
+                        </af:commandNavigationItem>
+                    </af:navigationPane>
+                    <af:panelGroupLayout id="pgl1" layout="vertical" rendered="#{bindings.stats_tab != '2'}">
+                        <af:panelHeader text="#{requestScope.descrTab==null? af:format(viewcontrollerBundle.STATISTICHE__TAB, viewcontrollerBundle.VOLUME) : af:format(viewcontrollerBundle.STATISTICHE__TAB, requestScope.descrTab)}" id="ph1">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t2" inlineStyle='padding-right: 13px'>
+                                    <af:button action="#{Stats_invitiEsitiAction.onCall_proc}"
+                                               text="#{viewcontrollerBundle.CA_1LCOLA_1}" id="btcerca"
+                                               disabled="#{sessionScope.SOStatULSS!=true}" partialSubmit="false"/>
+                                    <af:button text="#{viewcontrollerBundle.REIMPOSTA_1}"
+                                               disabled="#{sessionScope.SOStatULSS!=true}"
+                                               action="#{Stats_invitiEsitiAction.onReimp}" id="btreset">
+                                        <af:setPropertyListener from="#{1==1}" to="#{requestScope.hide_table}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:panelSplitter id="ps1" splitterPosition="300" partialTriggers="np2 statsType listUlss">
+                                <f:facet name="first">
+                                    <af:panelFormLayout id="pfl1"  partialTriggers="btreset">
+                                        <af:selectOneChoice value="#{bindings.stats_type.inputValue}"
+                                                            label="#{viewcontrollerBundle.SCELTA_INDICATORE}"
+                                                            styleClass="choiceInTable" id="statsType" autoSubmit="true"
+                                                            valueChangeListener="#{Stats_invitiEsitiAction.onChangeIndicator}">
+                                            <af:selectItem label="#{viewcontrollerBundle.INVITI_ED_ESITI}" id="si1"
+                                                           value="#{bindings.INVITI_ESITI.attributeValue}"/>
+                                            <af:selectItem value="#{bindings.ESCLUSIONI.attributeValue}"
+                                                           label="#{viewcontrollerBundle.ESCLUSIONI}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1'?true:false}"
+                                                           id="s4"/>
+                                            <af:selectItem value="#{bindings.PERIODISMO.attributeValue}"
+                                                           label="#{viewcontrollerBundle.PERIODISMO_INVITI}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1'?true:false}"
+                                                           id="s2"/>
+                                            <af:selectItem value="#{bindings.SCREENATI.attributeValue}"
+                                                           label="#{bindings.stats_tab.inputValue == '1'?'Corte screenati':'Soggetti esaminati'}"
+                                                           id="s3"/>
+                                            <af:selectItem value="#{bindings.DIAGNOSI1LIV.attributeValue}"
+                                                           label="#{viewcontrollerBundle.DIAGNOSI_TEST_1__LIVELLO}"
+                                                           rendered="#{sessionScope.scr!='CO'}" id="s5"/>
+                                            <af:selectItem value="#{bindings['ESITI_COLPO'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.DIAGNOSI_COLPOSCOPICHE}"
+                                                           rendered="#{sessionScope.scr=='CI'}" id="s6"/>
+                                            <af:selectItem value="#{bindings['DIAGNOSI_PEGGIORE'].attributeValue}"
+                                                           label="Diagnosi #{sessionScope.scr=='MA'?'patologica':'istologica'} peggiore"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1'?true:false}"
+                                                           id="s7"/>
+                                            <af:selectItem value="#{bindings['CONCLUSIONI2L'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.CONCLUSIONI_DI_2__LIVELLO}"
+                                                           rendered="#{sessionScope.scr=='CO' }" id="s8"/>
+                                            <af:selectItem value="#{bindings['APPROFONDIMENTO_CO'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.DATI_APPROFONDIMENTI}"
+                                                           rendered="#{sessionScope.scr!='CI' }" id="s9"/>
+                                            <af:selectItem value="#{bindings.RAC2LIV.attributeValue}"
+                                                           label="#{viewcontrollerBundle.RACCOMANDAZIONI}" id="s10"/>
+                                            <af:selectItem value="#{bindings.INDICAZIONI2LIV.attributeValue}"
+                                                           label="#{viewcontrollerBundle.INDICAZIONI_E_CONSEGUENZE}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1'?true:false}"
+                                                           id="s11"/>
+                                            <af:selectItem value="#{bindings['DETECTION_RATE'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.DETECTION_RATE}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1' &amp;&amp; sessionScope.scr!='CI' }"
+                                                           id="s12"/>
+                                            <af:selectItem value="#{bindings['CHIRURGIE_CO'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.TRATTAMENTI_CHIRURGICI}"
+                                                           rendered="#{sessionScope.scr!='CI' }" id="s13"/>
+                                            <af:selectItem value="#{bindings['PN_PT'].attributeValue}"
+                                                           label="#{viewcontrollerBundle.DIMENSIONI_E_LINFONODI}"
+                                                           rendered="#{sessionScope.scr=='CO' }" id="s14"/>
+                                            <af:selectItem value="#{bindings.TEMPI.attributeValue}"
+                                                           label="#{viewcontrollerBundle.TEMPI_DI_RISPOSTA}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '1'?true:false}"
+                                                           id="s15"/>
+                                            <af:selectItem value="#{bindings.OPMEDICI.attributeValue}"
+                                                           label="#{viewcontrollerBundle.STATISTICHE_PER_OPERATORE}"
+                                                           rendered="#{bindings.stats_tab.inputValue == '0'?true: sessionScope.scr=='MA'?true:false}"
+                                                           id="s16"/>
+                                            <f:validator binding="#{bindings.stats_type.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneRadio value="#{bindings.formato.inputValue}"
+                                                           label="#{viewcontrollerBundle.FORMATO}"
+                                                           required="#{bindings.formato.hints.mandatory}"
+                                                           shortDesc="#{bindings.formato.hints.tooltip}" id="sor1"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.INVITI_ESITI.attributeValue &amp;&amp; bindings.stats_tab.inputValue == '0'?true: bindings.stats_type.attributeValue==bindings.DIAGNOSI1LIV.attributeValue &amp;&amp; sessionScope.scr!='MA'? true: bindings.stats_type.attributeValue==bindings.RAC2LIV.attributeValue? true:false}">
+                                            <f:selectItems value="#{bindings.formato.items}" id="si2"/>
+                                            <f:validator binding="#{bindings.formato.validator}"/>
+                                        </af:selectOneRadio>
+                                    </af:panelFormLayout>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <af:panelFormLayout id="pfl2"  partialTriggers="btreset">
+                                        <af:selectOneChoice value="#{bindings.ulss.inputValue}"
+                                                            label="#{viewcontrollerBundle.AZIENDA_SANITARIA}"
+                                                            required="true" shortDesc="#{bindings.ulss.hints.tooltip}"
+                                                            id="listUlss"
+                                                            rendered="#{sessionScope.regionale?true:false}"
+                                                            autoSubmit="true"
+                                                            valueChangeListener="#{Stats_invitiEsitiAction.onChangeUlss}"
+                                                            styleClass="choiceInTable">
+                                            <af:selectItem value="#{'-1'}"
+                                                           label="#{viewcontrollerBundle.TUTTE_LE_AZIENDE}" id="s18"/>
+                                            <f:selectItems value="#{bindings.ulss.items}" id="si3"/>
+                                            <f:validator binding="#{bindings.ulss.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.coorte.inputValue}"
+                                                            label="#{viewcontrollerBundle.COORTE}"
+                                                            required="#{bindings.coorte.hints.mandatory}"
+                                                            shortDesc="#{bindings.coorte.hints.tooltip}" id="coorte"
+                                                            rendered="#{bindings.stats_tab == '1'?true:false}"
+                                                            readOnly="true" styleClass="choiceInTable "
+                                                            autoSubmit="true">
+                                            <f:selectItems value="#{bindings.coorte.items}" id="si4"/>
+                                            <f:validator binding="#{bindings.coorte.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:panelLabelAndMessage label="#{viewcontrollerBundle.PERIODO_DAL}" id="plam1"
+                                                                 styleClass="pmInTable">
+                                            <af:inputDate value="#{bindings.dal.inputValue}"
+                                                          label="#{viewcontrollerBundle.PERIODO_DAL}"
+                                                          required="#{bindings.dal.hints.mandatory}" simple="true"
+                                                          columns="#{bindings.dal.hints.displayWidth}"
+                                                          shortDesc="#{bindings.dal.hints.tooltip}" id="id1">
+                                                <f:validator binding="#{bindings.dal.validator}"/>
+                                                <af:convertDateTime pattern="#{bindings.dal.format}"/>
+                                            </af:inputDate>
+                                            <f:facet name="end">
+                                                <af:inputDate value="#{bindings.al_escluso.inputValue}"
+                                                              label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                                              required="#{bindings.al_escluso.hints.mandatory}"
+                                                              columns="#{bindings.al_escluso.hints.displayWidth}"
+                                                              shortDesc="#{bindings.al_escluso.hints.tooltip}" id="id2">
+                                                    <f:validator binding="#{bindings.al_escluso.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.al_escluso.format}"/>
+                                                </af:inputDate>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:selectOneChoice value="#{bindings.comune.inputValue}"
+                                                            label="#{viewcontrollerBundle.COMUNE}"
+                                                            autoSubmit="true"
+                                                            required="#{bindings.comune.hints.mandatory}"
+                                                            shortDesc="#{bindings.comune.hints.tooltip}" id="comune"
+                                                            styleClass="choiceInTable">
+                                            <af:selectItem value="#{'-1'}" label="#{viewcontrollerBundle.TUTTI_I_COMUNI}"
+                                                           id="s20"/>
+                                            <f:selectItems value="#{bindings.comune.items}" id="si5"/>
+                                            <f:validator binding="#{bindings.comune.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.zona.inputValue}"
+                                                            label="#{viewcontrollerBundle.ZONA}"
+                                                            required="#{bindings.zona.hints.mandatory}"
+                                                            shortDesc="#{bindings.zona.hints.tooltip}" id="zona"
+                                                            styleClass="choiceInTable" autoSubmit="true">
+                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.TUTTE_LE_ZONE}"
+                                                           id="s21"/>
+                                            <f:selectItems value="#{bindings.zona.items}" id="si6"/>
+                                            <f:validator binding="#{bindings.zona.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.centro_prel.inputValue}"
+                                                            label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}"
+                                                            required="#{bindings.centro_prel.hints.mandatory}"
+                                                            shortDesc="#{bindings.centro_prel.hints.tooltip}"
+                                                            id="centroPrel" styleClass="choiceInTable"
+                                                            autoSubmit="true">
+                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.TUTTI_I_CENTRI}"
+                                                           rendered="#{sessionScope.centro_f==null?'true':'false'}"
+                                                           id="s22"/>
+                                            <f:selectItems value="#{bindings.centro_prel.items}" id="si7"/>
+                                            <f:validator binding="#{bindings.centro_prel.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:panelLabelAndMessage label="#{viewcontrollerBundle.ET_U00E0_DA}" id="plam2"
+                                                                 styleClass="pmInTable">
+                                            <af:inputText value="#{bindings.eta_da.inputValue}" simple="true"
+                                                          label="#{bindings.eta_da.hints.label}"
+                                                          required="#{bindings.eta_da.hints.mandatory}" columns="5"
+                                                          maximumLength="#{bindings.eta_da.hints.precision}"
+                                                          shortDesc="#{bindings.eta_da.hints.tooltip}" id="it1">
+                                                <f:validator binding="#{bindings.eta_da.validator}"/>
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:inputText value="#{bindings.eta_a.inputValue}"
+                                                              required="#{bindings.eta_a.hints.mandatory}" columns="5"
+                                                              maximumLength="#{bindings.eta_a.hints.precision}"
+                                                              shortDesc="#{bindings.eta_a.hints.tooltip}" id="it2"
+                                                              label="#{viewcontrollerBundle.A}"
+                                                              inlineStyle="padding-top:0px">
+                                                    <f:validator binding="#{bindings.eta_a.validator}"/>
+                                                </af:inputText>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:selectOneChoice value="#{bindings.sesso.inputValue}"
+                                                            label="#{viewcontrollerBundle.SESSO}"
+                                                            rendered="#{sessionScope.scr=='CO' &amp;&amp; bindings.stats_type.attributeValue!=bindings.TEMPI.attributeValue}"
+                                                            styleClass="choiceInTable" id="sex" autoSubmit="true">
+                                            <af:selectItem label="#{viewcontrollerBundle.ENTRA_0MBI}" id="si90"
+                                                           value="#{-1}"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.MA_0SCHI}" id="si91"
+                                                           value="M"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.FEMMINE}" id="si92" value="F"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{bindings.round_ind.inputValue}"
+                                                            label="#{viewcontrollerBundle.ROUND_INDIVIDUA_0LE}"
+                                                            rendered="#{bindings.stats_type.attributeValue==bindings.SCREENATI.attributeValue?false:true}"
+                                                            required="#{bindings.round_ind.hints.mandatory}"
+                                                            shortDesc="#{bindings.round_ind.hints.tooltip}"
+                                                            id="roundInd" styleClass="choiceInTable" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.round_ind.items}" id="si8"/>
+                                            <f:validator binding="#{bindings.round_ind.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText value="#{bindings.round_org.inputValue}"
+                                                      label="#{viewcontrollerBundle.ROUND_ORGA_0NIZZA_0TIVO}"
+                                                      required="#{bindings.round_org.hints.mandatory}" columns="5"
+                                                      rendered="#{bindings.stats_type.attributeValue==bindings.ESCLUSIONI.attributeValue? false: bindings.stats_type.attributeValue!=bindings.OPMEDICI.attributeValue?true:false}"
+                                                      maximumLength="#{bindings.round_org.hints.precision}"
+                                                      shortDesc="#{bindings.round_org.hints.tooltip}" id="it4">
+                                            <f:validator binding="#{bindings.round_org.validator}"/>
+                                        </af:inputText>
+                                        <af:inputText value="#{bindings.round_inviti.inputValue}"
+                                                      label="#{viewcontrollerBundle.ROUND_INVITI}"
+                                                      required="#{bindings.round_inviti.hints.mandatory}" columns="5"
+                                                      rendered="#{bindings.stats_type.attributeValue==bindings.ESCLUSIONI.attributeValue? false:true}"
+                                                      maximumLength="#{bindings.round_inviti.hints.precision}"
+                                                      shortDesc="#{bindings.round_inviti.hints.tooltip}" id="it5">
+                                            <f:validator binding="#{bindings.round_inviti.validator}"/>
+                                        </af:inputText>
+                                        <af:selectOneChoice value="#{bindings.accesso.inputValue}"
+                                                            label="#{viewcontrollerBundle.A_0CCESSO}"
+                                                            required="#{bindings.accesso.hints.mandatory}"
+                                                            rendered="#{bindings.stats_type.attributeValue==bindings.ESCLUSIONI.attributeValue?false:bindings.stats_type.attributeValue==bindings.INVITI_ESITI.attributeValue &amp;&amp; bindings.stats_tab.inputValue=='1'?false:true}"
+                                                            shortDesc="#{bindings.accesso.hints.tooltip}" id="accesso"
+                                                            styleClass="choiceInTable" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.accesso.items}" id="si9"/>
+                                            <f:validator binding="#{bindings.accesso.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneRadio value="#{bindings.livello.inputValue}"
+                                                           label="#{viewcontrollerBundle.LIVELLO}"
+                                                           required="#{bindings.livello.hints.mandatory}"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.INVITI_ESITI.attributeValue &amp;&amp; bindings.stats_tab=='0'?true: bindings.stats_type.attributeValue==bindings.RAC2LIV.attributeValue?true:false}"
+                                                           shortDesc="#{bindings.livello.hints.tooltip}" id="sor2">
+                                            <af:selectItem label="1" id="si94" value="1"/>
+                                            <af:selectItem label="2" id="si95" value="2"/>
+                                            <af:selectItem label="3" id="si96" value="3"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.RAC2LIV.attributeValue?true:false}"/>
+                                            <f:validator binding="#{bindings.livello.validator}"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneRadio value="#{bindings.liv_successivo.inputValue}"
+                                                           label="#{viewcontrollerBundle.TIPO_DI_REFERTO}"
+                                                           required="#{bindings.liv_successivo.hints.mandatory}"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.INDICAZIONI2LIV.attributeValue &amp;&amp; bindings.stats_tab == '1' &amp;&amp; sessionScope.scr=='CI'}"
+                                                           shortDesc="#{bindings.liv_successivo.hints.tooltip}"
+                                                           id="sor3">
+                                            <af:selectItem label="#{viewcontrollerBundle.INA_0DEGUA_0TO}" id="si97"
+                                                           value="1"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.POSITIVO}" id="si98"
+                                                           value="2"/>
+                                            <f:validator binding="#{bindings.liv_successivo.validator}"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneChoice value="#{bindings.giudia.inputValue}"
+                                                            label="#{viewcontrollerBundle.GIUDIZIO_DIA_0GNOSTICO}"
+                                                            required="#{bindings.giudia.hints.mandatory}"
+                                                            shortDesc="#{bindings.giudia.hints.tooltip}" id="giudia"
+                                                            rendered="#{bindings.stats_type.attributeValue==bindings.INDICAZIONI2LIV.attributeValue &amp;&amp; bindings.stats_tab == '1' &amp;&amp; sessionScope.scr=='MA'?true:false}"
+                                                            styleClass="choiceInTable" autoSubmit="true">
+                                            <af:selectItem label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="si99"
+                                                           value="-1"/>
+                                            <f:selectItems value="#{bindings.giudia.items}" id="si10"/>
+                                            <f:validator binding="#{bindings.giudia.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneRadio value="#{bindings.livello.inputValue}"
+                                                           label="#{viewcontrollerBundle.LIVELLO}"
+                                                           required="#{bindings.livello.hints.mandatory}"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.INDICAZIONI2LIV.attributeValue &amp;&amp; bindings.stats_tab == '1'?true:false}"
+                                                           shortDesc="#{bindings.livello.hints.tooltip}" id="sor4">
+                                            <af:selectItem label="1" id="si100" value="1"/>
+                                            <af:selectItem label="2" id="si101" value="2"/>
+                                            <f:validator binding="#{bindings.livello.validator}"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneChoice value="#{bindings.tpescl.inputValue}"
+                                                            label="#{viewcontrollerBundle.TIPO_DI_ESCLUSIONI}"
+                                                            required="#{bindings.tpescl.hints.mandatory}"
+                                                            rendered="#{bindings.stats_type.attributeValue==bindings.ESCLUSIONI.attributeValue?true:false}"
+                                                            shortDesc="#{bindings.tpescl.hints.tooltip}" id="tpescl"
+                                                            styleClass="choiceInTable" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.tpescl.items}" id="si11"/>
+                                            <f:validator binding="#{bindings.tpescl.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:inputDate value="#{bindings.data_esclusione.inputValue}"
+                                                      label="#{viewcontrollerBundle.ESCLUSIONI_REGISTRA_0TE_DA_0L}"
+                                                      required="#{bindings.data_esclusione.hints.mandatory}"
+                                                      rendered="#{bindings.stats_type.attributeValue==bindings.ESCLUSIONI.attributeValue &amp;&amp; bindings.stats_tab == '1'?true:false}"
+                                                      columns="#{bindings.data_esclusione.hints.displayWidth}"
+                                                      shortDesc="#{bindings.data_esclusione.hints.tooltip}" id="id3">
+                                            <f:validator binding="#{bindings.data_esclusione.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.data_esclusione.format}"/>
+                                        </af:inputDate>
+                                        <af:selectOneRadio value="#{bindings.tipo_operatore.inputValue}"
+                                                           label="#{viewcontrollerBundle.TIPO_OPERA_0TORE}"
+                                                           required="#{bindings.tipo_operatore.hints.mandatory}"
+                                                           rendered="#{bindings.stats_type.attributeValue==bindings.OPMEDICI.attributeValue &amp;&amp; bindings.stats_tab == '0'}"
+                                                           shortDesc="#{bindings.tipo_operatore.hints.tooltip}"
+                                                           id="sor6">
+                                            <af:selectItem label="#{viewcontrollerBundle.PRELEVA_0TORE}" id="si102"
+                                                           rendered="#{sessionScope.scr=='CI'}" value="1"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.CITOSCREENER}" id="si103"
+                                                           rendered="#{sessionScope.scr=='CI'}" value="2"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.SUPERVISORE}" id="si104"
+                                                           rendered="#{sessionScope.scr=='CI'}" value="3"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.ENDOSCOPISTA_0}" id="si105"
+                                                           rendered="#{sessionScope.scr=='CO'}" value="1"/>
+                                            <af:selectItem label="#{viewcontrollerBundle.RA_0DIOLOGO}" id="si106"
+                                                           rendered="#{sessionScope.scr=='MA'}" value="1"/>
+                                            <f:validator binding="#{bindings.tipo_operatore.validator}"/>
+                                        </af:selectOneRadio>
+                                        <af:panelLabelAndMessage label="#{viewcontrollerBundle.INTERVA_0LLI_DI_DURA_0TA_0}"
+                                                                 rendered="#{bindings.stats_type.attributeValue!=bindings.PERIODISMO.attributeValue &amp;&amp; bindings.stats_type.attributeValue!=bindings.TEMPI.attributeValue?false:true}"
+                                                                 id="plam3">
+                                            <af:inputText value="#{bindings.durata_int.inputValue}"
+                                                          label="#{bindings.durata_int.hints.label}"
+                                                          required="#{bindings.durata_int.hints.mandatory}"
+                                                          simple="true" columns="5"
+                                                          maximumLength="#{bindings.durata_int.hints.precision}"
+                                                          shortDesc="#{bindings.durata_int.hints.tooltip}" id="it3">
+                                                <f:validator binding="#{bindings.durata_int.validator}"/>
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:outputText value="#{bindings.stats_type.attributeValue==bindings.PERIODISMO.attributeValue?'mesi':'giorni'}"
+                                                               id="ot1"/>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{viewcontrollerBundle.DA_0}"
+                                                                 rendered="#{bindings.stats_type.attributeValue!=bindings.PERIODISMO.attributeValue &amp;&amp; bindings.stats_type.attributeValue!=bindings.TEMPI.attributeValue?false:true}"
+                                                                 id="plam4">
+                                            <af:panelGroupLayout id="pgl2" halign="start" layout="horizontal">
+                                                <af:inputText value="#{bindings.inizio_int.inputValue}"
+                                                              label="#{bindings.inizio_int.hints.label}"
+                                                              required="#{bindings.inizio_int.hints.mandatory}"
+                                                              columns="5"
+                                                              maximumLength="#{bindings.inizio_int.hints.precision}"
+                                                              shortDesc="#{bindings.inizio_int.hints.tooltip}" id="it6"
+                                                              simple="true">
+                                                    <f:validator binding="#{bindings.inizio_int.validator}"/>
+                                                </af:inputText>
+                                                <af:spacer width="10" height="10" id="s1"/>
+                                                <af:outputText value="#{viewcontrollerBundle.A_0}" id="ot2"/>
+                                                <af:spacer width="10" height="10" id="s17"/>
+                                                <af:inputText value="#{bindings.fine_int.inputValue}"
+                                                              label="#{bindings.fine_int.hints.label}"
+                                                              required="#{bindings.fine_int.hints.mandatory}"
+                                                              columns="5"
+                                                              maximumLength="#{bindings.fine_int.hints.precision}"
+                                                              shortDesc="#{bindings.fine_int.hints.tooltip}" id="it7"
+                                                              simple="true">
+                                                    <f:validator binding="#{bindings.fine_int.validator}"/>
+                                                </af:inputText>
+                                                <af:spacer width="10" height="10" id="s19"/>
+                                                <af:outputText value="#{bindings.stats_type.attributeValue==bindings.PERIODISMO.attributeValue?'mesi':'giorni'}"
+                                                               id="ot3"/>
+                                            </af:panelGroupLayout>
+                                        </af:panelLabelAndMessage>
+                                        <af:switcher id="s23" facetName="#{sessionScope.scr}" defaultFacet="DEFAULT">
+                                            <f:facet name="CO">
+                                                <af:selectOneChoice value="#{bindings.lesione.inputValue}"
+                                                                    label="#{viewcontrollerBundle.LESIONE}"
+                                                                    required="#{bindings.lesione.hints.mandatory}"
+                                                                    shortDesc="#{bindings.lesione.hints.tooltip}"
+                                                                    readOnly="#{bindings.stats_type.attributeValue==bindings.PN_PT.attributeValue}"
+                                                                    rendered="#{bindings.stats_type.attributeValue!=bindings.CHIRURGIE_CO.attributeValue &amp;&amp; bindings.stats_type.attributeValue!=bindings.PN_PT.attributeValue?false:true}"
+                                                                    id="lesione" styleClass="choiceInTable"
+                                                                    autoSubmit="true">
+                                                    <af:selectItem label="#{viewcontrollerBundle.QUA_0LSIA_0SI}"
+                                                                   id="si999" value="-1"/>
+                                                    <f:selectItems value="#{bindings.lesione.items}" id="si12"/>
+                                                    <f:validator binding="#{bindings.lesione.validator}"/>
+                                                </af:selectOneChoice>
+                                            </f:facet>
+                                            <f:facet name="MA">
+                                                <af:selectOneChoice value="#{bindings.lesione1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.LESIONE}"
+                                                                    required="#{bindings.lesione1.hints.mandatory}"
+                                                                    shortDesc="#{bindings.lesione1.hints.tooltip}"
+                                                                    rendered="#{bindings.stats_type.attributeValue==bindings.CHIRURGIE_CO.attributeValue}"
+                                                                    id="lesione1" styleClass="choiceInTable"
+                                                                    autoSubmit="true">
+                                                    <af:selectItem label="#{viewcontrollerBundle.QUA_0LSIA_0SI}"
+                                                                   id="si9991" value="0"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.BENIGNA_1}"
+                                                                   id="si99921" value="1"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.MA_1LIGNA_1}"
+                                                                   id="si999134" value="2"/>
+                                                    <f:validator binding="#{bindings.lesione1.validator}"/>
+                                                </af:selectOneChoice>
+                                            </f:facet>
+                                            <f:facet name="DEFAULT"></f:facet>
+                                        </af:switcher>
+                                    </af:panelFormLayout>
+                                </f:facet>
+                            </af:panelSplitter>
+                        </af:panelHeader>
+                        <af:panelCollection id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth"
+                                            partialTriggers="::btcerca ::btreset">
+                            <af:table value="#{bindings.Stats_InvitiEsitiMatrix.collectionModel}" var="row"
+                                      rows="#{bindings.Stats_InvitiEsitiMatrix.rangeSize}"
+                                      rendered="#{requestScope.hide_table!=null?false: bindings.Stats_InvitiEsitiMatrix.estimatedRowCount &gt;0 &amp;&amp; sessionScope.SOStatULSS==true?true:false}"
+                                      emptyText="#{viewcontrollerBundle.INDICA_1TORE_NON_CA_1LCOLA_1TO}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Stats_InvitiEsitiMatrix.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Stats_InvitiEsitiMatrix.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.Stats_InvitiEsitiMatrix.rangeSize}"
+                                      id="t1" columnStretching="none" summary="#{''}">
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[0]}" id="c1"
+                                           rowHeader="unstyled"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[0]==true?true:false}"
+                                           width="100" noWrap="false">
+                                    <af:outputText value="#{row.Row_id}"
+                                                   shortDesc="#{bindings.Stats_InvitiEsitiMatrix.hints.Row_id.tooltip}"
+                                                   id="ot4"/>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[1]}"
+                                           id="c2" partialTriggers="::t1"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[1]==true?true:false}"
+                                           width="120" noWrap="false">
+                                    <af:outputText value="#{row.Row_label}"
+                                                   shortDesc="#{bindings.Stats_InvitiEsitiMatrix.hints.Row_label.tooltip}"
+                                                   id="ot5" />
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[2]}" id="c3"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[2]==true?true:false}"
+                                           width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           inlineStyle="text-align: right;" footerClass="footerNumber">
+                                    <af:link text="#{row.Field_0}" id="l0" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_0=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="0" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[2]==null? sessionScope.stats_inviti_esiti_totali_perc[2] : sessionScope.stats_inviti_esiti_totali[2]}" id="ot6"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[3]}" id="c4"
+                                           width="60" noWrap="false"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[3]==true?true:false}"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_1}" id="l1" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_1=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="1" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[3]==null? sessionScope.stats_inviti_esiti_totali_perc[3] : sessionScope.stats_inviti_esiti_totali[3]}" id="ot7"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[4]}" id="c5"
+                                           width="60" noWrap="false"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[4]==true?true:false}"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_2}" id="l2" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_2=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="2" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[4]==null? sessionScope.stats_inviti_esiti_totali_perc[4] : sessionScope.stats_inviti_esiti_totali[4]}" id="ot61"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[5]}" id="c6"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[5]==true?true:false}"
+                                           width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_3}" id="l3" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_3=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="3" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[5]==null? sessionScope.stats_inviti_esiti_totali_perc[5] : sessionScope.stats_inviti_esiti_totali[5]}" id="ot62"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[6]}" id="c7"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[6]==true?true:false}"
+                                           width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_4}" id="l4" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_4=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="4" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[6]==null? sessionScope.stats_inviti_esiti_totali_perc[6] : sessionScope.stats_inviti_esiti_totali[6]}" id="ot66"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[7]}" id="c8"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[7]==true?true:false}"
+                                           width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_5}" id="l5" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_5=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="5" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[7]==null? sessionScope.stats_inviti_esiti_totali_perc[7] : sessionScope.stats_inviti_esiti_totali[7]}" id="ot667"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[8]}" id="c9"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[8]==true?true:false}"
+                                           width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_6}" id="l6" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_6=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="6" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[8]==null? sessionScope.stats_inviti_esiti_totali_perc[8] : sessionScope.stats_inviti_esiti_totali[8]}" id="ot668"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[9]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[9]==true?true:false}"
+                                           id="c10" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_7}" id="l7" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_7=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="7" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[9]==null? sessionScope.stats_inviti_esiti_totali_perc[9] : sessionScope.stats_inviti_esiti_totali[9]}" id="ot669"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[10]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[10]==true?true:false}"
+                                           id="c11" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_8}" id="l8" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_8=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="8" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[10]==null? sessionScope.stats_inviti_esiti_totali_perc[10] : sessionScope.stats_inviti_esiti_totali[10]}" id="ot6610"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[11]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[11]==true?true:false}"
+                                           id="c12" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_9}" id="l9" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_9=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="9" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[11]==null? sessionScope.stats_inviti_esiti_totali_perc[11] : sessionScope.stats_inviti_esiti_totali[11]}" id="ot6611"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[12]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[12]==true?true:false}"
+                                           id="c13" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_10}" id="l10" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_10=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="10" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[12]==null? sessionScope.stats_inviti_esiti_totali_perc[12] : sessionScope.stats_inviti_esiti_totali[12]}" id="ot6612"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[13]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[13]==true?true:false}"
+                                           id="c14" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_11}" id="l11" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_11=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="11" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[13]==null? sessionScope.stats_inviti_esiti_totali_perc[13] : sessionScope.stats_inviti_esiti_totali[13]}" id="ot6613"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[14]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[14]==true?true:false}"
+                                           id="c15" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_12}" id="l12" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_12=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="12" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[14]==null? sessionScope.stats_inviti_esiti_totali_perc[14] : sessionScope.stats_inviti_esiti_totali[14]}" id="ot6614"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[15]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[15]==true?true:false}"
+                                           id="c16" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_13}" id="l13" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_13=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="13" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[15]==null? sessionScope.stats_inviti_esiti_totali_perc[15] : sessionScope.stats_inviti_esiti_totali[15]}" id="ot6615"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[16]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[16]==true?true:false}"
+                                           id="c17" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_14}" id="l14" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_14=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="14" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[16]==null? sessionScope.stats_inviti_esiti_totali_perc[16] : sessionScope.stats_inviti_esiti_totali[16]}" id="ot6616"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[17]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[17]==true?true:false}"
+                                           id="c18" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_15}" id="l15" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_15=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="15" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[17]==null? sessionScope.stats_inviti_esiti_totali_perc[17] : sessionScope.stats_inviti_esiti_totali[17]}" id="ot6617"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[18]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[18]==true?true:false}"
+                                           id="c19" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_16}" id="l16" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_16=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="16" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[18]==null? sessionScope.stats_inviti_esiti_totali_perc[18] : sessionScope.stats_inviti_esiti_totali[18]}" id="ot6618"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[19]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[19]==true?true:false}"
+                                           id="c20" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_17}" id="l17" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_17=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="17" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[19]==null? sessionScope.stats_inviti_esiti_totali_perc[19] : sessionScope.stats_inviti_esiti_totali[19]}" id="ot6619"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[20]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[20]==true?true:false}"
+                                           id="c21" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_18}" id="l18" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_18=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="18" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[20]==null? sessionScope.stats_inviti_esiti_totali_perc[20] : sessionScope.stats_inviti_esiti_totali[20]}" id="ot6620"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[21]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[21]==true?true:false}"
+                                           id="c22" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_19}" id="l19" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_19=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="19" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[21]==null? sessionScope.stats_inviti_esiti_totali_perc[21] : sessionScope.stats_inviti_esiti_totali[21]}" id="ot6621"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[22]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[22]==true?true:false}"
+                                           id="c23" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_20}" id="l20" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_20=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="20" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[22]==null? sessionScope.stats_inviti_esiti_totali_perc[22] : sessionScope.stats_inviti_esiti_totali[22]}" id="ot6622"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[23]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[23]==true?true:false}"
+                                           id="c24" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_21}" id="l21" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_21=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="21" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[23]==null? sessionScope.stats_inviti_esiti_totali_perc[23] : sessionScope.stats_inviti_esiti_totali[23]}" id="ot6623"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[24]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[24]==true?true:false}"
+                                           id="c25" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_22}" id="l22" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_22=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="22" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[24]==null? sessionScope.stats_inviti_esiti_totali_perc[24] : sessionScope.stats_inviti_esiti_totali[24]}" id="ot6624"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[25]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[25]==true?true:false}"
+                                           id="c26" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_23}" id="l23" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_23=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="23" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[25]==null? sessionScope.stats_inviti_esiti_totali_perc[25] : sessionScope.stats_inviti_esiti_totali[25]}" id="ot6625"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[26]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[26]==true?true:false}"
+                                           id="c27" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_24}" id="l24" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_24=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="24" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[26]==null? sessionScope.stats_inviti_esiti_totali_perc[26] : sessionScope.stats_inviti_esiti_totali[26]}" id="ot6626"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[27]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[27]==true?true:false}"
+                                           id="c28" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_25}" id="l25" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_25=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="25" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[27]==null? sessionScope.stats_inviti_esiti_totali_perc[27] : sessionScope.stats_inviti_esiti_totali[27]}" id="ot6627"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[28]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[28]==true?true:false}"
+                                           id="c29" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_26}" id="l26" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_26=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="26" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[28]==null? sessionScope.stats_inviti_esiti_totali_perc[28] : sessionScope.stats_inviti_esiti_totali[28]}" id="ot6628"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[29]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[29]==true?true:false}"
+                                           id="c30" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_27}" id="l27" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_27=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="27" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[29]==null? sessionScope.stats_inviti_esiti_totali_perc[29] : sessionScope.stats_inviti_esiti_totali[29]}" id="ot6629"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[30]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[30]==true?true:false}"
+                                           id="c31" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_28}" id="l28" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_28=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="28" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[30]==null? sessionScope.stats_inviti_esiti_totali_perc[30] : sessionScope.stats_inviti_esiti_totali[30]}" id="ot6630"/>
+                                    </f:facet>
+                                </af:column>
+                                <af:column headerText="#{sessionScope.stats_inviti_esiti_headers[31]}"
+                                           rendered="#{sessionScope.stats_inviti_esiti_render[31]==true?true:false}"
+                                           id="c32" width="60" noWrap="false"
+                                           styleClass="#{bindings.Row_id.inputValue == row.Row_id ? 'CellaImportante' : ''}"
+                                           footerClass="footerNumber" inlineStyle="text-align: right;">
+                                    <af:link text="#{row.Field_29}" id="l29" windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Row_id.inputValue ne row.Row_id || row.Field_29=='0'?true:false}"
+                                                windowHeight="300" windowWidth="600"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                        <af:setPropertyListener from="standard" to="#{pageFlowScope.todo}" type="action"/>
+                                        <af:setPropertyListener from="29" to="#{pageFlowScope.col_n}" type="action"/>
+                                    </af:link>
+                                    <f:facet name="footer">
+                                        <af:outputText value="#{sessionScope.stats_inviti_esiti_totali[31]==null? sessionScope.stats_inviti_esiti_totali_perc[31] : sessionScope.stats_inviti_esiti_totali[31]}" id="ot6631"/>
+                                    </f:facet>
+                                </af:column>                      
+                            </af:table>
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3">
+                                    <af:button text="Recupera stampa" id="b1">
+                                        <af:fileDownloadActionListener method="#{Stats_invitiEsitiAction.printDownload}"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                        </af:panelCollection>
+                        <af:panelGroupLayout id="pgl3" rendered="#{bindings.stats_type.attributeValue==bindings.INVITI_ESITI.attributeValue &amp;&amp; bindings.stats_tab.inputValue=='1' &amp;&amp; sessionScope.stats_notes!=null?true:false}">
+                            <af:outputLabel value="#{viewcontrollerBundle._QUESTO_DA_1TO__U00E8_GI_U00E0_COMPRESO_NEL_TOTA_1LE_INVITI}, #{viewcontrollerBundle.__QUESTO_DA_1TO__U00E8_GI_U00E0_COMPRESO_NELLE_A_1DESIONI_A_1GLI_INVITI}" id="ol1"/>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout id="pgl4" rendered="#{bindings.stats_tab == '2'}">
+                        <!--<af:region value="#{bindings.taskflowstatsDynamic1.regionModel}" id="r1"/>-->
+                        <!--ui:include src="/pages/statistiche/stats_dynamicFilters.jsff"/-->
+                        <af:panelGroupLayout id="pgl5" layout="vertical" binding="#{Stats_invitiEsitiAction.panelDynamicSearch}">
+                            <af:panelHeader text="#{viewcontrollerBundle.FILTRI_PERSONALIZZATI}"
+                                            id="ph2">
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t4" inlineStyle='padding-right: 13px'>
+                                        <af:button text="#{viewcontrollerBundle.RECUPERA_DATI}" id="b2"
+                                                   disabled="#{sessionScope.SOStatULSS!=true}"
+                                                   windowHeight="300" windowWidth="600"
+                                                   windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                   action="dialog:printElencoSoggetti" useWindow="true">
+                                            <af:setPropertyListener from="dynamic" to="#{pageFlowScope.todo}" type="action"/>
+                                        </af:button>
+                                        <af:button text="#{viewcontrollerBundle.REIMPOSTA_TUTTO}"
+                                                   action="#{Stats_invitiEsitiAction.onReimpDynamicFilter}" id="b3"></af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:panelGridLayout id="pgrl1" partialTriggers="b3">
+                                    <af:gridRow id="gr1">
+                                        <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc1">
+                                            <af:panelFormLayout id="pfl8" partialTriggers="b3">
+                                                <af:selectOneChoice value="#{bindings.ulss.inputValue}"
+                                                                    label="#{viewcontrollerBundle.AZIENDA_SANITARIA}" required="true"
+                                                                    shortDesc="#{bindings.ulss.hints.tooltip}" id="soc1"
+                                                                    rendered="#{sessionScope.regionale?true :false}" autoSubmit="true"
+                                                                    valueChangeListener="#{Stats_invitiEsitiAction.onChangeUlss}"
+                                                                    styleClass="choiceInTable">
+                                                    <af:selectItem value="#{'-1'}" label="" id="si60"/>
+                                                    <f:selectItems value="#{bindings.ulss.items}" id="si41"/>
+                                                    <f:validator binding="#{bindings.ulss.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.PERIODO_DAL}"
+                                                                         id="plam5"
+                                                                         styleClass="pmInTable">
+                                                    <af:inputDate value="#{bindings.periodo_dal.inputValue}"
+                                                                  label="#{viewcontrollerBundle.PERIODO_DAL}"
+                                                                  required="#{bindings.periodo_dal.hints.mandatory}" simple="true"
+                                                                  columns="#{bindings.periodo_dal.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.periodo_dal.hints.tooltip}"
+                                                                  id="id4" autoSubmit="true">
+                                                        <f:validator binding="#{bindings.periodo_dal.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.periodo_dal.format}"/>
+                                                    </af:inputDate>
+                                                    <f:facet name="end">
+                                                        <af:inputDate value="#{bindings.periodo_al.inputValue}"
+                                                                      label="#{viewcontrollerBundle.AL__ESCLUSO_}"
+                                                                      required="#{bindings.periodo_al.hints.mandatory}"
+                                                                      columns="#{bindings.periodo_al.hints.displayWidth}"
+                                                                      shortDesc="#{bindings.periodo_al.hints.tooltip}"
+                                                                      id="id5" autoSubmit="true">
+                                                            <f:validator binding="#{bindings.periodo_al.validator}"/>
+                                                            <af:convertDateTime pattern="#{bindings.periodo_al.format}"/>
+                                                        </af:inputDate>
+                                                    </f:facet>
+                                                </af:panelLabelAndMessage>
+                                                <af:selectOneChoice value="#{bindings.comune1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.COMUNE}" autoSubmit="true"
+                                                                    required="#{bindings.comune1.hints.mandatory}"
+                                                                    shortDesc="#{bindings.comune1.hints.tooltip}"
+                                                                    id="soc2"
+                                                                    styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.comune1.items}" id="si42"/>
+                                                    <f:validator binding="#{bindings.comune1.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.zona1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ZONA}"
+                                                                    required="#{bindings.zona1.hints.mandatory}"
+                                                                    shortDesc="#{bindings.zona.hints.tooltip}" id="soc3"
+                                                                    styleClass="choiceInTable" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.zona1.items}" id="si43"/>
+                                                    <f:validator binding="#{bindings.zona1.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.medico.inputValue}"
+                                                                    label="#{viewcontrollerBundle.MEDICO}"
+                                                                    required="#{bindings.medico.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true"
+                                                                    shortDesc="#{bindings.medico.hints.tooltip}" id="medico">
+                                                    <f:selectItems value="#{bindings.medico.items}" id="asssssa"/>
+                                                    <f:validator binding="#{bindings.medico.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.ET_U00E0_DA}"
+                                                                         id="plam6"
+                                                                         styleClass="pmInTable">
+                                                    <af:inputText value="#{bindings.eta_da1.inputValue}" simple="true"
+                                                                  label="#{bindings.eta_da1.hints.label}"
+                                                                  required="#{bindings.eta_da1.hints.mandatory}"
+                                                                  columns="5"
+                                                                  maximumLength="#{bindings.eta_da1.hints.precision}"
+                                                                  shortDesc="#{bindings.eta_da1.hints.tooltip}" id="it8">
+                                                        <f:validator binding="#{bindings.eta_da1.validator}"/>
+                                                    </af:inputText>
+                                                    <f:facet name="end">
+                                                        <af:inputText value="#{bindings.eta_a1.inputValue}"
+                                                                      required="#{bindings.eta_a1.hints.mandatory}"
+                                                                      columns="5"
+                                                                      maximumLength="#{bindings.eta_a1.hints.precision}"
+                                                                      shortDesc="#{bindings.eta_a1.hints.tooltip}"
+                                                                      id="it9"
+                                                                      label="#{viewcontrollerBundle.A}" inlineStyle="padding-top:0px">
+                                                            <f:validator binding="#{bindings.eta_a1.validator}"/>
+                                                        </af:inputText>
+                                                    </f:facet>
+                                                </af:panelLabelAndMessage>
+                                                <af:selectOneChoice value="#{bindings.sesso.inputValue}"
+                                                                    label="#{viewcontrollerBundle.SESSO}"
+                                                                    rendered="#{sessionScope.scr=='CO'}"
+                                                                    styleClass="choiceInTable" id="soc4" autoSubmit="true">
+                                                    <af:selectItem label="#{viewcontrollerBundle.ENTRA_0MBI}" id="si44" value="#{-1}"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.MA_0SCHI}" id="si45" value="M"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.FEMMINE}" id="si46" value="F"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.round_indiv.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ROUND_INDIVIDUA_0LE}"
+                                                                    required="#{bindings.round_indiv.hints.mandatory}"
+                                                                    shortDesc="#{bindings.round_indiv.hints.tooltip}"
+                                                                    id="soc5"
+                                                                    styleClass="choiceInTable" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.round_indiv.items}" id="si47"/>
+                                                    <f:validator binding="#{bindings.round_indiv.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:inputText value="#{bindings.round_comune.inputValue}"
+                                                              label="#{viewcontrollerBundle.ROUND_ORGA_0NIZZA_0TIVO}"
+                                                              required="#{bindings.round_comune.hints.mandatory}"
+                                                              columns="5"
+                                                              maximumLength="#{bindings.round_comune.hints.precision}"
+                                                              shortDesc="#{bindings.round_comune.hints.tooltip}"
+                                                              id="it10">
+                                                    <f:validator binding="#{bindings.round_comune.validator}"/>
+                                                </af:inputText>
+                                                <af:inputText value="#{bindings.round_inviti1.inputValue}"
+                                                              label="#{viewcontrollerBundle.ROUND_INVITI}"
+                                                              required="#{bindings.round_inviti1.hints.mandatory}"
+                                                              columns="5"
+                                                              maximumLength="#{bindings.round_inviti1.hints.precision}"
+                                                              shortDesc="#{bindings.round_inviti1.hints.tooltip}"
+                                                              id="it11">
+                                                    <f:validator binding="#{bindings.round_inviti1.validator}"/>
+                                                </af:inputText>
+                                                <af:selectOneChoice value="#{bindings.accesso1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.A_0CCESSO}"
+                                                                    required="#{bindings.accesso1.hints.mandatory}"
+                                                                    shortDesc="#{bindings.accesso.hints.tooltip}"
+                                                                    id="soc6"
+                                                                    styleClass="choiceInTable" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.accesso1.items}" id="si48"/>
+                                                    <f:validator binding="#{bindings.accesso1.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.alto_rischio.inputValue}"
+                                                                    label="#{viewcontrollerBundle.SOGGETTI}"
+                                                                    rendered="#{sessionScope.scr=='CO'}"
+                                                                    styleClass="choiceInTable" id="richio" autoSubmit="true">
+                                                    <af:selectItem label="#{viewcontrollerBundle.TUTTI}" id="si9023" value="#{-1}"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.NON_A_0D_A_0LTO_RISCHIO}" id="si9132"
+                                                                   value="#{0}"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.D_A_0LTO_RISCHIO}" id="si9232"
+                                                                   value="#{1}"/>
+                                                </af:selectOneChoice>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                        <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc2">
+                                            <af:panelFormLayout id="pfl3" partialTriggers="btreset">
+                                                <af:selectBooleanCheckbox value="#{bindings.esclusi.inputValue}"
+                                                                          label="#{viewcontrollerBundle.SOGGETTI_ESCLUSI}" autoSubmit="true"
+                                                                          shortDesc="#{bindings.esclusi.hints.tooltip}" id="sbc1"/>
+                                                <af:selectOneChoice value="#{bindings.tpescl1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ESCLUSIONE}"
+                                                                    required="#{bindings.tpescl1.hints.mandatory}"
+                                                                    disabled="#{bindings.esclusi.inputValue!=true}"
+                                                                    shortDesc="#{bindings.tpescl1.hints.tooltip}"
+                                                                    id="soc7"
+                                                                    styleClass="choiceInTable" autoSubmit="true">
+                                                    <af:selectItem label="#{viewcontrollerBundle.TUTTI_I_TIPI}" id="si9023s" value="#{-1}"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.DEFINITIVA_0}" id="si9132a" value="D"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.TEMPORA_0NEA_0}" id="si9232s" value="T"/>
+                                                </af:selectOneChoice>
+                                                <af:selectBooleanCheckbox value="#{bindings.invitati.inputValue}"
+                                                                          label="#{viewcontrollerBundle.SOGGETTI_INVITA_0TI}"
+                                                                          autoSubmit="true"
+                                                                          shortDesc="#{bindings.invitati.hints.tooltip}" id="sbc2"/>
+                                                <af:selectOneChoice value="#{bindings.centro_invito.inputValue}"
+                                                                    label="#{viewcontrollerBundle.CENTRO_DI_PRELIEVO}"
+                                                                    required="#{bindings.centro_invito.hints.mandatory}"
+                                                                    shortDesc="#{bindings.centro_invito.hints.tooltip}"
+                                                                    id="soc8"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true">
+                                                    <f:selectItems value="#{bindings.centro_invito.items}" id="si49"/>
+                                                    <f:validator binding="#{bindings.centro_invito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.centro_ref.inputValue}"
+                                                                    label="#{viewcontrollerBundle.CENTRO_REFERTA_0NTE}"
+                                                                    required="#{bindings.centro_ref.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.centro_ref.hints.tooltip}" id="centroRef">
+                                                    <f:selectItems value="#{bindings.centro_ref.items}" id="si50"/>
+                                                    <f:validator binding="#{bindings.centro_ref.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.cat_invito.inputValue}"
+                                                                    label="#{viewcontrollerBundle.CA_0TEGORIA_0_DI_INVITO}"
+                                                                    required="#{bindings.cat_invito.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.cat_invito.hints.tooltip}" id="catInv">
+                                                    <f:selectItems value="#{bindings.cat_invito.items}" id="si51"/>
+                                                    <f:validator binding="#{bindings.cat_invito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.tipo_invito.inputValue}"
+                                                                    label="#{viewcontrollerBundle.TIPO_DI_INVITO}"
+                                                                    required="#{bindings.tipo_invito.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.tipo_invito.hints.tooltip}" id="tpInvito">
+                                                    <f:selectItems value="#{bindings.tipo_invito.items}" id="si52"/>
+                                                    <f:validator binding="#{bindings.tipo_invito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.esito.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ESITO}"
+                                                                    required="#{bindings.esito.hints.mandatory}" styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.esito.hints.tooltip}" id="esito">
+                                                    <f:selectItems value="#{bindings.esito.items}" id="si53"/>
+                                                    <f:validator binding="#{bindings.esito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.tipo_richiamo.inputValue}"
+                                                                    label="#{viewcontrollerBundle.TIPO_DI_RICHIA_0MO}"
+                                                                    required="#{bindings.tipo_richiamo.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.tipo_richiamo.hints.tooltip}" id="tprichiamo">
+                                                    <f:selectItems value="#{bindings.tipo_richiamo.items}" id="si54"/>
+                                                    <f:validator binding="#{bindings.tipo_richiamo.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.livello1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.LIVELLO}"
+                                                                    required="#{bindings.livello1.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    disabled="#{bindings.invitati.inputValue!=true}" autoSubmit="true"
+                                                                    shortDesc="#{bindings.livello1.hints.tooltip}" id="livello">
+                                                    <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s34"/>
+                                                    <af:selectItem label="1" id="si55" value="1"/>
+                                                    <af:selectItem label="2" id="si56" value="2"/>
+                                                    <f:validator binding="#{bindings.livello1.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectBooleanCheckbox value="#{bindings.referto.inputValue}"
+                                                                          label="#{viewcontrollerBundle.REFERTO_PRESENTE}"
+                                                                          styleClass="choiceInTable"
+                                                                          disabled="#{bindings.invitati.inputValue!=true || bindings.livello.inputValue==-1 || bindings.livello.inputValue==0}"
+                                                                          autoSubmit="true" shortDesc="#{bindings.referto.hints.tooltip}"
+                                                                          id="sbc3" partialTriggers="sbc2"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow id="gr2">
+                                        <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc3">
+                                            <af:panelFormLayout id="pfl4"
+                                                                rendered="#{bindings.livello1.inputValue==1 &amp;&amp; bindings.referto.inputValue==true &amp;&amp; bindings.invitati.inputValue==true}"
+                                                                partialTriggers="sbc3">
+                                                <af:selectOneChoice value="#{bindings.completo.inputValue}"
+                                                                    label="#{viewcontrollerBundle.REFERTO}"
+                                                                    required="#{bindings.completo.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.completo.hints.tooltip}"
+                                                                    id="completo">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s35"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.COMPLETO}" id="si57" value="1"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.INSERITO__MA_0_NON_COMPLETO}"
+                                                                   id="si58"
+                                                                   value="0"/>
+                                                    <f:validator binding="#{bindings.completo.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.adepre.inputValue}"
+                                                                    label="#{viewcontrollerBundle.A_0DEGUA_0TEZZA_0}"
+                                                                    required="#{bindings.adepre.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" rendered="#{sessionScope.scr=='CI'}"
+                                                                    shortDesc="#{bindings.adepre.hints.tooltip}" id="adepre">
+                                                    <f:selectItems value="#{bindings.adepre.items}" id="si59"/>
+                                                    <f:validator binding="#{bindings.adepre.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.inalim.inputValue}"
+                                                                    label="#{viewcontrollerBundle.MOTIVO_DI_INA_0DEGUA_0TEZZA_0}"
+                                                                    required="#{bindings.inalim.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.inalim.hints.tooltip}"
+                                                                    id="inalim">
+                                                    <f:selectItems value="#{bindings.inalim.items}" id="si13"/>
+                                                    <f:validator binding="#{bindings.inalim.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.giudia1.inputValue}"
+                                                                    label="#{viewcontrollerBundle.GIUDIZIO_DIA_0GNOSTICO}"
+                                                                    required="#{bindings.giudia1.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.giudia.hints.tooltip}"
+                                                                    id="soc9">
+                                                    <f:selectItems value="#{bindings.giudia1.items}" id="si14"/>
+                                                    <f:validator binding="#{bindings.giudia1.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.positi.inputValue}"
+                                                                    label="#{viewcontrollerBundle.TIPO_DI_POSITIVIT_U00E0}"
+                                                                    required="#{bindings.positi.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.positi.hints.tooltip}"
+                                                                    id="positi">
+                                                    <f:selectItems value="#{bindings.positi.items}" id="si15"/>
+                                                    <f:validator binding="#{bindings.positi.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.mx_esito.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ESITO_DEL_REFERTO}"
+                                                                    required="#{bindings.mx_esito.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='MA'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.mx_esito.hints.tooltip}"
+                                                                    id="mx_esito">
+                                                    <f:selectItems value="#{bindings.mx_esito.items}" id="si16"/>
+                                                    <f:validator binding="#{bindings.mx_esito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.quantita.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ESITO_DEL_REFERTO}"
+                                                                    required="#{bindings.quantita.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CO'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.quantita.hints.tooltip}"
+                                                                    id="quantita">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s41"/>
+                                                    <af:selectItem value="1" label="#{viewcontrollerBundle._LT_100}" id="s42"/>
+                                                    <af:selectItem value="2" label="#{viewcontrollerBundle._GT__100}" id="s43"/>
+                                                    <af:selectItem value="3" label="#{viewcontrollerBundle.TRA_0_90_E_100}" id="s44"/>
+                                                    <af:selectItem value="4" label="#{viewcontrollerBundle.TRA_0_100_E_110}" id="s45"/>
+                                                    <af:selectItem value="5" label="#{viewcontrollerBundle._GT__110}" id="s46"/>
+                                                    <f:validator binding="#{bindings.quantita.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.idsugg1l.inputValue}"
+                                                                    label="#{viewcontrollerBundle.SUGGERIMENTO_CONCLUSIVO}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" required="#{bindings.idsugg1l.hints.mandatory}"
+                                                                    shortDesc="#{bindings.idsugg1l.hints.tooltip}" id="idsugg1l">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s47"/>
+                                                    <f:selectItems value="#{bindings.idsugg1l.items}" id="si17"/>
+                                                    <f:validator binding="#{bindings.idsugg1l.validator}"/>
+                                                </af:selectOneChoice>
+                                            </af:panelFormLayout>
+                                            <af:panelFormLayout id="pfl5"
+                                                                rendered="#{bindings.referto.inputValue==true &amp;&amp; bindings.livello1.inputValue==2 &amp;&amp; bindings.invitati.inputValue==true}"
+                                                                partialTriggers="btreset">
+                                                <af:selectOneChoice value="#{bindings.completo.inputValue}"
+                                                                    label="#{viewcontrollerBundle.REFERTO}"
+                                                                    required="#{bindings.completo.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.completo.hints.tooltip}"
+                                                                    id="completo1">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s48"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.COMPLETO}" id="si197" value="1"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.INSERITO__MA_0_NON_COMPLETO}" id="si1197"
+                                                                   value="0"/>
+                                                    <f:validator binding="#{bindings.completo.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.colpvl.inputValue}"
+                                                                    label="#{viewcontrollerBundle.COLPOSCOPIA_0}"
+                                                                    required="#{bindings.colpvl.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.colpvl.hints.tooltip}"
+                                                                    id="colpvl">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s49"/>
+                                                    <f:selectItems value="#{bindings.colpvl.items}" id="si18"/>
+                                                    <f:validator binding="#{bindings.colpvl.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.colpes.inputValue}"
+                                                                    label="#{viewcontrollerBundle.ESITO_COLPOSCOPIA_0}"
+                                                                    required="#{bindings.colpes.hints.mandatory}"
+                                                                    rendered="#{sessionScope.scr=='CI'}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.colpes.hints.tooltip}"
+                                                                    id="colpes">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s50"/>
+                                                    <f:selectItems value="#{bindings.colpes.items}" id="si19"/>
+                                                    <f:validator binding="#{bindings.colpes.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice label="#{viewcontrollerBundle.LesionedaHPV}"
+                                                                    value="#{bindings.lesione_hpv.inputValue}"
+                                                                    required="#{bindings.lesione_hpv.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.lesione_hpv.hints.tooltip}"
+                                                                    id="lesione_hpv" rendered="#{sessionScope.scr=='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s51"/>
+                                                    <af:selectItem value="0" label="#{viewcontrollerBundle.datonondisponibile}" id="s52"/>
+                                                    <af:selectItem value="1" label="rilevata" id="s53"/>
+                                                    <f:validator binding="#{bindings.lesione_hpv.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice label="#{viewcontrollerBundle.Istologiabioptica}"
+                                                                    value="#{bindings.ist_bio.inputValue}"
+                                                                    required="#{bindings.ist_bio.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.ist_bio.hints.tooltip}"
+                                                                    id="ist_bio" rendered="#{sessionScope.scr=='CI'}">
+                                                    <af:selectItem value="-1" label="qualsiasi" id="s54"/>
+                                                    <af:selectItem value="0" label="non eseguita" id="s55"/>
+                                                    <af:selectItem value="1" label="eseguita" id="s56"/>
+                                                    <f:validator binding="#{bindings.ist_bio.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.ist_bio_diagnosi.inputValue}"
+                                                                    label="#{viewcontrollerBundle.Diagnosi}"
+                                                                    required="#{bindings.ist_bio_diagnosi.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.ist_bio_diagnosi.hints.tooltip}"
+                                                                    id="ist_bio_diagnosi" rendered="#{sessionScope.scr=='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s57"/>
+                                                    <f:selectItems value="#{bindings.ist_bio_diagnosi.items}" id="si20"/>
+                                                    <f:validator binding="#{bindings.ist_bio_diagnosi.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!-- 20081210 fine mod-->
+                                                <af:selectOneChoice value="#{bindings.racdia.inputValue}"
+                                                                    rendered="#{sessionScope.scr=='CI'}"
+                                                                    required="#{bindings.racdia.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.racdia.hints.tooltip}"
+                                                                    id="racdia"
+                                                                    label="#{viewcontrollerBundle.Diagnosiistologicapeggiore}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s58"/>
+                                                    <f:selectItems value="#{bindings.racdia.items}" id="si21"/>
+                                                    <f:validator binding="#{bindings.racdia.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!--colon retto -->
+                                                <af:selectOneChoice value="#{bindings.rxcolon.inputValue}"
+                                                                    required="#{bindings.rxcolon.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.rxcolon.hints.tooltip}"
+                                                                    id="rxcolon" label="#{viewcontrollerBundle.Rxcolon}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <f:validator binding="#{bindings.rxcolon.validator}"/>
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s59"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.noneseguito}" value="0" id="s60"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.eseguito}" value="1" id="s61"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.rx_conclusioni.inputValue}"
+                                                                    required="#{bindings.rx_conclusioni.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.rx_conclusioni.hints.tooltip}"
+                                                                    id="rx_conclusioni"
+                                                                    label="#{viewcontrollerBundle.Conclusionirxcolon}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s62"/>
+                                                    <f:selectItems value="#{bindings.rx_conclusioni.items}" id="si22"/>
+                                                    <f:validator binding="#{bindings.rx_conclusioni.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.endo_estensione.inputValue}"
+                                                                    required="#{bindings.endo_estensione.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.endo_estensione.hints.tooltip}"
+                                                                    id="endo_estensione"
+                                                                    label="#{viewcontrollerBundle.Estensioneendoscopia}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s63"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.incompleta}" value="0" id="s64"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.completa}" value="1" id="s65"/>
+                                                    <f:validator binding="#{bindings.endo_estensione.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.motivo.inputValue}"
+                                                                    required="#{bindings.motivo.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.motivo.hints.tooltip}"
+                                                                    id="motivo"
+                                                                    label="#{viewcontrollerBundle.Motivodiincompletezza}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s66"/>
+                                                    <f:validator binding="#{bindings.motivo.validator}"/>
+                                                    <f:selectItems value="#{bindings.motivo.items}" id="si23"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.procedura.inputValue}"
+                                                                    label="#{viewcontrollerBundle.Proceduraoperativa}"
+                                                                    rendered="#{sessionScope.scr=='CO'}"
+                                                                    required="#{bindings.procedura.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.procedura.hints.tooltip}"
+                                                                    id="procedura">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s67"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.noneseguita}" value="0" id="s68"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.eseguita}" value="1" id="s69"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.endo_complicanze.inputValue}"
+                                                                    required="#{bindings.endo_complicanze.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.endo_complicanze.hints.tooltip}"
+                                                                    id="endo_complicanze"
+                                                                    label="#{viewcontrollerBundle.Complicanzeendoscopia}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s70"/>
+                                                    <f:validator binding="#{bindings.endo_complicanze.validator}"/>
+                                                    <f:selectItems value="#{bindings.endo_complicanze.items}" id="si24"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.conclusioni2l.inputValue}"
+                                                                    required="#{bindings.conclusioni2l.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.conclusioni2l.hints.tooltip}"
+                                                                    id="conclusioni2l"
+                                                                    label="#{viewcontrollerBundle.Conclusionidi2livello}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s71"/>
+                                                    <f:validator binding="#{bindings.conclusioni2l.validator}"/>
+                                                    <f:selectItems value="#{bindings.conclusioni2l.items}" id="si25"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.diagnosi_co.inputValue}"
+                                                                    required="#{bindings.diagnosi_co.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.diagnosi_co.hints.tooltip}"
+                                                                    id="diagnosi_co"
+                                                                    label="#{viewcontrollerBundle.Diagnosiistologicapeggiore}"
+                                                                    rendered="#{sessionScope.scr=='CO'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s72"/>
+                                                    <f:validator binding="#{bindings.diagnosi_co.validator}"/>
+                                                    <f:selectItems value="#{bindings.diagnosi_co.items}" id="si26"/>
+                                                </af:selectOneChoice>
+                                                <!-- mammografico -->
+                                                <af:selectOneChoice value="#{bindings.mammo.inputValue}"
+                                                                    required="#{bindings.mammo.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.mammo.hints.tooltip}" id="mammo"
+                                                                    label="#{viewcontrollerBundle.Mammografia}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s73"/>
+                                                    <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s74"/>
+                                                    <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s75"/>
+                                                    <f:validator binding="#{bindings.mammo.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.eco.inputValue}"
+                                                                    required="#{bindings.eco.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.eco.hints.tooltip}" id="eco"
+                                                                    label="#{viewcontrollerBundle.Ecografia}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s76"/>
+                                                    <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s77"/>
+                                                    <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s78"/>
+                                                    <f:validator binding="#{bindings.eco.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.clinico.inputValue}"
+                                                                    required="#{bindings.clinico.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.clinico.hints.tooltip}"
+                                                                    id="clinico" label="#{viewcontrollerBundle.Esameclinico}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s79"/>
+                                                    <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguito}" id="s80"/>
+                                                    <af:selectItem value="1" label="#{viewcontrollerBundle.eseguito}" id="s81"/>
+                                                    <f:validator binding="#{bindings.clinico.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.citologia.inputValue}"
+                                                                    required="#{bindings.citologia.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.citologia.hints.tooltip}"
+                                                                    id="citologia" label="#{viewcontrollerBundle.Esamecitologico}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{''}" id="s82"/>
+                                                    <f:validator binding="#{bindings.citologia.validator}"/>
+                                                    <f:selectItems value="#{bindings.citologia.items}" id="si27"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.esito_cito.inputValue}"
+                                                                    required="#{bindings.esito_cito.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.esito_cito.hints.tooltip}"
+                                                                    id="esito_cito" label="#{viewcontrollerBundle.Esitocitologia}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s83"/>
+                                                    <f:validator binding="#{bindings.esito_cito.validator}"/>
+                                                    <f:selectItems value="#{bindings.esito_cito.items}" id="si28"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.agobiopsia.inputValue}"
+                                                                    required="#{bindings.agobiopsia.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.agobiopsia.hints.tooltip}"
+                                                                    id="agobiopsia" label="#{viewcontrollerBundle.Agobiopsiaesame}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s84"/>
+                                                    <f:validator binding="#{bindings.agobiopsia.validator}"/>
+                                                    <f:selectItems value="#{bindings.agobiopsia.items}" id="si29"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.esito_agob.inputValue}"
+                                                                    required="#{bindings.esito_agob.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.esito_agob.hints.tooltip}"
+                                                                    id="esito_agob" label="#{viewcontrollerBundle.Esitoagobiopsia}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s85"/>
+                                                    <f:validator binding="#{bindings.esito_agob.validator}"/>
+                                                    <f:selectItems value="#{bindings.esito_agob.items}" id="si30"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.racdia.inputValue}"
+                                                                    rendered="#{sessionScope.scr=='MA'}"
+                                                                    required="#{bindings.racdia.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.racdia.hints.tooltip}"
+                                                                    id="racdia1" label="#{viewcontrollerBundle.Diagnosipatologicapeggiore}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s86"/>
+                                                    <f:selectItems value="#{bindings.racdia.items}" id="si31"/>
+                                                    <f:validator binding="#{bindings.racdia.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!--comuni-->
+                                                <af:selectOneChoice value="#{bindings.idsugg2l.inputValue}"
+                                                                    required="#{bindings.idsugg2l.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.idsugg2l.hints.tooltip}"
+                                                                    id="idsugg2l"
+                                                                    label="#{viewcontrollerBundle.Suggerimentoconclusivo2livello}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s87"/>
+                                                    <f:selectItems value="#{bindings.idsugg2l.items}" id="si32"/>
+                                                    <f:validator binding="#{bindings.idsugg2l.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.intchiusi.inputValue}"
+                                                                    required="#{bindings.intchiusi.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.intchiusi.hints.tooltip}"
+                                                                    id="intchiusi" label="#{viewcontrollerBundle.Interventi}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s88"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.chiusi}" value="1" id="s89"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.inseritimaNONchiusi}" value="0" id="s90"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.intval.inputValue}"
+                                                                    required="#{bindings.intval.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.intval.hints.tooltip}"
+                                                                    id="intval" label="#{viewcontrollerBundle.Intervento}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s91"/>
+                                                    <f:selectItems value="#{bindings.intval.items}" id="si33"/>
+                                                    <f:validator binding="#{bindings.intval.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.tipo_int.inputValue}"
+                                                                    required="#{bindings.tipo_int.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.tipo_int.hints.tooltip}"
+                                                                    id="tipo_int" label="#{viewcontrollerBundle.Tipodiintervento}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s92"/>
+                                                    <f:selectItems value="#{bindings.tipo_int.items}" id="si34"/>
+                                                    <f:validator binding="#{bindings.tipo_int.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!-- 20081210 MOD versione 1.2-->
+                                                <af:selectOneChoice label="#{viewcontrollerBundle.Istologiachirurgica}"
+                                                                    value="#{bindings.ist_chir.inputValue}"
+                                                                    required="#{bindings.ist_chir.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.ist_chir.hints.tooltip}"
+                                                                    id="ist_chir" rendered="#{sessionScope.scr=='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s93"/>
+                                                    <af:selectItem value="0" label="#{viewcontrollerBundle.noneseguita}" id="s94"/>
+                                                    <af:selectItem value="1" label="#{viewcontrollerBundle.eseguita}" id="s95"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.ist_chir_diagnosi.inputValue}"
+                                                                    label="#{viewcontrollerBundle.Diagnosi}"
+                                                                    required="#{bindings.ist_chir_diagnosi.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true"
+                                                                    shortDesc="#{bindings.ist_chir_diagnosi.hints.tooltip}"
+                                                                    id="ist_chir_diagnosi" rendered="#{sessionScope.scr=='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s96"/>
+                                                    <f:selectItems value="#{bindings.ist_chir_diagnosi.items}" id="si35"/>
+                                                    <f:validator binding="#{bindings.ist_chir_diagnosi.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!-- 20081210 fine mod-->
+                                                <af:selectOneChoice value="#{bindings.pn.inputValue}"
+                                                                    required="#{bindings.pn.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.pn.hints.tooltip}" id="pn"
+                                                                    label="#{viewcontrollerBundle.pN}" rendered="#{sessionScope.scr!='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s97"/>
+                                                    <f:selectItems value="#{bindings.pn.items}" id="si36"/>
+                                                    <f:validator binding="#{bindings.pn.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.pt.inputValue}"
+                                                                    required="#{bindings.pt.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.pt.hints.tooltip}" id="pt"
+                                                                    label="#{viewcontrollerBundle.pT}" rendered="#{sessionScope.scr!='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s98"/>
+                                                    <f:selectItems value="#{bindings.pt.items}" id="si37"/>
+                                                    <f:validator binding="#{bindings.pt.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.pm.inputValue}"
+                                                                    required="#{bindings.pm.hints.mandatory}" styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.pm.hints.tooltip}" id="pm"
+                                                                    label="#{viewcontrollerBundle.pM}" rendered="#{sessionScope.scr!='CI'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s99"/>
+                                                    <f:selectItems value="#{bindings.pm.items}" id="si38"/>
+                                                    <f:validator binding="#{bindings.pm.validator}"/>
+                                                </af:selectOneChoice>
+                                                <!-- mammografico -->
+                                                <af:selectOneChoice value="#{bindings.ascella.inputValue}"
+                                                                    required="#{bindings.ascella.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.ascella.hints.tooltip}"
+                                                                    id="ascella" label="#{viewcontrollerBundle.Tipointerventosuascella}"
+                                                                    rendered="#{sessionScope.scr=='MA'}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s100"/>
+                                                    <f:selectItems value="#{bindings.ascella.items}" id="si39"/>
+                                                    <f:validator binding="#{bindings.ascella.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.idsugg3l.inputValue}"
+                                                                    required="#{bindings.idsugg3l.hints.mandatory}"
+                                                                    styleClass="choiceInTable"
+                                                                    autoSubmit="true" shortDesc="#{bindings.idsugg3l.hints.tooltip}"
+                                                                    id="idsugg3l"
+                                                                    label="#{viewcontrollerBundle.Suggerimentopostintervento}">
+                                                    <af:selectItem value="-1" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s101"/>
+                                                    <f:selectItems value="#{bindings.idsugg3l.items}" id="si40"/>
+                                                    <f:validator binding="#{bindings.idsugg3l.validator}"/>
+                                                </af:selectOneChoice>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                        <af:gridCell width="50%" halign="stretch" valign="stretch" id="gc4">
+                                            <af:panelFormLayout id="pfl6">
+                                                <af:selectOneRadio value="#{bindings.filtro_2.inputValue}"
+                                                                   label="#{viewcontrollerBundle.FILTRI_SULL_INVITO_SUCCESSIVO}"
+                                                                   required="#{bindings.filtro_2.hints.mandatory}"
+                                                                   autoSubmit="true"
+                                                                   shortDesc="#{bindings.filtro_2.hints.tooltip}"
+                                                                   id="sor5"
+                                                                   rendered="#{bindings.esclusi.inputValue!=true &amp;&amp; bindings.invitati.inputValue==true}">
+                                                    <af:selectItem label="#{viewcontrollerBundle.NO}" id="si61" value="0"/>
+                                                    <af:selectItem label="#{viewcontrollerBundle.SI}" id="si62" value="1"/>
+                                                    <f:validator binding="#{bindings.filtro_2.validator}"/>
+                                                </af:selectOneRadio>
+                                            </af:panelFormLayout>
+                                            <af:panelFormLayout id="pfl7"
+                                                                rendered="#{bindings.filtro_2.inputValue==1 &amp;&amp; bindings.esclusi.inputValue!=true &amp;&amp; bindings.invitati.inputValue==true}">
+                                                        <!--20080710 MOD: reimposta fa sparire i risultati-->
+                                                        <af:selectOneChoice value="#{bindings.cat_invito_2.inputValue}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true"
+                                                                       label="#{viewcontrollerBundle.CA_0TEGORIA_0_DI_INVITO}"
+                                                                            id="cat_invito_2">
+                                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s361"/>
+                                                            <f:selectItems value="#{bindings.cat_invito_2.items}"
+                                                                           id="si63"/>
+                                                            <f:validator binding="#{bindings.cat_invito_2.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <!--20080710 FINE MOD-->
+                                                        <af:selectOneChoice value="#{bindings.tipo_invito_2.inputValue}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true"
+                                                                       label="#{viewcontrollerBundle.TIPO_DI_INVITO}" id="tipo_invito_2">
+                                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s362"/>
+                                                            <f:selectItems value="#{bindings.tipo_invito_2.items}"
+                                                                           id="si64"/>
+                                                            <f:validator binding="#{bindings.tipo_invito_2.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneChoice value="#{bindings.esito_2.inputValue}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true" 
+                                                                       label="#{viewcontrollerBundle.ESITO}" id="esito_2">
+                                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s363"/>
+                                                            <f:selectItems value="#{bindings.esito_2.items}" id="si65"/>
+                                                            <f:validator binding="#{bindings.esito_2.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneChoice value="#{bindings.tipo_richiamo_2.inputValue}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true" 
+                                                                       label="#{viewcontrollerBundle.TIPO_DI_RICHIA_0MO}"
+                                                                            id="tipo_richiamo_2">
+                                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s364"/>
+                                                            <f:selectItems value="#{bindings.tipo_richiamo_2.items}"
+                                                                           id="si66"/>
+                                                            <f:validator binding="#{bindings.tipo_richiamo_2.validator}"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneChoice value="#{bindings.livello_2.inputValue}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true" 
+                                                                       label="#{viewcontrollerBundle.LIVELLO}" id="livello_2">
+                                                            <af:selectItem value="#{-1}" label="#{viewcontrollerBundle.QUA_0LSIA_0SI}" id="s365"/>
+                                                            <af:selectItem value="#{1}" label="1" id="s366"/>
+                                                            <af:selectItem value="#{2}" label="2" id="s3667"/>
+                                                            <f:validator binding="#{bindings.livello_2.validator}"/>
+                                                        </af:selectOneChoice>
+                                                          <!--20110714 Serra-->
+                                                <af:selectBooleanCheckbox value="#{bindings.referto2.inputValue}"
+                                                                          label="#{bindings.referto2.label}"
+                                                                          styleClass="choiceInTable"
+                                                                          autoSubmit="true"
+                                                                          shortDesc="#{bindings.referto2.hints.tooltip}" id="sbc4"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelHeader>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.STATISTICHE}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

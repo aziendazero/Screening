@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   Name="A_SelTrialStatoView"
+   OrderBy="descr"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.trial.A_SelTrialStatoViewImpl"
+   Version="12.2.1.11.57"
+   xmlns="http://xmlns.oracle.com/bc4j"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+select idstato_trial, descr, descrbreve
+from so_cnf_trial_stato
+where idtrial = :1
+and tpscr = :2
+union
+select null, ' ', ' '
+from dual
+union select -1, '(Non valorizzato)', '(N.V.)'
+from dual
+union select -2, '(Qualsiasi)', '(Qualsiasi)'
+from dual
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="IdstatoTrial"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSTATO_TRIAL"
+      Expression="IDSTATO_TRIAL"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descr"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCR"
+      Expression="DESCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRBREVE"
+      Expression="DESCRBREVE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10"/>
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

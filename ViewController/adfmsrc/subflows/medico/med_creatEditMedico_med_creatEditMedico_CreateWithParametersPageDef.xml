@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="med_creatEditMedico_med_creatEditMedico_CreateWithParametersPageDef" Package="subflows.medico"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Med_SoMedicoView1" RangeSize="25" DataControl="Med_AppModuleDataControl"
+              id="Med_SoMedicoView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Med_SoMedicoView1Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="Ulss" NDValue="#{sessionScope.ulss}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="print_invitiPageDef"
+                Package="pages.print">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PrintBeanDataControl" id="PrintBeanDataControlIterator"/>
+    <iterator Binds="Print_SoCnfTpinvitoView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="Print_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Print_SoCentroPrelRefView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="Print_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="A_SelTrialStatoView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="A_SelTrialStatoView1Iterator"/>
+    <iterator Binds="A_SelTrialBraccioView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="A_SelTrialBraccioView1Iterator"/>
+    <iterator Binds="Print_SoTemplateEtichetteView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="Print_SoTemplateEtichetteView1Iterator"/>
+    <iterator Binds="Cnf_SoInsertoView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="Cnf_SoInsertoView1Iterator"/>
+    <iterator Binds="Print_SoAllegatoInvitiView1" RangeSize="10" DataControl="Print_AppModuleDataControl"
+              id="Print_SoAllegatoInvitiView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="raccomandata">
+      <AttrNames>
+        <Item Value="raccomandata"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PrintBeanDataControlIterator" id="tpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Print_SoCnfTpinvitoView1Iterator">
+      <AttrNames>
+        <Item Value="tpinvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="centro" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Print_SoCentroPrelRefView1Iterator">
+      <AttrNames>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="data_app">
+      <AttrNames>
+        <Item Value="data_app"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="data_app_al">
+      <AttrNames>
+        <Item Value="data_app_al"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="comune">
+      <AttrNames>
+        <Item Value="comune"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="creato">
+      <AttrNames>
+        <Item Value="creato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="creato_al">
+      <AttrNames>
+        <Item Value="creato_al"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="stampate_dal">
+      <AttrNames>
+        <Item Value="stampate_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="stampate_al">
+      <AttrNames>
+        <Item Value="stampate_al"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PrintBeanDataControlIterator" id="testProposto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="testProposto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="--"/>
+        <Item Value="HPV"/>
+        <Item Value="PAP test"/>
+      </ValueList>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="idStatoTrial" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SelTrialStatoView1Iterator">
+      <AttrNames>
+        <Item Value="idStatoTrial"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdstatoTrial"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="idBraccioTrial" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SelTrialBraccioView1Iterator">
+      <AttrNames>
+        <Item Value="idBraccioTrial"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdbraccioTrial"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="consensi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="consensi"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="qualsiasi valore"/>
+        <Item Value="consensi non dati"/>
+        <Item Value="dato il primo"/>
+        <Item Value="dati entrambi"/>
+      </ValueList>
+    </list>
+    <methodAction id="reset" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reset"
+                  IsViewObjectMethod="false" DataControl="PrintBeanDataControl"
+                  InstanceName="data.PrintBeanDataControl.dataProvider"/>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PrintBeanDataControlIterator" id="cosaStampare" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="cosaStampare"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="lettere"/>
+        <Item Value="etichette"/>
+        <Item Value="lettere + etichette"/>
+        <Item Value="lettere + inserti"/>
+        <Item Value="lettere + etichette + inserti"/>
+      </ValueList>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="etichetta" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Print_SoTemplateEtichetteView1Iterator">
+      <AttrNames>
+        <Item Value="etichetta"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="tpStampa" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="tpStampa"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="locale"/>
+        <Item Value="Postel"/>
+        <Item Value="Posteltxt"/>
+      </ValueList>
+    </list>
+    <list IterBinding="PrintBeanDataControlIterator" id="inserto" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoInsertoView1Iterator">
+      <AttrNames>
+        <Item Value="inserto"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idinserto"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Nomefile"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Print_SoAllegatoInvitiView1Iterator" id="Print_SoAllegatoInvitiView1">
+      <nodeDefinition DefName="model.print.Print_SoAllegatoInvitiView" Name="Print_SoAllegatoInvitiView10">
+        <AttrNames>
+          <Item Value="BraccioTrialDescr"/>
+          <Item Value="Cap"/>
+          <Item Value="Cap1"/>
+          <Item Value="Cap2"/>
+          <Item Value="Cap3"/>
+          <Item Value="Cellulare"/>
+          <Item Value="CentroPrel"/>
+          <Item Value="Cf"/>
+          <Item Value="Codanagreg"/>
+          <Item Value="CodCampione"/>
+          <Item Value="CodCampione1"/>
+          <Item Value="Codcom"/>
+          <Item Value="Codcom1"/>
+          <Item Value="Codcomdom"/>
+          <Item Value="Codcomres"/>
+          <Item Value="Codcomscr"/>
+          <Item Value="Coddistrzona"/>
+          <Item Value="Codiceregmedico"/>
+          <Item Value="CodidsoggMx"/>
+          <Item Value="Codpr"/>
+          <Item Value="Codpr1"/>
+          <Item Value="Codpr2"/>
+          <Item Value="Codpr3"/>
+          <Item Value="CodRichiesta"/>
+          <Item Value="Codts"/>
+          <Item Value="Codts1"/>
+          <Item Value="Codts2"/>
+          <Item Value="Cognome"/>
+          <Item Value="CognomeMedico"/>
+          <Item Value="ComuneDesc"/>
+          <Item Value="Data_ora_order"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Descrizione2"/>
+          <Item Value="Dtapp"/>
+          <Item Value="Dtcreazione"/>
+          <Item Value="Dtstampa"/>
+          <Item Value="Email"/>
+          <Item Value="Idacc1liv"/>
+          <Item Value="Idaccco1liv"/>
+          <Item Value="Idaccma1liv"/>
+          <Item Value="Idaccpf1liv"/>
+          <Item Value="Idallegato"/>
+          <Item Value="Idapp"/>
+          <Item Value="IdbraccioTrial"/>
+          <Item Value="Idcentro"/>
+          <Item Value="Idcentroprelievo"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Idinvito1"/>
+          <Item Value="Idinvito2"/>
+          <Item Value="IdstatoTrial"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Idtrial"/>
+          <Item Value="Idtrial1"/>
+          <Item Value="IndirizzoCentro"/>
+          <Item Value="IndirizzoDom"/>
+          <Item Value="IndirizzoRes"/>
+          <Item Value="IndirizzoRes1"/>
+          <Item Value="IndirizzoScr"/>
+          <Item Value="Lettera"/>
+          <Item Value="Minapp"/>
+          <Item Value="Mx45Braccio"/>
+          <Item Value="Mx45Codice"/>
+          <Item Value="Nome"/>
+          <Item Value="NomeMedico"/>
+          <Item Value="NonSpedireReferto"/>
+          <Item Value="Numvetrino"/>
+          <Item Value="Oraapp"/>
+          <Item Value="Oraritel"/>
+          <Item Value="Otp"/>
+          <Item Value="RaccLettInvito"/>
+          <Item Value="RaccLettReferto"/>
+          <Item Value="ReleaseCode"/>
+          <Item Value="ReleaseCodeComDom"/>
+          <Item Value="ReleaseCodeComRes"/>
+          <Item Value="ReleaseCode3"/>
+          <Item Value="Sede"/>
+          <Item Value="Sesso"/>
+          <Item Value="Stampapostel"/>
+          <Item Value="StatoTrialDescr"/>
+          <Item Value="Tel"/>
+          <Item Value="Tel1"/>
+          <Item Value="Tel2"/>
+          <Item Value="TestProposto"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Tpscr1"/>
+          <Item Value="Tpscr2"/>
+          <Item Value="Tpscr3"/>
+          <Item Value="Ulss"/>
+          <Item Value="Ulss1"/>
+          <Item Value="Ulss2"/>
+          <Item Value="Ulss3"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="PrintBeanDataControlIterator" id="nuovi">
+      <AttrNames>
+        <Item Value="nuovi"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="StoricoInvitoDetail"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="536"
+		 columnSpacing="0"
+		 leftMargin="29"
+		 rightMargin="30"
+		 topMargin="2"
+		 bottomMargin="2"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REFERTO1LIV_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REFERTO2LIV_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cod_ts" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["111"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="INTERVENTO_DETAIL" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ulss" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["050113"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ordStorico" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT
+    SO_INVITO.IDINVITO,
+    SO_INVITO.CODTS,
+    SO_INVITO.IDTPINVITO,
+    SO_INVITO.CODESITOINVITO,
+    SO_INVITO.LIVESITO,
+    SO_INVITO.IDCENTROPRELIEVO,
+    SO_INVITO.IDCENTROREF1LIV,
+    SO_INVITO.DTAPP,
+    SO_INVITO.ROUNDINDIV,
+    SO_INVITO.ROUNDCOMUNE,
+    SO_INVITO.ROUNDINVITI,
+    TO_CHAR(SO_INVITO.ORAAPP,99) ORAAPP,
+    DECODE(LENGTH(TO_CHAR(SO_INVITO.MINAPP)),1,CONCAT('0',TO_CHAR(SO_INVITO.MINAPP)),TO_CHAR(SO_INVITO.MINAPP)) MINAPP,
+    SO_INVITO.NOTEINVITO,
+    SO_INVITO.ULSS,
+    SO_INVITO.TPSCR,
+    SO_INVITO.LIVELLO,
+    SO_CNF_TPINVITO.DESCRIZIONE TIPO_INVITO,
+    SO_CENTRO_PREL_REF.DESCRIZIONE CENTRO_PRELIEVO,
+    SO_CNF_ESITOINVITO.DESCRIZIONE ESITO,
+   /* REFERTI1LIV.NUMERO NUM_REF1LIV,
+    REFERTI2LIV.NUMERO NUM_REF2LIV,*/
+    DECODE(REFERTI1LIV.IDINVITO,NULL,NULL,1) NUM_REF1LIV,
+    DECODE(REFERTI2LIV.IDINVITO,NULL,NULL,1) NUM_REF2LIV,
+SO_ACC_CITO1LIV.COD_RICHIESTA
+ FROM SO_INVITO,SO_CNF_TPINVITO, SO_CENTRO_PREL_REF,
+ SO_CNF_ESITOINVITO,SO_ACC_CITO1LIV,
+/* (SELECT SO_INVITO.IDINVITO,COUNT(SO_REFERTOCITO1LIV.IDREFERTO) NUMERO
+FROM SO_REFERTOCITO1LIV, SO_INVITO
+WHERE SO_REFERTOCITO1LIV.IDINVITO=SO_INVITO.IDINVITO
+GROUP BY SO_INVITO.IDINVITO) REFERTI1LIV,
+(SELECT SO_INVITO.IDINVITO,COUNT(SO_REFERTOCITO2LIV.IDREFERTO) NUMERO
+FROM SO_REFERTOCITO2LIV , SO_INVITO
+WHERE SO_REFERTOCITO2LIV.IDINVITO=SO_INVITO.IDINVITO
+GROUP BY SO_INVITO.IDINVITO) REFERTI2LIV*/
+so_refertocito1liv REFERTI1LIV,
+so_refertocito2liv REFERTI2LIV
+ WHERE (SO_INVITO.IDTPINVITO=SO_CNF_TPINVITO.IDTPINVITO AND 
+ SO_INVITO.ULSS=SO_CNF_TPINVITO.ULSS AND 
+ SO_INVITO.TPSCR=SO_CNF_TPINVITO.TPSCR)
+ AND (SO_INVITO.IDCENTROPRELIEVO=SO_CENTRO_PREL_REF.IDCENTRO(+))
+ AND (SO_INVITO.CODESITOINVITO=SO_CNF_ESITOINVITO.CODESITOINVITO(+) AND
+ SO_INVITO.LIVESITO=SO_CNF_ESITOINVITO.LIVESITO(+) AND
+ SO_INVITO.ULSS=SO_CNF_ESITOINVITO.ULSS(+) AND
+ SO_INVITO.TPSCR=SO_CNF_ESITOINVITO.TPSCR(+)) 
+AND SO_INVITO.IDINVITO=REFERTI1LIV.IDINVITO(+)
+AND SO_INVITO.IDINVITO=REFERTI2LIV.IDINVITO(+)
+AND SO_INVITO.IDINVITO=SO_ACC_CITO1LIV.IDINVITO(+)
+AND SO_INVITO.CODTS=$P{cod_ts} AND SO_INVITO.ULSS=$P{ulss}
+AND SO_INVITO.TPSCR='CI'
+ORDER BY so_invito.attivo $P!{ordStorico}, SO_INVITO.DTAPP $P!{ordStorico}, so_invito.oraapp $P!{ordStorico}, so_invito.minapp $P!{ordStorico}, so_invito.livello]]></queryString>
+
+	<field name="IDINVITO" class="java.math.BigDecimal"/>
+	<field name="CODTS" class="java.lang.String"/>
+	<field name="IDTPINVITO" class="java.lang.String"/>
+	<field name="CODESITOINVITO" class="java.lang.String"/>
+	<field name="LIVESITO" class="java.math.BigDecimal"/>
+	<field name="IDCENTROPRELIEVO" class="java.math.BigDecimal"/>
+	<field name="IDCENTROREF1LIV" class="java.math.BigDecimal"/>
+	<field name="DTAPP" class="java.sql.Timestamp"/>
+	<field name="ROUNDINDIV" class="java.math.BigDecimal"/>
+	<field name="ROUNDCOMUNE" class="java.math.BigDecimal"/>
+	<field name="ROUNDINVITI" class="java.math.BigDecimal"/>
+	<field name="ORAAPP" class="java.lang.String"/>
+	<field name="MINAPP" class="java.lang.String"/>
+	<field name="NOTEINVITO" class="java.lang.String"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="TPSCR" class="java.lang.String"/>
+	<field name="LIVELLO" class="java.math.BigDecimal"/>
+	<field name="TIPO_INVITO" class="java.lang.String"/>
+	<field name="CENTRO_PRELIEVO" class="java.lang.String"/>
+	<field name="ESITO" class="java.lang.String"/>
+	<field name="NUM_REF1LIV" class="java.math.BigDecimal"/>
+	<field name="NUM_REF2LIV" class="java.math.BigDecimal"/>
+	<field name="COD_RICHIESTA" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="65"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="304"
+						y="0"
+						width="231"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-1"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Data "+new String($F{DTAPP}==null?"__/__/____":new SimpleDateFormat("dd/MM/yyyy").format($F{DTAPP}))+" ore "+new String($F{ORAAPP}==null?"--":$F{ORAAPP})+":"+new String($F{MINAPP}==null?"--":$F{MINAPP})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="14"
+						width="303"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{CENTRO_PRELIEVO}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Presso: "+$F{CENTRO_PRELIEVO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="0"
+						width="302"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{TIPO_INVITO}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TIPO_INVITO}]]></textFieldExpression>
+				</textField>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-29"
+						y="44"
+						width="591"
+						height="8"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-1"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{NUM_REF1LIV}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<subreportParameter  name="num_invito">
+						<subreportParameterExpression><![CDATA[$F{IDINVITO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="INTERVENTO_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{INTERVENTO_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{REFERTO1LIV_DETAIL}]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-29"
+						y="51"
+						width="591"
+						height="8"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-2"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{NUM_REF2LIV}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<subreportParameter  name="num_invito">
+						<subreportParameterExpression><![CDATA[$F{IDINVITO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="INTERVENTO_DETAIL">
+						<subreportParameterExpression><![CDATA[$P{INTERVENTO_DETAIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{REFERTO2LIV_DETAIL}]]></subreportExpression>
+				</subreport>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="29"
+						width="368"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esito: "+$F{ESITO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="304"
+						y="15"
+						width="231"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-5"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{COD_RICHIESTA}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Codice richiesta: "+$F{COD_RICHIESTA}.toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

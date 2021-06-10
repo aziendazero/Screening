@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.accCo_esitoBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.ESITO_INVITO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{AccCo_esitoAction.frm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="80px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl49">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="#{viewcontrollerBundle.Precedente}" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{AccCo_esitoAction.prevInvitoColon}"/>
+                                        <af:button text="#{viewcontrollerBundle.Successivo}" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{AccCo_esitoAction.nextInvitoColon}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="#{viewcontrollerBundle.Etichette}" id="b2"
+                                                   rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="600"
+                                                   windowWidth="600" action="dialog:printPianoLavoro">
+                                            <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                    to="#{pageFlowScope.pl_centro}" type="action"></af:setPropertyListener>
+                                            <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                    to="#{pageFlowScope.pl_data}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                    to="#{pageFlowScope.pl_codts}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Idtpinvito.inputValue}"
+                                                                    to="#{pageFlowScope.pl_idtpinv}" type="action"/>                                                                    
+                                            <af:setPropertyListener from="single"
+                                                                    to="#{pageFlowScope.pl_type}" type="action"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="#{viewcontrollerBundle.Conferma}" id="b4" disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{AccCo_esitoAction.onConf}"/>
+                                        <af:button text="#{viewcontrollerBundle.Annulla}" id="b5" action="acc_toColon" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="#{viewcontrollerBundle.Applica}" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{AccCo_esitoAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s1" />
+                                <af:outputText value="#{viewcontrollerBundle.Soggettoescluso}" id="ot1" rendered="#{bindings.Escl.inputValue != null}"
+                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                <af:spacer width="30" height="10" id="s5" rendered="#{bindings.Escl.inputValue != null}"/>
+                                <af:outputText value="#{viewcontrollerBundle.Sollecitare}" id="ot2" rendered="#{bindings.Sollecitare == '1'}"
+                                               inlineStyle="color:Red; font-size:large;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelHeader text="#{viewcontrollerBundle.Datiinvito}" id="ph1" size="1">
+                                    <af:message id="m2" messageType="warning"
+                                                message="#{viewcontrollerBundle.Appuntamentodaconfermare}"
+                                                rendered="#{bindings.DaConfermare.inputValue == '1'}"/>
+                                    <af:panelGridLayout id="pgl4" partialTriggers="soc1">
+                                        <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                            <af:gridCell marginStart="5px" width="150px" id="gc1" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.Dtoraapp.hints.label}" id="ol1"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" id="gc2">
+                                                <af:inputDate value="#{bindings.Dtoraapp.inputValue}"
+                                                              label="#{bindings.Dtoraapp.hints.label}"
+                                                              required="#{bindings.Dtoraapp.hints.mandatory}"
+                                                              columns="#{bindings.Dtoraapp.hints.displayWidth}"
+                                                              shortDesc="#{bindings.Dtoraapp.hints.tooltip}" id="id1"
+                                                              disabled="true" simple="true">
+                                                    <f:validator binding="#{bindings.Dtoraapp.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.Dtoraapp.format}"/>
+                                                </af:inputDate>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="150px" id="gc3" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.TipoInvito.hints.label}" id="ol2"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" marginEnd="5px" id="gc4">
+                                                <af:inputText value="#{bindings.TipoInvito.inputValue}"
+                                                              label="#{bindings.TipoInvito.hints.label}"
+                                                              disabled="true"
+                                                              required="#{bindings.TipoInvito.hints.mandatory}"
+                                                              columns="50"
+                                                              maximumLength="#{bindings.TipoInvito.hints.precision}"
+                                                              shortDesc="#{bindings.TipoInvito.hints.tooltip}" id="it9"
+                                                              simple="true">
+                                                    <f:validator binding="#{bindings.TipoInvito.validator}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                        <af:gridRow marginTop="5px" height="auto" id="gr2">
+                                            <af:gridCell marginStart="5px" width="150px" id="gc5" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.Descrbreve.hints.label}" id="ol3"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" id="gc6">
+                                                <af:inputText value="#{bindings.Descrbreve.inputValue}"
+                                                              label="#{bindings.Descrbreve.hints.label}"
+                                                              required="#{bindings.Descrbreve.hints.mandatory}"
+                                                              columns="#{bindings.Descrbreve.hints.displayWidth}"
+                                                              maximumLength="#{bindings.Descrbreve.hints.precision}"
+                                                              shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="it2"
+                                                              disabled="true" simple="true">
+                                                    <f:validator binding="#{bindings.Descrbreve.validator}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="150px" id="gc7" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.CodidsoggMx.hints.label}" id="ol4"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" marginEnd="5px" id="gc8">
+                                                <af:inputText value="#{bindings.CodidsoggMx.inputValue}" simple="true"
+                                                              required="#{bindings.CodidsoggMx.hints.mandatory}"
+                                                              label="#{bindings.CodidsoggMx.hints.label}"
+                                                              columns="#{bindings.CodidsoggMx.hints.displayWidth}"
+                                                              maximumLength="#{bindings.CodidsoggMx.hints.precision}"
+                                                              shortDesc="#{bindings.CodidsoggMx.hints.tooltip}" id="it5"
+                                                              disabled="true">
+                                                    <f:validator binding="#{bindings.CodidsoggMx.validator}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                        <af:gridRow marginTop="5px" height="auto" id="gr3" rendered="#{bindings.Livello == '1'}">
+                                            <af:gridCell marginStart="5px" width="150px" id="gc9" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.CodCampione.hints.label}" id="ol5"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" id="gc10">
+                                                <af:inputText value="#{bindings.CodCampione.inputValue}"
+                                                              label="#{bindings.CodCampione.hints.label}"
+                                                              rendered="#{bindings.Livello == '1'}"
+                                                              columns="#{bindings.CodCampione.hints.displayWidth}"
+                                                              maximumLength="#{bindings.CodCampione.hints.precision}"
+                                                              shortDesc="#{bindings.CodCampione.hints.tooltip}" id="it39"
+                                                              disabled="#{sessionScope.refPresente?true: sessionScope.campione==true}"
+                                                              simple="true">
+                                                    <f:validator binding="#{bindings.CodCampione.validator}"/>
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.CodCampione.format}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="150px" id="gc11" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.CodRichiesta.hints.label}" id="ol6"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" marginEnd="5px" id="gc12">
+                                                <af:inputText value="#{bindings.CodRichiesta.inputValue}"
+                                                              label="#{bindings.CodRichiesta.hints.label}"
+                                                              rendered="#{bindings.Livello == '1'}"
+                                                              columns="#{bindings.CodRichiesta.hints.displayWidth}"
+                                                              maximumLength="#{bindings.CodRichiesta.hints.precision}"
+                                                              shortDesc="#{bindings.CodRichiesta.hints.tooltip}" id="it3"
+                                                              disabled="#{sessionScope.refPresente?true: sessionScope.richiesta==true}"
+                                                              simple="true">
+                                                    <f:validator binding="#{bindings.CodRichiesta.validator}"/>
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.CodRichiesta.format}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                        <af:gridRow marginTop="5px" height="28px" id="gr4">
+                                            <af:gridCell marginStart="5px" width="150px" id="gc13" valign="middle"
+                                                         halign="end">
+                                                <af:outputLabel value="#{bindings.Livello == '2' ? bindings.CodRichiesta1.hints.label: ''}" id="ol7"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" id="gc17"
+                                                            columnSpan="#{sessionScope.SOAgenda==true &amp;&amp; bindings.Codesitoinvito.attributeValue == '?' ? '1' : '2'}">
+                                                <af:inputText value="#{bindings.CodRichiesta1.inputValue}"
+                                                              label="#{bindings.CodRichiesta1.hints.label}"
+                                                              rendered="#{bindings.Livello == '2'}"
+                                                              simple="true"
+                                                              columns="#{bindings.CodRichiesta1.hints.displayWidth}"
+                                                              maximumLength="#{bindings.CodRichiesta1.hints.precision}"
+                                                              shortDesc="#{bindings.CodRichiesta1.hints.tooltip}" id="it4"
+                                                              disabled="#{sessionScope.refPresente?true: sessionScope.richiesta==true}">
+                                                    <f:validator binding="#{bindings.CodRichiesta1.validator}"/>
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.CodRichiesta1.format}"/>
+                                                </af:inputText>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="150px" id="gc133" valign="middle" rendered="#{sessionScope.SOAgenda==true &amp;&amp; bindings.Codesitoinvito.attributeValue == '?' }"
+                                                         halign="end">
+                                                <af:outputLabel value="#{''}" id="ol7s"/>
+                                            </af:gridCell>
+                                            <af:gridCell marginStart="5px" width="450px" id="gc18">
+                                                <af:link id="l1" icon="../images/calendar.png" iconPosition="leading" 
+                                                         rendered="#{sessionScope.sposta_invito==true and sessionScope.SOAgenda==true &amp;&amp; bindings.Codesitoinvito.attributeValue == '?' }"
+                                                         action="#{MenuUtilBean.doAction('ag_preGiorn', AccCo_esitoAction, null)}"
+                                                         styleClass="img32">
+                                                    <af:setPropertyListener from="#{Ag_daInvitoAction}"
+                                                                            to="#{pageFlowScope.agendaObject}" type="action"/>
+                                                </af:link>
+                                            </af:gridCell>
+                                        </af:gridRow>
+                                    </af:panelGridLayout>
+                                </af:panelHeader>
+                                <af:spacer width="10" height="30" id="s2"/>
+                                <af:panelHeader text="Esito invito" id="ph2" size="1">
+                                   <af:panelFormLayout id="pfl2"  maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.Codesitoinvito.inputValue}"
+                                                            label="#{bindings.Codesitoinvito.label}"
+                                                            disabled="#{sessionScope.refPresente}"
+                                                            required="#{bindings.Codesitoinvito.hints.mandatory}"
+                                                            shortDesc="#{bindings.Codesitoinvito.hints.tooltip}"
+                                                            id="soc1" valuePassThru="true" autoSubmit="true"
+                                                            styleClass="choiceInTable">
+                                            <f:selectItems value="#{bindings.Codesitoinvito.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.Codesitoinvito.validator}"/>
+                                        </af:selectOneChoice>
+                                         <af:inputDate value="#{bindings.Dtritcont.inputValue}"
+                                                      label="#{bindings.Dtritcont.hints.label}"
+                                                      required="#{bindings.Dtritcont.hints.mandatory}"
+                                                      columns="#{bindings.Dtritcont.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtritcont.hints.tooltip}" id="id3"
+                                                      disabled="#{sessionScope.refPresente}"
+                                                      rendered="#{bindings.Livello == '1' &amp;&amp; (bindings.Codesitoinvito.attributeValue == 'Q' || bindings.Codesitoinvito.attributeValue == 'S')}">
+                                            <f:validator binding="#{bindings.Dtritcont.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtritcont.format}"/>
+                                        </af:inputDate>
+                                    </af:panelFormLayout>
+                                    <af:panelFormLayout id="pf29" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                        <af:inputDate value="#{bindings.Dtesamerecente.inputValue}"
+                                                      label="#{bindings.Dtesamerecente.hints.label}"
+                                                      rendered="#{bindings.MetodoCalcolo == 'D'}"
+                                                      disabled="#{sessionScope.refPresente}"
+                                                      columns="#{bindings.Dtesamerecente.hints.displayWidth}"
+                                                      shortDesc="#{bindings.Dtesamerecente.hints.tooltip}" id="id2"
+                                                      showRequired="#{bindings.DataObbligatoria=='1'}">
+                                            <f:validator binding="#{bindings.Dtesamerecente.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtesamerecente.format}"/>
+                                        </af:inputDate>
+                                        <af:inputDate value="#{bindings.Dtconscont.inputValue}"
+                                                      label="#{bindings.Dtconscont.hints.label}"
+                                                      required="#{bindings.Dtconscont.hints.mandatory}"
+                                                      columns="#{bindings.Dtconscont.hints.displayWidth}"
+                                                      disabled="#{sessionScope.refPresente}"
+                                                      rendered="#{bindings.Livello == '1' &amp;&amp; bindings.Codesitoinvito.attributeValue == 'S'}"
+                                                      shortDesc="#{bindings.Dtconscont.hints.tooltip}" id="id4">
+                                            <f:validator binding="#{bindings.Dtconscont.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtconscont.format}"/>
+                                        </af:inputDate>
+                                        <af:inputText value="#{bindings.Descrsugg.inputValue}"
+                                                      label="#{bindings.Descrsugg.hints.label}"
+                                                      required="#{bindings.Descrsugg.hints.mandatory}" columns="45"
+                                                      shortDesc="#{bindings.Descrsugg.hints.tooltip}" id="it7"
+                                                      disabled="true">
+                                            <f:validator binding="#{bindings.Descrsugg.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                   <af:panelFormLayout id="pf291" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                        <af:inputDate value="#{bindings.Dtrichiamo.inputValue}"
+                                                      label="#{bindings.Dtrichiamo.hints.label}"
+                                                      required="#{bindings.Dtrichiamo.hints.mandatory}"
+                                                      columns="#{bindings.Dtrichiamo.hints.displayWidth}"
+                                                      disabled="true"
+                                                      shortDesc="#{bindings.Dtrichiamo.hints.tooltip}" id="id5">
+                                            <f:validator binding="#{bindings.Dtrichiamo.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.Dtrichiamo.format}"/>
+                                        </af:inputDate>
+                                    </af:panelFormLayout>
+                               </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="funzionalita" value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="soggData" value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue,bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{AccCo_esitoAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

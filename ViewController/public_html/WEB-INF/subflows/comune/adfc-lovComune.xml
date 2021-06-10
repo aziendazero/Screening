@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="adfc-lovComune">
+    <default-activity>init</default-activity>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <input-parameter-definition id="__3">
+      <name>searchText</name>
+      <value>#{requestScope.searchText}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__5">
+      <name>source</name>
+      <value>#{pageFlowScope.source}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__9">
+      <name>iteratorBinding</name>
+      <value>#{pageFlowScope.iteratorBinding}</value>
+      <class>oracle.adf.model.binding.DCIteratorBinding</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__10">
+      <name>onOneReturn</name>
+      <value>#{requestScope.onOneReturn}</value>
+      <class>java.lang.Boolean</class>
+    </input-parameter-definition>
+    <managed-bean id="__6">
+      <managed-bean-name>LovComuneAction</managed-bean-name>
+      <managed-bean-class>view.comune.LovComuneAction</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <view id="lovComune">
+      <page>/pages/comune/lovComune.jsf</page>
+    </view>
+    <task-flow-return id="return">
+      <outcome>
+        <name>return</name>
+      </outcome>
+    </task-flow-return>
+    <method-call id="init">
+      <method>#{LovComuneAction.onLovFilter}</method>
+      <outcome>
+        <fixed-outcome>initialized</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__1">
+      <from-activity-id>lovComune</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>selected</from-outcome>
+        <to-activity-id>return</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__4">
+        <from-outcome>annulla</from-outcome>
+        <to-activity-id>return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id>init</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome>initialized</from-outcome>
+        <to-activity-id>lovComune</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

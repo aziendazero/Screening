@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_SdospsDaextView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;COGNOME&#34;,&#34;NOME&#34;,&#34;DATA_NASCITA&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_SdospsDaextViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT a.tipo_flusso, a.ulss, a.codts, a.cf, a.cognome, a.nome,
+       a.data_nascita, a.ulss_inviante, a.data_id, decode(a.tipo_flusso, 'SDO', nvl(a.codsdo_dia,a.codsdo_int), a.codsps_ps) cod_prestazione,
+       case 
+        when a.tipo_flusso = 'SDO' and a.codsdo_dia is not null then CNF_DIAG.descrizione
+        when a.tipo_flusso = 'SDO' and a.codsdo_dia is null then CNF_INT.descrizione
+        else CNF_PREST.descrizione 
+       end des_prestazione
+  FROM so_sdosps_daext a, SO_CNF_SDOSPS CNF_DIAG, SO_CNF_SDOSPS CNF_INT, SO_CNF_SDOSPS CNF_PREST
+where
+ CNF_DIAG.CODSDOSPS (+) = TRIM(a.codsdo_dia)
+ AND CNF_DIAG.TIPO_FLUSSO (+) = trim(a.TIPO_FLUSSO)
+ AND CNF_INT.CODSDOSPS (+) = TRIM(a.codsdo_int)
+ AND CNF_INT.TIPO_FLUSSO (+) = trim(a.TIPO_FLUSSO)
+ AND CNF_PREST.CODSDOSPS (+) = TRIM(a.codsps_ps)
+ AND CNF_PREST.TIPO_FLUSSO (+) = trim(a.TIPO_FLUSSO)
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="TipoFlusso"
+      IsPersistent="false"
+      Precision="3"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TIPO_FLUSSO"
+      Expression="TIPO_FLUSSO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codts_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CF"
+      Expression="CF"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="COGNOME"
+      Expression="COGNOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="NOME"
+      Expression="NOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="DATA_NASCITA"
+      Expression="DATA_NASCITA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UlssInviante"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS_INVIANTE"
+      Expression="ULSS_INVIANTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="UlssInviante_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataId"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="DATA_ID"
+      Expression="DATA_ID"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodPrestazione"
+      IsPersistent="false"
+      Precision="7"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COD_PRESTAZIONE"
+      Expression="COD_PRESTAZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CodPrestazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DesPrestazione"
+      IsPersistent="false"
+      Precision="1000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DES_PRESTAZIONE"
+      Expression="DES_PRESTAZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DesPrestazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.impexp.common.Impexp_SdospsDaextViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

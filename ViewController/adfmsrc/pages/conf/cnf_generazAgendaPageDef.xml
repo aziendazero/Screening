@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_generazAgendaPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Cnf_selectionBean" id="Cnf_selectionBeanIterator"/>
+    <iterator Binds="Cnf_SoCnfCentroPrelView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroPrelView1Iterator"/>
+    <iterator id="Cnf_SoAgendacentroView3Iterator" Binds="Cnf_SoAgendacentroView3"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+    <iterator id="Cnf_SoAppuntamentoView1Iterator" Binds="Cnf_SoAppuntamentoView1"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+    <iterator id="Cnf_SoSlotInvitiView1Iterator" Binds="Cnf_SoSlotInvitiView1" DataControl="Cnf_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Cnf_SoChiusuracentroView1Iterator" Binds="Cnf_SoChiusuracentroView1"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+    <iterator id="Cnf_SoInvitoView1Iterator" Binds="Cnf_SoInvitoView1" DataControl="Cnf_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Cnf_SoCentroPrelRefView1Iterator" Binds="Cnf_SoCentroPrelRefView1"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Cnf_selectionBeanIterator" id="centro" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoCnfCentroPrelView1Iterator">
+      <AttrNames>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

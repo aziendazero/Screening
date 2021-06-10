@@ -1,0 +1,898 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_ricercaBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.FUNZIONALITA}" id="d1" initialFocusId="pt1:it1">
+        <af:resource type="javascript">
+          function onBdlClickSelect() {
+              var button = AdfPage.PAGE.findComponentByAbsoluteId('pc1:bselect');
+              var isOk = button != null &amp;&amp; button.getProperty("visible") == true &amp;&amp; button.getProperty("disabled") == false;
+              if (isOk)
+                  AdfActionEvent.queue(button, button.getPartialSubmit());
+
+          }
+        </af:resource>
+        <af:messages id="m1"/>
+        <af:clientListener method="setFocus('pt1:it1', false)" type="load"/>
+        <af:clientListener method="removeEmptyOptionList(['pt1:soc3'])"
+                   type="load"/>    
+        <af:form id="f1" binding="#{IniSoggAction.formSearch}" defaultCommand="pt1:btcerca">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.FUNZIONALITA}"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                        <af:panelHeader text="#{viewcontrollerBundle.PANEL_SEARCH_TITLE}" id="ph1"
+                                        binding="#{Sogg_ricercaAction.panelSearch}">
+                            <af:panelGridLayout id="pgl2" partialTriggers="btreset">
+                                <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc1" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.idCprel.label}" id="ol1"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc2">
+                                        <af:selectOneChoice value="#{bindings.idCprel.inputValue}"
+                                                            label="#{bindings.idCprel.label}"
+                                                            required="#{bindings.idCprel.hints.mandatory}"
+                                                            shortDesc="#{bindings.idCprel.hints.tooltip}" id="soc1"
+                                                            simple="true">
+                                            <f:selectItems value="#{bindings.idCprel.items}" id="si1"/>
+                                            <f:validator binding="#{bindings.idCprel.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc3" halign="end" valign="top">
+                                        <af:outputLabel value="#{viewcontrollerBundle.DATA_INVITO}" id="ol2"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc4">
+                                        <af:inputDate simple="true" label="#{viewcontrollerBundle.DATA_INVITO}" id="id1"
+                                                      value="#{sessionScope.dtInvito}">
+                                            <af:convertDateTime pattern="#{viewcontrollerBundle.DATA_INVITO_PATTERN}"/>
+                                        </af:inputDate>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc5" halign="end" valign="top"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{viewcontrollerBundle.DATA_NASCITA}" id="ol3"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc6"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:inputDate simple="true" label="#{viewcontrollerBundle.DATA_NASCITA}"
+                                                      id="id2" value="#{sessionScope.dtNasc}">
+                                            <af:convertDateTime pattern="#{viewcontrollerBundle.DATA_NASCITA_PATTERN}"/>
+                                        </af:inputDate>
+                                    </af:gridCell>
+
+                                    <af:gridCell marginStart="5px" width="auto" id="gc55" halign="end" valign="top"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{viewcontrollerBundle.ANNO_NASCITA}" id="ol33"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc66"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:inputText value="#{bindings.annoNascita.inputValue}" simple="true"
+                                                      required="#{bindings.annoNascita.hints.mandatory}"
+                                                      columns="#{bindings.annoNascita.hints.displayWidth}"
+                                                      maximumLength="#{bindings.annoNascita.hints.precision}"
+                                                      shortDesc="#{bindings.annoNascita.hints.tooltip}" 
+                                                      contentStyle="width:40px;" id="it10">
+                                            <f:validator binding="#{bindings.annoNascita.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.annoNascita.format}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr19"
+                                rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc7" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.cognome.hints.label}" id="ol4"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc8">
+                                        <af:inputText value="#{bindings.cognome.inputValue}"
+                                                      label="#{bindings.cognome.hints.label}"
+                                                      required="#{bindings.cognome.hints.mandatory}"
+                                                      columns="#{bindings.cognome.hints.displayWidth}"
+                                                      maximumLength="#{bindings.cognome.hints.precision}"
+                                                      shortDesc="#{bindings.cognome.hints.tooltip}" id="it1"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.cognome.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc9" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.nome.hints.label}" id="ol5"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc10">
+                                        <af:inputText value="#{bindings.nome.inputValue}"
+                                                      label="#{bindings.nome.hints.label}"
+                                                      required="#{bindings.nome.hints.mandatory}"
+                                                      columns="#{bindings.nome.hints.displayWidth}"
+                                                      maximumLength="#{bindings.nome.hints.precision}"
+                                                      shortDesc="#{bindings.nome.hints.tooltip}" id="it2" simple="true">
+                                            <f:validator binding="#{bindings.nome.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc11" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.codFisc.hints.label}" id="ol10"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc12">
+                                        <af:inputText value="#{bindings.codFisc.inputValue}"
+                                                      label="#{bindings.codFisc.hints.label}"
+                                                      required="#{bindings.codFisc.hints.mandatory}"
+                                                      columns="#{bindings.codFisc.hints.displayWidth}"
+                                                      maximumLength="#{bindings.codFisc.hints.precision}"
+                                                      clientComponent="true"
+                                                      shortDesc="#{bindings.codFisc.hints.tooltip}" id="itCF"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.codFisc.validator}"/>
+                                            <af:clientListener type="keyUp" method="toUppercase"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr2">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc13" halign="end" valign="top"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{bindings.tessSan.hints.label}" id="ol11"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc14"
+                                    rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:inputText value="#{bindings.tessSan.inputValue}"
+                                                      label="#{bindings.tessSan.hints.label}"
+                                                      required="#{bindings.tessSan.hints.mandatory}"
+                                                      columns="#{bindings.tessSan.hints.displayWidth}"
+                                                      maximumLength="#{bindings.tessSan.hints.precision}"
+                                                      shortDesc="#{bindings.tessSan.hints.tooltip}" id="it4"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.tessSan.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc15" halign="end" valign="top">
+                                        <af:outputLabel value="#{viewcontrollerBundle.COD__COMUNE}" id="ol12"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc16">
+                                        <af:inputText label="#{viewcontrollerBundle.COD__COMUNE}" id="codc"
+                                                      simple="true" value="#{sessionScope.codCom}" autoSubmit="true"
+                                                      binding="#{Sogg_ricercaAction.codiceComune}">
+                                            <af:setPropertyListener from="#{Sogg_ricercaAction.codiceComune.getValue()}"
+                                                                    to="#{bindings.idComRes.inputValue}"
+                                                                    type="valueChange"/>
+                                            <af:setPropertyListener from="#{Sogg_ricercaAction.codiceComune.getValue()==''?'':bindings.desComRes.inputValue}"
+                                                                    to="#{bindings.desComRes.inputValue}"
+                                                                    type="valueChange"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc17" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.desComRes.hints.label}" id="ol13"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc18">
+                                        <af:panelLabelAndMessage label='#{""}' id="plam1" labelStyle="display:none">
+                                            <af:inputText value="#{bindings.desComRes.inputValue}"
+                                                          label="#{bindings.desComRes.hints.label}"
+                                                          required="#{bindings.desComRes.hints.mandatory}"
+                                                          columns="#{bindings.desComRes.hints.displayWidth}"
+                                                          maximumLength="#{bindings.desComRes.hints.precision}"
+                                                          shortDesc="#{bindings.desComRes.hints.tooltip}" id="it5"
+                                                          partialTriggers="codc"
+                                                          simple="true" binding="#{Sogg_ricercaAction.descComune}" >
+                                                <f:validator binding="#{bindings.desComRes.validator}"/>
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                                <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l1\')'})"
+                                                                   type="blur"/>
+                                                <af:serverListener type="customEvent"
+                                                                   method="#{Sogg_ricercaAction.setParameterAndCallback}"/-->
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l1" icon="/images/search_16.png" iconPosition="leading"
+                                                         action="#{Sogg_ricercaAction.onChCodCom}"
+                                                         inlineStyle="padding: 1px;"
+                                                         shortDesc="#{viewcontrollerBundle.SELEZIONA_COMUNE}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_ricercaAction.lovComuneReturnListener}">
+                                                    <af:setPropertyListener from="#{bindings.desComRes.inputValue != null ? bindings.desComRes.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_desComRes"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                    <af:setPropertyListener from="#{bindings.Sogg_ComuneView1Iterator}"
+                                                                            to="#{requestScope.iteratorBinding}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                            to="#{requestScope.onClick}" type="action"/>
+                                                    <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                            to="#{requestScope.onOneReturn}"
+                                                                            type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr3">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc19" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.idDistr.hints.label}" id="ol14"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc20">
+                                        <af:selectOneChoice value="#{bindings.idDistr.inputValue}"
+                                                            label="#{bindings.idDistr.label}"
+                                                            required="#{bindings.idDistr.hints.mandatory}"
+                                                            shortDesc="#{bindings.idDistr.hints.tooltip}" id="soc2"
+                                                            binding="#{Sogg_ricercaAction.idDistr}"
+                                                            disabled="#{sessionScope.codCom == null || sessionScope.codCom.trim().isEmpty()}"
+                                                            simple="true">
+                                            <f:selectItems value="#{bindings.idDistr.items}" id="si2"/>
+                                            <f:validator binding="#{bindings.idDistr.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc21" halign="end" valign="top">
+                                        <af:outputLabel value="#{viewcontrollerBundle.COD__MEDICO}" id="ol15"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc22">
+                                        <af:inputText label="#{viewcontrollerBundle.COD__MEDICO}" id="codm"
+                                                      simple="true" value="#{sessionScope.codMed}" autoSubmit="true"
+                                                      binding="#{Sogg_ricercaAction.codMed}">
+                                            <af:validateRegExp pattern="^[0-9]*$"
+                                                               messageDetailNoMatch="#{viewcontrollerBundle.IMMETTERE__UN_VALORE_NUMERICO}"/>
+                                            <af:setPropertyListener from="#{Sogg_ricercaAction.codMed.getValue()!='' ? Sogg_ricercaAction.codMed.getValue(): null}"
+                                                                    to="#{bindings.idMedico.inputValue}"
+                                                                    type="valueChange"/>
+                                            <af:setPropertyListener from="#{Sogg_ricercaAction.codMed.getValue()==''?'':bindings.desMedico.inputValue}"
+                                                                    to="#{bindings.desMedico.inputValue}"
+                                                                    type="valueChange"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc23" halign="end" valign="top">
+                                        <af:outputLabel value="#{viewcontrollerBundle.MEDICO}" id="ol16"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc24">
+                                        <af:panelLabelAndMessage label='#{""}' id="plam2" labelStyle="display:none">
+                                            <af:inputText value="#{bindings.desMedico.inputValue}"
+                                                          label="#{bindings.desMedico.hints.label}"
+                                                          required="#{bindings.desMedico.hints.mandatory}"
+                                                          columns="#{bindings.desMedico.hints.displayWidth}"
+                                                          maximumLength="#{bindings.desMedico.hints.precision}"
+                                                          shortDesc="#{bindings.desMedico.hints.tooltip}" id="it6"
+                                                          simple="true" binding="#{Sogg_ricercaAction.desMedico}"
+                                                          partialTriggers="codm">
+                                                <f:validator binding="#{bindings.desMedico.validator}"/>
+                                            </af:inputText>
+                                            <f:facet name="end">
+                                                <af:link id="l2" icon="/images/search_16.png" iconPosition="leading"
+                                                         action="lovMedico" inlineStyle="padding: 1px;"
+                                                         shortDesc="#{viewcontrollerBundle.SELEZIONA_MEDICO}"
+                                                         useWindow="true" windowHeight="600" windowWidth="750"
+                                                         returnListener="#{Sogg_ricercaAction.lovMedicoReturnListener}">
+                                                    <af:setPropertyListener from="#{bindings.desMedico.inputValue != null ? bindings.desMedico.inputValue : ''}"
+                                                                            to="#{requestScope.searchText}"
+                                                                            type="action"/>
+                                                    <af:setPropertyListener from="VB_desMedico"
+                                                                            to="#{requestScope.source}" type="action"/>
+                                                </af:link>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr4"
+                                rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc27" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.tipoDocumento.hints.label}" id="ol18"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc28">
+                                        <af:selectOneChoice value="#{bindings.tipoDocumento.inputValue}"
+                                                            label="#{bindings.tipoDocumento.label}"
+                                                            required="#{bindings.tipoDocumento.hints.mandatory}"
+                                                            shortDesc="#{bindings.tipoDocumento.hints.tooltip}"
+                                                            id="soc3" simple="true" autoSubmit="true">
+                                            <f:selectItems value="#{bindings.tipoDocumento.items}" id="si3"/>
+                                            <f:validator binding="#{bindings.tipoDocumento.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc29" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.codiceDocumento.hints.label}" id="ol19"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc30">
+                                        <af:inputText value="#{bindings.codiceDocumento.inputValue}"
+                                                      label="#{bindings.codiceDocumento.hints.label}"
+                                                      required="#{bindings.codiceDocumento.hints.mandatory}"
+                                                      columns="#{bindings.codiceDocumento.hints.displayWidth}"
+                                                      maximumLength="#{bindings.codiceDocumento.hints.precision}"
+                                                      shortDesc="#{bindings.codiceDocumento.hints.tooltip}" id="it7"
+                                                      simple="true">
+                                            <f:validator binding="#{bindings.codiceDocumento.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc45" halign="end" valign="top">
+                                        <af:outputLabel value="MPI" id="ol7"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc46">
+                                        <af:inputText value="#{bindings.mpiRegionale.inputValue}" simple="true"
+                                                      required="#{bindings.mpiRegionale.hints.mandatory}"
+                                                      columns="#{bindings.mpiRegionale.hints.displayWidth}"
+                                                      maximumLength="#{bindings.mpiRegionale.hints.precision}"
+                                                      shortDesc="#{bindings.mpiRegionale.hints.tooltip}" id="it3">
+                                            <f:validator binding="#{bindings.mpiRegionale.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr5">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc25" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.inEta.hints.label}" id="ol17"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc26">
+                                        <af:panelLabelAndMessage partialTriggers="sbc1" label='#{""}' id="plam3"
+                                                                 labelStyle="display:none">
+                                            <af:selectBooleanCheckbox value="#{bindings.inEta.inputValue}"
+                                                                      label="#{bindings.inEta.label}"
+                                                                      shortDesc="#{bindings.inEta.hints.tooltip}"
+                                                                      id="sbc1" simple="true"
+                                                                      valueChangeListener="#{Sogg_ricercaAction.onChineta}"
+                                                                      autoSubmit="true"/>
+                                            <f:facet name="end">
+                                                <af:outputLabel value="Fascia: #{bindings.etaMin}-#{bindings.etaMax}"
+                                                                id="ol6" rendered="#{sessionScope.inEta}"/>
+                                            </f:facet>
+                                        </af:panelLabelAndMessage>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc31" halign="end" valign="top"
+                                        rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{bindings.soloStorico.hints.label}" id="ol20"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc32"
+                                        rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                        <af:selectBooleanCheckbox value="#{bindings.soloStorico.inputValue}"
+                                                                  label="#{bindings.soloStorico.label}"
+                                                                  shortDesc="#{bindings.soloStorico.hints.tooltip}"
+                                                                  id="sbc2" simple="true"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc33"
+                                                 rendered="#{sessionScope.scr eq 'CO'}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.altoRischio.hints.label}" id="ol21"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc34"
+                                                 rendered="#{sessionScope.scr eq 'CO'}">
+                                        <af:selectBooleanCheckbox value="#{bindings.altoRischio.inputValue}"
+                                                                  label="#{bindings.altoRischio.label}"
+                                                                  shortDesc="#{bindings.altoRischio.hints.tooltip}"
+                                                                  id="sbc3" simple="true"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr59">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc37"
+                                                 rendered="#{sessionScope.trial > 0}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.idStatoTrial.hints.label}" id="o69"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc38"
+                                                 rendered="#{sessionScope.trial > 0}">
+                                        <af:selectOneChoice value="#{bindings.idStatoTrial.inputValue}"
+                                                            label="#{bindings.idStatoTrial.label}"
+                                                            required="#{bindings.idStatoTrial.hints.mandatory}"
+                                                            shortDesc="#{bindings.idStatoTrial.hints.tooltip}" id="soc4"
+                                                            simple="true">
+                                            <f:selectItems value="#{bindings.idStatoTrial.items}" id="si4"/>
+                                            <f:validator binding="#{bindings.idStatoTrial.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc39"
+                                                 rendered="#{sessionScope.trial > 0}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.idBraccioTrial.hints.label}" id="ol24"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc40"
+                                                 rendered="#{sessionScope.trial > 0}">
+                                        <af:selectOneChoice value="#{bindings.idBraccioTrial.inputValue}"
+                                                            label="#{bindings.idBraccioTrial.label}"
+                                                            required="#{bindings.idBraccioTrial.hints.mandatory}"
+                                                            shortDesc="#{bindings.idBraccioTrial.hints.tooltip}"
+                                                            id="soc5" simple="true">
+                                            <f:selectItems value="#{bindings.idBraccioTrial.items}" id="si5"/>
+                                            <f:validator binding="#{bindings.idBraccioTrial.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr591" rendered="#{sessionScope.HPV}">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc41"
+                                                 rendered="#{sessionScope.HPV}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.testProposto.hints.label}" id="ol25"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc42"
+                                                 rendered="#{sessionScope.HPV}">
+                                        <af:selectOneChoice value="#{bindings.testProposto.inputValue}"
+                                                            label="#{bindings.testProposto.label}"
+                                                            required="#{bindings.testProposto.hints.mandatory}"
+                                                            shortDesc="#{bindings.testProposto.hints.tooltip}" id="soc6"
+                                                            simple="true" unselectedLabel='#{""}'>
+                                            <f:selectItems value="#{bindings.testProposto.items}" id="si6"/>
+                                            <f:validator binding="#{bindings.testProposto.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gc43"
+                                                 rendered="#{sessionScope.HPV}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.prelievoHpv.hints.label}" id="ol26"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc44"
+                                                 rendered="#{sessionScope.trial > 0}">
+                                        <af:selectOneChoice value="#{bindings.prelievoHpv.inputValue}"
+                                                            label="#{bindings.prelievoHpv.label}"
+                                                            required="#{bindings.prelievoHpv.hints.mandatory}"
+                                                            shortDesc="#{bindings.prelievoHpv.hints.tooltip}" id="soc7"
+                                                            unselectedLabel='#{""}' simple="true">
+                                            <f:selectItems value="#{bindings.prelievoHpv.items}" id="si7"/>
+                                            <f:validator binding="#{bindings.prelievoHpv.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr6" rendered="#{sessionScope.scr eq 'MA'}">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc35"
+                                                 rendered="#{sessionScope.scr eq 'MA'}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.restituire.hints.label}" id="ol22"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc36"
+                                                 rendered="#{sessionScope.scr eq 'MA'}">
+                                        <af:selectBooleanCheckbox value="#{bindings.restituire.inputValue}"
+                                                                  label="#{bindings.restituire.label}"
+                                                                  shortDesc="#{bindings.restituire.hints.tooltip}"
+                                                                  id="sbc4" simple="true"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow marginTop="5px" height="auto" id="gr7">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc47" rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}" halign="end" valign="top">
+                                        <af:outputLabel value="#{bindings.codClassePop.hints.label}" id="ol8"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc48">
+                                        <af:selectOneChoice value="#{bindings.codClassePop.inputValue}"
+                                                            label="#{bindings.codClassePop.label}"
+                                                            required="#{bindings.codClassePop.hints.mandatory}"
+                                                            rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}"
+                                                            shortDesc="#{bindings.codClassePop.hints.tooltip}"
+                                                            simple="true"
+                                                            id="soc8" autoSubmit="true" valuePassThru="true"
+                                                            valueChangeListener="#{Sogg_ricercaAction.onChangeCodClassePop}">
+                                            <f:selectItems value="#{bindings.codClassePop.items}" id="si8"/>
+                                            <f:validator binding="#{bindings.codClassePop.validator}"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    
+                                    <af:gridCell marginStart="5px" width="150px" id="gc65" halign="end" valign="top"
+                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true and !sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{viewcontrollerBundle.COD__RICHIESTA}" id="ol23"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc76"
+                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true and !sessionScope.SONoDatiSensibili==true}">
+                                        <af:inputText value="#{bindings.codRichiesta.inputValue}" simple="true"
+                                                      required="#{bindings.codRichiesta.hints.mandatory}"
+                                                      columns="#{bindings.codRichiesta.hints.displayWidth}"
+                                                      maximumLength="#{bindings.codRichiesta.hints.precision}"
+                                                      shortDesc="#{bindings.codRichiesta.hints.tooltip}" id="it13">
+                                            <af:validateRegExp pattern="^[0-9]*$"
+                                                               messageDetailNoMatch="#{viewcontrollerBundle.IMMETTERE__UN_VALORE_NUMERICO}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="150px" id="gs65" halign="end" valign="top"
+                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true and !sessionScope.SONoDatiSensibili==true}">
+                                        <af:outputLabel value="#{viewcontrollerBundle.COD__CAMPIONE}" id="op23"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gl76"
+                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true and !sessionScope.SONoDatiSensibili==true}">
+                                        <af:inputText value="#{bindings.codCampione.inputValue}" simple="true"
+                                                      required="#{bindings.codCampione.hints.mandatory}"
+                                                      columns="#{bindings.codCampione.hints.displayWidth}"
+                                                      maximumLength="#{bindings.codCampione.hints.precision}"
+                                                      shortDesc="#{bindings.codCampione.hints.tooltip}" id="it11">
+                                            <af:validateRegExp pattern="^[0-9]*$"
+                                                               messageDetailNoMatch="#{viewcontrollerBundle.IMMETTERE__UN_VALORE_NUMERICO}"/>
+                                        </af:inputText>
+                                    </af:gridCell>                                      
+                                    
+                                </af:gridRow>
+                                <af:gridRow id="gr8">
+                                    <af:gridCell marginStart="5px" width="150px" id="gc49"
+                                                 rendered="#{sessionScope.SOAccessoAnonimo==true}" halign="end"
+                                                 valign="top">
+                                        <af:outputLabel value="Chiave anonima" id="ol27"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="auto" id="gc50"
+                                                 rendered="#{sessionScope.SOAccessoAnonimo==true}">
+                                        <af:inputText value="#{bindings.chiave.inputValue}" simple="true"
+                                                      required="#{bindings.chiave.hints.mandatory}"
+                                                      columns="#{bindings.chiave.hints.displayWidth}"
+                                                      maximumLength="#{bindings.chiave.hints.precision}"
+                                                      shortDesc="#{bindings.chiave.hints.tooltip}" id="it8">
+                                            <f:validator binding="#{bindings.chiave.validator}"/>
+                                        </af:inputText>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                            <af:panelFormLayout id="pfl1">
+                                <f:facet name="footer">
+                                    <af:toolbar id="t2" inlineStyle='padding-right: 13px'>
+                                        <af:button action="#{Sogg_ricercaAction.onCerca}"
+                                                   text="#{viewcontrollerBundle.CERCA}" id="btcerca"
+                                                   clientComponent="true"/>
+                                        <af:button text="#{viewcontrollerBundle.CANCELLA_FILTRI}"
+                                                   action="#{Sogg_ricercaAction.onReimp}" id="btreset"/>
+                                    </af:toolbar>
+                                </f:facet>
+                            </af:panelFormLayout>
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t4">
+                                    <!-- I00097084 af:button text="Nuovo soggetto" id="b9" action="#{Sogg_ricercaAction.onNuova}"
+                                               rendered="#{sessionScope.SODatiAnagraficiStandardWrite==true}"/ -->
+                                    <af:button action="aurSearch" text="Ricerca in AUR" disabled="false" id="b1"
+                                               rendered="#{Sogg_ricercaAction.aurEnabled}">
+                                        <af:setPropertyListener from="#{bindings.codFisc.inputValue}" to="#{bindings.fiscalCode.inputValue}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{bindings.cognome.inputValue}" to="#{bindings.nameFam.inputValue}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{bindings.nome.inputValue}" to="#{bindings.nameGiv.inputValue}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{bindings.tipoDocumento.inputValue=='TS' ? bindings.codiceDocumento.inputValue : null}" to="#{bindings.cs.inputValue}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{bindings.mpiRegionale.inputValue}" to="#{bindings.mpi.inputValue}"
+                                                                type="action"/>
+                                        <af:setPropertyListener from="#{sessionScope.dtNasc}" to="#{bindings.birthTimeDate.attributeValue}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="Piano di lavoro/Etichette" id="b10"
+                                               rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                               immediate="true" windowEmbedStyle="inlineDocument"
+                                               windowModalityType="applicationModal" windowHeight="850"
+                                               windowWidth="750" action="dialog:printPianoLavoro"
+                                               binding="#{IniSoggAction.btnPianoLavoroEtichette}">
+                                        <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                to="#{pageFlowScope.pl_centro}" type="action"/>
+                                        <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                to="#{pageFlowScope.pl_data}" type="action"/>
+                                        <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                to="#{pageFlowScope.pl_codts}" type="action"/>
+                                        <af:setPropertyListener from="more" to="#{pageFlowScope.pl_type}"
+                                                                type="action"/>                                                                
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                        </af:panelHeader>
+                        <af:spacer width="10" height="10" id="s1"/>
+                        <af:showDetail disclosed="false" id="sd1" disclosedText="Legenda" undisclosedText="Legenda"
+                                       styleClass="legenda">
+                            <af:panelGridLayout id="pgl5">
+                                <af:gridRow marginTop="5px" height="auto" id="gr16">
+                                    <af:gridCell marginStart="5px" width="10%" id="gc1699">
+                                        <af:inputText id="it9" readOnly="true" styleClass="CellaImportante"
+                                                      columns="10" label="#{''}" value=""/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="90%" marginEnd="5px" id="gc299">
+                                        <af:outputText value="" id="ot199"/>
+                                         <af:inputText id="it99" readOnly="true"
+                                                      columns="10" label="#{''}" value="2° livello"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                        </af:showDetail>
+                        <af:spacer width="10" height="10" id="s2"/>
+                        <af:panelCollection id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth"
+                                            partialTriggers="::btcerca">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t3" partialTriggers="t1">
+                                    <!-- Se in IniSoggAction ha trovato zero o n>1 configurazioni fast -->
+                                    <af:button text="Inviti fast"  id="b200"
+                                            actionListener="#{Sogg_ricercaAction.onInvitoFast}"
+                                            rendered="#{sessionScope.SOInvitoFast &amp;&amp; sessionScope.invitoFastDirect==false &amp;&amp; sessionScope.SOInvitoCorrente==true &amp;&amp; !sessionScope.SONoDatiSensibili==true}"
+                                            disabled="#{sessionScope.creaInvFast==false or (bindings.Sogg_RicercaView1Iterator.estimatedRowCount>0?false:true)}">
+                                    </af:button>  
+                                    <!-- Se in IniSoggAction ha trovato solo una configurazione fast -->
+                                    <af:button text="Invito fast"  id="b201"
+                                            action="#{Sogg_ricercaAction.onInvitoFast}"
+                                            rendered="#{sessionScope.SOInvitoFast &amp;&amp; sessionScope.invitoFastDirect==true &amp;&amp; sessionScope.SOInvitoCorrente==true &amp;&amp; !sessionScope.SONoDatiSensibili==true}"
+                                            disabled="#{sessionScope.creaInvFast==false or (bindings.Sogg_RicercaView1Iterator.estimatedRowCount>0?false:true)}">
+                                            <af:setPropertyListener from="true" to="#{pageFlowScope.showEsito}"
+                                                type="action"/>
+                                    </af:button>                                      
+                                    <af:panelGroupLayout id="pt_pgl6" halign="center" layout="horizontal">
+                                        <af:navigationPane id="np2" level="2" value="#{op_function_menu}" var="menuInfo"
+                                            rendered="#{MenuUtilBean.getMenuItemsSize(op_function_menu)>0}" hint="buttons"
+                                                           inlineStyle='display: inline-block; padding: 0px; cursor: default; white-space: nowrap; vertical-align: middle; min-height: 26px;border-radius: 2px;'>
+                                            <f:facet name="nodeStamp">
+                                                <af:commandNavigationItem text="#{menuInfo.label}" id="cni2"
+                                                                          destination="#{menuInfo.destination}"
+                                                                          rendered="#{menuInfo.rendered and menuInfo.visible}"
+                                                                          disabled="#{bindings.Sogg_RicercaView1Iterator.estimatedRowCount>0?false:true}"
+                                                                          action="#{MenuUtilBean.doActionEvent(menuInfo.refNode.customPropList['defaultOutcome'], menuInfo.refNode.customPropList['eventEvaluation'])}"
+                                                                          inlineStyle="text-decoration: none; cursor: default; white-space: nowrap;padding: 5px 8px 5px 8px; margin-top: 0px;"/>
+                                            </f:facet>
+                                        </af:navigationPane> 
+                                    </af:panelGroupLayout>
+                                    <af:button text="Merge" disabled="#{bindings.Sogg_RicercaView1Iterator.estimatedRowCount>0?false:true}" id="b100" action="mrg_toMerge" 
+                                    rendered="#{sessionScope.SOMerge==true and !sessionScope.SONoDatiSensibili==true}">
+                                        <af:setPropertyListener to="#{pageFlowScope.merge_codts}" type="action"
+                                                                from="#{bindings.Codts.inputValue}"/>
+                                    </af:button>
+                                </af:toolbar>
+                                <af:toolbar id="t6">
+                                    <af:button text="#{viewcontrollerBundle.STAMPA_ELENCO}" id="btprint1" useWindow="true" immediate="true"
+                                            windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                            windowHeight="300" windowWidth="600" visible="#{sessionScope.SOStampaElenco and !sessionScope.SONoDatiSensibili==true}"
+                                            disabled="#{bindings.Sogg_RicercaView1Iterator.estimatedRowCount>0?false:true}"
+                                            action="dialog:printElencoSoggetti"/>
+                                </af:toolbar>
+                            </f:facet>                                   
+                            <af:table value="#{bindings.Sogg_RicercaView1.collectionModel}" var="row"
+                                      rows="#{bindings.Sogg_RicercaView1.rangeSize}"
+                                      emptyText="#{bindings.Sogg_RicercaView1.viewable ? viewcontrollerBundle.NESSUN_DATO_TROVATO : 'Access Denied.'}"
+                                      rowBandingInterval="0" binding="#{Sogg_ricercaAction.soggTable}"
+                                      selectedRowKeys="#{bindings.Sogg_RicercaView1.collectionModel.selectedRow}"
+                                      rowSelection="single" fetchSize="#{bindings.Sogg_RicercaView1.rangeSize}" id="t1"
+                                      columnStretching="column:c3" summary='#{""}' scrollPolicy="page"
+                                      selectionListener="#{Sogg_ricercaAction.selectSoggListener}">
+                                <af:column rendered="#{sessionScope.trial eq 1}"
+                                           sortProperty="#{bindings.Sogg_RicercaView1.hints.TrialStatoDescr.name}"
+                                           sortable="true" styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.TrialStatoDescr.label}"
+                                           id="c1" rowHeader="unstyled" width="50" noWrap="false">
+                                    <af:outputText value="#{row.TrialStatoDescr}"
+                                                   shortDesc="#{bindings.Sogg_RicercaView1.hints.TrialStatoDescr.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                                <af:column rendered="#{sessionScope.trial eq 1}"
+                                           sortProperty="#{bindings.Sogg_RicercaView1.hints.TrialBraccioDescr.name}"
+                                           sortable="true" styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.TrialBraccioDescr.label}"
+                                           id="c2" width="50" noWrap="false">
+                                    <af:outputText value="#{row.TrialBraccioDescr}"
+                                                   shortDesc="#{bindings.Sogg_RicercaView1.hints.TrialBraccioDescr.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.FasciaHpv.name}"
+                                           sortable="true" styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           rendered="#{sessionScope.HPV==true}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.FasciaHpv.label}" id="c41"
+                                           align="center" width="50" noWrap="false">
+                                    <af:selectBooleanCheckbox value="#{row.bindings.FasciaHpv.inputValue}"
+                                                              label="#{row.bindings.FasciaHpv.label}"
+                                                              shortDesc="#{bindings.Sogg_RicercaView1.hints.FasciaHpv.tooltip}"
+                                                              id="sbc5" readOnly="true"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Cognome.name}"
+                                           rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           sortable="true"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Cognome.label}" id="c3"
+                                          width="120" noWrap="false">
+                                    <af:outputText value="#{row.Cognome}" shortDesc="#{row.Cognome}" id="ot3"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Nome.name}" sortable="true"
+                                           rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Nome.label}" id="c4"
+                                           width="120" noWrap="false">
+                                    <af:outputText value="#{row.Nome}" shortDesc="#{row.Nome}" id="ot4"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.DataNascita.name}"
+                                           rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.DataNascita.label}" id="c5"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                          width="70" noWrap="false">
+                                    <af:outputText value="#{row.DataNascita}" shortDesc="#{row.DataNascita}" id="ot5">
+                                        <af:convertDateTime pattern="#{bindings.Sogg_RicercaView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Sigla.name}" sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Sigla.label}" id="c35"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="45"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Sigla}" shortDesc="#{row.Sigla}" id="ot35"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Escl.name}" sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Escl.label}" id="c6"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="70"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Escl}" shortDesc="#{row.Escl}" id="ot6"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Dtapp.name}" sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Dtapp.label}" id="c7"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                           width="75" noWrap="false">
+                                    <af:outputText value="#{row.Dtapp}" shortDesc="#{row.Dtapp}" id="ot7">
+                                        <af:convertDateTime pattern="#{bindings.Sogg_RicercaView1.hints.Dtapp.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Orario.name}"
+                                           sortable="true" headerText="#{bindings.Sogg_RicercaView1.hints.Orario.label}"
+                                           id="c28"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                          width="47" noWrap="false">
+                                    <af:outputText value="#{row.Orario}" shortDesc="#{row.Orario}" id="ot28"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Centro.name}"
+                                           sortable="true" headerText="#{bindings.Sogg_RicercaView1.hints.Centro.label}"
+                                           id="c29" styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="100"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Centro}" shortDesc="#{row.Centro}" id="ot29"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.DescTpinv.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.DescTpinv.label}" id="c8"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null} #{row.Confermato!='0'?'InvitoConfermato':null}"
+                                           width="73" noWrap="false">
+                                    <af:outputText value="#{row.DescTpinv}" shortDesc="#{row.DescTpinv}" id="ot8"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.DescEsito.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.DescEsito.label}" id="c9"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="30"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.DescEsito}" shortDesc="#{row.DescEsito}" id="ot9"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Eta.name}" sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Eta.label}" id="c21"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="30"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Eta}" shortDesc="#{row.Eta}" id="ot21">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Sogg_RicercaView1.hints.Eta.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Dtrichiamo.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Dtrichiamo.label}" id="c24"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="75"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Dtrichiamo}" shortDesc="#{row.Dtrichiamo}" id="ot24">
+                                        <af:convertDateTime pattern="#{bindings.Sogg_RicercaView1.hints.Dtrichiamo.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Tprich.name}"
+                                           sortable="true" headerText="#{bindings.Sogg_RicercaView1.hints.Tprich.label}"
+                                           id="c25" styleClass="#{row.Livello=='2'?'CellaImportante':null}" width="65"
+                                           noWrap="false">
+                                    <af:outputText value="#{row.Tprich}" shortDesc="#{row.Tprich}" id="ot25"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.TestProposto.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.TestProposto.label}" id="c38"
+                                           styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           rendered="#{sessionScope.HPV==true}" width="60" noWrap="false">
+                                    <af:outputText value="#{row.TestProposto}" shortDesc="#{row.TestProposto}"
+                                                   id="ot38"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.PrelievoHpvDescr.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.PrelievoHpvDescr.label}"
+                                           id="c40" styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           rendered="#{sessionScope.HPV==true}" width="60" noWrap="false">
+                                    <af:outputText value="#{row.PrelievoHpvDescr}"
+                                                   rendered="#{row.Codesitoinvito eq 'S'}"
+                                                   shortDesc="#{row.PrelievoHpvDescr}" id="ot40"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Sollecitare.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Sollecitare.label}" id="c32"
+                                           align="center" width="70" noWrap="false">
+                                    <af:selectBooleanCheckbox value="#{row.bindings.Sollecitare.inputValue}"
+                                                              label="#{row.bindings.Sollecitare.label}"
+                                                              shortDesc="#{bindings.Sogg_RicercaView1.hints.Sollecitare.tooltip}"
+                                                              id="sbc6" readOnly="true"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Sogg_RicercaView1.hints.Altorischio.name}"
+                                           sortable="true" styleClass="#{row.Livello=='2'?'CellaImportante':null}"
+                                           rendered="#{sessionScope.scr eq 'CO'}"
+                                           headerText="#{bindings.Sogg_RicercaView1.hints.Altorischio.label}" id="c26"
+                                           width="70" noWrap="false">
+                                    <af:selectBooleanCheckbox value="#{row.bindings.Altorischio.inputValue}"
+                                                              label="#{row.bindings.Altorischio.label}"
+                                                              shortDesc="#{bindings.Sogg_RicercaView1.hints.Altorischio.tooltip}"
+                                                              id="sbc7" readOnly="true"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Sogg_RicercaView1.hints.Chiave.label}" id="c10"
+                                    rendered="#{sessionScope.SOAccessoAnonimo==true}">
+                                    <af:outputText value="#{row.Chiave}"
+                                                   shortDesc="#{bindings.Sogg_RicercaView1.hints.Chiave.tooltip}"
+                                                   id="ot10"/>
+                                </af:column>
+                            </af:table> 
+                        </af:panelCollection>
+                            <af:popup childCreation="deferred" autoCancel="disabled" id="invFast1"
+                                binding="#{Sogg_ricercaAction.invFast1}">
+                                <af:dialog id="d2" title="Inviti fast" type="none">
+                                    <f:facet name="buttonBar">
+                                        <af:panelGroupLayout id="pgl21" halign="end" layout="horizontal">
+                                            <af:toolbar id="t5">
+                                                <af:button text="Procedi" id="b1234"  
+                                                    action="#{Sogg_ricercaAction.onInvitoFast}">
+                                                        <af:clientListener method="showHidePopup('invFast1', false)" type="action"/>
+                                                </af:button> 
+                                                
+                                                <af:button text="Annulla" id="b78">
+                                                    <af:clientListener method="showHidePopup('invFast1', false)"
+                                                                       type="action"/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <af:panelGroupLayout id="pgl23" layout="horizontal">
+                                        <af:icon id="i32" shortDesc="Inviti fast" name="info"/>
+                                        <af:spacer width="20" height="20" id="s69"/>
+                                        <af:outputText value="Nessuna configurazione trovata" id="ot338"/>
+                                    </af:panelGroupLayout>
+                                </af:dialog>
+                            </af:popup>  
+                            
+                            <af:popup childCreation="deferred" autoCancel="disabled" id="invFast2"
+                                binding="#{Sogg_ricercaAction.invFast2}">
+                                <af:dialog id="d22" title="Inviti fast" type="none">
+                                    <f:facet name="buttonBar">
+                                        <af:panelGroupLayout id="pgl221" halign="end" layout="horizontal">
+                                            <af:toolbar id="t25">
+                                                <af:button text="Procedi" id="b34"  
+                                                    action="#{Sogg_ricercaAction.onInvitoFastn}">
+                                                        <af:clientListener method="showHidePopup('invFast2', false)" type="action"/>
+                                                </af:button> 
+                                                
+                                                <af:button text="Annulla" id="b782">
+                                                    <af:clientListener method="showHidePopup('invFast2', false)"
+                                                                       type="action"/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <af:panelGroupLayout id="pgl223">
+                                        <af:icon id="i232" shortDesc="Inviti fast" name="info"/>
+                                        <af:spacer width="20" height="20" id="s629"/>
+                                        <af:outputText value="Selezione configurazione" id="ot238"/>
+                                    <af:table value="#{bindings.Cnf_SoCnfInvitiFastView11.collectionModel}" var="row"
+                                              rows="#{bindings.Cnf_SoCnfInvitiFastView11.rangeSize}"
+                                              emptyText="#{bindings.Cnf_SoCnfInvitiFastView11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Cnf_SoCnfInvitiFastView11.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Cnf_SoCnfInvitiFastView11.collectionModel.makeCurrent}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Cnf_SoCnfInvitiFastView11.rangeSize}" id="t7">
+                                        <af:column headerText="#{bindings.Cnf_SoCnfInvitiFastView11.hints.NomeConf.label}"
+                                                   id="c11">
+                                            <af:outputText value="#{row.NomeConf}"
+                                                           shortDesc="#{bindings.Cnf_SoCnfInvitiFastView11.hints.NomeConf.tooltip}"
+                                                           id="ot11"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idcentro.label}"
+                                                   id="c13"> 
+                                            <af:selectOneChoice value="#{row.bindings.Idcentro.inputValue}"
+                                                                label="#{row.bindings.Idcentro.label}"
+                                                                required="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idcentro.mandatory}"
+                                                                shortDesc="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idcentro.tooltip}"
+                                                                id="soc9" readOnly="true">
+                                                <f:selectItems value="#{row.bindings.Idcentro.items}" id="si9"/>
+                                                <f:validator binding="#{row.bindings.Idcentro.validator}"/>
+                                            </af:selectOneChoice>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idtpinvito.label}"
+                                                   id="c14">
+                                            <af:selectOneChoice value="#{row.bindings.Idtpinvito.inputValue}"
+                                                                label="#{row.bindings.Idtpinvito.label}"
+                                                                required="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idtpinvito.mandatory}"
+                                                                shortDesc="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Idtpinvito.tooltip}"
+                                                                id="soc10" readOnly="true">
+                                                <f:selectItems value="#{row.bindings.Idtpinvito.items}" id="si10"/>
+                                                <f:validator binding="#{row.bindings.Idtpinvito.validator}"/>
+                                            </af:selectOneChoice>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCnfInvitiFastView11.hints.DataCorrente.label}"
+                                                   id="c15">
+                                            <af:selectBooleanCheckbox value="#{row.bindings.DataCorrente.inputValue}"
+                                                                      label="#{row.bindings.DataCorrente.label}"
+                                                                      shortDesc="#{bindings.Cnf_SoCnfInvitiFastView11.hints.DataCorrente.tooltip}"
+                                                                      id="sbc8" readOnly="true"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Data.label}"
+                                                   id="c16">
+                                            <af:outputText value="#{row.Data}" rendered="#{row.bindings.DataCorrente.inputValue=='0'}"
+                                                           shortDesc="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Data.tooltip}"
+                                                           id="ot13">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoCnfInvitiFastView11.hints.Data.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelGroupLayout>                                    
+                                </af:dialog>
+                            </af:popup> 
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="navigation" value="#{Sogg_ricercaAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

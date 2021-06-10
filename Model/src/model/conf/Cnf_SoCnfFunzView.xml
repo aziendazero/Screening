@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfFunzView"
+   Version="11.1.2.62.76"
+   SelectList="Cnf_SoCnfFunz.IDCNF, 
+       Cnf_SoCnfFunz.IMPANAG, 
+       Cnf_SoCnfFunz.IMPREF, 
+       Cnf_SoCnfFunz.EXPAPP, 
+       Cnf_SoCnfFunz.EXPACC, 
+       Cnf_SoCnfFunz.POSTEL, 
+       Cnf_SoCnfFunz.TPSCR, 
+       Cnf_SoCnfFunz.ULSS, 
+       Cnf_SoCnfFunz.N_REFERTI_1LIV, 
+       Cnf_SoCnfFunz.EXPCANC, 
+       Cnf_SoCnfFunz.IMPESCL, 
+       Cnf_SoCnfFunz.IMPACC"
+   FromList="SO_CNF_FUNZ Cnf_SoCnfFunz"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   RowClass="model.conf.Cnf_SoCnfFunzViewRowImpl"
+   ComponentClass="model.conf.Cnf_SoCnfFunzViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg|VarAccess" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Variable
+      Name="UlssVar"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <EntityUsage
+      Name="Cnf_SoCnfFunz"
+      Entity="model.conf.Cnf_SoCnfFunz" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idcnf"
+      IsNotNull="true"
+      EntityAttrName="Idcnf"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="IDCNF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Impanag"
+      IsNotNull="true"
+      EntityAttrName="Impanag"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="IMPANAG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Impref"
+      IsNotNull="true"
+      EntityAttrName="Impref"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="IMPREF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Expapp"
+      IsNotNull="true"
+      EntityAttrName="Expapp"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="EXPAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Expacc"
+      IsNotNull="true"
+      EntityAttrName="Expacc"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="EXPACC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Postel"
+      IsNotNull="true"
+      EntityAttrName="Postel"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="POSTEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NReferti1liv"
+      EntityAttrName="NReferti1liv"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="N_REFERTI_1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Expcanc"
+      IsNotNull="true"
+      EntityAttrName="Expcanc"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="EXPCANC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Impescl"
+      IsNotNull="true"
+      EntityAttrName="Impescl"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="IMPESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Impacc"
+      EntityAttrName="Impacc"
+      EntityUsage="Cnf_SoCnfFunz"
+      AliasName="IMPACC" >
+   </ViewAttribute>
+   <ViewCriteria
+      Name="UlssMACriteria"
+      ViewObjectName="model.conf.Cnf_SoCnfFunzView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="Cnf_SoCnfFunzViewCriteria_row_0"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Tpscr"
+            ViewAttribute="Tpscr"
+            Operator="="
+            Conjunction="AND"
+            Value="MA"
+            UpperColumns="0"
+            GenerateIsNullClauseForBindVars="false"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Ulss"
+            ViewAttribute="Ulss"
+            Operator="="
+            Conjunction="AND"
+            Value=":UlssVar"
+            UpperColumns="0"
+            GenerateIsNullClauseForBindVars="false"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+</ViewObject>

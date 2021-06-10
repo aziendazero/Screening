@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.acc_prelievoBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.PRELIEVO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Acc_prelievoAction.frm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="90px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl10" layout="vertical">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="#{viewcontrollerBundle.Precedente}" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_prelievoAction.onPrev}"/>
+                                        <af:button text="#{viewcontrollerBundle.Successivo}" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{Acc_prelievoAction.onNext}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="#{viewcontrollerBundle.Schedacompilata}" id="b8"
+                                            rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                            <af:showPopupBehavior popupId="Scheda_compilata"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="Scheda_compilata">
+                                            <af:dialog id="d3"
+                                                       title="#{viewcontrollerBundle.SALVATAGGIO_SCHEDA_ANAMNESI}"
+                                                       type="none">
+                                                <af:message id="m2" messageType="info"
+                                                            message="#{viewcontrollerBundle.ATTENZIONE__CONTINUANDO__VERRANNO_AUTOMATICAMENTE_SALVATE_LE_MODIFICHE_ALLA_SCHEDA_ANAMNESI_}"/>
+                                                <f:facet name="buttonBar">
+                                                    <af:panelGroupLayout id="pgl211" halign="end" layout="horizontal">
+                                                        <af:toolbar id="t311">
+                                                            <af:button text="#{viewcontrollerBundle.SALVA_E_STAMPA}"
+                                                                       id="b311">
+                                                                <af:setPropertyListener from="#{bindings.IdAnamci.inputValue}"
+                                                                                        to="#{requestScope.idAnam}"
+                                                                                        type="action"/>
+                                                                <af:setPropertyListener from="#{1!=1}"
+                                                                                        to="#{requestScope.schedaEmpty}"
+                                                                                        type="action"/>
+                                                                <af:fileDownloadActionListener filename="SchedaAnamCito_#{bindings.IdAnamci.inputValue}.pdf"
+                                                                                               method="#{Acc_anamAction.stampaScheda}"
+                                                                                               contentType="application/pdf"/>
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                            <af:button text="Annulla" id="b611">
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </af:panelGroupLayout>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="#{viewcontrollerBundle.CONFERMA}" id="b4"
+                                                   disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{Acc_prelievoAction.onConf}"/>
+                                        <af:button text="#{viewcontrollerBundle.Annulla}" id="b5" action="#{Acc_prelievoAction.onRollback}" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="#{viewcontrollerBundle.Applica}" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{Acc_prelievoAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s16"/>
+                                <af:panelGridLayout id="pgl4" styleClass="AFStretchWidth">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                            <af:panelGroupLayout id="pgl3" halign="start">
+                                                <af:outputText value="#{viewcontrollerBundle.SOGGETTO_ESCLUSO}" id="ot1"
+                                                               rendered="#{bindings.Escl.inputValue != null}"
+                                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                                <af:spacer width="30" height="10" id="s5"
+                                                           rendered="#{bindings.Escl.inputValue != null}"/>
+                                                <af:outputText value="#{viewcontrollerBundle.SOLLECITARE}" id="ot2"
+                                                               rendered="#{bindings.Sollecitare == '1'}"
+                                                               inlineStyle="color:Red; font-size:large;"/>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="0px" id="gc2"
+                                                     halign="end">
+                                            <af:panelGroupLayout id="pgl21" halign="end">
+                                                <af:toolbar id="t34">
+                                                    <af:button text="#{viewcontrollerBundle.SCHEDA_ACCETTAZIONE}" id="b7"
+                                                               disabled="true"/>
+                                                    <af:button text="#{viewcontrollerBundle.ETICHETTE}" id="b2"
+                                                               rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}"
+                                                               useWindow="true" immediate="true"
+                                                               windowEmbedStyle="inlineDocument"
+                                                               windowModalityType="applicationModal" windowHeight="600"
+                                                               windowWidth="600" action="dialog:printPianoLavoro">
+                                                        <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                                to="#{pageFlowScope.pl_centro}"
+                                                                                type="action"/>
+                                                        <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                                to="#{pageFlowScope.pl_data}"
+                                                                                type="action"/>
+                                                        <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                                to="#{pageFlowScope.pl_codts}"
+                                                                                type="action"/>
+                                                        <af:setPropertyListener from="single"
+                                                                                to="#{pageFlowScope.pl_type}"
+                                                                                type="action"/>
+                                                    </af:button>
+                                                </af:toolbar>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl38" layout="scroll">
+                                <af:panelSplitter id="ps1" splitterPosition="600">
+                                    <f:facet name="first">
+                                        <af:panelGroupLayout id="pgl2" layout="vertical">
+                                            <af:panelHeader text="#{viewcontrollerBundle.PRELIEVO}" id="ph1">
+                                                <af:panelFormLayout id="pfl2">
+                                                    <f:facet name="footer"/>
+                                                    <af:inputDate value="#{bindings.Dtapp1.inputValue}"
+                                                                  label="#{bindings.Dtapp1.hints.label}"
+                                                                  required="#{bindings.Dtapp1.hints.mandatory}"
+                                                                  columns="#{bindings.Dtapp1.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.Dtapp1.hints.tooltip}" id="id1"
+                                                                  disabled="true">
+                                                        <f:validator binding="#{bindings.Dtapp1.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.Dtapp1.format}"/>
+                                                    </af:inputDate>
+                                                    <af:inputText value="#{bindings.TipoInvito.inputValue}"
+                                                                  label="#{bindings.TipoInvito.hints.label}"
+                                                                  required="#{bindings.TipoInvito.hints.mandatory}"
+                                                                  columns="40"
+                                                                  maximumLength="#{bindings.TipoInvito.hints.precision}"
+                                                                  shortDesc="#{bindings.TipoInvito.hints.tooltip}"
+                                                                  id="it1" disabled="true">
+                                                        <f:validator binding="#{bindings.TipoInvito.validator}"/>
+                                                    </af:inputText>
+                                                    <af:inputText value="#{bindings.Noteprelievo.inputValue}"
+                                                                  label="#{bindings.Noteprelievo.hints.label}"
+                                                                  required="#{bindings.Noteprelievo.hints.mandatory}"
+                                                                  columns="50"
+                                                                  maximumLength="#{bindings.Noteprelievo.hints.precision}"
+                                                                  shortDesc="#{bindings.Noteprelievo.hints.tooltip}"
+                                                                  id="it2" rows="5">
+                                                        <f:validator binding="#{bindings.Noteprelievo.validator}"/>
+                                                    </af:inputText>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                            <af:spacer width="10" height="10" id="s1"/>
+                                            <af:panelHeader text="Vetrino" id="ph2">
+                                                <af:panelFormLayout id="pfl3">
+                                                    <f:facet name="footer"/>
+                                                    <af:inputText value="#{bindings.Numvetrino.inputValue}"
+                                                                  label="#{bindings.Numvetrino.hints.label}"
+                                                                  required="#{bindings.Numvetrino.hints.mandatory}"
+                                                                  columns="12"
+                                                                  maximumLength="12"
+                                                                  disabled="#{sessionScope.refPresente?true: sessionScope.campione==true}"
+                                                                  shortDesc="#{bindings.Numvetrino.hints.tooltip}"
+                                                                  id="it3">
+                                                        <f:validator binding="#{bindings.Numvetrino.validator}"/>
+                                                        <af:convertNumber groupingUsed="false"
+                                                                          pattern="#{bindings.Numvetrino.format}"/>
+                                                    </af:inputText>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <af:panelHeader text="* #{bindings.Idtpprelievo.label}" id="ph3">
+                                            <af:panelFormLayout id="pfl1">
+                                                <f:facet name="footer"/>
+                                                <af:selectOneRadio value="#{bindings.Idtpprelievo.inputValue}"
+                                                                   label="#{bindings.Idtpprelievo.label}" simple="true"
+                                                                   required="#{bindings.Idtpprelievo.hints.mandatory}"
+                                                                   shortDesc="#{bindings.Idtpprelievo.hints.tooltip}"
+                                                                   id="sor1">
+                                                    <f:selectItems value="#{bindings.Idtpprelievo.items}" id="si1"/>
+                                                    <f:validator binding="#{bindings.Idtpprelievo.validator}"/>
+                                                </af:selectOneRadio>
+                                            </af:panelFormLayout>
+                                        </af:panelHeader>
+                                    </f:facet>
+                                </af:panelSplitter>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="funzionalita"
+                             value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue,bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{Acc_prelievoAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

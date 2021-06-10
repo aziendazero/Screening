@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_anagUlss">
+    <page>/pages/conf/cnf_anagUlss.jsf</page>
+  </view>
+  <view id="cnf_anagFilters">
+    <page>/pages/conf/cnf_anagFilters.jsf</page>
+  </view>
+  <view id="cnf_anagEsclusioni">
+    <page>/pages/conf/cnf_anagEsclusioni.jsf</page>
+  </view>
+  <view id="cnf_anagReg">
+    <page>/pages/conf/cnf_anagReg.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editAnagUlss">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editAnagUlss.xml</document>
+      <id>cnf_editAnagUlss</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editAnagEscl">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editAnagEscl.xml</document>
+      <id>cnf_editAnagEscl</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editAnagReg">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editAnagReg.xml</document>
+      <id>cnf_editAnagReg</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>anagUlss</from-outcome>
+      <to-activity-id>cnf_anagUlss</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>anagFilters</from-outcome>
+      <to-activity-id>cnf_anagFilters</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>anagEsclusioni</from-outcome>
+      <to-activity-id>cnf_anagEsclusioni</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>anagReg</from-outcome>
+      <to-activity-id>cnf_anagReg</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__9">
+    <from-activity-id>cnf_anagUlss</from-activity-id>
+    <control-flow-case id="__10">
+      <from-outcome>creatEditAnagUlss</from-outcome>
+      <to-activity-id>cnf_editAnagUlss</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__12">
+    <from-activity-id>cnf_anagEsclusioni</from-activity-id>
+    <control-flow-case id="__13">
+      <from-outcome>creatEditAnagEscl</from-outcome>
+      <to-activity-id>cnf_editAnagEscl</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__14">
+    <from-activity-id>cnf_anagReg</from-activity-id>
+    <control-flow-case id="__15">
+      <from-outcome>creatEditAnagReg</from-outcome>
+      <to-activity-id>cnf_editAnagReg</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__6">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_confanag_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__7">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__8">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_confanag_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__11">
+    <managed-bean-name>Cnf_confAnagBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_confAnagBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__16">
+    <managed-bean-name>Cnf_anagraficheAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_anagraficheAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <method-call id="toPresenze">
+    <method>#{Impexp_presenzeAction.findForward}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="impexp_presenze">
+    <page>/pages/impexp/impexp_presenze.jsf</page>
+  </view>
+  <method-call id="reset">
+    <method>#{bindings.reset.execute}</method>
+    <outcome>
+      <fixed-outcome>reset</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="refreshFileList">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="refreshOldFile">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="print_elencoSoggetti">
+    <page>/pages/print/print_elencoSoggetti.jsf</page>
+  </view>
+  <view id="impexp_referti">
+    <page>/pages/impexp/impexp_referti.jsf</page>
+  </view>
+  <method-call id="toReferti">
+    <method>#{Impexp_refertiAction.findForward}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="reset1">
+    <method>#{bindings.reset.execute}</method>
+    <outcome>
+      <fixed-outcome>reset</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="refreshReferti">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="refereshOldreferti">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="toAnagrafe">
+    <method>#{Impexp_anagrafeAction.findForward}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="impexp_anagrafe">
+    <page>/pages/impexp/impexp_anagrafe.jsf</page>
+  </view>
+  <method-call id="reset2">
+    <method>#{bindings.reset.execute}</method>
+    <outcome>
+      <fixed-outcome>reset</fixed-outcome>
+    </outcome>
+  </method-call>
+  <method-call id="toAppuntamenti">
+    <method>#{Impexp_appuntamentiAction.findForward}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="impexp_appuntamenti">
+    <page>/pages/impexp/impexp_appuntamenti.jsf</page>
+  </view>
+  <view id="impexp_esclusioni">
+    <page>/pages/impexp/impexp_esclusioni.jsf</page>
+  </view>
+  <method-call id="toEsclusioni">
+    <method>#{pageFlowScope.Impexp_esclusioniAction.findForward()}</method>
+    <outcome>
+      <fixed-outcome>success</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="uploadFile">
+    <page>/uploadFile.jsf</page>
+  </view>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__38">
+      <from-outcome>adfMenu_impexp_anagrafe</from-outcome>
+      <to-activity-id>toAnagrafe</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__6">
+      <from-outcome>adfMenu_impexp_referti</from-outcome>
+      <to-activity-id>reset1</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__20">
+      <from-outcome>adfMenu_impexp_presenze</from-outcome>
+      <to-activity-id>reset</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__32">
+      <from-outcome>adfMenu_impexp_appuntamenti</from-outcome>
+      <to-activity-id>reset2</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__42">
+      <from-outcome>adfMenu_impexp_esclusioni</from-outcome>
+      <to-activity-id>toEsclusioni</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__46">
+      <from-outcome>to_impexp_app_single</from-outcome>
+      <to-activity-id>impexp_appuntamenti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__3">
+    <from-activity-id>toPresenze</from-activity-id>
+    <control-flow-case id="__4">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>impexp_presenze</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__2">
+    <from-activity-id>reset</from-activity-id>
+    <control-flow-case id="__10">
+      <from-outcome>reset</from-outcome>
+      <to-activity-id>toPresenze</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__11">
+    <from-activity-id>impexp_presenze</from-activity-id>
+    <control-flow-case id="__12">
+      <from-outcome>chiudi</from-outcome>
+      <to-activity-id>refreshFileList</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__47">
+      <from-outcome>dialog:uploadFile</from-outcome>
+      <to-activity-id>uploadFile</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__13">
+    <from-activity-id>refreshFileList</from-activity-id>
+    <control-flow-case id="__14">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>refreshOldFile</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__15">
+    <from-activity-id>refreshOldFile</from-activity-id>
+    <control-flow-case id="__16">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>impexp_presenze</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__17">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__18">
+      <from-outcome>dialog:printElencoSoggetti</from-outcome>
+      <to-activity-id>print_elencoSoggetti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__23">
+    <from-activity-id>toReferti</from-activity-id>
+    <control-flow-case id="__24">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>impexp_referti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__22">
+    <from-activity-id>reset1</from-activity-id>
+    <control-flow-case id="__25">
+      <from-outcome>reset</from-outcome>
+      <to-activity-id>toReferti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__26">
+    <from-activity-id>impexp_referti</from-activity-id>
+    <control-flow-case id="__27">
+      <from-outcome>chiudi</from-outcome>
+      <to-activity-id>refreshReferti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__28">
+    <from-activity-id>refreshReferti</from-activity-id>
+    <control-flow-case id="__29">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>refereshOldreferti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__30">
+    <from-activity-id>refereshOldreferti</from-activity-id>
+    <control-flow-case id="__31">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>impexp_referti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__34">
+    <from-activity-id>toAnagrafe</from-activity-id>
+    <control-flow-case id="__35">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>impexp_anagrafe</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__33">
+    <from-activity-id>reset2</from-activity-id>
+    <control-flow-case id="__37">
+      <from-outcome>reset</from-outcome>
+      <to-activity-id>toAppuntamenti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__40">
+    <from-activity-id>toAppuntamenti</from-activity-id>
+    <control-flow-case id="__41">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>impexp_appuntamenti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__44">
+    <from-activity-id>toEsclusioni</from-activity-id>
+    <control-flow-case id="__45">
+      <from-outcome>success</from-outcome>
+      <to-activity-id>impexp_esclusioni</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__48">
+    <from-activity-id>uploadFile</from-activity-id>
+    <control-flow-case id="__49">
+      <from-outcome>exit</from-outcome>
+      <to-activity-id>impexp_presenze</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__5">
+    <managed-bean-name>Impexp_presenzeAction</managed-bean-name>
+    <managed-bean-class>view.impexp.Impexp_presenzeAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__7">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>integrazioni_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__8">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__9">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/menu/integrazioni_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__19">
+    <managed-bean-name>Print_elencoSoggetti</managed-bean-name>
+    <managed-bean-class>view.print.Print_elencoSoggettiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__21">
+    <managed-bean-name>Impexp_refertiAction</managed-bean-name>
+    <managed-bean-class>view.impexp.Impexp_refertiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__36">
+    <managed-bean-name>Impexp_anagrafeAction</managed-bean-name>
+    <managed-bean-class>view.impexp.Impexp_anagrafeAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__39">
+    <managed-bean-name>Impexp_appuntamentiAction</managed-bean-name>
+    <managed-bean-class>view.impexp.Impexp_appuntamentiAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__43">
+    <managed-bean-name>Impexp_esclusioniAction</managed-bean-name>
+    <managed-bean-class>view.impexp.Impexp_esclusioniAction</managed-bean-class>
+    <managed-bean-scope>pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

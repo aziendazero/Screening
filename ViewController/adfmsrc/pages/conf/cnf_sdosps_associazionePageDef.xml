@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_sdosps_associazionePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfSdospsEsclElencoView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsEsclElencoView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSdospsMotEsclView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsMotEsclView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfSdospsEsclView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdospsEsclView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfSdospsEsclElencoView1Iterator" id="Cnf_SoCnfSdospsEsclElencoView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfSdospsEsclElencoView" Name="Cnf_SoCnfSdospsEsclElencoView10">
+        <AttrNames>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="TipoFlusso"/>
+          <Item Value="Codsdosps"/>
+          <Item Value="DescIdp"/>
+          <Item Value="DescEscl"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfSdospsEsclElencoView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfSdospsEsclElencoView1"
+            DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSdospsMotEsclView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfSdospsMotEsclView1Iterator" id="Cnf_SoCnfSdospsMotEsclView1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+        <Item Value="Descrizione"/>
+        <Item Value="Tpescl"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfSdospsEsclView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfSdospsEsclView1Iterator" id="Cnf_SoCnfSdospsEsclView1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codsdosps"/>
+        <Item Value="TipoFlusso"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Idcnfescl"/>
+        <Item Value="Descrizione"/>
+        <Item Value="DataInizioValidita"/>
+        <Item Value="DataFineValidita"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="round_sollecitiPageDef"
+                Package="pages.round">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Round_invitiBeanDataControl"
+              id="Round_invitiBeanDataControlIterator"/>
+    <iterator Binds="Round_SoCentriPrelView2" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCentriPrelView2Iterator"/>
+    <iterator Binds="Round_SoCentriPrelView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCentriPrelView1Iterator"/>
+    <iterator Binds="Round_SoComuniByCentri1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoComuniByCentri1Iterator"/>
+    <iterator Binds="Round_SoZoneByComuniCentri1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoZoneByComuniCentri1Iterator"/>
+    <iterator Binds="Round_SoCnfTpinvitoSollecitiView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCnfTpinvitoSollecitiView1Iterator"/>
+    <iterator Binds="Round_SoCnfTpinvitoSollView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_SoCnfTpinvitoSollView1Iterator"/>
+    <iterator Binds="Round_SoTipiInvitiDaGenerareView3" RangeSize="10" DataControl="Round_AppModuleDataControl"
+              id="Round_SoTipiInvitiDaGenerareView3Iterator"/>
+    <iterator Binds="Round_SoTipiInvitiDaGenerareView7" RangeSize="10" DataControl="Round_AppModuleDataControl"
+              id="Round_SoTipiInvitiDaGenerareView7Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="centro_2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoCentriPrelView2Iterator">
+      <AttrNames>
+        <Item Value="centro_2"/>
+        <Item Value="livello"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Tipocentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="centro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoCentriPrelView1Iterator">
+      <AttrNames>
+        <Item Value="centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="comune" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoComuniByCentri1Iterator">
+      <AttrNames>
+        <Item Value="comune"/>
+        <Item Value="rc_comune"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codcom"/>
+        <Item Value="ReleaseCode"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="ordine">
+      <AttrNames>
+        <Item Value="ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="zona" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoZoneByComuniCentri1Iterator">
+      <AttrNames>
+        <Item Value="zona"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="tpInvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoCnfTpinvitoSollView1Iterator">
+      <AttrNames>
+        <Item Value="tpInvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="tpSollecito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_SoCnfTpinvitoSollecitiView1Iterator">
+      <AttrNames>
+        <Item Value="tpSollecito"/>
+        <Item Value="livelloInvito"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Livello"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_invitiBeanDataControlIterator" id="testProposto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="testProposto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="HPV"/>
+        <Item Value="PAP"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="livello">
+      <AttrNames>
+        <Item Value="livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="max_data_invito">
+      <AttrNames>
+        <Item Value="max_data_invito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="eta_da">
+      <AttrNames>
+        <Item Value="eta_da"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="eta_a">
+      <AttrNames>
+        <Item Value="eta_a"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="data_riferimento_eta">
+      <AttrNames>
+        <Item Value="data_riferimento_eta"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Round_SoTipiInvitiDaGenerareView3Iterator" id="Round_SoTipiInvitiDaGenerareView3">
+      <nodeDefinition DefName="model.round.Round_SoTipiInvitiDaGenerareView" Name="Round_SoTipiInvitiDaGenerareView30">
+        <AttrNames>
+          <Item Value="Idtpinvito"/>
+          <Item Value="DaGenerare"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Numero"/>
+          <Item Value="TipoTest"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Round_SoTipiInvitiDaGenerareView7Iterator" id="Round_SoTipiInvitiDaGenerareView7">
+      <nodeDefinition DefName="model.round.Round_SoTipiInvitiDaGenerareView" Name="Round_SoTipiInvitiDaGenerareView70">
+        <AttrNames>
+          <Item Value="Idtpinvito"/>
+          <Item Value="DaGenerare"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Numero"/>
+          <Item Value="TipoTest"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="Round_invitiBeanDataControlIterator" StaticList="true" id="virtuale">
+      <AttrNames>
+        <Item Value="virtuale"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="generate_daore">
+      <AttrNames>
+        <Item Value="generate_daore"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="generate_aore">
+      <AttrNames>
+        <Item Value="generate_aore"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="generate_dal">
+      <AttrNames>
+        <Item Value="generate_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="generate_al">
+      <AttrNames>
+        <Item Value="generate_al"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_SoTipiInvitiDaGenerareView7Iterator" id="DaGenerare1">
+      <AttrNames>
+        <Item Value="DaGenerare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_SoTipiInvitiDaGenerareView3Iterator" id="DaGenerare">
+      <AttrNames>
+        <Item Value="DaGenerare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="data_nascita_da">
+      <AttrNames>
+        <Item Value="data_nascita_da"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_invitiBeanDataControlIterator" id="data_nascita_a">
+      <AttrNames>
+        <Item Value="data_nascita_a"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

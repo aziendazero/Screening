@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="sogg_esclPageDef"
+                Package="pages.soggetto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Sogg_SoSoggettoView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggettoView1Iterator"/>
+    <iterator Binds="Sogg_SoEsclusioneView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoEsclusioneView1Iterator"/>
+    <iterator Binds="Sogg_MotEsclView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_MotEsclView1Iterator"/>
+    <iterator Binds="Sogg_TipoInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_TipoInvitoView1Iterator"/>
+    <iterator Binds="Cnf_EsclProposteViewCI" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Cnf_EsclProposteViewCIIterator"/>
+    <iterator Binds="Cnf_EsclProposteViewMA" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Cnf_EsclProposteViewMAIterator"/>
+    <iterator Binds="Cnf_EsclProposteViewCO" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Cnf_EsclProposteViewCOIterator"/>
+    <iterator Binds="Sogg_EsclusioniCollegateView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_EsclusioniCollegateView1Iterator"/>
+    <iterator Binds="Sogg_SoInvitoView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoInvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoEsclusioneView1Iterator" id="Dtescl">
+      <AttrNames>
+        <Item Value="Dtescl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoEsclusioneView1Iterator" id="Tpescl">
+      <AttrNames>
+        <Item Value="Tpescl"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoEsclusioneView1Iterator" id="Idcnfescl" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_MotEsclView1Iterator">
+      <AttrNames>
+        <Item Value="Idcnfescl"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfescl"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoEsclusioneView1Iterator" id="Dtfine">
+      <AttrNames>
+        <Item Value="Dtfine"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoEsclusioneView1Iterator" id="Tprich" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_TipoInvitoView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Tprich"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoEsclusioneView1Iterator" id="Noteescl">
+      <AttrNames>
+        <Item Value="Noteescl"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Cnf_EsclProposteViewCIIterator" id="Cnf_EsclProposteViewCI">
+      <nodeDefinition DefName="model.conf.Cnf_EsclProposteView" Name="Cnf_EsclProposteViewCI0">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Idcnfescl"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_EsclProposteViewMAIterator" id="Cnf_EsclProposteViewMA">
+      <nodeDefinition DefName="model.conf.Cnf_EsclProposteView" Name="Cnf_EsclProposteViewMA0">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Idcnfescl"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_EsclProposteViewCOIterator" id="Cnf_EsclProposteViewCO">
+      <nodeDefinition DefName="model.conf.Cnf_EsclProposteView" Name="Cnf_EsclProposteViewCO0">
+        <AttrNames>
+          <Item Value="Selected"/>
+          <Item Value="Idcnfescl"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Sogg_EsclusioniCollegateView1Iterator" id="Sogg_EsclusioniCollegateView1">
+      <nodeDefinition DefName="model.soggetto.Sogg_EsclusioniCollegateView" Name="Sogg_EsclusioniCollegateView10">
+        <AttrNames>
+          <Item Value="TipoScr"/>
+          <Item Value="Idcnfescl"/>
+          <Item Value="Descrizione"/>
+          <Item Value="TipoEscl"/>
+          <Item Value="Dtescl"/>
+          <Item Value="Dtfine"/>
+          <Item Value="Selected"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

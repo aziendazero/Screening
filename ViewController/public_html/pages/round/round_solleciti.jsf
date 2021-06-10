@@ -1,0 +1,433 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.round.round_sollecitiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GENERAZIONE_SOLLECITI}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOption('pt1:ord')" type="load"/>
+        <af:form id="f1" binding="#{ToRoundSollecitiAction.frmInvito}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GENERAZIONE_SOLLECITI}"/>
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl4" layout="scroll">
+                        <af:panelSplitter id="ps1" splitterPosition="240" orientation="vertical">
+                            <f:facet name="first">
+                                <af:panelStretchLayout id="psl1">
+                                    <f:facet name="start"/>
+                                    <f:facet name="end"/>
+                                    <f:facet name="top"/>
+                                    <f:facet name="bottom">
+                                        <af:panelGroupLayout id="pgl2" layout="vertical" halign="center">
+                                            <af:button text="#{viewcontrollerBundle.CONTA}" id="b1"
+                                                       actionListener="#{pageFlowScope.Round_sollecitiAction.onFilterPopulation}"/>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="center">
+                                        <af:panelGroupLayout id="pgl12" layout="horizontal" valign="top">
+                                            <af:panelHeader text="#{viewcontrollerBundle.GENERAZIONE_PRIMI_INVITI}"
+                                                            id="ph2">
+                                                <af:panelFormLayout id="pfl1">
+                                                    <af:selectOneChoice value="#{bindings.centro_2.inputValue}"
+                                                                        label="#{bindings.centro_2.label}"
+                                                                        required="#{bindings.centro_2.hints.mandatory}"
+                                                                        autoSubmit="true" styleClass="choiceInTable "
+                                                                        shortDesc="#{bindings.centro_2.hints.tooltip}"
+                                                                        id="centroInvito"
+                                                                        valueChangeListener="#{pageFlowScope.Round_sollecitiAction.onSelectCentroInvito}">
+                                                        <f:selectItems value="#{bindings.centro_2.items}" id="si7"/>
+                                                        <f:validator binding="#{bindings.centro_2.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                                        partialTriggers="centroInvito"
+                                                                        label="#{viewcontrollerBundle.CENTRO_PER_IL_SOLLECITO}"
+                                                                        required="#{bindings.centro.hints.mandatory}"
+                                                                        shortDesc="#{bindings.centro.hints.tooltip}"
+                                                                        id="centro"
+                                                                        valueChangeListener="#{pageFlowScope.Round_sollecitiAction.onSelectCentro}"
+                                                                        styleClass="choiceInTable "
+                                                                        unselectedLabel='#{""}' autoSubmit="true">
+                                                        <f:selectItems value="#{bindings.centro.items}" id="si2"/>
+                                                        <f:validator binding="#{bindings.centro.validator}"/>
+                                                    </af:selectOneChoice>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                            <af:spacer width="50" height="10" id="s3"/>
+                                            <af:panelHeader text="#{viewcontrollerBundle.POPOLAZIONE_TARGET}" id="ph1"
+                                                            partialTriggers="centro centroInvito comune tpInvito">
+                                                <af:panelFormLayout id="pfl2" rows="4">
+                                                    <af:selectOneChoice value="#{bindings.comune.inputValue}"
+                                                                        label="#{bindings.comune.label}"
+                                                                        required="#{bindings.comune.hints.mandatory}"
+                                                                        shortDesc="#{bindings.comune.hints.tooltip}"
+                                                                        id="comune" styleClass="choiceInTable"
+                                                                        partialTriggers="ord" unselectedLabel='#{""}'
+                                                                        valueChangeListener="#{pageFlowScope.Round_sollecitiAction.onSelectComune}"
+                                                                        autoSubmit="true">
+                                                        <f:selectItems value="#{bindings.comune.items}" id="si3"/>
+                                                        <f:validator binding="#{bindings.comune.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice id="ord"
+                                                                        label="#{viewcontrollerBundle.ORDINAMENTO}"
+                                                                        styleClass="choiceInTable" autoSubmit="true"
+                                                                        value="#{bindings.ordine.inputValue}"
+                                                                        showRequired="true">
+                                                        <f:selectItem id="si1" itemLabel="Data nascita"
+                                                                      itemValue="Default"/>
+                                                        <f:selectItem id="si8" itemLabel="Indirizzo"
+                                                                      itemValue="Indirizzo"/>
+                                                        <f:selectItem id="si9" itemLabel="Data ultimo appuntamento"
+                                                                      itemValue="Dtultapp"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.zona.inputValue}"
+                                                                        label="#{bindings.zona.label}"
+                                                                        required="#{bindings.zona.hints.mandatory}"
+                                                                        shortDesc="#{bindings.zona.hints.tooltip}"
+                                                                        id="soc3" styleClass="choiceInTable"
+                                                                        unselectedLabel='#{""}'>
+                                                        <f:selectItems value="#{bindings.zona.items}" id="si4"/>
+                                                        <f:validator binding="#{bindings.zona.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.tpInvito.inputValue}"
+                                                                        label="#{viewcontrollerBundle.TIPO_DI_INVITO_CHE_SCATENA_IL_SOLLECITO}"
+                                                                        required="#{bindings.tpInvito.hints.mandatory}"
+                                                                        shortDesc="#{bindings.tpInvito.hints.tooltip}"
+                                                                        id="tpInvito" styleClass="choiceInTable"
+                                                                        autoSubmit="true"
+                                                                        unselectedLabel="#{viewcontrollerBundle.TUTTI}"
+                                                                        valueChangeListener="#{pageFlowScope.Round_sollecitiAction.onSelectTpInvito}">
+                                                        <f:selectItems value="#{bindings.tpInvito.items}" id="si42"/>
+                                                        <f:validator binding="#{bindings.tpInvito.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.tpSollecito.inputValue}"
+                                                                        label="#{bindings.tpSollecito.label}"
+                                                                        rendered="#{sessionScope.HPV == true}"
+                                                                        required="#{bindings.tpSollecito.hints.mandatory}"
+                                                                        styleClass="choiceInTable"
+                                                                        unselectedLabel='#{""}' autoSubmit="true"
+                                                                        shortDesc="#{bindings.tpSollecito.hints.tooltip}"
+                                                                        id="soc2">
+                                                        <f:selectItems value="#{bindings.tpSollecito.items}" id="si10"/>
+                                                        <f:validator binding="#{bindings.tpSollecito.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectOneChoice value="#{bindings.testProposto.inputValue}"
+                                                                        label="#{bindings.testProposto.label}"
+                                                                        required="#{bindings.testProposto.hints.mandatory}"
+                                                                        shortDesc="#{bindings.testProposto.hints.tooltip}"
+                                                                        styleClass="choiceInTable"
+                                                                        unselectedLabel="tutti"
+                                                                        rendered="#{sessionScope.HPV == true &amp;&amp; bindings.livello == '1'}"
+                                                                        id="soc4">
+                                                        <f:selectItems value="#{bindings.testProposto.items}"
+                                                                       id="si11"/>
+                                                        <f:validator binding="#{bindings.testProposto.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:inputDate value="#{bindings.max_data_invito.inputValue}"
+                                                                  label="#{viewcontrollerBundle.CON_ULTIMO_INVITO_NON_PRIMA_DEL}"
+                                                                  required="#{bindings.max_data_invito.hints.mandatory}"
+                                                                  columns="#{bindings.max_data_invito.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.max_data_invito.hints.tooltip}"
+                                                                  id="id5">
+                                                        <f:validator binding="#{bindings.max_data_invito.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.max_data_invito.format}"/>
+                                                    </af:inputDate>
+                                                    <af:panelLabelAndMessage label="#{bindings.eta_da.hints.label}"
+                                                                             id="plam1" rendered="#{sessionScope.scr=='CI'||sessionScope.scr=='MA'||sessionScope.scr=='CO'}">
+                                                        <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                                            <af:inputText value="#{bindings.eta_da.inputValue}"
+                                                                          label="#{bindings.eta_da.hints.label}"
+                                                                          required="#{bindings.eta_da.hints.mandatory}"
+                                                                          columns="3"
+                                                                          maximumLength="#{bindings.eta_da.hints.precision}"
+                                                                          shortDesc="#{bindings.eta_da.hints.tooltip}"
+                                                                          id="it2" simple="true">
+                                                                <f:validator binding="#{bindings.eta_da.validator}"/>
+                                                            </af:inputText>
+                                                            <af:spacer width="10" height="10" id="s1"/>
+                                                            <af:outputLabel value="#{bindings.eta_a.hints.label}"
+                                                                            id="ol2"/>
+                                                            <af:spacer width="5" height="10" id="s2"/>
+                                                            <af:inputText value="#{bindings.eta_a.inputValue}"
+                                                                          label="#{bindings.eta_a.hints.label}"
+                                                                          required="#{bindings.eta_a.hints.mandatory}"
+                                                                          columns="3"
+                                                                          maximumLength="#{bindings.eta_a.hints.precision}"
+                                                                          shortDesc="#{bindings.eta_a.hints.tooltip}"
+                                                                          id="it3" simple="true">
+                                                                <f:validator binding="#{bindings.eta_a.validator}"/>
+                                                            </af:inputText>
+                                                        </af:panelGroupLayout>
+                                                        <f:facet name="end">
+                                                            <af:outputText value="#{viewcontrollerBundle.ANNI}"
+                                                                           id="ot1"/>
+                                                        </f:facet>
+                                                    </af:panelLabelAndMessage>
+                                                    <af:inputDate value="#{bindings.data_riferimento_eta.inputValue}"
+                                                                  label="#{bindings.data_riferimento_eta.hints.label}"
+                                                                  required="#{bindings.data_riferimento_eta.hints.mandatory}"
+                                                                  columns="#{bindings.data_riferimento_eta.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.data_riferimento_eta.hints.tooltip}"
+                                                                  rendered="#{sessionScope.scr=='CI'||sessionScope.scr=='MA'||sessionScope.scr=='CO'}"
+                                                                  id="id1">
+                                                        <f:validator binding="#{bindings.data_riferimento_eta.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.data_riferimento_eta.format}"/>
+                                                    </af:inputDate>
+                                                    <af:panelLabelAndMessage label="Data di nascita" id="plam2" rendered="#{sessionScope.scr=='CA'||sessionScope.scr=='PF'}">
+                                                        <af:panelGroupLayout id="pgl5" layout="horizontal">
+                                                            <af:inputDate value="#{bindings.data_nascita_da.inputValue}"
+                                                                          required="#{bindings.data_nascita_da.hints.mandatory}"
+                                                                          columns="#{bindings.data_nascita_da.hints.displayWidth}"
+                                                                          shortDesc="#{bindings.data_nascita_da.hints.tooltip}"
+                                                                          id="id2">
+                                                                <f:validator binding="#{bindings.data_nascita_da.validator}"/>
+                                                                <af:convertDateTime pattern="#{bindings.data_nascita_da.format}"/>
+                                                            </af:inputDate>
+                                                            <af:spacer width="10" height="10" id="s5"/>
+                                                            <af:inputDate value="#{bindings.data_nascita_a.inputValue}"
+                                                                          required="#{bindings.data_nascita_a.hints.mandatory}"
+                                                                          columns="#{bindings.data_nascita_a.hints.displayWidth}"
+                                                                          shortDesc="#{bindings.data_nascita_a.hints.tooltip}"
+                                                                          id="id7" label="a">
+                                                                <f:validator binding="#{bindings.data_nascita_a.validator}"/>
+                                                                <af:convertDateTime pattern="#{bindings.data_nascita_a.format}"/>
+                                                            </af:inputDate>
+                                                        </af:panelGroupLayout>
+                                                    </af:panelLabelAndMessage>
+                                                    <f:facet name="footer"/>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                </af:panelStretchLayout>
+                            </f:facet>
+                            <f:facet name="second">
+                                <af:panelSplitter id="ps2" orientation="vertical" partialTriggers="b1"
+                                                  splitterPosition="250">
+                                    <f:facet name="first">
+                                        <af:panelSplitter id="ps4" splitterPosition="700">
+                                            <f:facet name="first">
+                                                <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                                                    featuresOff="detach freeze wrap">
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t2">
+                                                            <af:group id="g1">
+                                                                <af:button text="#{viewcontrollerBundle.DETTAGLI}"
+                                                                           id="bselect"
+                                                                           action="#{pageFlowScope.Round_sollecitiAction.onGoDetails}"
+                                                                           rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                                           disabled="#{bindings.Round_SoTipiInvitiDaGenerareView3.currentRow == null}"
+                                                                           partialTriggers="t4"/>
+                                                            </af:group>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <af:table value="#{bindings.Round_SoTipiInvitiDaGenerareView3.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Round_SoTipiInvitiDaGenerareView3.rangeSize}"
+                                                              emptyText="#{bindings.Round_SoTipiInvitiDaGenerareView3.viewable ? viewcontrollerBundle.NESSUN_CONTO_ESEGUITO_O_NESSUN_INVITO_DA_GENERARE : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Round_SoTipiInvitiDaGenerareView3.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Round_SoTipiInvitiDaGenerareView3.collectionModel.makeCurrent}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.Round_SoTipiInvitiDaGenerareView3.rangeSize}"
+                                                              id="t4" summary='#{""}' editingMode="clickToEdit">
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Descrizione.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Descrizione.label}"
+                                                                   id="c1" rowHeader="unstyled" width="200">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Descrizione.tooltip}"
+                                                                           id="ot2"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.TipoTest.label}"
+                                                                   sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.TipoTest.name}"
+                                                                   id="c4"
+                                                                   rendered="#{sessionScope.HPV == true and bindings.livello=='1'}">
+                                                            <af:outputText value="#{row.TipoTest}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.TipoTest.tooltip}"
+                                                                           id="ot5"/>
+                                                        </af:column>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Numero.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Numero.label}"
+                                                                   id="c2">
+                                                            <af:outputText value="#{row.Numero}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Numero.tooltip}"
+                                                                           id="ot3">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.Numero.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.label}"
+                                                                   id="c3">
+                                                            <!--af:switcher id="s5"
+                                                                     facetName="#{row.TipoTest==bindings.TipoTest3.inputValue?'selected':'not_selected'}">
+                                                                     <f:facet name="selected"-->
+                                                            <af:inputText value="#{row.DaGenerare}"
+                                                                          label="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.label}"
+                                                                          required="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.mandatory}"
+                                                                          maximumLength="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.precision}"
+                                                                          shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.tooltip}"
+                                                                          autoSubmit="true" id="it41">
+                                                                <f:validator binding="#{bindings.DaGenerare.validator}"/>
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.format}"
+                                                                                  integerOnly="true"/>
+                                                            </af:inputText>
+                                                            <!--/f:facet>
+                                                                     <f:facet name="not_selected">
+                                                                        <af:outputText value="#{row.DaGenerare}"
+                                                                                       shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView3.hints.DaGenerare.tooltip}"
+                                                                                       id="ot9">
+                                                                        </af:outputText>
+                                                                     </f:facet>
+                                                         </af:switcher-->
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </f:facet>
+                                            <f:facet name="second">
+                                                <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                                                    featuresOff="detach freeze wrap"
+                                                                    rendered="#{sessionScope.HPV == true &amp;&amp; sessionScope.doppiaTabella == true}">
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t3">
+                                                            <af:group id="g2">
+                                                                <af:button text="#{viewcontrollerBundle.DETTAGLI}"
+                                                                           id="bselecthpv"
+                                                                           action="#{pageFlowScope.Round_sollecitiAction.onGoDetailsHPV}"
+                                                                           rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                                           disabled="#{bindings.Round_SoTipiInvitiDaGenerareView7.currentRow == null}"
+                                                                           partialTriggers="t5"/>
+                                                            </af:group>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <af:table value="#{bindings.Round_SoTipiInvitiDaGenerareView7.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Round_SoTipiInvitiDaGenerareView7.rangeSize}"
+                                                              emptyText="#{bindings.Round_SoTipiInvitiDaGenerareView7.viewable ? viewcontrollerBundle.NESSUN_CONTO_ESEGUITO_O_NESSUN_INVITO_DA_GENERARE : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Round_SoTipiInvitiDaGenerareView7.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Round_SoTipiInvitiDaGenerareView7.collectionModel.makeCurrent}"
+                                                              rowSelection="single" editingMode="clickToEdit"
+                                                              fetchSize="#{bindings.Round_SoTipiInvitiDaGenerareView7.rangeSize}"
+                                                              id="t5" summary='#{""}'>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Descrizione.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Descrizione.label}"
+                                                                   id="c5" rowHeader="unstyled" width="200">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Descrizione.tooltip}"
+                                                                           id="ot6"/>
+                                                        </af:column>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.TipoTest.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.TipoTest.label}"
+                                                                   id="c6">
+                                                            <af:outputText value="#{row.TipoTest}"
+                                                                           rendered="#{sessionScope.HPV and bindings.livello=='1'}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.TipoTest.tooltip}"
+                                                                           id="ot7"/>
+                                                        </af:column>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Numero.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Numero.label}"
+                                                                   id="c7">
+                                                            <af:outputText value="#{row.Numero}"
+                                                                           shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Numero.tooltip}"
+                                                                           id="ot8">
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  pattern="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.Numero.format}"/>
+                                                            </af:outputText>
+                                                        </af:column>
+                                                        <af:column sortProperty="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.name}"
+                                                                   headerText="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.label}"
+                                                                   id="c8">
+                                                            <!--af:switcher id="s4"
+                                                                     facetName="#{row.TipoTest==bindings.TipoTest1.inputValue?'selected':'not_selected'}">
+                                                                     <f:facet name="selected"-->
+                                                            <af:inputText value="#{row.DaGenerare}"
+                                                                          label="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.label}"
+                                                                          required="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.mandatory}"
+                                                                          maximumLength="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.precision}"
+                                                                          shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.tooltip}"
+                                                                          autoSubmit="true" id="it4">
+                                                                <f:validator binding="#{bindings.DaGenerare1.validator}"/>
+                                                                <af:convertNumber groupingUsed="false"
+                                                                                  integerOnly="true"
+                                                                                  pattern="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.format}"/>
+                                                            </af:inputText>
+                                                            <!--/f:facet>
+                                                                     <f:facet name="not_selected">
+                                                                        <af:outputText value="#{row.DaGenerare}"
+                                                                                       shortDesc="#{bindings.Round_SoTipiInvitiDaGenerareView7.hints.DaGenerare.tooltip}"
+                                                                                       id="ot12">
+                                                                        </af:outputText>
+                                                                     </f:facet>
+                                                         </af:switcher-->
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </f:facet>
+                                        </af:panelSplitter>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <af:panelGroupLayout id="pgl3" layout="vertical" halign="center">
+                                            <af:panelHeader text="#{viewcontrollerBundle.DISTRIBUZIONE_INVITI}" id="ph3"
+                                                            partialTriggers="centro centroInvito tpInvito comune">
+                                                <af:panelFormLayout id="pfl3" rows="2">
+                                                    <af:selectBooleanCheckbox value="#{bindings.virtuale.inputValue}"
+                                                                              label="#{bindings.virtuale.label}"
+                                                                              shortDesc="#{bindings.virtuale.hints.tooltip}"
+                                                                              id="sbc2"/>
+                                                    <af:inputText value="#{bindings.generate_daore.inputValue}"
+                                                                  label="#{bindings.generate_daore.hints.label}"
+                                                                  required="#{bindings.generate_daore.hints.mandatory}"
+                                                                  columns="#{bindings.generate_daore.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.generate_daore.hints.tooltip}"
+                                                                  id="it5">
+                                                        <f:validator binding="#{bindings.generate_daore.validator}"/>
+                                                        <af:validateRegExp pattern="^#|(([0-1][0-9]|2[0-3]):[0-5][0-9])"
+                                                                           messageDetailNoMatch="#{viewcontrollerBundle._L_ORARIO_IMPOSTATO_NON_HA_IL_FORMATO_CORRETTO_HH_MM}"/>
+                                                    </af:inputText>
+                                                    <af:inputDate value="#{bindings.generate_dal.inputValue}"
+                                                                  label="#{bindings.generate_dal.hints.label}"
+                                                                  required="#{bindings.generate_dal.hints.mandatory}"
+                                                                  columns="#{bindings.generate_dal.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.generate_dal.hints.tooltip}"
+                                                                  id="id3">
+                                                        <f:validator binding="#{bindings.generate_dal.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.generate_dal.format}"/>
+                                                    </af:inputDate>
+                                                    <af:inputText value="#{bindings.generate_aore.inputValue}"
+                                                                  label="#{bindings.generate_aore.hints.label}"
+                                                                  required="#{bindings.generate_aore.hints.mandatory}"
+                                                                  columns="#{bindings.generate_aore.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.generate_aore.hints.tooltip}"
+                                                                  id="id6">
+                                                        <f:validator binding="#{bindings.generate_aore.validator}"/>
+                                                        <af:validateRegExp pattern="^#|(([0-1][0-9]|2[0-3]):[0-5][0-9])"
+                                                                           messageDetailNoMatch="#{viewcontrollerBundle._L_ORARIO_IMPOSTATO_NON_HA_IL_FORMATO_CORRETTO_HH_MM}"/>
+                                                    </af:inputText>
+                                                    <af:inputDate value="#{bindings.generate_al.inputValue}"
+                                                                  label="#{bindings.generate_al.hints.label}"
+                                                                  required="#{bindings.generate_al.hints.mandatory}"
+                                                                  columns="#{bindings.generate_al.hints.displayWidth}"
+                                                                  shortDesc="#{bindings.generate_al.hints.tooltip}"
+                                                                  id="id4">
+                                                        <f:validator binding="#{bindings.generate_al.validator}"/>
+                                                        <af:convertDateTime pattern="#{bindings.generate_al.format}"/>
+                                                    </af:inputDate>
+                                                </af:panelFormLayout>
+                                            </af:panelHeader>
+                                            <af:spacer width="10" height="10" id="s4"/>
+                                            <af:button text="#{viewcontrollerBundle.GENERA_INVITI}" id="btGenera"
+                                                       disabled="#{sessionScope.SOGenerazioneInviti!=true}"
+                                                       actionListener="#{pageFlowScope.Round_sollecitiAction.onGenerate}"/>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                </af:panelSplitter>
+                            </f:facet>
+                        </af:panelSplitter>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="navigation" value="#{pageFlowScope.Round_sollecitiAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

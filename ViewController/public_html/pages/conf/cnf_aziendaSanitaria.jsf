@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_aziendaSanitaria.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="Azienda sanitaria"/>
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b4" action="cancel"/>
+                                    <af:button text="Applica" id="b5" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Codaz.inputValue}" label="#{bindings.Codaz.hints.label}"
+                                              required="#{bindings.Codaz.hints.mandatory}"
+                                              disabled="${sessionScope.regionale?false:true}"
+                                              columns="#{bindings.Codaz.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codaz.hints.precision}"
+                                              shortDesc="#{bindings.Codaz.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Codaz.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}" columns="50"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2" rows="2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Codipa.inputValue}"
+                                              label="#{bindings.Codipa.hints.label}"
+                                              required="#{bindings.Codipa.hints.mandatory}"
+                                              columns="#{bindings.Codipa.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codipa.hints.precision}"
+                                              shortDesc="#{bindings.Codipa.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Codipa.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etacitomin.inputValue}"
+                                              label="#{bindings.Etacitomin.hints.label}"
+                                              required="#{bindings.Etacitomin.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etacitomin.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etacitomin.hints.precision}"
+                                              shortDesc="#{bindings.Etacitomin.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Etacitomin.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etacitomin.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etacitomax.inputValue}"
+                                              label="#{bindings.Etacitomax.hints.label}"
+                                              required="#{bindings.Etacitomax.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etacitomax.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etacitomax.hints.precision}"
+                                              shortDesc="#{bindings.Etacitomax.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Etacitomax.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etacitomax.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etamammomin.inputValue}"
+                                              label="#{bindings.Etamammomin.hints.label}"
+                                              required="#{bindings.Etamammomin.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etamammomin.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etamammomin.hints.precision}"
+                                              shortDesc="#{bindings.Etamammomin.hints.tooltip}" id="it7">
+                                    <f:validator binding="#{bindings.Etamammomin.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etamammomin.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etamammomax.inputValue}"
+                                              label="#{bindings.Etamammomax.hints.label}"
+                                              required="#{bindings.Etamammomax.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etamammomax.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etamammomax.hints.precision}"
+                                              shortDesc="#{bindings.Etamammomax.hints.tooltip}" id="it8">
+                                    <f:validator binding="#{bindings.Etamammomax.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etamammomax.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etacolonmin.inputValue}"
+                                              label="#{bindings.Etacolonmin.hints.label}"
+                                              required="#{bindings.Etacolonmin.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etacolonmin.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etacolonmin.hints.precision}"
+                                              shortDesc="#{bindings.Etacolonmin.hints.tooltip}" id="it9">
+                                    <f:validator binding="#{bindings.Etacolonmin.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etacolonmin.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Etacolonmax.inputValue}"
+                                              label="#{bindings.Etacolonmax.hints.label}"
+                                              required="#{bindings.Etacolonmax.hints.mandatory}"
+                                              rendered="${sessionScope.scr!='CA' and sessionScope.scr!='PF'}"
+                                              columns="#{bindings.Etacolonmax.hints.displayWidth}"
+                                              maximumLength="#{bindings.Etacolonmax.hints.precision}"
+                                              shortDesc="#{bindings.Etacolonmax.hints.tooltip}" id="it10">
+                                    <f:validator binding="#{bindings.Etacolonmax.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Etacolonmax.format}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.Etacardiomin.inputValue}"
+                                              label="#{bindings.Etacardiomin.hints.label}"
+                                              required="#{bindings.Etacardiomin.hints.mandatory}"
+                                              rendered="${sessionScope.scr=='CA'}"
+                                              columns="#{bindings.Etacardiomin.hints.displayWidth}"
+                                              shortDesc="#{bindings.Etacardiomin.hints.tooltip}" id="it11">
+                                    <f:validator binding="#{bindings.Etacardiomin.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Etacardiomin.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.Etacardiomax.inputValue}"
+                                              label="#{bindings.Etacardiomax.hints.label}"
+                                              required="#{bindings.Etacardiomax.hints.mandatory}"
+                                              rendered="${sessionScope.scr=='CA'}"
+                                              columns="#{bindings.Etacardiomax.hints.displayWidth}"
+                                              shortDesc="#{bindings.Etacardiomax.hints.tooltip}" id="it12">
+                                    <f:validator binding="#{bindings.Etacardiomax.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Etacardiomax.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.Etapfasmin.inputValue}"
+                                              label="#{bindings.Etapfasmin.hints.label}"
+                                              required="#{bindings.Etapfasmin.hints.mandatory}"
+                                              rendered="${sessionScope.scr=='PF'}"
+                                              columns="#{bindings.Etapfasmin.hints.displayWidth}"
+                                              shortDesc="#{bindings.Etapfasmin.hints.tooltip}" id="it13">
+                                    <f:validator binding="#{bindings.Etapfasmin.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Etapfasmin.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.Etapfasmax.inputValue}"
+                                              label="#{bindings.Etapfasmax.hints.label}"
+                                              required="#{bindings.Etapfasmax.hints.mandatory}"
+                                              rendered="${sessionScope.scr=='PF'}"
+                                              columns="#{bindings.Etapfasmax.hints.displayWidth}"
+                                              shortDesc="#{bindings.Etapfasmax.hints.tooltip}" id="it14">
+                                    <f:validator binding="#{bindings.Etapfasmax.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Etapfasmax.format}"/>
+                                </af:inputDate>
+                                <af:inputText value="#{bindings.GgChiusuraRound.inputValue}"
+                                              label="#{bindings.GgChiusuraRound.hints.label}"
+                                              required="#{bindings.GgChiusuraRound.hints.mandatory}"
+                                              columns="#{bindings.GgChiusuraRound.hints.displayWidth}"
+                                              maximumLength="#{bindings.GgChiusuraRound.hints.precision}"
+                                              shortDesc="#{bindings.GgChiusuraRound.hints.tooltip}" id="it15">
+                                    <f:validator binding="#{bindings.GgChiusuraRound.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.GgChiusuraRound.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.DurataMsgChiusuraRound.inputValue}"
+                                              label="#{bindings.DurataMsgChiusuraRound.hints.label}"
+                                              required="#{bindings.DurataMsgChiusuraRound.hints.mandatory}"
+                                              columns="#{bindings.DurataMsgChiusuraRound.hints.displayWidth}"
+                                              maximumLength="#{bindings.DurataMsgChiusuraRound.hints.precision}"
+                                              shortDesc="#{bindings.DurataMsgChiusuraRound.hints.tooltip}" id="it16">
+                                    <f:validator binding="#{bindings.DurataMsgChiusuraRound.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.DurataMsgChiusuraRound.format}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.DataHpv.inputValue}"
+                                              label="#{bindings.DataHpv.hints.label}"
+                                              required="#{bindings.DataHpv.hints.mandatory}"
+                                              rendered="${sessionScope.HPV==true and sessionScope.scr!='CA'}"
+                                              columns="#{bindings.DataHpv.hints.displayWidth}"
+                                              shortDesc="#{bindings.DataHpv.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.DataHpv.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.DataHpv.format}"/>
+                                </af:inputDate>
+                                <af:inputDate value="#{bindings.Dtultagganag.inputValue}"
+                                              label="#{bindings.Dtultagganag.hints.label}"
+                                              required="#{bindings.Dtultagganag.hints.mandatory}" readOnly="true"
+                                              columns="#{bindings.Dtultagganag.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtultagganag.hints.tooltip}" id="id2">
+                                    <f:validator binding="#{bindings.Dtultagganag.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.Dtultagganag.format}"/>
+                                </af:inputDate>
+                                <f:facet name="footer">
+                                    <af:panelGroupLayout id="pgl1" layout="horizontal" halign="center">
+                                        <af:button text="Nuovo logo" id="b1" useWindow="true"
+                                                   windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="200"
+                                                   windowWidth="400" action="dialog:uploadFile">
+                                            <af:setPropertyListener type="action" from="logo" to="#{pageFlowScope.action}"/>
+                                        </af:button>
+                                        <af:button text="Visualizza logo" id="b2" partialSubmit="true"
+                                                   windowHeight="300" windowWidth="300" useWindow="true"
+                                                   action="dialog:viewLogo" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

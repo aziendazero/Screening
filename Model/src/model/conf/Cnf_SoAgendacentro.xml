@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoAgendacentro"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_AGENDACENTRO"
+   AliasName="Cnf_SoAgendacentro"
+   BindingStyle="Oracle"
+   RowClass="model.conf.Cnf_SoAgendacentroImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Idagenda"
+      Precision="10"
+      Scale="0"
+      ColumnName="IDAGENDA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentro"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTRO"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ggsettimana"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      ColumnName="GGSETTIMANA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Oraapp"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      ColumnName="ORAAPP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Minapp"
+      Precision="2"
+      Scale="0"
+      ColumnName="MINAPP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Disporaria"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      ColumnName="DISPORARIA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Nascosto"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      ColumnName="NASCOSTO"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_AGENDACENTRO"/>
+   <AccessorAttribute
+      Name="Cnf_SoCentroPrelRef"
+      Association="model.FkSoAgendHaAgendaSoCentrAssoc"
+      AssociationEnd="model.FkSoAgendHaAgendaSoCentrAssoc.Cnf_SoCentroPrelRef"
+      AssociationOtherEnd="model.FkSoAgendHaAgendaSoCentrAssoc.Cnf_SoAgendacentro"
+      Type="model.conf.Cnf_SoCentroPrelRefImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <Key
+      Name="CkcGgsettimanaSoAgend" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="CKC_GGSETTIMANA_SO_AGEND"/>
+         <Attr Name="_checkCondition" Value="GGSETTIMANA in (1,2,3,4,5,6,7)"/>
+         <Attr Name="_isCheck" Value="true"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoAgendacentro.Ggsettimana" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="PkSoAgendacentro"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_AGENDACENTRO"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoAgendacentro.Idagenda" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoAgendHaAgendaSoCentr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_AGEND_HA_AGENDA_SO_CENTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoAgendacentro.Idcentro" />
+      </AttrArray>
+   </Key>
+</Entity>

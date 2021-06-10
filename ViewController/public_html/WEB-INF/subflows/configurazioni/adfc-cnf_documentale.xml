@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_templates">
+    <page>/pages/conf/cnf_templates.jsf</page>
+  </view>
+  <view id="cnf_lettereCentri">
+    <page>/pages/conf/cnf_lettereCentri.jsf</page>
+  </view>
+  <view id="cnf_tpLettere">
+    <page>/pages/conf/cnf_tpLettere.jsf</page>
+  </view>
+  <view id="cnf_inserti">
+    <page>/pages/conf/cnf_inserti.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editTemplate">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editTemplate.xml</document>
+      <id>cnf_editTemplate</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editLettera">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editLettera.xml</document>
+      <id>cnf_editLettera</id>
+    </task-flow-reference>
+    <input-parameter id="__14">
+      <name>operation</name>
+      <value>#{requestScope.action}</value>
+    </input-parameter>
+  </task-flow-call>
+  <task-flow-call id="cnf_editTpLettere">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editTpLettere.xml</document>
+      <id>cnf_editTpLettere</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <task-flow-call id="cnf_editInserto">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editInserto.xml</document>
+      <id>cnf_editInserto</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <method-call id="refreshLettereCentri">
+    <method>#{bindings.Execute.execute}</method>
+    <outcome>
+      <fixed-outcome>Execute</fixed-outcome>
+    </outcome>
+  </method-call>
+  <view id="cnf_filtri">
+    <page>/cnf_filtri.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editFiltro">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editFiltro.xml</document>
+      <id>cnf_editFiltro</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>template</from-outcome>
+      <to-activity-id>cnf_templates</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>lettere_centri</from-outcome>
+      <to-activity-id>cnf_lettereCentri</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>tipi_lettere</from-outcome>
+      <to-activity-id>cnf_tpLettere</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>inserti</from-outcome>
+      <to-activity-id>cnf_inserti</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__24">
+      <from-outcome>filtri</from-outcome>
+      <to-activity-id>cnf_filtri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__9">
+    <from-activity-id>cnf_templates</from-activity-id>
+    <control-flow-case id="__10">
+      <from-outcome>creatEditTemplate</from-outcome>
+      <to-activity-id>cnf_editTemplate</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__12">
+    <from-activity-id>cnf_lettereCentri</from-activity-id>
+    <control-flow-case id="__13">
+      <from-outcome>creatEditLettera</from-outcome>
+      <to-activity-id>cnf_editLettera</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__19">
+    <from-activity-id>cnf_tpLettere</from-activity-id>
+    <control-flow-case id="__20">
+      <from-outcome>creatEditTpLettera</from-outcome>
+      <to-activity-id>cnf_editTpLettere</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__21">
+    <from-activity-id>cnf_inserti</from-activity-id>
+    <control-flow-case id="__22">
+      <from-outcome>creatEditInserto</from-outcome>
+      <to-activity-id>cnf_editInserto</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__15">
+    <from-activity-id>cnf_editLettera</from-activity-id>
+    <control-flow-case id="__16">
+      <to-activity-id>refreshLettereCentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__17">
+    <from-activity-id>refreshLettereCentri</from-activity-id>
+    <control-flow-case id="__18">
+      <from-outcome>Execute</from-outcome>
+      <to-activity-id>cnf_lettereCentri</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__25">
+    <from-activity-id>cnf_filtri</from-activity-id>
+    <control-flow-case id="__26">
+      <from-outcome>createEditFiltro</from-outcome>
+      <to-activity-id>cnf_editFiltro</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__6">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>cnf_documentale_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__7">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__8">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/subflows/configurazioni/cnf_documentale_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__11">
+    <managed-bean-name>Cnf_TemplateLetteraBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_TemplateLetteraBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__23">
+    <managed-bean-name>Cnf_docsAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_docsAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoUtentiCentri"
+   Version="11.1.2.62.76"
+   DBObjectType="table"
+   DBObjectName="SO_UTENTI_CENTRI"
+   AliasName="Cnf_SoUtentiCentri"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="model.conf.Cnf_SoUtentiCentriImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Utente"
+      IsNotNull="true"
+      Precision="100"
+      ColumnName="UTENTE"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_UTENTI_CENTRI"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentrof"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTROF"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_UTENTI_CENTRI"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_UTENTI_CENTRI"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_UTENTI_CENTRI"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Note"
+      Precision="255"
+      ColumnName="NOTE"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_UTENTI_CENTRI" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="255" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Cnf_SoCnfCentroFisico"
+      Association="model.FkUtentiCentriCentrofAssoc"
+      AssociationEnd="model.FkUtentiCentriCentrofAssoc.Cnf_SoCnfCentroFisico"
+      AssociationOtherEnd="model.FkUtentiCentriCentrofAssoc.Cnf_SoUtentiCentri"
+      Type="model.conf.Cnf_SoCnfCentroFisicoImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <Key
+      Name="PkUtentiCentri"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_UTENTI_CENTRI"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoUtentiCentri.Utente" />
+         <Item Value="model.conf.Cnf_SoUtentiCentri.Idcentrof" />
+         <Item Value="model.conf.Cnf_SoUtentiCentri.Ulss" />
+         <Item Value="model.conf.Cnf_SoUtentiCentri.Tpscr" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkUtentiCentriCentrof" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_CENTRO_FISICO"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_UTENTI_CENTRI_CENTROF"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoUtentiCentri.Idcentrof" />
+      </AttrArray>
+   </Key>
+</Entity>

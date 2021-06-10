@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_periodicitaInvito.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="#{Cnf_periodicitaInviti.onConf}"/>
+                                    <af:button text="Annulla" id="b4" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b5" action="#{Cnf_periodicitaInviti.onAppl}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl2">
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc3">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Codclassepop1.inputValue}"
+                                                    label="#{bindings.Codclassepop1.label}"
+                                                    required="#{bindings.Codclassepop1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codclassepop1.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Codclassepop1.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Codclassepop1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito.inputValue}"
+                                                    label="#{bindings.Idtpinvito.label}"
+                                                    required="#{bindings.Idtpinvito.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Idtpinvito.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idtpinvito.validator}"/>
+                                </af:selectOneChoice>
+
+                                <af:inputText value="#{bindings.GgPeriodismo.inputValue}"
+                                              label="#{bindings.GgPeriodismo.hints.label}"
+                                              required="#{bindings.GgPeriodismo.hints.mandatory}"
+                                              columns="#{bindings.GgPeriodismo.hints.displayWidth}"
+                                              maximumLength="#{bindings.GgPeriodismo.hints.precision}"
+                                              shortDesc="#{bindings.GgPeriodismo.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.GgPeriodismo.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.GgPeriodismo.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Note.inputValue}" label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              rows="4" columns="100"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it3" >
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.Dtins.inputValue}" label="#{bindings.Dtins.hints.label}"
+                                              required="#{bindings.Dtins.hints.mandatory}" disabled="true"
+                                              columns="#{bindings.Dtins.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtins.hints.tooltip}" id="id1">
+                                    <f:validator binding="#{bindings.Dtins.validator}"/>
+                                    <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                </af:inputDate>
+                                <af:inputText value="#{bindings.Opins.inputValue}" label="#{bindings.Opins.hints.label}"
+                                              required="#{bindings.Opins.hints.mandatory}" disabled="true"
+                                              columns="#{bindings.Opins.hints.displayWidth}"
+                                              maximumLength="#{bindings.Opins.hints.precision}"
+                                              shortDesc="#{bindings.Opins.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Opins.validator}"/>
+                                </af:inputText>
+                                <af:inputDate value="#{bindings.Dtultmod.inputValue}" disabled="true"
+                                              label="#{bindings.Dtultmod.hints.label}"
+                                              required="#{bindings.Dtultmod.hints.mandatory}"
+                                              columns="#{bindings.Dtultmod.hints.displayWidth}"
+                                              shortDesc="#{bindings.Dtultmod.hints.tooltip}" id="id2">
+                                    <f:validator binding="#{bindings.Dtultmod.validator}"/>
+                                    <af:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                                </af:inputDate>
+                                <af:inputText value="#{bindings.Opultmod.inputValue}" disabled="true"
+                                              label="#{bindings.Opultmod.hints.label}"
+                                              required="#{bindings.Opultmod.hints.mandatory}"
+                                              columns="#{bindings.Opultmod.hints.displayWidth}"
+                                              maximumLength="#{bindings.Opultmod.hints.precision}"
+                                              shortDesc="#{bindings.Opultmod.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Opultmod.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Periodicità invito"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

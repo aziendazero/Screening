@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_medici_centri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCentri.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="100px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelHeader text="Centro" id="ph1">
+                                <f:facet name="context"/>
+                                <f:facet name="toolbar"/>
+                                <f:facet name="menuBar"/>
+                                <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                    label="Centro"
+                                                    required="#{bindings.centro.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro.hints.tooltip}" id="soc1"
+                                                    autoSubmit="true"
+                                                    valueChangeListener="#{viewScope.Cnf_agendaBean.selectCentro}">
+                                    <f:selectItems value="#{bindings.centro.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.centro.validator}"/>
+                                </af:selectOneChoice>
+                                <f:facet name="legend"/>
+                                <f:facet name="info"/>
+                            </af:panelHeader>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelHeader text="Medici" id="ph2">
+                                <f:facet name="context"/>
+                                <f:facet name="toolbar"/>
+                                <f:facet name="menuBar"/>
+                                <af:panelCollection id="pc1" featuresOff="detach freeze wrap">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t2">
+                                            <af:group id="g1">
+                                                <af:button text="Cancella" id="b1">
+                                                    <af:showPopupBehavior popupId="p1"/>
+                                                </af:button>
+                                                <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                          partialTriggers="t1">
+                                                    <af:dialog id="d2" partialTriggers="t1"
+                                                               title="Cancella associazione"
+                                                               affirmativeTextAndAccessKey="Cancella"
+                                                               cancelTextAndAccessKey="Annulla"
+                                                               dialogListener="#{ParentBackingBean.deleteAction}">
+                                                        <f:facet name="buttonBar"/>
+                                                        <af:outputText value="Cancellare il medico dal Centro?" id="ot3"/>
+                                                    </af:dialog>
+                                                </af:popup>
+                                            </af:group>
+                                            <af:button text="Nuovo" id="b2" action="createMedicoCentro"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.Cnf_SoCnfCentriMediciView2.collectionModel}" var="row"
+                                              rows="#{bindings.Cnf_SoCnfCentriMediciView2.rangeSize}"
+                                              emptyText="#{bindings.Cnf_SoCnfCentriMediciView2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.Cnf_SoCnfCentriMediciView2.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.Cnf_SoCnfCentriMediciView2.collectionModel.makeCurrent}"
+                                              rowSelection="single"
+                                              fetchSize="#{bindings.Cnf_SoCnfCentriMediciView2.rangeSize}" id="t1">
+                                        <af:column headerText="#{bindings.Cnf_SoCnfCentriMediciView2.hints.Cognome.label}"
+                                                   id="c1" width="300">
+                                            <af:outputText value="#{row.Cognome} #{row.Nome}"
+                                                           shortDesc="#{bindings.Cnf_SoCnfCentriMediciView2.hints.Cognome.tooltip}"
+                                                           id="ot2"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoCnfCentriMediciView2.hints.Codiceregmedico1.label}"
+                                                   id="c2">
+                                            <af:outputText value="#{row.Codiceregmedico1}"
+                                                           shortDesc="#{bindings.Cnf_SoCnfCentriMediciView2.hints.Codiceregmedico1.tooltip}"
+                                                           id="ot1">
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.Cnf_SoCnfCentriMediciView2.hints.Codiceregmedico1.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelCollection>
+                                <f:facet name="legend"/>
+                                <f:facet name="info"/>
+                            </af:panelHeader>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Associazione medici-centri"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

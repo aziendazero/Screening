@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_round_comuni.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_geog.roundComuniForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempGeo.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" layout="scroll">
+                        <af:panelHeader text="Round attivi per comune" id="ph1">
+                            <f:facet name="context"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:button text="Attiva" id="b1" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                            <af:showPopupBehavior popupId="p1"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                      partialTriggers="t1">
+                                                <af:dialog id="d2" title="Attiva round"
+                                                           cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                           affirmativeTextAndAccessKey="Ok"
+                                                           dialogListener="#{Cnf_comuneBean.activateRound}">
+                                                    <f:facet name="buttonBar"/>
+                                                    <h:outputText value="Attivare un nuovo round per il comune di #{bindings.Descrizione.inputValue} ?" id="ot5"/>
+                                                </af:dialog>
+                                        </af:popup>
+                                        <af:button text="Chiudi" id="b2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                            <af:showPopupBehavior popupId="p2"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="p2"
+                                                      partialTriggers="t1">
+                                                <af:dialog id="d3" title="Chiudi round"
+                                                           cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                           affirmativeTextAndAccessKey="Ok"
+                                                           dialogListener="#{Cnf_comuneBean.closeRound}">
+                                                    <f:facet name="buttonBar"/>
+                                                    <h:outputText rendered="not #{Cnf_comuneBean.checkRoundPopulation}" value="Chiudere il round attivo per il comune di #{bindings.Descrizione.inputValue}?"
+                                                                  id="ot13"/>
+                                                    <h:outputText rendered="#{Cnf_comuneBean.checkRoundPopulation}" value="La popolazione target per il comune di #{bindings.Descrizione.inputValue} non è stata tutta invitata. Chiudere ugualmente il round?"
+                                                                  id="ot14"/>
+                                                </af:dialog>
+                                        </af:popup>
+                                        <af:selectOneChoice value="#{pageFlowScope.ulssSelectedRound}" label="Azienda sanitaria"
+                                            rendered="#{sessionScope.regionale?true:false}"
+                                            shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                            valueChangeListener="#{Cnf_geog.onChangeRound}" autoSubmit="true"
+                                                            valuePassThru="true">
+                                            <af:selectItem label="Tutte" id="si22"/>
+                                            <f:selectItems  value="#{bindings.Cnf_SoAziendaView1.items}" id="si4"/>
+                                        </af:selectOneChoice>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Round_SoRoundAttiviView1.collectionModel}" var="row"
+                                          rows="#{bindings.Round_SoRoundAttiviView1.rangeSize}"
+                                          emptyText="#{bindings.Round_SoRoundAttiviView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Round_SoRoundAttiviView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Round_SoRoundAttiviView1.collectionModel.makeCurrent}"
+                                          rowSelection="single"
+                                          fetchSize="#{bindings.Round_SoRoundAttiviView1.rangeSize}" id="t1"
+                                          autoHeightRows="10" scrollPolicy="page" binding="#{Cnf_geog.tabRoundComuni}">
+                                    <af:column headerText="#{bindings.Round_SoRoundAttiviView1.hints.Descrizione.label}" id="c1" width="250">
+                                        <af:outputText value="#{row.Descrizione}"
+                                                       shortDesc="#{bindings.Round_SoRoundAttiviView1.hints.Descrizione.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_SoRoundAttiviView1.hints.Codcom.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.Codcom}"
+                                                       shortDesc="#{bindings.Round_SoRoundAttiviView1.hints.Codcom.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_SoRoundAttiviView1.hints.Numround.label}"
+                                               id="c3">
+                                        <af:outputText value="#{row.Numround}"
+                                                       shortDesc="#{bindings.Round_SoRoundAttiviView1.hints.Numround.tooltip}"
+                                                       id="ot3">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Round_SoRoundAttiviView1.hints.Numround.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_SoRoundAttiviView1.hints.Dtinizio.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.Dtinizio}"
+                                                       shortDesc="#{bindings.Round_SoRoundAttiviView1.hints.Dtinizio.tooltip}"
+                                                       id="ot4">
+                                            <af:convertDateTime pattern="#{bindings.Round_SoRoundAttiviView1.hints.Dtinizio.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column id="c13" headerText="Chiuso" align="center">
+                                        <af:selectBooleanCheckbox label="" readOnly="true" id="sbc1" rendered="#{row.Dtfine!=null?true:false}"
+                                                                  selected="true"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_SoRoundAttiviView1.hints.Ulss.label}"
+                                               id="c6" rendered="#{sessionScope.regionale?true:false}">
+                                        <af:outputText value="#{row.Ulss}"
+                                                       shortDesc="#{bindings.Round_SoRoundAttiviView1.hints.Ulss.tooltip}"
+                                                       id="ot6"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </af:panelHeader>
+                        <af:panelHeader text="Storico round" id="ph2">
+                            <f:facet name="context"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="menuBar"/>
+                            <f:facet name="legend"/>
+                            <f:facet name="info"/>
+                            <af:table value="#{bindings.Round_SoRoundorgView3.collectionModel}" var="row"
+                                      rows="#{bindings.Round_SoRoundorgView3.rangeSize}"
+                                      emptyText="#{bindings.Round_SoRoundorgView3.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Round_SoRoundorgView3.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Round_SoRoundorgView3.collectionModel.makeCurrent}"
+                                      rowSelection="single" fetchSize="#{bindings.Round_SoRoundorgView3.rangeSize}"
+                                      id="t2">
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Numround.label}" id="c7">
+                                    <af:outputText value="#{row.Numround}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Numround.tooltip}"
+                                                   id="ot7">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Round_SoRoundorgView3.hints.Numround.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Dtinizio.label}" id="c8">
+                                    <af:outputText value="#{row.Dtinizio}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Dtinizio.tooltip}"
+                                                   id="ot8">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundorgView3.hints.Dtinizio.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Dtfine.label}" id="c9">
+                                    <af:outputText value="#{row.Dtfine}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Dtfine.tooltip}"
+                                                   id="ot9">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundorgView3.hints.Dtfine.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Dtprimoinvito.label}"
+                                           id="c10">
+                                    <af:outputText value="#{row.Dtprimoinvito}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Dtprimoinvito.tooltip}"
+                                                   id="ot10">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundorgView3.hints.Dtprimoinvito.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Dtultinvito.label}"
+                                           id="c11">
+                                    <af:outputText value="#{row.Dtultinvito}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Dtultinvito.tooltip}"
+                                                   id="ot11">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundorgView3.hints.Dtultinvito.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoRoundorgView3.hints.Dtultsollecito.label}"
+                                           id="c12">
+                                    <af:outputText value="#{row.Dtultsollecito}"
+                                                   shortDesc="#{bindings.Round_SoRoundorgView3.hints.Dtultsollecito.tooltip}"
+                                                   id="ot12">
+                                        <af:convertDateTime pattern="#{bindings.Round_SoRoundorgView3.hints.Dtultsollecito.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:table>
+                        </af:panelHeader>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Round"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

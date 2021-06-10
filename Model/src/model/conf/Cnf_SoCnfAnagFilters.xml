@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfAnagFilters"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfAnagReg.CODANAGREG, 
+       Cnf_SoCnfAnagReg.SIGLA, 
+       Cnf_SoCnfAnagReg.DESCRIZIONE, 
+       Cnf_SoCnfAnagScr.CODANAGREG AS CODANAGREG1, 
+       Cnf_SoCnfAnagScr.ULSS, 
+       Cnf_SoCnfAnagScr.TPSCR, 
+       Cnf_SoCnfAnagScr.INCLUSO"
+   FromList="SO_CNF_ANAG_SCR Cnf_SoCnfAnagScr, SO_CNF_ANAG_REG Cnf_SoCnfAnagReg"
+   Where="Cnf_SoCnfAnagScr.CODANAGREG(+) = Cnf_SoCnfAnagReg.CODANAGREG"
+   OrderBy="Cnf_SoCnfAnagReg.SIGLA"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfAnagFiltersImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfAnagScr"
+      Entity="model.conf.Cnf_SoCnfAnagScr" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfAnagReg"
+      Entity="model.conf.Cnf_SoCnfAnagReg"
+      Association="model.FkAnagScrRegAssoc"
+      AssociationEnd="model.FkAnagScrRegAssoc.Cnf_SoCnfAnagReg"
+      SourceUsage="model.conf.Cnf_SoCnfAnagFilters.Cnf_SoCnfAnagScr"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfAnagScr.Codanagreg" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCnfAnagReg.Codanagreg" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="CODANAGREG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sigla"
+      IsNotNull="true"
+      EntityAttrName="Sigla"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="SIGLA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Cnf_SoCnfAnagReg"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CrossCode"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="Cnf_SoCnfAnagScr"
+      AliasName="CODANAGREG1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Cnf_SoCnfAnagScr"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfAnagScr"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Incluso"
+      IsNotNull="true"
+      EntityAttrName="Incluso"
+      EntityUsage="Cnf_SoCnfAnagScr"
+      AliasName="INCLUSO" >
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Cnf_SoCnfAnagScrView"
+      ViewLink="model.Cnf_SoCnfAnagFiltersScrLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+</ViewObject>

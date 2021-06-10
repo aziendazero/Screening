@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="accCo_anamPageDef"
+                Package="pages.accettazione">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="AccCo_RicInvitiView1" RangeSize="10" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_RicInvitiView1Iterator"/>
+    <iterator Binds="AccCo_SoAnamnesicolonView1" RangeSize="10" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_SoAnamnesicolonView1Iterator"/>
+    <iterator Binds="AccCo_SoInvitoView1" RangeSize="10" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_SoInvitoView1Iterator"/>
+    <iterator Binds="AccCo_OpAnamView1" RangeSize="-1" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_OpAnamView1Iterator"/>
+    <iterator Binds="AccCo_SoSoggScrView1" RangeSize="10" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_SoSoggScrView1Iterator"/>
+    <iterator Binds="AccCo_EsitoAnamFamView1" RangeSize="-1" DataControl="AccCo_AppModuleDataControl"
+              id="AccCo_EsitoAnamFamView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AccCo_RicInvitiView1Iterator" id="Next"
+            InstanceName="AccCo_AppModuleDataControl.AccCo_RicInvitiView1" DataControl="AccCo_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="AccCo_RicInvitiView1Iterator" id="Previous"
+            InstanceName="AccCo_AppModuleDataControl.AccCo_RicInvitiView1" DataControl="AccCo_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="previous"/>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Escl">
+      <AttrNames>
+        <Item Value="Escl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Sollecitare">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="IdAnamco">
+      <AttrNames>
+        <Item Value="IdAnamco"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_SoInvitoView1Iterator" id="Idinvito">
+      <AttrNames>
+        <Item Value="Idinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="Dtanamnesi">
+      <AttrNames>
+        <Item Value="Dtanamnesi"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="AccCo_SoAnamnesicolonView1Iterator" ListIter="AccCo_OpAnamView1Iterator"
+          id="Idopanamnesi">
+      <AttrNames>
+        <Item Value="Idopanamnesi"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idop"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccCo_SoSoggScrView1Iterator" id="Altorischio">
+      <AttrNames>
+        <Item Value="Altorischio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="AccCo_SoAnamnesicolonView1Iterator" ListIter="AccCo_EsitoAnamFamView1Iterator"
+          id="Idesitoaf">
+      <AttrNames>
+        <Item Value="Idesitoaf"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idesitoaf"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="NoteFam">
+      <AttrNames>
+        <Item Value="NoteFam"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" StaticList="true" id="PcPresente">
+      <AttrNames>
+        <Item Value="PcPresente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="PcIntnoncod">
+      <AttrNames>
+        <Item Value="PcIntnoncod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="PcDtintervento">
+      <AttrNames>
+        <Item Value="PcDtintervento"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="AcPresenti" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AcPresenti"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="AcDtsosp">
+      <AttrNames>
+        <Item Value="AcDtsosp"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="PaPresente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="PaPresente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="PaDatainizio">
+      <AttrNames>
+        <Item Value="PaDatainizio"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="Ibd" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Ibd"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="RcPresente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="RcPresente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="AlPresente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AlPresente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="AccCo_SoAnamnesicolonView1Iterator" id="NotePers">
+      <AttrNames>
+        <Item Value="NotePers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccCo_RicInvitiView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

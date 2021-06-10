@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<menu xmlns="http://myfaces.apache.org/trinidad/menu">
+    <sharedNode ref="#{round_menu}"/>
+    <groupNode id="itemNode_sogg" idref="itemNode_sogg_ricerca"
+               label="#{adfBundle['view.op_function_menuBundle']['label_sogg_ricerca']}"
+               rendered="#{sessionScope.SOGestioneSoggetto==true}" icon="/images/address-book.png">
+            <itemNode id="itemNode_sogg_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_ricerca']}"
+                      action="iniSogg" focusViewId="/sogg_ricerca" icon="/images/address-book.png"
+                      rendered="#{sessionScope.SOGestioneSoggetto==true}" defaultOutcome="iniSogg">
+            <itemNode id="itemNode_sogg_Nuovo" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_Nuovo']}"
+                      action="goNuovoInv" focusViewId="/sogg_Nuovo" rendered="#{sessionScope.creaInv &amp;&amp; sessionScope.SOInvitoCorrente==true &amp;&amp; !sessionScope.SONoDatiSensibili==true}"
+                      defaultOutcome="goNuovoInv" eventEvaluation="#{Sogg_ricercaAction.onInvito()}"/>
+            <itemNode id="itemNode_sogg_invCorr" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_invCorr']}" action="goInvCorr"
+                      focusViewId="/sogg_invCorr" rendered="#{!sessionScope.creaInv &amp;&amp; sessionScope.SOInvitoCorrente==true}"
+                      defaultOutcome="goInvCorr" eventEvaluation="#{Sogg_ricercaAction.onInvito()}"/> 
+            <itemNode id="itemNode_sogg_anag" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_anag']}" action="goAnag"
+                      focusViewId="/sogg_anag" rendered="#{sessionScope.SODatiAnagrafici==true &amp;&amp; !sessionScope.SONoDatiSensibili==true}"
+                      defaultOutcome="goAnag" eventEvaluation="#{Sogg_ricercaAction.onAnag()}">
+                <itemNode id="itemNode_documento" label="" action="goDocumento" focusViewId="/sogg_documento" rendered="true"/>
+                <itemNode id="itemNode_consenso" label="" action="goConsenso" focusViewId="/sogg_consenso" rendered="true"/>
+            </itemNode>
+            <itemNode id="itemNode_sogg_escl" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_escl']}" action="goEscl"
+                      focusViewId="/sogg_escl" rendered="#{sessionScope.SOEsclusione==true}"
+                      defaultOutcome="goEscl" eventEvaluation="#{Sogg_ricercaAction.onEscl()}"/>
+            <itemNode id="itemNode_sogg_storia" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_storia']}" action="goStoria"
+                      focusViewId="/sogg_storia" rendered="#{sessionScope.SODatiStorici==true}"
+                      defaultOutcome="goStoria" eventEvaluation="#{Sogg_ricercaAction.onStoria()}"/>
+            <itemNode id="itemNode_sogg_aur" label="#{adfBundle['view.op_function_menuBundle']['label_sogg_aur']}" action="aurSearch"
+                      focusViewId="/aur_search" rendered="true" visible="false"/>
+        </itemNode>
+    </groupNode>
+    <itemNode focusViewId="/acc_ricerca" id="itemNode_acc_ricerca" 
+                label="#{adfBundle['view.op_function_menuBundle']['label_acc_ricerca']}"
+                action="acc_to" defaultOutcome="acc_to"
+                icon="/images/search_invito.png"
+                rendered="#{sessionScope.scr=='CI' &amp;&amp; sessionScope.SOAccettazione==true}">
+        <itemNode focusViewId="/acc_esitoInvito" id="itemNode_acc_esito"  action="goEsitoCI" defaultOutcome="goEsitoCI"
+                  label="Esito invito"/>
+        <itemNode focusViewId="/acc_intPrec" id="itemNode_int_prec"  action="goInt" defaultOutcome="goInt"
+                  label="Interventi precedenti"/>
+        <itemNode id="itemNode_acc_anam" focusViewId="/acc_anam" action="goAnamCI" defaultOutcome="goAnamCI"
+                  label="Anamnesi"/>
+        <itemNode id="itemNode_acc_prel" focusViewId="/acc_prelievo" action="goPrel" defaultOutcome="goPrel"
+                  label="Prelievo" rendered="#{sessionScope.accPrimo != null and sessionScope.accPrimo}"/>
+    </itemNode>
+    <itemNode focusViewId="/accMa_ricerca" id="itemNode_accMa_ricerca" 
+                label="#{adfBundle['view.op_function_menuBundle']['label_accMa_ricerca']}"
+                action="acc_toMammo" defaultOutcome="acc_toMammo"
+                icon="/images/search_invito.png"
+                rendered="#{sessionScope.scr=='MA' &amp;&amp; sessionScope.SOAccettazione==true}">
+        <itemNode focusViewId="/accMa_esito" id="itemNode_accMa_esito"  action="goEsito" defaultOutcome="goEsito"
+                  label="Esito invito"/>
+        <itemNode id="itemNode_accMa_anam" focusViewId="/accMa_anam" action="goAnam" defaultOutcome="goAnam"
+                  label="Anamnesi"/>
+    </itemNode>
+    <itemNode id="itemNode_accCa_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_accCa_ricerca']}"
+              action="acc_toCardio" defaultOutcome="acc_toCardio" focusViewId="/accCa_ricerca"
+              icon="/images/search_invito.png"
+              rendered="#{sessionScope.scr=='CA' &amp;&amp; sessionScope.SOAccettazione==true}"/>
+    <itemNode id="itemNode_accCo_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_accCo_ricerca']}"
+              action="acc_toColon" defaultOutcome="acc_toColon" focusViewId="/accCo_ricerca"
+              icon="/images/search_invito.png"
+              rendered="#{sessionScope.scr=='CO' &amp;&amp; sessionScope.SOAccettazione==true}">
+        <itemNode focusViewId="/accCo_esito" id="itemNode_accCo_esito"  action="goEsitoCo" defaultOutcome="goEsitoCo"
+                  label="Esito invito"/>
+        <itemNode id="itemNode_accCo_anam" focusViewId="/accCo_anam" action="goAnamCo" defaultOutcome="goAnamCo"
+                  label="Anamnesi" rendered="#{!sessionScope.accPrimo}"/>
+    </itemNode>
+    <itemNode id="itemnode_medici" focusViewId="/med_gestione" label="Medici" icon="/images/doctor.png" action="med_ini"
+              defaultOutcome="med_ini" rendered="#{sessionScope.SOMedici==true}">
+        <itemNode id="itemnode_dett_medici" focusViewId="/med_dett" action="toDettMed" defaultOutcome="toDettMed"
+                  label="Dettaglio"/>
+    </itemNode>
+    <itemNode id="itemNode_ref_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_ref_ricerca']}"
+              action="to_ref_ricerca" focusViewId="/ref_ricerca" icon="/images/referto.png"
+              rendered="#{sessionScope.scr=='CI' &amp;&amp; sessionScope.SORefertazione==true}"
+              defaultOutcome="to_ref_ricerca" params="event_call=cerca">
+        <itemNode focusViewId="/ref_referto1liv" id="itemNode_ref_referto1liv" label="Cervicale" action="to_ref_livello1" 
+                defaultOutcome="to_ref_livello1" rendered="#{sessionScope.ref_livello=='1'?true:false}"/>
+        <groupNode id="itemNode_ref2liv" idref="itemNode_ref_colposcopia" rendered="#{sessionScope.ref_livello=='2'?true:false}"
+                   label="Colposcopia">
+            <itemNode id="itemNode_ref_colposcopia" focusViewId="/ref_colpo2liv"
+                      label="Colposcopia" action="to_ref_livello2" defaultOutcome="to_ref_livello2"/>
+            <itemNode id="itemNode_ref_istologia" focusViewId="/ref_istobio2liv" label="Istologia bioptica"
+                      action="toRefIstobio2liv" defaultOutcome="toRefIstobio2liv"/>
+            <itemNode id="itemNode_ref_conclusioni" focusViewId="/ref_conclusioni2liv" label="Conclusioni"
+                      action="toRefConclusioni2liv" defaultOutcome="toRefConclusioni2liv"/>
+            <itemNode id="itemNode_ref_intervento" focusViewId="/ref_intervento3liv" label="Intervento"
+                      action="toRefIntervento3liv" defaultOutcome="toRefIntervento3liv"/>
+            <itemNode id="itemNode_ref_istchir" focusViewId="/ref_istochir3liv" label="Istologia chirurgica"
+                      action="toRefIstochir3liv" defaultOutcome="toRefIstochir3liv"/>
+            <itemNode id="itemNode_ref_diagnosi" focusViewId="/ref_diagnosiPeggiore" label="Diagnosi peggiore"
+                      action="toRefDiagnosiPeggiore" defaultOutcome="toRefDiagnosiPeggiore"/>
+        </groupNode>
+    </itemNode>
+    <itemNode id="itemNode_refCa_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_refCa_ricerca']}"
+              action="to_refCa_ricerca" focusViewId="/refCa_ricerca" icon="/images/referto.png"
+              rendered="#{sessionScope.scr=='CA' &amp;&amp; sessionScope.SORefertazione==true}"
+              defaultOutcome="to_refCa_ricerca" params="event_call=cerca"/>
+    <itemNode id="itemNode_refCo_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_refCo_ricerca']}"
+              action="to_refCo_ricerca" focusViewId="/refCo_ricerca" icon="/images/referto.png"
+              rendered="#{sessionScope.scr=='CO' &amp;&amp; sessionScope.SORefertazione==true}"
+              defaultOutcome="to_refCo_ricerca" params="event_call=cerca">
+        <itemNode focusViewId="/refCo_referto1liv" id="itemNode_refCo_referto1liv" label="Lettura" action="livello1Co" 
+                defaultOutcome="livello1Co" rendered="#{sessionScope.ref_livello=='1'?true:false}"/>
+        <groupNode id="itemNode_refCo2liv" idref="itemNode_refCo_endoscopia" rendered="#{sessionScope.ref_livello=='2'?true:false}"
+                   label="Endoscopia">
+            <itemNode id="itemNode_refCo_endoscopia" focusViewId="/refCo_endoscopia"
+                      label="Endoscopia" action="livello2Co" defaultOutcome="livello2Co"/>
+            <itemNode id="itemNode_refCo_istologia" focusViewId="/refCo_istologia" label="Istologia"
+                      action="to_refCo_istologia" defaultOutcome="to_refCo_istologia"/>
+            <itemNode id="itemNode_refCo_rxcolon" focusViewId="/refCo_rxcolon" label="Esami radiologici"
+                      action="to_refCo_rxcolon" defaultOutcome="to_refCo_rxcolon"/>
+            <itemNode id="itemNode_refCo_conclusioni" focusViewId="/refCo_conclusioni" label="Conclusioni"
+                      action="to_refCo_conclusioni" defaultOutcome="to_refCo_conclusioni"/>
+            <itemNode id="itemNode_refCo_intervento" focusViewId="/refCo_intervento" label="Intervento"
+                      action="to_refCo_intervento" defaultOutcome="to_refCo_intervento"/>
+            <itemNode id="itemNode_refCo_istchir" focusViewId="/refCo_istchir" label="Istologia chirurgica"
+                      action="to_refCo_istchir" defaultOutcome="to_refCo_istchir"/>
+            <itemNode id="itemNode_refCo_diagnosi" focusViewId="/refCo_diagnosi" label="Diagnosi peggiore"
+                      action="to_refCo_diagnosi" defaultOutcome="to_refCo_diagnosi"/>
+        </groupNode>
+        <itemNode id="itemNode_refCo_intermedi_ricerca" focusViewId="/refCo_intermedi_ricerca" rendered="#{sessionScope.ref_livello=='i'?true:false}"
+                  action="intermediCo" defaultOutcome="intermediCo"/>
+    </itemNode>
+    <itemNode focusViewId="/refMa_ricerca" id="itemNode_refMa_ricerca" label="#{adfBundle['view.op_function_menuBundle']['label_refMa_ricerca']}"
+              action="to_refMa_ricerca" icon="/images/referto.png"
+              defaultOutcome="to_refMa_ricerca" params="event_call=cerca" rendered="#{sessionScope.scr=='MA' &amp;&amp; sessionScope.SORefertazione==true}">
+        <groupNode id="itemNode_refMa1liv" label="Letture" 
+                  idref="itemNode_refMa_lettura1" rendered="#{sessionScope.ref_livello!='2'}">
+            <itemNode id="itemNode_refMa_lettura1" focusViewId="/refMa_lettura1" label="Prima lettura"
+                      action="livello1Ma" defaultOutcome="livello1Ma"/>
+            <itemNode focusViewId="/refMa_lettura2" id="itemNode_refMa_lettura2" label="Seconda lettura"
+                      action="to_refMa_lettura2" defaultOutcome="to_refMa_lettura2"
+                      disabled="#{sessionScope.SODoppioCieco==true and sessionScope.revisore!=true and data.view_refMa_lettura1PageDef.Completo.inputValue=='0'}"/>
+            <itemNode id="itemNode_refMa_revisione" focusViewId="/refMa_revisione" label="Revisione"
+                      action="to_refMa_revisione" defaultOutcome="to_refMa_revisione"
+                      rendered="#{sessionScope.n_referti_1liv == '3'}"
+                      disabled="#{sessionScope.SODoppioCieco==true and sessionScope.revisore!=true and data.view_refMa_lettura1PageDef.Completo.inputValue=='0'}"/>
+        </groupNode>                      
+        <itemNode id="itemNode_refMa_refertoC" focusViewId="/refMa_refertoC" label="Referto conclusivo"
+                  action="to_refMa_refertoC" defaultOutcome="to_refMa_refertoC"
+                  disabled="#{sessionScope.SODoppioCieco==true &amp;&amp; sessionScope.revisore!=true &amp;&amp; data.view_refMa_lettura1PageDef.Completo.inputValue=='0'}" 
+                  rendered="#{data.view_refMa_lettura1PageDef.Idreferto.inputValue!=null}"/>
+        <groupNode id="itemNode_refMa2liv" idref="itemNode_refMa_radiologia" label="2° livello"
+                   rendered="#{sessionScope.ref_livello=='2'?true:false}">
+            <itemNode focusViewId="/refMa_radiologia" id="itemNode_refMa_radiologia" action="livello2Ma"
+                      defaultOutcome="livello2Ma" label="2° livello"/>
+            <itemNode id="itemNode_refMa_citologia" focusViewId="/refMa_citologia" action="to_refMa_citologia"
+                      defaultOutcome="to_refMa_citologia" label="Citologia"/>
+            <itemNode id="itemNode_refMa_agobiopsia" focusViewId="/refMa_agobiopsia" label="Agobiopsia"
+                      action="to_refMa_agobiopsia" defaultOutcome="to_refMa_agobiopsia"/>
+            <itemNode focusViewId="/refMa_conclusioni" id="itemNode_refMa_conclusioni" label="Conclusioni"
+                      action="to_refMa_conclusioni" defaultOutcome="to_refMa_conclusioni"/>
+            <itemNode focusViewId="/refMa_intervento" id="itemNode_refMa_intervento" label="Intervento"
+                      action="to_refMa_intervento" defaultOutcome="to_refMa_intervento"/>
+            <itemNode id="itemNode_refMa_isologia" focusViewId="/refMa_istologia" label="Istologia chirurgica"
+                      action="to_refMa_istologia" defaultOutcome="to_refMa_istologia"/>
+            <itemNode focusViewId="/refMa_diagnosi" id="itemNode_refMa_diagnosi" label="Diagnosi peggiore"
+                      action="to_refMa_diagnosi" defaultOutcome="to_refMa_diagnosi"/>
+        </groupNode>
+    </itemNode>
+    <sharedNode ref="#{agenda_menu}"/>
+    <groupNode id="itemnode_stampe" idref="itemNode_inv_stampe" rendered="#{sessionScope.SOGestioneStampe==true and !sessionScope.SONoDatiSensibili==true}"
+               icon="/images/print_48.png" label="Stampe">
+        <itemNode id="itemNode_inv_stampe" focusViewId="/print_inviti" label="Stampa inviti" action="print_toInviti"
+                  defaultOutcome="print_toInviti" icon="/images/print_48.png" params="print_mode=empty"/>
+        <itemNode id="itemNode_ref_stampe" focusViewId="/print_referti" label="Stampa referti" action="print_referti"
+                  defaultOutcome="print_referti" icon="/images/print_48.png" 
+                  rendered="#{sessionScope.SORefertazione==true}" params="print_mode=empty"/>
+    </groupNode>
+    <groupNode id="itemnode_merge" idref="itemNode_mrg_merge" rendered="#{sessionScope.SOMerge==true and !sessionScope.SONoDatiSensibili==true}"
+               icon="/images/ionicons_merge.png" label="Merge">
+        <itemNode id="itemNode_mrg_merge" focusViewId="/mrg_merge" label="Merge" action="mrg_toMerge"
+                defaultOutcome="mrg_toMerge" icon="/images/ionicons_merge.png"/>
+        <itemNode id="itemNode_mrg_unmerge" focusViewId="/mrg_unmerge" label="Unmerge" action="mrg_toUnmerge"
+                defaultOutcome="mrg_toUnmerge" icon="/images/ionicons_merge.png">
+            <itemNode id="itemNode_mrg_unmrg_detail" focusViewId="/mrg_unmrg_detail" action="goDettaglio"/>
+        </itemNode>
+        <itemNode id="itemNode_mrg_segnalazioni" focusViewId="/mrg_segnalazioni" label="Segnalazioni"
+                  action="mrg_toSegnalazioni" defaultOutcome="mrg_toSegnalazioni" icon="/images/ionicons_merge.png"/>
+    </groupNode>
+</menu>

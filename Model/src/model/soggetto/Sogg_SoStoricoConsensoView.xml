@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_SoStoricoConsensoView"
+   Version="12.2.1.11.57"
+   SelectList="Sogg_SoStoricoConsenso.IDSTORICO, 
+       Sogg_SoStoricoConsenso.CODTS, 
+       Sogg_SoStoricoConsenso.ULSS, 
+       Sogg_SoStoricoConsenso.TPSCR, 
+       Sogg_SoStoricoConsenso.VALORE, 
+       Sogg_SoStoricoConsenso.INIZIO_VAL, 
+       Sogg_SoStoricoConsenso.OP_INS, 
+       Sogg_SoStoricoConsenso.FINE_VAL, 
+       Sogg_SoStoricoConsenso.OP_MOD, 
+       Sogg_SoStoricoConsenso.TIPO"
+   FromList="SO_STORICO_CONSENSO Sogg_SoStoricoConsenso"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   RowClass="model.soggetto.Sogg_SoStoricoConsensoViewRowImpl"
+   PageIterMode="Partial"
+   ComponentClass="model.soggetto.Sogg_SoStoricoConsensoViewImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Variable
+      Name="CodtsVar"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <Variable
+      Name="UlssVar"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <Variable
+      Name="TpscrVar"
+      Kind="viewcriteria"
+      Type="java.lang.String"/>
+   <EntityUsage
+      Name="Sogg_SoStoricoConsenso"
+      Entity="model.soggetto.Sogg_SoStoricoConsenso" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idstorico"
+      IsNotNull="true"
+      EntityAttrName="Idstorico"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="IDSTORICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Valore"
+      IsNotNull="true"
+      EntityAttrName="Valore"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="VALORE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="InizioVal"
+      IsNotNull="true"
+      EntityAttrName="InizioVal"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="INIZIO_VAL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OpIns"
+      IsNotNull="true"
+      EntityAttrName="OpIns"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="OP_INS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FineVal"
+      EntityAttrName="FineVal"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="FINE_VAL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OpMod"
+      EntityAttrName="OpMod"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="OP_MOD" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipo"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tipo"
+      EntityUsage="Sogg_SoStoricoConsenso"
+      AliasName="TIPO"/>
+   <ViewCriteria
+      Name="ConsensoValidoCriteria"
+      ViewObjectName="model.soggetto.Sogg_SoStoricoConsensoView"
+      Conjunction="AND">
+      <Properties Name="_Props">
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="Sogg_SoStoricoConsensoViewCriteria_row_0"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Sogg_SoStoricoConsensoViewCriteria_Sogg_SoStoricoConsensoViewCriteria_row_0_Codts"
+            ViewAttribute="Codts"
+            Operator="="
+            Conjunction="AND"
+            Value=":CodtsVar"
+            UpperColumns="0"
+            IsBindVarValue="true"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Ulss"
+            ViewAttribute="Ulss"
+            Operator="="
+            Conjunction="AND"
+            Value=":UlssVar"
+            UpperColumns="0"
+            IsBindVarValue="true"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Tpscr"
+            ViewAttribute="Tpscr"
+            Operator="="
+            Conjunction="AND"
+            Value=":TpscrVar"
+            UpperColumns="0"
+            IsBindVarValue="true"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Sogg_SoStoricoConsensoViewCriteria_Sogg_SoStoricoConsensoViewCriteria_row_0_FineVal"
+            ViewAttribute="FineVal"
+            Operator="ISBLANK"
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+</ViewObject>

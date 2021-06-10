@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sec_SoWarningWelcome"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="model.sicurezze.Sec_SoWarningWelcomeImpl"
+  PageIterMode="Full"
+  OrderBy="ordine asc">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="Sec_SoWarningWelcome_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery><![CDATA[SELECT           
+    sec_sowarning.idwarning,           
+    sec_sowarning.ulss,           
+    sec_sowarning.tpscr,           
+    sec_sowarning.applicativo,           
+    sec_sowarning.titolo,           
+    sec_sowarning.testo,           
+    sec_sowarning.iniziovalidita,           
+    sec_sowarning.finevalidita,           
+    sec_sowarning.opins,           
+    sec_sowarning.ordine           
+FROM           
+    so_warning sec_sowarning           
+WHERE           
+    ( sec_sowarning.applicativo = 'SCREENING'           
+      AND sec_sowarning.ulss is null           
+      AND sec_sowarning.tpscr is null     
+      AND (sec_sowarning.iniziovalidita is null or sec_sowarning.iniziovalidita < sysdate)       
+      AND (sec_sowarning.finevalidita is null or sec_sowarning.finevalidita > sysdate)     
+      )]]></SQLQuery>
+  <ViewAttribute
+    Name="Idwarning"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="IDWARNING"
+    Expression="IDWARNING"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="Ulss"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="6"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="ULSS"
+    Expression="ULSS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="6"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Tpscr"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="2"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="TPSCR"
+    Expression="TPSCR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Applicativo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APPLICATIVO"
+    Expression="APPLICATIVO"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Titolo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="250"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TITOLO"
+    Expression="TITOLO"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Testo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="2000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TESTO"
+    Expression="TESTO"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2000"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Iniziovalidita"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="INIZIOVALIDITA"
+    Expression="INIZIOVALIDITA"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="Finevalidita"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="FINEVALIDITA"
+    Expression="FINEVALIDITA"
+    SQLType="DATE"/>
+  <ViewAttribute
+    Name="Opins"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OPINS"
+    Expression="OPINS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Ordine"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ORDINE"
+    Expression="ORDINE"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Idwarning"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.sicurezze.common.Sec_SoWarningWelcomeMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

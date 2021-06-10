@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="cnf_editEsclusione_cnf_editEsclusione_CreateWithParametersPageDef1"
+                Package="subflows.configurazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfEsclusioneView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfEsclusioneView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Cnf_SoCnfEsclusioneView1Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="Ulss" NDValue="#{sessionScope.ulss}" NDType="java.lang.String"/>
+      <NamedData NDName="Tpscr" NDValue="#{sessionScope.scr}" NDType="java.lang.String"/>
+      <NamedData NDName="Tpescl" NDValue="D" NDType="java.lang.String"/>
+      <NamedData NDName="MergeIgnore" NDValue="0" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

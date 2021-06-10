@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_errori.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_impExpAction.errorForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCnfImpExp.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" rendered="#{!sessionScope.SOGestioneRiservata &amp;&amp; !sessionScope.SOGestioneConfigurazioneSistema?false:true}"
+                                               action="creatEditErrore" actionListener="#{Cnf_impExpAction.onDettError}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2"
+                                               rendered="#{sessionScope.SOGestioneRiservata==true}">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente tipo di errore?"
+                                                              id="ot4"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" rendered="#{sessionScope.SOGestioneRiservata==true}"
+                                           action="creatEditErrore">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedError}" label="Azienda sanitaria"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                                    valueChangeListener="#{Cnf_impExpAction.onChangeError}" autoSubmit="true"
+                                                    binding="#{Cnf_impExpAction.selectedUlssError}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoErroreView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoErroreView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoErroreView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoErroreView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoErroreView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoErroreView1.rangeSize}" id="t1"
+                                  columnStretching="column:c3" scrollPolicy="page"
+                                  binding="#{Cnf_impExpAction.tabError}">
+                            <af:column headerText="#{bindings.Cnf_SoErroreView1.hints.Coderrore.label}" id="c1">
+                                <af:outputText value="#{row.Coderrore}"
+                                               shortDesc="#{bindings.Cnf_SoErroreView1.hints.Coderrore.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoErroreView1.hints.Gruppo.label}" id="c2"
+                                       width="150">
+                                <af:selectOneChoice value="#{row.Gruppo}" readOnly="true" id="soc1">
+                                    <af:selectItem label="Anagrafe" value="AN" id="si1"/>
+                                    <af:selectItem label="Anatomia Patologica" value="AP" id="si2"/>
+                                    <af:selectItem label="Radiologia" value="RA" id="si3"/>
+                                    <af:selectItem label="Laboratorio" value="LA" id="si4"/>
+                                    <af:selectItem label="Tracciato Unico" value="RT" id="si5"/>
+                                    <af:selectItem label="SDO" value="SD" id="si6"/>
+                                    <af:selectItem label="SPS" value="SP" id="si7"/>
+                                </af:selectOneChoice>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoErroreView1.hints.Descrizione.label}" id="c3"
+                                       width="500">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoErroreView1.hints.Descrizione.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoErroreView1.hints.Vedi.label}" id="c4">
+                                <af:selectBooleanCheckbox selected ="#{row.Vedi}" id="sbc1" readOnly="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoErroreView1.hints.Ulss.label}" id="c5" rendered="#{sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoErroreView1.hints.Ulss.tooltip}" id="ot5"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Errori di import/export"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

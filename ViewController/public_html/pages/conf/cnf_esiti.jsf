@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_esiti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_esitoInvitoAction.tabEsitoInvito}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSingle.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelBox text="Regole di modifica" id="pb1">
+                        <f:facet name="toolbar"/>
+                        <af:panelList id="pl1">
+                            <h:outputText value="Ogni azienda sanitaria ha una copia locale dello standard regionale, che è meglio NON modificare" id="ot16"/>
+                            <h:outputText value="E' possibile aggiungere nuovi esiti che ricadano all'interno dei codici regionali" id="ot17"/>
+                        </af:panelList>
+                    </af:panelBox>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" action="creatEditEsito"
+                                               actionListener="#{Cnf_esitiBean.filterEsitiRegionali}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente tipo di esito?"
+                                                              id="ot18"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditEsito"
+                                           actionListener="#{Cnf_esitiBean.filterEsitiRegionali}">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelected}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_esitoInvitoAction.onChange}" autoSubmit="true"
+                                    binding="#{Cnf_esitoInvitoAction.selectedUlss}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems  value="#{bindings.Cnf_SoAziendaView1.items}" id="si4"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfEsitoinvitoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfEsitoinvitoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfEsitoinvitoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfEsitoinvitoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfEsitoinvitoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfEsitoinvitoView1.rangeSize}"
+                                  id="t1" styleClass="AFStretchWidth" autoHeightRows="0" scrollPolicy="page" binding="#{Cnf_esitoInvitoAction.tabSugg}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Codesitoinvito.label}"
+                                       id="c1" noWrap="false" width="60">
+                                <af:outputText value="#{row.Codesitoinvito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Codesitoinvito.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Livesito.label}" id="c2"
+                                       noWrap="false" width="60">
+                                <af:outputText value="#{row.Livesito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Livesito.tooltip}"
+                                               id="ot2">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Livesito.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Esitoinvito.label}"
+                                       noWrap="false" id="c3" width="150">
+                                <af:outputText value="#{row.Esitoinvito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Esitoinvito.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrbreve.label}"
+                                       id="c4" width="80">
+                                <af:outputText value="#{row.Descrbreve}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrbreve.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrizione.label}"
+                                       noWrap="false" id="c5">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrizione.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrsugg.label}" id="c6"
+                                       noWrap="false">
+                                <af:outputText value="#{row.Descrsugg}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrsugg.tooltip}"
+                                               id="ot6"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Catesito.label}" id="c7" noWrap="false">
+                                <af:outputText value="#{row.Catesito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Catesito.tooltip}"
+                                               id="ot7"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Tipoesito.label}" id="c8" noWrap="false">
+                                <af:outputText value="#{row.Tipoesito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Tipoesito.tooltip}"
+                                               id="ot8"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ggrichiamo.label}"
+                                       id="c9" noWrap="false">
+                                <af:outputText value="#{row.Ggrichiamo}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ggrichiamo.tooltip}"
+                                               id="ot9">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ggrichiamo.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrbreve1.label}"
+                                       id="c10" noWrap="false">
+                                <af:outputText value="#{row.Descrbreve1}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Descrbreve1.tooltip}"
+                                               id="ot10"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Codregionale.label}"
+                                       id="c11" width="60" noWrap="false">
+                                <af:outputText value="#{row.Codregionale}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Codregionale.tooltip}"
+                                               id="ot11"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ordine.label}" id="c12"
+                                       width="60" noWrap="false">
+                                <af:outputText value="#{row.Ordine}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ordine.tooltip}"
+                                               id="ot12">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ordine.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.MetodoCalcolo.label}"
+                                       noWrap="false" id="c13">
+                                <af:outputText value="#{row.MetodoCalcolo=='D'?'A partire dalla data esame recente':'Standard'}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.MetodoCalcolo.tooltip}"
+                                               id="ot13"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.DataObbligatoria.label}"
+                                       noWrap="false" id="c14" width="60">
+                                <af:selectBooleanCheckbox selected ="#{row.DataObbligatoria}" id="sbc1" readOnly="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ulss.label}" id="c15" rendered="#{sessionScope.regionale==true}" noWrap="false">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Ulss.tooltip}"
+                                               id="ot15"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Dtfinevalidita.label}"
+                                       noWrap="false" id="c16">
+                                <af:outputText value="#{row.Dtfinevalidita}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Dtfinevalidita.tooltip}"
+                                               id="ot19">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Dtfinevalidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsitoinvitoView1.hints.Portale.label}" id="c17" rendered="#{sessionScope.otp==true}"
+                                       noWrap="false" width="60">
+                               <af:selectBooleanCheckbox selected ="#{row.Portale}" id="sbc2" readOnly="true"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Esiti degli inviti"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

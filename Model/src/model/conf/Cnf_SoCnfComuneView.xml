@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoCnfComuneView"
+   Version="12.2.1.11.57"
+   SelectList="Cnf_SoCnfComune.IDCNF, 
+       Cnf_SoCnfComune.CODCOM, 
+       Cnf_SoCnfComune.IDCENTRO1LIV, 
+       Cnf_SoCnfComune.IDCENTRO2LIV, 
+       Cnf_SoCnfComune.TPSCR, 
+       Cnf_SoCentroPrelRef.IDCENTRO, 
+       Cnf_SoCentroPrelRef.DESCRBREVE, 
+       Cnf_SoCentroPrelRef.TIPOCENTRO, 
+       Cnf_SoCentroPrelRef1.IDCENTRO AS IDCENTRO1, 
+       Cnf_SoCentroPrelRef1.DESCRBREVE AS DESCRBREVE1, 
+       Cnf_SoCentroPrelRef1.TIPOCENTRO AS TIPOCENTRO1, 
+       Cnf_SoCnfComune.RELEASE_CODE_COM"
+   FromList="SO_CNF_COMUNE Cnf_SoCnfComune, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef, SO_CENTRO_PREL_REF Cnf_SoCentroPrelRef1"
+   Where="(Cnf_SoCentroPrelRef.IDCENTRO = Cnf_SoCnfComune.IDCENTRO1LIV)AND ( Cnf_SoCentroPrelRef1.IDCENTRO(+) =Cnf_SoCnfComune.IDCENTRO2LIV )"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.conf.Cnf_SoCnfComuneViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg" />
+   </DesignTime>
+   <EntityUsage
+      Name="Cnf_SoCnfComune"
+      Entity="model.conf.Cnf_SoCnfComune" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      Association="model.FkSoCnfCHaC1livSoCentrAssoc"
+      AssociationEnd="model.FkSoCnfCHaC1livSoCentrAssoc.Cnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoCnfComuneView.Cnf_SoCnfComune"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfComune.Idcentro1liv" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCentroPrelRef.Idcentro" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCentroPrelRef1"
+      Entity="model.conf.Cnf_SoCentroPrelRef"
+      Association="model.FkSoCnfCHaC1livSoCentrAssoc"
+      AssociationEnd="model.FkSoCnfCHaC1livSoCentrAssoc.Cnf_SoCentroPrelRef"
+      SourceUsage="model.conf.Cnf_SoCnfComuneView.Cnf_SoCnfComune"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.conf.Cnf_SoCnfComune.Idcentro1liv" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.conf.Cnf_SoCentroPrelRef.Idcentro" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idcnf"
+      IsNotNull="true"
+      EntityAttrName="Idcnf"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="IDCNF" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcnf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="CODCOM" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codcom_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1liv"
+      IsNotNull="true"
+      EntityAttrName="Idcentro1liv"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="IDCENTRO1LIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro1liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro2liv"
+      IsNotNull="true"
+      EntityAttrName="Idcentro2liv"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="IDCENTRO2LIV" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentro2liv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="IDCENTRO"
+      IsUpdateable="while_insert">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve"
+      IsNotNull="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="DESCRBREVE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipocentro"
+      IsNotNull="true"
+      EntityAttrName="Tipocentro"
+      EntityUsage="Cnf_SoCentroPrelRef"
+      AliasName="TIPOCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro1"
+      EntityAttrName="Idcentro"
+      EntityUsage="Cnf_SoCentroPrelRef1"
+      AliasName="IDCENTRO1"
+      IsUpdateable="while_insert">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrbreve1"
+      IsNotNull="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCentroPrelRef1"
+      AliasName="DESCRBREVE1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrbreve1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipocentro1"
+      IsNotNull="true"
+      EntityAttrName="Tipocentro"
+      EntityUsage="Cnf_SoCentroPrelRef1"
+      AliasName="TIPOCENTRO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReleaseCodeCom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeCom"
+      EntityUsage="Cnf_SoCnfComune"
+      AliasName="RELEASE_CODE_COM"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.conf.common.Cnf_SoCnfComuneViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

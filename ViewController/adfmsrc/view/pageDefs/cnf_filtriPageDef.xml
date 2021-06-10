@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_filtriPageDef"
+                Package="view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoFiltriTemplateView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoFiltriTemplateView1Iterator"/>
+    <iterator Binds="Cnf_SoTemplateView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoTemplateView1Iterator"/>
+    <iterator Binds="Cnf_SoTemplateView3" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoTemplateView3Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="Cnf_AppModuleDataControl"/>
+    <tree IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Cnf_SoFiltriTemplateView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoFiltriTemplateView" Name="Cnf_SoFiltriTemplateView10">
+        <AttrNames>
+          <Item Value="Idriga"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Codtempl"/>
+          <Item Value="Idcentro"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Dtins"/>
+          <Item Value="Opins"/>
+          <Item Value="Dtmod"/>
+          <Item Value="Opmod"/>
+          <Item Value="Descrizione"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Cnf_SoFiltriTemplateView11">
+      <nodeDefinition DefName="model.conf.Cnf_SoFiltriTemplateView" Name="Cnf_SoFiltriTemplateView110">
+        <AttrNames>
+          <Item Value="Descrizione"/>
+          <Item Value="Nomefile"/>
+          <Item Value="Tipoinvito"/>
+          <Item Value="Centro"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoFiltriTemplateView1Iterator" id="Delete" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <list IterBinding="Cnf_SoTemplateView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoTemplateView1Iterator"
+          id="Cnf_SoTemplateView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codtempl"/>
+        <Item Value="Idtplettera"/>
+        <Item Value="Codtemplreg"/>
+        <Item Value="Nomefile"/>
+        <Item Value="Filexml"/>
+        <Item Value="Dtcreazione"/>
+        <Item Value="Autore"/>
+        <Item Value="Dtultmod"/>
+        <Item Value="Opultmod"/>
+        <Item Value="Dtfinevaltempl"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Descrizione"/>
+        <Item Value="Descrizione1"/>
+        <Item Value="Idtplettera1"/>
+        <Item Value="Compiled"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="Cnf_SoTemplateView3Iterator" ListOperMode="multiSelect" ListIter="Cnf_SoTemplateView3Iterator"
+          id="Cnf_SoTemplateView3" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codtempl"/>
+      </AttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codtempl"/>
+        <Item Value="Idtplettera"/>
+        <Item Value="Codtemplreg"/>
+        <Item Value="Nomefile"/>
+        <Item Value="Filexml"/>
+        <Item Value="Dtcreazione"/>
+        <Item Value="Autore"/>
+        <Item Value="Dtultmod"/>
+        <Item Value="Opultmod"/>
+        <Item Value="Dtfinevaltempl"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+        <Item Value="Descrizione"/>
+        <Item Value="Descrizione1"/>
+        <Item Value="Idtplettera1"/>
+        <Item Value="Compiled"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Ref_SoRefertopfasDati"
+  Version="11.1.2.62.76"
+  DBObjectType="table"
+  DBObjectName="SO_REFERTOPFAS_DATI"
+  AliasName="Ref_SoRefertopfasDati"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  RowClass="model.referto.Ref_SoRefertopfasDatiImpl">
+  <Attribute
+    Name="Idrefdati"
+    IsNotNull="true"
+    Precision="12"
+    Scale="0"
+    ColumnName="IDREFDATI"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_REFERTOPFAS_DATI"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="Idreferto"
+    IsNotNull="true"
+    Precision="12"
+    Scale="0"
+    ColumnName="IDREFERTO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_REFERTOPFAS_DATI"/>
+  <Attribute
+    Name="Idcnfquest"
+    IsNotNull="true"
+    Precision="12"
+    Scale="0"
+    ColumnName="IDCNFQUEST"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_REFERTOPFAS_DATI"/>
+  <Attribute
+    Name="Idcnfdom"
+    IsNotNull="true"
+    Precision="12"
+    Scale="0"
+    ColumnName="IDCNFDOM"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_REFERTOPFAS_DATI"/>
+  <Attribute
+    Name="Sezione"
+    IsNotNull="true"
+    Precision="10"
+    ColumnName="SEZIONE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_REFERTOPFAS_DATI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Valore"
+    IsNotNull="true"
+    Precision="2000"
+    ColumnName="VALORE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_REFERTOPFAS_DATI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2000"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtinserimento"
+    IsNotNull="true"
+    ColumnName="DTINSERIMENTO"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_REFERTOPFAS_DATI"/>
+  <Attribute
+    Name="Opinserimento"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="OPINSERIMENTO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_REFERTOPFAS_DATI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtultimamodifica"
+    ColumnName="DTULTIMAMODIFICA"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_REFERTOPFAS_DATI"/>
+  <Attribute
+    Name="Opultmodifica"
+    Precision="100"
+    ColumnName="OPULTMODIFICA"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_REFERTOPFAS_DATI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="Ref_SoRefertopfas"
+    Association="model.referto.FkRefpfasIdrefertoAssoc"
+    AssociationEnd="model.referto.FkRefpfasIdrefertoAssoc.Ref_SoRefertopfas"
+    AssociationOtherEnd="model.referto.FkRefpfasIdrefertoAssoc.Ref_SoRefertopfasDati"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="PkSoRefpfasDati"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SO_REFPFAS_DATI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.referto.Ref_SoRefertopfasDati.Idrefdati"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkRefpfasIdcnfdom">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CNF_QUEST_DOMANDE"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_REFPFAS_IDCNFDOM"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.referto.Ref_SoRefertopfasDati.Idcnfquest"/>
+      <Item Value="model.referto.Ref_SoRefertopfasDati.Idcnfdom"/>
+      <Item Value="model.referto.Ref_SoRefertopfasDati.Sezione"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkRefpfasIdreferto">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="SO_REFERTOPFAS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_REFPFAS_IDREFERTO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.referto.Ref_SoRefertopfasDati.Idreferto"/>
+    </AttrArray>
+  </Key>
+</Entity>

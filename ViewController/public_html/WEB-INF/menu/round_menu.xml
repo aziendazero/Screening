@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<menu xmlns="http://myfaces.apache.org/trinidad/menu">
+  <groupNode id="itemNode_inviti" label="#{adfBundle['view.round_menuBundle']['label_inviti']}"
+             idref="itemNode_round_inviti"
+             icon="/images/envelope.png" rendered="#{sessionScope.SOGenerazioneInviti eq true}">
+    <itemNode id="itemNode_round_inviti" label="#{adfBundle['view.round_menuBundle']['label_round_inviti']}"
+              action="toRoundInviti" focusViewId="/round_inviti" defaultOutcome="toRoundInviti" rendered="#{sessionScope.SOGenerazioneInviti eq true}">
+      <itemNode id="itemNode_round_dettagliInviti" label="" action="goDetails" focusViewId="/round_dettagliInviti" renered="true"/>
+    </itemNode>
+    <itemNode id="itemNode_round_invitiRSS" label="#{adfBundle['view.round_menuBundle']['label_round_invitiRSS']}"
+              action="toRoundInvitiRSS" focusViewId="/round_invitiRSS" rendered="#{sessionScope.RSS and sessionScope.SOGenerazioneInviti}" defaultOutcome="toRoundInvitiRSS">
+      <itemNode id="itemNode_round_dettagliInvitiRSS" label="" action="goDetails" focusViewId="/round_dettagliInvitiRSS" renered="true"/>
+    </itemNode>
+    <itemNode id="itemNode_round_altriInviti" label="#{adfBundle['view.round_menuBundle']['label_round_altriInviti']}" action="toRoundAltriInviti"
+              focusViewId="/round_altriInviti" defaultOutcome="toRoundAltriInviti" rendered="#{sessionScope.SOGenerazioneInviti eq true}">
+          <itemNode id="itemNode_round_dettagliAltriInviti" label="" action="goDetails" focusViewId="/round_dettagliAltriInviti" renered="true"/>
+    </itemNode>
+    <itemNode id="itemNode_round_solleciti" label="#{adfBundle['view.round_menuBundle']['label_round_solleciti']}" action="toRoundSolleciti"
+              focusViewId="/round_solleciti" defaultOutcome="toRoundSolleciti" rendered="#{sessionScope.SOGenerazioneInviti eq true}">
+          <itemNode id="itemNode_round_dettagliSolleciti" label="" action="goDetails" focusViewId="/round_dettagliSolleciti" renered="true"/>
+    </itemNode>
+    <itemNode id="itemNode_round_spostaRichiami" label="#{adfBundle['view.round_menuBundle']['label_round_spostaRichiami']}" action="toRoundSposta"
+              focusViewId="/round_spostaRichiami" defaultOutcome="toRoundSposta" rendered="#{sessionScope.SOGenerazioneInviti eq true}"/>
+    <itemNode id="itemNode_round_pianificaInviti" label="#{adfBundle['view.round_menuBundle']['label_round_pianificaInviti']}" action="toRoundPianificaInviti"
+              focusViewId="/round_pianificaInviti" defaultOutcome="toRoundPianificaInviti" rendered="#{sessionScope.SOPianificaTest and sessionScope.scr eq 'CO' and sessionScope.covid19}">
+          <itemNode id="itemNode_round_dettagliopianificaInviti" label="" action="goDetails" focusViewId="/round_dettagliPianificaInviti" renered="true"/>
+    </itemNode>
+  </groupNode>
+  <groupNode id="itemNode_pianificazione" label="#{adfBundle['view.round_menuBundle']['label_inviti']}"
+             idref="itemNode_round_pianificaInviti2"
+             icon="/images/envelope.png" rendered="#{not sessionScope.SOGenerazioneInviti and sessionScope.SOPianificaTest}">
+    <itemNode id="itemNode_round_pianificaInviti2" label="#{adfBundle['view.round_menuBundle']['label_round_pianificaInviti']}" action="toRoundPianificaInviti"
+              focusViewId="/round_pianificaInviti" defaultOutcome="toRoundPianificaInviti" rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19}">
+          <itemNode id="itemNode_round_dettagliopianificaInviti2" label="" action="goDetails" focusViewId="/round_dettagliPianificaInviti" renered="true"/>
+    </itemNode>
+  </groupNode>
+</menu>

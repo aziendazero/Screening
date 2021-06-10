@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.refCo_diagnosiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.DIAGNOSI_ISTOLOGICA_PEGGIORE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{RefCo_diagnosiAction.diagnosiForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="130px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="vertical">
+                                <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                             inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                             styleClass="no_border">
+                                    <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                         inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                         styleClass="AFStretchWidth">
+                                        <af:panelGroupLayout id="pgl8">
+                                            <af:icon name="folder" id="i2" styleClass="banner_closed"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                            <af:icon name="folder" id="i1" styleClass="banner_open"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?false:true}"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                             inlineStyle="background-color:#3a76cb;" halign="left">
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                            id="pt_ol1" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="#{viewcontrollerBundle.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                            id="pt_ol32" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/> 
+                                            <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                            id="ol1"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="Raccomandazione: #{bindings.Descrizione.inputValue}"
+                                                            id="ol2"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pgl10" halign="end" layout="horizontal"
+                                                             inlineStyle="padding-right:30px;">
+                                            <af:outputText value="Intervento/i chiuso/i" id="ot1"
+                                                           inlineStyle="font-size:14px; color:White; font-weight:lighter;"
+                                                           noWrap="true"/>
+                                            <af:spacer width="15" height="10" id="s3"/>
+                                            <af:icon name="folder" id="i3"
+                                                     styleClass="#{bindings.Intchiusi.inputValue=='1'?'checked_box':'unchecked_box'}"/>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                    <af:toolbar id="t1">
+                                        <af:button text="Chiudi" id="b3" action="#{RefCo_diagnosiAction.onRollback}" immediate="true"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelGridLayout id="pgl4">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                            <af:panelHeader text="Istologie esami endoscopici" id="ph1" size="2">
+                                                <af:table value="#{bindings.Ref_SoEndoIstologieView1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Ref_SoEndoIstologieView1.rangeSize}"
+                                                          emptyText="#{bindings.Ref_SoEndoIstologieView1.viewable ? 'Nessuna endoscopia eseuita.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          fetchSize="#{bindings.Ref_SoEndoIstologieView1.rangeSize}"
+                                                          id="t2" width="630">
+                                                    <af:column headerText="Endoscopia n°"
+                                                               id="c1" width="80">
+                                                        <af:outputText value="#{row.NEndo}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.NEndo.tooltip}"
+                                                                       id="ot2">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Ref_SoEndoIstologieView1.hints.NEndo.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Data"
+                                                               id="c2" width="80">
+                                                        <af:outputText value="#{row.Dtendo}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.Dtendo.tooltip}"
+                                                                       id="ot3">
+                                                            <af:convertDateTime pattern="#{bindings.Ref_SoEndoIstologieView1.hints.Dtendo.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Carcinoma"
+                                                               id="c3" noWrap="false">
+                                                        <af:outputText value="#{row.IstoC}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.IstoC.tooltip}"
+                                                                       id="ot4"/>
+                                                    </af:column>
+                                                    <af:column headerText="Polipo 1"
+                                                               id="c4" noWrap="false">
+                                                        <af:outputText value="#{row.IstoP1}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.IstoP1.tooltip}"
+                                                                       id="ot5"/>
+                                                    </af:column>
+                                                    <af:column headerText="Polipo 2"
+                                                               id="c5" noWrap="false">
+                                                        <af:outputText value="#{row.IstoP2}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.IstoP2.tooltip}"
+                                                                       id="ot6"/>
+                                                    </af:column>
+                                                    <af:column headerText="Polipo 3"
+                                                               id="c6" noWrap="false">
+                                                        <af:outputText value="#{row.IstoP3}"
+                                                                       shortDesc="#{bindings.Ref_SoEndoIstologieView1.hints.IstoP3.tooltip}"
+                                                                       id="ot7"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelHeader>
+                                            <af:spacer width="10" height="30" id="s1"/>
+                                            <af:panelHeader text="Istologie chirurgiche" id="ph2" size="2">
+                                                <af:table value="#{bindings.Ref_SoIntColonIstologieView1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Ref_SoIntColonIstologieView1.rangeSize}"
+                                                          emptyText="#{bindings.Ref_SoIntColonIstologieView1.viewable ? 'Nessuna istologia inserita.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          fetchSize="#{bindings.Ref_SoIntColonIstologieView1.rangeSize}"
+                                                          id="t3" width="400" columnStretching="last">
+                                                    <af:column headerText="Intervento n°"
+                                                               id="c7" width="80">
+                                                        <af:outputText value="#{row.NInt}"
+                                                                       shortDesc="#{bindings.Ref_SoIntColonIstologieView1.hints.NInt.tooltip}"
+                                                                       id="ot8">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Ref_SoIntColonIstologieView1.hints.NInt.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Data"
+                                                               id="c8" width="80">
+                                                        <af:outputText value="#{row.Dtintervento}"
+                                                                       shortDesc="#{bindings.Ref_SoIntColonIstologieView1.hints.Dtintervento.tooltip}"
+                                                                       id="ot9">
+                                                            <af:convertDateTime pattern="#{bindings.Ref_SoIntColonIstologieView1.hints.Dtintervento.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Istologia"
+                                                               id="c9" noWrap="false" width="150">
+                                                        <af:outputText value="#{row.Istologia}"
+                                                                       shortDesc="#{bindings.Ref_SoIntColonIstologieView1.hints.Istologia.tooltip}"
+                                                                       id="ot10"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelHeader>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                            <af:selectOneRadio value="#{bindings.DiagnosiPeggiore.inputValue}"
+                                                               label="#{bindings.DiagnosiPeggiore.label}"
+                                                               required="#{bindings.DiagnosiPeggiore.hints.mandatory}"
+                                                               shortDesc="#{bindings.DiagnosiPeggiore.hints.tooltip}"
+                                                               id="sor1" disabled="true">
+                                                <f:selectItems value="#{bindings.DiagnosiPeggiore.items}" id="si1"/>
+                                                <f:validator binding="#{bindings.DiagnosiPeggiore.validator}"/>
+                                            </af:selectOneRadio>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Diagnosi istologica peggiore"/>
+                <f:attribute name="navigation" value="#{RefCo_diagnosiAction}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

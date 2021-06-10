@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_agendaFascia.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel"  immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:panelLabelAndMessage label="Centro di prelievo" id="plam1">
+                                    <af:outputText value="#{bindings.Descrbreve.inputValue}"
+                                                   shortDesc="#{bindings.Descrbreve.hints.tooltip}" id="ot1"/>
+                                </af:panelLabelAndMessage>
+                                <af:selectOneChoice value="#{bindings.Ggsettimana.inputValue}"
+                                                    label="Giorno della settimana" id="soc1" styleClass="choiceInTable"
+                                                    autoSubmit="false" valuePassThru="true">
+                                    <af:selectItem label="LUN" value="2" id="si1"/>
+                                    <af:selectItem label="MAR" value="3" id="si2"/>
+                                    <af:selectItem label="MER" value="4" id="si3"/>
+                                    <af:selectItem label="GIO" value="5" id="si4"/>
+                                    <af:selectItem label="VEN" value="6" id="si5"/>
+                                    <af:selectItem label="SAB" value="7" id="si6"/>
+                                    <af:selectItem label="DOM" value="1" id="si7"/>
+                                </af:selectOneChoice>
+                                <af:panelLabelAndMessage label="Orario" id="plam2">
+                                    <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                        <af:inputText value="#{bindings.Oraapp.inputValue}"
+                                                      required="#{bindings.Oraapp.hints.mandatory}"
+                                                      columns="2"
+                                                      maximumLength="2"
+                                                      shortDesc="#{bindings.Oraapp.hints.tooltip}" id="it4">
+                                            <f:validator binding="#{bindings.Oraapp.validator}"/>
+                                            <af:convertNumber groupingUsed="false" pattern="#{bindings.Oraapp.format}"/>
+                                        </af:inputText>
+                                        <af:outputText value=":" id="ot2"/>
+                                        <af:inputText value="#{bindings.Minapp.inputValue}"
+                                                      required="#{bindings.Minapp.hints.mandatory}"
+                                                      columns="2"
+                                                      maximumLength="2"
+                                                      shortDesc="#{bindings.Minapp.hints.tooltip}" id="it5">
+                                            <f:validator binding="#{bindings.Minapp.validator}"/>
+                                            <af:convertNumber groupingUsed="false" pattern="#{bindings.Minapp.format}"/>
+                                        </af:inputText>
+                                    </af:panelGroupLayout>
+                                </af:panelLabelAndMessage>
+                                <af:inputText value="#{bindings.Disporaria.inputValue}"
+                                              label="Disponibilità"
+                                              required="#{bindings.Disporaria.hints.mandatory}"
+                                              columns="#{bindings.Disporaria.hints.displayWidth}"
+                                              maximumLength="#{bindings.Disporaria.hints.precision}"
+                                              shortDesc="#{bindings.Disporaria.hints.tooltip}" id="it6">
+                                    <f:validator binding="#{bindings.Disporaria.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Disporaria.format}"/>
+                                </af:inputText>
+                                <af:selectBooleanCheckbox value="#{bindings.Nascosto.inputValue}"
+                                                          label="#{bindings.Nascosto.label}"
+                                                          shortDesc="#{bindings.Nascosto.hints.tooltip}" id="sbc1"/>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Agenda teorica"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

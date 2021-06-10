@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="acc_anamPageDef"
+                Package="pages.accettazione">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Acc_RicInvitiView1" RangeSize="10" DataControl="Acc_AppModuleDataControl"
+              id="Acc_RicInvitiView1Iterator"/>
+    <iterator id="Acc_SoAnamnesiCitoView1Iterator" Binds="Acc_SoAnamnesiCitoView1"
+              DataControl="Acc_AppModuleDataControl" RangeSize="25"/>
+    <iterator Binds="Acc_SoSoggScrView1" RangeSize="25" DataControl="Acc_AppModuleDataControl"
+              id="Acc_SoSoggScrView1Iterator"/>
+    <iterator Binds="Acc_DDLB_HPV" RangeSize="-1" DataControl="Acc_AppModuleDataControl" id="Acc_DDLB_HPVIterator"/>
+    <iterator Binds="Acc_DDLBGravidanza" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_DDLBGravidanzaIterator"/>
+    <iterator Binds="Acc_DDLBAllattamento" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_DDLBAllattamentoIterator"/>
+    <iterator Binds="Acc_DDLBIUD" RangeSize="-1" DataControl="Acc_AppModuleDataControl" id="Acc_DDLBIUDIterator"/>
+    <iterator Binds="Acc_DDLBContracc" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_DDLBContraccIterator"/>
+    <iterator Binds="Acc_DDLBMenopausa" RangeSize="-1" DataControl="Acc_AppModuleDataControl"
+              id="Acc_DDLBMenopausaIterator"/>
+    <iterator Binds="Acc_DDLBChemio" RangeSize="-1" DataControl="Acc_AppModuleDataControl" id="Acc_DDLBChemioIterator"/>
+    <iterator Binds="Acc_DDLBRadio" RangeSize="-1" DataControl="Acc_AppModuleDataControl" id="Acc_DDLBRadioIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Acc_RicInvitiView1Iterator" id="Next"
+            InstanceName="Acc_AppModuleDataControl.Acc_RicInvitiView1" DataControl="Acc_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="Acc_RicInvitiView1Iterator" id="Previous"
+            InstanceName="Acc_AppModuleDataControl.Acc_RicInvitiView1" DataControl="Acc_AppModuleDataControl"
+            RequiresUpdateModel="true" Action="previous"/>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Escl">
+      <AttrNames>
+        <Item Value="Escl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Sollecitare">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="IdAnamci">
+      <AttrNames>
+        <Item Value="IdAnamci"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Idinvito">
+      <AttrNames>
+        <Item Value="Idinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Acc_SoSoggScrView1Iterator" id="VaccinatoHpv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLB_HPVIterator">
+      <AttrNames>
+        <Item Value="VaccinatoHpv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="Gravidanza" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLBGravidanzaIterator">
+      <AttrNames>
+        <Item Value="Gravidanza"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="MeseGravidanza">
+      <AttrNames>
+        <Item Value="MeseGravidanza"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="Acc_SoAnamnesiCitoView1Iterator" ListIter="Acc_DDLBAllattamentoIterator"
+          id="Allattamento">
+      <AttrNames>
+        <Item Value="Allattamento"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list StaticList="false" IterBinding="Acc_SoAnamnesiCitoView1Iterator" ListIter="Acc_DDLBIUDIterator"
+          id="PresenzaIud">
+      <AttrNames>
+        <Item Value="PresenzaIud"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list StaticList="false" IterBinding="Acc_SoAnamnesiCitoView1Iterator" ListIter="Acc_DDLBContraccIterator"
+          id="ContraccTorm">
+      <AttrNames>
+        <Item Value="ContraccTorm"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="Menopausa" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLBMenopausaIterator">
+      <AttrNames>
+        <Item Value="Menopausa"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="DtUltMestr">
+      <AttrNames>
+        <Item Value="DtUltMestr"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="ChemioUlt1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLBChemioIterator">
+      <AttrNames>
+        <Item Value="ChemioUlt1"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="RadioUlt3" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Acc_DDLBRadioIterator">
+      <AttrNames>
+        <Item Value="RadioUlt3"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="GravTermine">
+      <AttrNames>
+        <Item Value="GravTermine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="PartiPrematuri">
+      <AttrNames>
+        <Item Value="PartiPrematuri"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="Aborti">
+      <AttrNames>
+        <Item Value="Aborti"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="FigliViventi">
+      <AttrNames>
+        <Item Value="FigliViventi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_SoAnamnesiCitoView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Acc_RicInvitiView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

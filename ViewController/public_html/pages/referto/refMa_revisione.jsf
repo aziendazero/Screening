@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="refMa_revisione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{RefMa_revisioneAction.revisioneForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="220px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="vertical">
+                                <af:navigationPane id="np233" level="2" value="#{op_function_menu}"
+                                                   var="submenuInfo" hint="bar">
+                                    <f:facet name="nodeStamp">
+                                        <af:commandNavigationItem text="#{submenuInfo.label}" id="cni233"
+                                                                  destination="#{submenuInfo.destination}"
+                                                                  rendered="#{submenuInfo.rendered}"
+                                                                  disabled="#{submenuInfo.disabled}"
+                                                                  action="#{MenuUtilBean.doAction(submenuInfo.refNode.customPropList['defaultOutcome'], RefMa_lettura1Action, submenuInfo.refNode.customPropList['params'])}"/>
+                                    </f:facet>
+                                </af:navigationPane>
+                                <af:panelBox text="PanelBox1" id="pt_pb1" showHeader="never"
+                                             inlineStyle="font-weight:bold; background-color:#3a76cb;"
+                                             styleClass="no_border">
+                                    <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                                         inlineStyle="background-color:#3a76cb; padding-left:20px;"
+                                                         styleClass="AFStretchWidth">
+                                        <af:panelGroupLayout id="pgl8">
+                                            <af:icon name="folder" id="i2" styleClass="banner_closed"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                            <af:icon name="folder" id="i1" styleClass="banner_open"
+                                                     rendered="#{bindings.Completo.inputValue=='1'?false:true}"/>
+                                        </af:panelGroupLayout>
+                                        <af:panelGroupLayout id="pt_pgl11" layout="vertical"
+                                                             inlineStyle="background-color:#3a76cb;">
+                                            <af:outputLabel value="#{viewcontrollerBundle1.SOGGETTO} #{bindings.Cognome.inputValue} #{bindings.Nome.inputValue} #{viewcontrollerBundle1.DATA_NAS} #{bindings.DataNascita.inputValue}"
+                                                            id="pt_ol1"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"
+                                                            rendered="#{!sessionScope.SONoDatiSensibili==true and sessionScope.showTabs}"/>
+                                            <af:outputLabel value="#{viewcontrollerBundle1.SOGGETTO} #{bindings.Chiave.inputValue}"
+                                                            id="ol3"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"
+                                                            rendered="#{sessionScope.SOAccessoAnonimo==true and sessionScope.showTabs}"/>
+                                            <af:outputLabel value="#{bindings.Dtapp.inputValue} #{bindings.Tipoinvitodesc.inputValue}"
+                                                            id="ol1"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                            <af:outputLabel value="Raccomandazione: #{bindings.Descrizione.inputValue}"
+                                                            id="ol2"
+                                                            inlineStyle="font-size:14px; color:White; font-weight:lighter;"/>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </af:panelBox>
+                                <af:panelGroupLayout id="pgl3" layout="horizontal" halign="end">
+                                    <af:toolbar id="t2">
+                                                <af:button text="Anamnesi" id="b10" action="#{MenuUtilBean.doAction('acc_toMA_Anamnesi', RefMa_revisioneAction, 'tsk=view_accMa_anamPageDef')}"
+                                                            rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Attivo.attributeValue=='1'?true:false)}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="100" height="10" id="s69"/>
+                                    <af:toolbar id="t1">
+                                        <af:button text="Conferma" id="b1" action="#{RefMa_revisioneAction.onConfirm}"
+                                                   disabled="#{bindings.Completo.inputValue=='1'?true:false}"/>
+                                        <af:button text="Annulla" id="b3" action="#{RefMa_revisioneAction.onRollback}" immediate="true"/>
+                                        <af:button text="Applica" id="b4"
+                                                   disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                   actionListener="#{RefMa_revisioneAction.onApply}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:panelGroupLayout id="pgl6" layout="horizontal" halign="end">
+                                    <af:toolbar id="t4">
+                                        <af:button text="Cancella referto" id="b7"
+                                                   rendered="#{bindings.Completo.inputValue!='1'?true:false}"
+                                                   action="#{RefMa_revisioneAction.onDeleteReferto}">
+                                            <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il referto selezionato?')"
+                                                               type="action"/>
+                                        </af:button>
+                                        <af:button text="Recupera lettera" id="b2"
+                                                   rendered="#{!sessionScope.SONoDatiSensibili==true and (bindings.Completo.inputValue!='1'?false:bindings.Idallegato.attributeValue==null?false:true)}">
+                                            <af:clientListener method="#{bindings.Dtspedizione.inputValue == null ? 'askBeforeGoingOn(\'Dopo la visualizzazione la lettera risulterà stampata.\\n Visualizzare ugualmente la lettera?\')': true}"
+                                                               type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Idreferto.inputValue}"
+                                                                    to="#{requestScope.print_referto_idref}"
+                                                                    type="action"/>
+                                            <af:setPropertyListener from="#{'1'}"
+                                                                    to="#{requestScope.print_referto_livello}"
+                                                                    type="action"/>
+                                            <af:fileDownloadActionListener method="#{Print_refertoAction.stampaPDF}"
+                                                                           filename="Referto#{bindings.Idreferto.inputValue}.pdf"/>
+                                        </af:button>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                <af:panelGridLayout id="pgl4">
+                                    <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc1">
+                                            <af:selectOneRadio value="#{bindings.Revisione.inputValue}"
+                                                          label="#{bindings.Revisione.hints.label}" id="sor1"
+                                                            disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                               autoSubmit="true" valuePassThru="true">
+                                                <af:selectItem label="non effettuata" value="0" id="si1"/>
+                                                <af:selectItem label="effettuata" value="1" id="si2"/>
+                                            </af:selectOneRadio>
+                                            <af:panelFormLayout id="pfl1" rendered="#{bindings.Revisione.inputValue=='1' and sessionScope.SOMx45==true}"
+                                                                partialTriggers="sor1">
+                                                <f:facet name="footer"/>
+                                                <af:panelLabelAndMessage label="Braccio"
+                                                                         id="plam1">
+                                                    <af:outputText value="#{bindings.Mx45Braccio.inputValue}"
+                                                                   shortDesc="#{bindings.Mx45Braccio.hints.tooltip}"
+                                                                   id="ot1"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:panelLabelAndMessage label="Codice studio"
+                                                                         id="plam2">
+                                                    <af:outputText value="#{bindings.Mx45Codice.inputValue}"
+                                                                   shortDesc="#{bindings.Mx45Codice.hints.tooltip}"
+                                                                   id="ot2"/>
+                                                </af:panelLabelAndMessage>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2" rendered="#{bindings.Revisione.inputValue == '1'}">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc2" >
+                                            
+                                            <af:panelFormLayout id="pfl2">
+                                                <f:facet name="footer"/>
+                                                <af:selectOneChoice value="#{bindings.RRadiologo.inputValue}"
+                                                                    label="#{bindings.RRadiologo.label}"
+                                                                    readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                    required="#{bindings.RRadiologo.hints.mandatory}"
+                                                                    shortDesc="#{bindings.RRadiologo.hints.tooltip}"
+                                                                    unselectedLabel="#{''}"
+                                                                    id="soc1" styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.RRadiologo.items}" id="si3"/>
+                                                    <f:validator binding="#{bindings.RRadiologo.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:panelLabelAndMessage label="#{bindings.RCentroref.hints.label}"
+                                                                         rendered="#{bindings.RIdcentroref != ''}" id="plam3">
+                                                    <af:outputText value="#{bindings.RCentroref.inputValue}"
+                                                                   shortDesc="#{bindings.RCentroref.hints.tooltip}"
+                                                                   id="ot3"/>
+                                                </af:panelLabelAndMessage>
+                                                <af:selectOneChoice value="#{bindings.REsito.inputValue}"
+                                                                    label="#{bindings.REsito.label}"
+                                                                    readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                    required="#{bindings.REsito.hints.mandatory}"
+                                                                    shortDesc="#{bindings.REsito.hints.tooltip}"
+                                                                    id="soc2"
+                                                                    valueChangeListener="#{RefMa_revisioneAction.onSelectEsito}"
+                                                                    autoSubmit="true" styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.REsito.items}" id="si4"/>
+                                                    <f:validator binding="#{bindings.REsito.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.RSugg.inputValue}"
+                                                                    label="#{bindings.RSugg.label}"
+                                                                    readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                    required="#{bindings.RSugg.hints.mandatory}"
+                                                                    shortDesc="#{bindings.RSugg.hints.tooltip}"
+                                                                    id="soc3" partialTriggers="soc2"
+                                                                    styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.RSugg.items}" id="si5"/>
+                                                    <f:validator binding="#{bindings.RSugg.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:inputText value="#{bindings.RNote.inputValue}"
+                                                              label="#{bindings.RNote.hints.label}"
+                                                              required="#{bindings.RNote.hints.mandatory}"
+                                                              readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                              columns="60"
+                                                              maximumLength="#{bindings.RNote.hints.precision}"
+                                                              shortDesc="#{bindings.RNote.hints.tooltip}" id="it1"
+                                                              rows="5">
+                                                    <f:validator binding="#{bindings.RNote.validator}"/>
+                                                </af:inputText>
+                                                <af:selectOneRadio value="#{bindings.DensitaTemp.inputValue}"
+                                                                   label="Densità"
+                                                                   disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                   required="#{bindings.DensitaTemp.hints.mandatory}"
+                                                                   shortDesc="#{bindings.DensitaTemp.hints.tooltip}"
+                                                                   id="sor2"
+                                                                   valueChangeListener="#{RefMa_revisioneAction.onChangeDirty}">
+                                                    <f:selectItems value="#{bindings.DensitaTemp.items}" id="si6"/>
+                                                    <f:validator binding="#{bindings.DensitaTemp.validator}"/>
+                                                </af:selectOneRadio>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc3">
+                                            <af:panelGroupLayout id="pgl5">
+                                                <af:panelHeader text="Indicazioni" id="ph1" size="2">
+                                                    <f:facet name="context"/>
+                                                    <f:facet name="toolbar"/>
+                                                    <f:facet name="menuBar"/>
+                                                    <f:facet name="legend"/>
+                                                    <f:facet name="info"/>
+                                                    <af:table value="#{bindings.Ref_SoCnfRef1livMXINDIView1.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Ref_SoCnfRef1livMXINDIView1.rangeSize}"
+                                                              emptyText="#{bindings.Ref_SoCnfRef1livMXINDIView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              fetchSize="#{bindings.Ref_SoCnfRef1livMXINDIView1.rangeSize}"
+                                                              id="t3" width="350" columnStretching="column:c1">
+                                                        <af:column headerText="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Descrizione.label}"
+                                                                   id="c1" width="150">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Descrizione.tooltip}"
+                                                                           id="ot4"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Dx.label}"
+                                                                   id="c2" width="60">
+                                                            <af:selectBooleanCheckbox value="#{row.bindings.Dx.inputValue}"
+                                                                                      label="#{row.bindings.Dx.label}"
+                                                                                      disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                                      shortDesc="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Dx.tooltip}"
+                                                                                      id="sbc1"
+                                                                                      valueChangeListener="#{RefMa_revisioneAction.onChangeDirty}"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Sx.label}"
+                                                                   id="c3" width="60">
+                                                            <af:selectBooleanCheckbox value="#{row.bindings.Sx.inputValue}"
+                                                                                      label="#{row.bindings.Sx.label}"
+                                                                                      disabled="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                                      shortDesc="#{bindings.Ref_SoCnfRef1livMXINDIView1.hints.Sx.tooltip}"
+                                                                                      id="sbc2"
+                                                                                      valueChangeListener="#{RefMa_revisioneAction.onChangeDirty}"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelHeader>
+                                                <af:spacer width="10" height="10" id="s2"/>
+                                                <af:panelHeader text="#{bindings.RAltreIndicazioni.hints.label}" id="ph14" size="2">
+                                                    <af:inputText value="#{bindings.RAltreIndicazioni.inputValue}"
+                                                                  label="#{bindings.RAltreIndicazioni.hints.label}"
+                                                                  required="#{bindings.RAltreIndicazioni.hints.mandatory}"
+                                                                  columns="60"
+                                                                  simple="true"
+                                                                  readOnly="#{bindings.Completo.inputValue=='1'?true:false}"
+                                                                  maximumLength="#{bindings.RAltreIndicazioni.hints.precision}"
+                                                                  shortDesc="#{bindings.RAltreIndicazioni.hints.tooltip}"
+                                                                  id="it2">
+                                                        <f:validator binding="#{bindings.RAltreIndicazioni.validator}"/>
+                                                    </af:inputText>
+                                                </af:panelHeader>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Mammografia: revisione"/>
+                <f:attribute name="navigation" value="#{RefMa_revisioneAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

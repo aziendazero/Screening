@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="lovCittadinanzaPageDef"
+                Package="pages.cittadinanza">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Sogg_SoCittadinanzaView1" RangeSize="15" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCittadinanzaView1Iterator"/>
+    <iterator Binds="Sogg_SoSoggettoView1" RangeSize="10" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggettoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="ReleaseCode">
+      <AttrNames>
+        <Item Value="ReleaseCode"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Sogg_SoCittadinanzaView1Iterator" id="Sogg_SoCittadinanzaView1">
+      <nodeDefinition DefName="model.soggetto.Sogg_SoCittadinanzaView" Name="Sogg_SoCittadinanzaView10">
+        <AttrNames>
+          <Item Value="CodCitt"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Dtinizioval"/>
+          <Item Value="Dtfineval"/>
+          <Item Value="ReleaseCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cittadinanza">
+      <AttrNames>
+        <Item Value="Cittadinanza"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeCit">
+      <AttrNames>
+        <Item Value="ReleaseCodeCit"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

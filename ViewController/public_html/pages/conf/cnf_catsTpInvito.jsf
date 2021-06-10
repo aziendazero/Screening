@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_catsTpInvito.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_tpInvitiAction.catTpInvForm}"> 
+            <af:pageTemplate viewId="/WEB-INF/templates/tempInviti.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneRiservata==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" action="creatEditCatTpinvito" actionListener="#{Cnf_tpInvitiAction.onDettCatTpinv}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente la seguente categoria di tipi di invito?" id="ot3"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditCatTpinvito">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfCategTpinvitoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfCategTpinvitoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfCategTpinvitoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfCategTpinvitoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfCategTpinvitoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfCategTpinvitoView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_tpInvitiAction.tabCatTpinv}"> 
+                            <af:column headerText="#{bindings.Cnf_SoCnfCategTpinvitoView1.hints.Idcateg.label}" id="c1">
+                                <af:outputText value="#{row.Idcateg}"
+                                               shortDesc="#{bindings.Cnf_SoCnfCategTpinvitoView1.hints.Idcateg.tooltip}"
+                                               id="ot1">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfCategTpinvitoView1.hints.Idcateg.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfCategTpinvitoView1.hints.Descrizione.label}"
+                                       id="c2" width="300">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfCategTpinvitoView1.hints.Descrizione.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Categorie di tipi di invito"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

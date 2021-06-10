@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_inserto.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" usesUpload="true">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b4" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b5" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                    <!--af:button text="Nuovo inserto" id="b1" useWindow="true" immediate="true"
+                                               windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                               windowHeight="200" windowWidth="400" action="dialog:uploadFile"
+                                               partialTriggers="pfl1"
+                                               returnListener="#{Cnf_TemplateLetteraBean.handlePopupReturn}">
+                                        <af:setPropertyListener type="action" from="inserto"
+                                                                to="#{pageFlowScope.action}"/>
+                                    </af:button-->
+                                    <af:inputFile label="Nuovo inserto" id="if1" value="#{Cnf_UploadFileBean.file}" partialTriggers="b11"/>
+                                    <af:commandButton text="Upload" id="b11" action="#{Cnf_UploadFileBean.insertFile}">
+                                         <af:setPropertyListener type="action" from="inserto" to="#{pageFlowScope.action}"/>
+                                    </af:commandButton>
+                                    <af:button text="Download" id="b2">
+                                        <af:fileDownloadActionListener filename="#{bindings.Nomefile.inputValue}"
+                                                                       method="#{Cnf_TemplateLetteraBean.downloadInsertoListener}"/>
+                                    </af:button>
+                                </af:panelGroupLayout>
+                                <af:inputText value="#{bindings.Nomefile.inputValue}"
+                                              label="#{bindings.Nomefile.hints.label}"
+                                              required="#{bindings.Nomefile.hints.mandatory}"
+                                              columns="#{bindings.Nomefile.hints.displayWidth}"
+                                              maximumLength="#{bindings.Nomefile.hints.precision}"
+                                              shortDesc="#{bindings.Nomefile.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Nomefile.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Inserti"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_centrifisiciPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCentroFisicoExtendedView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCentroFisicoExtendedView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroFisicoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfCentroFisicoView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCentroFisicoExtendedView1Iterator" id="Cnf_SoCentroFisicoExtendedView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCentroFisicoExtendedView" Name="Cnf_SoCentroFisicoExtendedView10">
+        <AttrNames>
+          <Item Value="Idcentro"/>
+          <Item Value="DescrBreve"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Centro1"/>
+          <Item Value="Centro2"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCentroFisicoExtendedView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCentroFisicoExtendedView1"
+            DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoCnfCentroFisicoView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfCentroFisicoView1Iterator" id="Cnf_SoCnfCentroFisicoView1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="DescrBreve"/>
+        <Item Value="Descrizione"/>
+        <Item Value="Idcentro1liv"/>
+        <Item Value="Idcentro2liv"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

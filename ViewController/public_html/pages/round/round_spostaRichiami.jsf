@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.round.round_spostaRichiamiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.SPOSTAMENTO_RICHIAMI}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOption('pt1:soc1')" type="load"/>
+        <af:clientListener method="removeEmptyOption('pt1:soc2')" type="load"/>
+        <af:form id="f1" binding="#{ToRoundSpostaAction.frmsposta}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.SPOSTAMENTO_RICHIAMI}"/>
+                <f:facet name="content">
+                    <af:panelHeader text="#{''}" id="ph1" styleClass="AFStretchWidth" partialTriggers="btreset">
+                        <af:panelFormLayout id="pfl1" rows="3" >
+                            <af:selectOneChoice value="#{bindings.ctPart.inputValue}" label="#{bindings.ctPart.label}" autoSubmit="true"
+                                                styleClass="choiceInTable " shortDesc="#{bindings.ctPart.hints.tooltip}"
+                                                id="soc1"
+                                                valueChangeListener="#{Round_spostaRichiamiAction.onChCentro}">
+                                <f:selectItems value="#{bindings.ctPart.items}" id="si5"/>
+                                <f:validator binding="#{bindings.ctPart.validator}"/>
+                            </af:selectOneChoice>
+                            <af:inputDate value="#{bindings.dtRichDa.inputValue}"
+                                          label="#{bindings.dtRichDa.hints.label}"
+                                          required="#{bindings.dtRichDa.hints.mandatory}"
+                                          columns="#{bindings.dtRichDa.hints.displayWidth}"
+                                          shortDesc="#{bindings.dtRichDa.hints.tooltip}" id="id1">
+                                <f:validator binding="#{bindings.dtRichDa.validator}"/>
+                                <af:convertDateTime pattern="#{bindings.dtRichDa.format}"/>
+                            </af:inputDate>
+                            <af:inputText value="#{bindings.codCom.inputValue}" label="#{bindings.codCom.hints.label}"
+                                          required="#{bindings.codCom.hints.mandatory}"
+                                          columns="#{bindings.codCom.hints.displayWidth}"
+                                          maximumLength="#{bindings.codCom.hints.precision}"
+                                          shortDesc="#{bindings.codCom.hints.tooltip}" id="plam2" disabled="true"
+                                          binding="#{Round_spostaRichiamiAction.codComune}" partialTriggers="it5">
+                                <f:validator binding="#{bindings.codCom.validator}"/>
+                            </af:inputText>
+                            <af:selectOneChoice value="#{bindings.ctArr.inputValue}" label="#{bindings.ctArr.label}"
+                                                required="#{bindings.ctArr.hints.mandatory}" autoSubmit="true"
+                                                styleClass="choiceInTable " partialTriggers="soc1"
+                                                shortDesc="#{bindings.ctArr.hints.tooltip}" id="soc2">
+                                <f:selectItems value="#{bindings.ctArr.items}" id="si1"/>
+                                <f:validator binding="#{bindings.ctArr.validator}"/>
+                            </af:selectOneChoice>
+                            <af:inputDate value="#{bindings.dtRichA.inputValue}"
+                                          required="#{bindings.dtRichA.hints.mandatory}"
+                                          columns="#{bindings.dtRichA.hints.displayWidth}"
+                                          shortDesc="#{bindings.dtRichA.hints.tooltip}" id="id2"
+                                          label="#{bindings.dtRichA.hints.label}">
+                                <f:validator binding="#{bindings.dtRichA.validator}"/>
+                                <af:convertDateTime pattern="#{bindings.dtRichA.format}"/>
+                            </af:inputDate>
+                            <af:panelLabelAndMessage label="#{bindings.desCom.hints.label}" id="plam1">
+                                <af:inputText value="#{bindings.desCom.inputValue}"
+                                              label="#{bindings.desCom.hints.label}"
+                                              required="#{bindings.desCom.hints.mandatory}"
+                                              columns="#{bindings.desCom.hints.displayWidth}"
+                                              maximumLength="#{bindings.desCom.hints.precision}"
+                                              contentStyle="text-transform: uppercase;"
+                                              shortDesc="#{bindings.desCom.hints.tooltip}" id="it5" simple="true"
+                                              binding="#{Round_spostaRichiamiAction.descComune}">
+                                    <f:validator binding="#{bindings.desCom.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                    <!--af:clientListener method="handleBlur('customEvent', {onClick:false, onOneReturn:true, callbackFunction:'callBtnClick(\'pt1:l1\')'})"
+                                                       type="blur"/>
+                                    <af:serverListener type="customEvent"
+                                                       method="#{Round_spostaRichiamiAction.setParameterAndCallback}"/-->
+                                </af:inputText>
+                                <f:facet name="end">
+                                    <af:link id="l1" icon="../images/search_16.png" iconPosition="leading"
+                                             action="#{Round_spostaRichiamiAction.onChComuneLOV}" inlineStyle="padding: 1px;"
+                                             shortDesc="#{bindings.desCom.hints.label}" useWindow="true"
+                                             windowHeight="600" windowWidth="750"
+                                             returnListener="#{Round_spostaRichiamiAction.lovComuneReturnListener}">
+                                        <af:setPropertyListener from="#{bindings.desCom.inputValue != null ? bindings.desCom.inputValue : ''}"
+                                                                to="#{requestScope.searchText}" type="action"/>
+                                        <af:setPropertyListener from="#{bindings.Round_LovComuneView1Iterator}"
+                                                                to="#{requestScope.iteratorBinding}" type="action"/>
+                                        <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                to="#{requestScope.onClick}" type="action"/>
+                                        <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                to="#{requestScope.onOneReturn}"
+                                                                type="action"/>
+                                    </af:link>
+                                </f:facet>
+                            </af:panelLabelAndMessage>
+                        </af:panelFormLayout>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t1">
+                                <af:button text="#{viewcontrollerBundle.ESEGUI_SPOSTAMENTO}" id="b1"
+                                           actionListener="#{Round_spostaRichiamiAction.onSposta}"/>
+                                <af:spacer width="10" height="10" id="s1"/>
+                                <af:button text="#{viewcontrollerBundle.REIMPOSTA}"
+                                            id="btreset" partialSubmit="true"
+                                            actionListener="#{Round_spostaRichiamiAction.onReimpListener}">
+                                </af:button>
+                            </af:toolbar>
+                        </f:facet>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="navigation" value="#{Round_spostaRichiamiAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

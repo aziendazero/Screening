@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sec_SecCnfRoles"
+  Version="11.1.2.62.76"
+  DBObjectType="table"
+  DBObjectName="SEC_CNF_ROLES"
+  AliasName="Sec_SecCnfRoles"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <Attribute
+    Name="SoRoleId"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="SO_ROLE_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SEC_CNF_ROLES"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="RoleKey"
+    IsNotNull="true"
+    Precision="24"
+    ColumnName="ROLE_KEY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SEC_CNF_ROLES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="24"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="SoApplication"
+    IsNotNull="true"
+    Precision="32"
+    ColumnName="SO_APPLICATION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SEC_CNF_ROLES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="32"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Description"
+    IsNotNull="true"
+    Precision="64"
+    ColumnName="DESCRIPTION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SEC_CNF_ROLES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="64"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tpscr"
+    Precision="2"
+    ColumnName="TPSCR"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SEC_CNF_ROLES"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="Sec_SecCnfUsersRoles"
+    Association="model.sicurezze.Sec_SecCnfUsersRoles_RolesAssoc"
+    AssociationEnd="model.sicurezze.Sec_SecCnfUsersRoles_RolesAssoc.Sec_SecCnfUsersRoles"
+    AssociationOtherEnd="model.sicurezze.Sec_SecCnfUsersRoles_RolesAssoc.Sec_SecCnfRoles"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="SoCnfRolesPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SO_CNF_ROLES_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.sicurezze.Sec_SecCnfRoles.SoRoleId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SoCnfRolesAppFk">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="SO_CNF_APPS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="SO_CNF_ROLES_APP_FK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.sicurezze.Sec_SecCnfRoles.SoApplication"/>
+    </AttrArray>
+  </Key>
+</Entity>

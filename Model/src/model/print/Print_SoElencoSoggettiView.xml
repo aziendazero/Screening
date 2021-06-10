@@ -1,0 +1,437 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Print_SoElencoSoggettiView"
+   Version="11.1.2.62.76"
+   OrderBy="&#34;COGNOME&#34;,&#34;NOME&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   RowClass="model.print.Print_SoElencoSoggettiViewRowImpl"
+   ComponentClass="model.print.Print_SoElencoSoggettiViewImpl"
+   RowInterface="model.common.Print_SoElencoSoggettiViewRow"
+   ClientRowProxyName="model.client.Print_SoElencoSoggettiViewRowClient"
+   FetchMode="FETCH_ALL"
+   FetchSize="100"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT COGNOME,
+        NOME,
+        CODANAGREG,
+        INDIRIZZO_RES INDIRIZZO,
+        CODCOMRES,
+        CAP_RES CAP,
+        DECODE(CODCOMRES,NULL,STATO_RES,COMUNE_RES) COMUNE,
+        PROV_RES PROVINCIA,
+        INDIRIZZO_DOM,
+        CODCOMDOM,
+        CAP_DOM,
+        DECODE(CODCOMDOM,NULL,STATO_DOM,COMUNE_DOM) COMUNE_DOM,
+        PROV_DOM PROVINCIA_DOM,
+        TO_CHAR(DATA_NASCITA,'DD/MM/YYYY') DATA_NASCITA,
+        DECODE(CODCOMNASCITA,NULL,STATO_NAS,COMUNE_NASCITA) LUOGO_NASCITA,
+        TO_CHAR(CODICEREGMEDICO) CODICE_MEDICO,
+        CONCAT(CONCAT(COGNOME_MED,' '),NOME_MED) MEDICO,
+        ZONA,
+        TEL1,
+        TEL2,
+        CODTS TESSERA_SANITARIA,
+        CF CODICE_FISCALE,
+        ULSS,
+	TO_CHAR(SYSDATE,'DD/MM/YYYY') DATA_STAMPA
+        
+FROM(
+ SELECT
+    SO_SOGGETTO.CODTS,
+    SO_SOGGETTO.CODANAGREG,
+    SO_SOGGETTO.CODDISTRZONA,
+    SO_SOGGETTO.CODCOMNASCITA,
+    SO_SOGGETTO.CODCOMRES,
+    SO_SOGGETTO.CODCOMDOM,
+    SO_SOGGETTO.CODCOMSCR,
+    SO_SOGGETTO.CODICEREGMEDICO,
+    SO_SOGGETTO.CODST,
+    SO_SOGGETTO.IDINTERNO,
+    SO_SOGGETTO.CF,
+    SO_SOGGETTO.COGNOME,
+    SO_SOGGETTO.NOME,
+    SO_SOGGETTO.COGNOME_CONIUGE,
+    SO_SOGGETTO.DATA_NASCITA,
+    SO_SOGGETTO.SESSO,
+    SO_SOGGETTO.CAP_COMRES,
+    SO_SOGGETTO.INDIRIZZO_RES,
+    SO_SOGGETTO.CAP_COMDOM,
+    SO_SOGGETTO.INDIRIZZO_DOM,
+    SO_SOGGETTO.CAP_COMSRC,
+    SO_SOGGETTO.INDIRIZZO_SCR,
+    SO_SOGGETTO.TEL1,
+    SO_SOGGETTO.TEL2,
+    SO_SOGGETTO.DATASCELTAMMG,
+    SO_SOGGETTO.ULSS,
+    SO_SOGGETTO.DTULTMODIFICA,
+    SO_SOGGETTO.OPULTMODIFICA,
+    SO_SOGGETTO.DTCREAZIONE,
+    SO_SOGGETTO.OPCREAZIONE,
+    SO_SOGGETTO.NOTEANAG,
+    SO_SOGGETTO.CODSTRES,
+    SO_SOGGETTO.CODSTDOM,
+    C_RES.DESCRIZIONE COMUNE_RES,
+    C_RES.CODPR PROV_RES,
+    C_RES.CAP CAP_RES,
+    C_DOM.DESCRIZIONE COMUNE_DOM,
+    C_DOM.CODPR PROV_DOM,
+    C_DOM.CAP CAP_DOM,
+    C_NAS.DESCRIZIONE COMUNE_NASCITA,
+    S_RES.DESCRIZIONE STATO_RES,
+    S_DOM.DESCRIZIONE STATO_DOM,
+    S_NAS.DESCRIZIONE STATO_NAS,
+    SO_MEDICO.COGNOME COGNOME_MED,
+    SO_MEDICO.NOME NOME_MED,
+    SO_MEDICO.CODCOM CODCOM_MED,
+    SO_MEDICO.INDIRIZZO_RES INDIRIZZO_MED,
+    SO_MEDICO.TEL,
+    SO_MEDICO.CELL,
+    SO_MEDICO.DTADESIONE,
+    SO_MEDICO.DTFINEVALOP,
+    SO_DISTRETTO_ZONA.DESCRIZIONE ZONA
+    
+ FROM SO_SOGGETTO,
+ SO_COMUNE C_RES, SO_COMUNE C_DOM, SO_COMUNE C_NAS,
+ SO_STATO S_RES, SO_STATO S_DOM, SO_STATO S_NAS,
+ SO_MEDICO, SO_DISTRETTO_ZONA
+ WHERE SO_SOGGETTO.CODCOMRES=C_RES.CODCOM(+)
+ AND SO_SOGGETTO.CODCOMDOM=C_DOM.CODCOM(+)
+ AND SO_SOGGETTO.CODCOMNASCITA=C_NAS.CODCOM(+)
+ AND SO_SOGGETTO.CODSTRES=S_RES.CODST(+)
+ AND SO_SOGGETTO.CODSTDOM=S_DOM.CODST(+)
+ AND SO_SOGGETTO.CODST=S_NAS.CODST(+)
+ AND SO_SOGGETTO.CODICEREGMEDICO=SO_MEDICO.CODICEREGMEDICO(+)
+ AND SO_SOGGETTO.ULSS=SO_MEDICO.ULSS(+)
+ AND (SO_SOGGETTO.CODDISTRZONA=SO_DISTRETTO_ZONA.CODDISTRZONA(+)
+ AND SO_SOGGETTO.ULSS=SO_DISTRETTO_ZONA.ULSS(+))
+
+)
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Cognome"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COGNOME"
+      Expression="COGNOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOME"
+      Expression="NOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CODANAGREG"
+      Expression="CODANAGREG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Indirizzo"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO"
+      Expression="INDIRIZZO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomres"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOMRES"
+      Expression="CODCOMRES"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP"
+      Expression="CAP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comune"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COMUNE"
+      Expression="COMUNE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Provincia"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="PROVINCIA"
+      Expression="PROVINCIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Indirizzo_dom"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO_DOM"
+      Expression="INDIRIZZO_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomdom"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOMDOM"
+      Expression="CODCOMDOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap_dom"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP_DOM"
+      Expression="CAP_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comune_dom"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COMUNE_DOM"
+      Expression="COMUNE_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Provincia_dom"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="PROVINCIA_DOM"
+      Expression="PROVINCIA_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Data_nascita"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DATA_NASCITA"
+      Expression="DATA_NASCITA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Luogo_nascita"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LUOGO_NASCITA"
+      Expression="LUOGO_NASCITA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codice_medico"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODICE_MEDICO"
+      Expression="CODICE_MEDICO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Medico"
+      IsPersistent="false"
+      Precision="81"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO"
+      Expression="MEDICO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="81" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Zona"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ZONA"
+      Expression="ZONA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEL1"
+      Expression="TEL1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEL2"
+      Expression="TEL2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tessera_sanitaria"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TESSERA_SANITARIA"
+      Expression="TESSERA_SANITARIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codice_fiscale"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODICE_FISCALE"
+      Expression="CODICE_FISCALE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Data_stampa"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DATA_STAMPA"
+      Expression="DATA_STAMPA"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+</ViewObject>

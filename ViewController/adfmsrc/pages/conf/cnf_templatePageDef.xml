@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_templatePageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoTemplateView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoTemplateView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfTpletteraView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpletteraView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoTemplateView1Iterator" id="Nomefile">
+      <AttrNames>
+        <Item Value="Nomefile"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoTemplateView1Iterator" id="Dtfinevaltempl">
+      <AttrNames>
+        <Item Value="Dtfinevaltempl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoTemplateView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoTemplateView1Iterator" id="Idtplettera" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfTpletteraView1Iterator">
+      <AttrNames>
+        <Item Value="Idtplettera"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtplettera"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Cnf_SoTemplateView1Iterator" id="Filexml">
+      <AttrNames>
+        <Item Value="Filexml"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoTemplateView1Iterator" id="Ulss" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

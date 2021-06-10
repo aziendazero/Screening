@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sec_RolesPFView"
+  Version="11.1.2.62.76"
+  SelectList="Sec_SecCnfRoles.SO_ROLE_ID, 
+       Sec_SecCnfRoles.ROLE_KEY, 
+       Sec_SecCnfRoles.SO_APPLICATION, 
+       Sec_SecCnfRoles.DESCRIPTION, 
+       Sec_SecCnfRoles.TPSCR"
+  FromList="SEC_CNF_ROLES Sec_SecCnfRoles"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  Where="Sec_SecCnfRoles.TPSCR = :TpscrVar">
+  <Variable
+    Name="TpscrVar"
+    Kind="where"
+    Type="java.lang.String"
+    IsUpdateable="false"
+    DefaultValue="PF"/>
+  <EntityUsage
+    Name="Sec_SecCnfRoles"
+    Entity="model.sicurezze.Sec_SecCnfRoles"/>
+  <ViewAttribute
+    Name="SoRoleId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="SoRoleId"
+    EntityUsage="Sec_SecCnfRoles"
+    AliasName="SO_ROLE_ID"/>
+  <ViewAttribute
+    Name="RoleKey"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RoleKey"
+    EntityUsage="Sec_SecCnfRoles"
+    AliasName="ROLE_KEY">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="model.sicurezze.Sec_RolesPFView.RoleKey_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SoApplication"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="SoApplication"
+    EntityUsage="Sec_SecCnfRoles"
+    AliasName="SO_APPLICATION"/>
+  <ViewAttribute
+    Name="Description"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="Sec_SecCnfRoles"
+    AliasName="DESCRIPTION">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="model.sicurezze.Sec_RolesPFView.Description_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Tpscr"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Sec_SecCnfRoles"
+    AliasName="TPSCR"/>
+  <ViewLinkAccessor
+    Name="Sec_SecCnfRolesAuthView"
+    ViewLink="model.sicurezze.Sec_RolesPF_Auth_VL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

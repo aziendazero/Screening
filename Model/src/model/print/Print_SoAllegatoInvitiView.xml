@@ -1,0 +1,1192 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Print_SoAllegatoInvitiView"
+   Version="12.2.1.11.57"
+   SelectList="Print_SoAllegato.IDALLEGATO, 
+       Print_SoAllegato.IDINVITO, 
+       Print_SoAllegato.CODTS, 
+       Print_SoAllegato.LETTERA, 
+       Print_SoAllegato.DTCREAZIONE, 
+       Print_SoAllegato.DTSTAMPA, 
+       Print_SoAllegato.STAMPAPOSTEL, 
+       Print_SoAllegato.ULSS, 
+       Print_SoAllegato.TPSCR, 
+       A_SoInvito.IDINVITO AS IDINVITO1, 
+       A_SoInvito.IDTPINVITO, 
+       A_SoInvito.IDCENTROPRELIEVO, 
+       A_SoInvito.DTAPP, 
+       A_SoInvito.ORAAPP, 
+       A_SoInvito.MINAPP, 
+       A_SoSoggetto.CODTS AS CODTS1, 
+       A_SoSoggetto.ULSS AS ULSS1, 
+       A_SoSoggetto.COGNOME, 
+       A_SoSoggetto.NOME, 
+       A_SoSoggetto.DATA_NASCITA, 
+       A_SoSoggetto.SESSO, 
+       A_SoSoggetto.TEL1, 
+       A_SoSoggetto.TEL2, 
+       A_SoSoggetto.INDIRIZZO_SCR, 
+       A_SoSoggetto.CODCOMSCR, 
+       A_SoComune.CODCOM, 
+       A_SoComune.DESCRIZIONE, 
+       A_SoComune.CODPR, 
+       A_SoSoggetto.CF, 
+       Print_SoCentroPrelRef.DESCRIZIONE AS DESCRIZIONE1, 
+       Print_SoCentroPrelRef.IDCENTRO, 
+       PL_SoAccCito1liv.NUMVETRINO, 
+       PL_SoAccCito1liv.IDACC1LIV, 
+       PL_SoAccCito1liv.IDINVITO AS IDINVITO2, 
+       A_SoComune1.DESCRIZIONE AS DESCRIZIONE2, 
+       A_SoComune1.CODCOM AS CODCOM1, 
+       A_SoComune2.DESCRIZIONE AS DESCRIZIONE3, 
+       A_SoComune2.CODCOM AS CODCOM2, 
+       A_SoComune1.CODPR AS CODPR1, 
+       A_SoComune2.CODPR AS CODPR2, 
+       A_SoSoggetto.INDIRIZZO_RES, 
+       A_SoSoggetto.INDIRIZZO_DOM, 
+       TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(TO_CHAR(DTAPP,'DD/mm/YYYY'),' '),LPAD(ORAAPP,2,'0')),':'),LPAD(MINAPP,2,'0')),'DD/MM/YYYY HH24:MI') AS DATA_ORA_ORDER, 
+       DECODE(Print_SoAllegato.TPSCR,'CO',A_SoAccColon1liv.COD_CAMPIONE,'PF',A_SoAccPfas2liv.COD_CAMPIONE) AS COD_CAMPIONE, 
+       A_SoAccColon1liv.IDACCCO_1LIV, 
+       A_SoInvito.NON_SPEDIRE_REFERTO, 
+       A_SoAccMammo1liv.IDACCMA_1LIV, 
+       DECODE(Print_SoAllegato.TPSCR,'CO',A_SoAccColon1liv.COD_RICHIESTA,'MA',A_SoAccMammo1liv.COD_RICHIESTA,'CI',PL_SoAccCito1liv.COD_RICHIESTA,'PF',DECODE(A_SoInvito.LIVELLO,1,A_SoAccPfas1liv.COD_RICHIESTA,2,A_SoAccPfas2liv.COD_RICHIESTA),NULL) AS COD_RICHIESTA, 
+       A_SoInvito.RACC_LETT_INVITO, 
+       A_SoInvito.RACC_LETT_REFERTO, 
+       Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc) AS CAP, 
+       Decode(A_SoSoggetto.cap_comdom,null,A_SoComune1.CAP,A_SoSoggetto.cap_comdom) AS CAP1, 
+       Decode(A_SoSoggetto.cap_comres,null,A_SoComune2.CAP,A_SoSoggetto.cap_comres) AS CAP2, 
+       A_SoMedico.NOME AS NOME1, 
+       A_SoMedico.CODICEREGMEDICO, 
+       A_SoMedico.COGNOME AS COGNOME1, 
+       Print_SoCentroPrelRef.INDIRIZZO_RES AS INDIRIZZO_RES1, 
+       A_SoMedico.ULSS AS ULSS2, 
+       A_SoSoggScr.CODIDSOGG_MX, 
+       A_SoSoggScr.CODTS AS CODTS2, 
+       A_SoSoggScr.ULSS AS ULSS3, 
+       A_SoSoggScr.TPSCR AS TPSCR1, 
+       A_SoMedico.INDIRIZZO_RES AS INDIRIZZO_RES2, 
+       A_SoComune3.DESCRIZIONE AS DESCRIZIONE4, 
+       A_SoComune3.CODCOM AS CODCOM3, 
+       A_SoComune3.CODPR AS CODPR3, 
+       A_SoComune3.CAP AS CAP3, 
+       A_SoInvito.IDAPP, 
+       Print_SoCentroPrelRef.SEDE, 
+       Print_SoCentroPrelRef.TEL, 
+       Print_SoCentroPrelRef.ORARITEL, 
+       A_SoSoggScr.MX45_CODICE, 
+       A_SoSoggScr.MX45_BRACCIO, 
+       Cnf_SoCnfTrialStato.DESCRBREVE, 
+       Cnf_SoCnfTrialStato.IDSTATO_TRIAL, 
+       Cnf_SoCnfTrialStato.IDTRIAL, 
+       Cnf_SoCnfTrialStato.TPSCR AS TPSCR2, 
+       Cnf_SoCnfTrialBraccio.DESCRBREVE AS DESCRBREVE1, 
+       Cnf_SoCnfTrialBraccio.IDBRACCIO_TRIAL, 
+       Cnf_SoCnfTrialBraccio.IDTRIAL AS IDTRIAL1, 
+       Cnf_SoCnfTrialBraccio.TPSCR AS TPSCR3, 
+       A_SoSoggetto.EMAIL, 
+       A_SoSoggetto.CELLULARE, 
+       A_SoInvito.TEST_PROPOSTO, 
+       A_SoComune.RELEASE_CODE, 
+       A_SoComune1.RELEASE_CODE AS RELEASE_CODE1, 
+       A_SoComune2.RELEASE_CODE AS RELEASE_CODE2, 
+       A_SoComune3.RELEASE_CODE AS RELEASE_CODE3, 
+       A_SoInvito.OTP, 
+       A_SoAccPfas1liv.COD_CAMPIONE AS COD_CAMPIONE1, 
+       A_SoAccPfas1liv.IDACCPF_1LIV, 
+       A_SoSoggetto.CODDISTRZONA, 
+       A_SoSoggetto.CODANAGREG, 
+       A_SoCnfTpinvito.DESCRIZIONE AS DESCRIZIONE5, 
+       A_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       A_SoCnfTpinvito.ULSS AS ULSS4, 
+       A_SoCnfTpinvito.TPSCR AS TPSCR4, 
+       Print_SoCentroPrelRef1.DESCRIZIONE AS DESCRIZIONE6, 
+       Print_SoCentroPrelRef1.IDCENTRO AS IDCENTRO1"
+   FromList="SO_ALLEGATO Print_SoAllegato, SO_INVITO A_SoInvito, SO_SOGGETTO A_SoSoggetto, SO_COMUNE A_SoComune, SO_CENTRO_PREL_REF Print_SoCentroPrelRef, SO_ACC_CITO1LIV PL_SoAccCito1liv, SO_COMUNE A_SoComune1, SO_COMUNE A_SoComune2, SO_ACC_COLON1LIV A_SoAccColon1liv, SO_ACC_MAMMO1LIV A_SoAccMammo1liv, SO_MEDICO A_SoMedico, SO_SOGG_SCR A_SoSoggScr, SO_COMUNE A_SoComune3, SO_CNF_TRIAL_STATO Cnf_SoCnfTrialStato, SO_CNF_TRIAL_BRACCIO Cnf_SoCnfTrialBraccio, SO_ACC_PFAS1LIV A_SoAccPfas1liv, SO_ACC_PFAS2LIV A_SoAccPfas2liv, SO_CNF_TPINVITO A_SoCnfTpinvito, SO_CENTRO_PREL_REF Print_SoCentroPrelRef1"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   Where="Print_SoAllegato.IDINVITO               = A_SoInvito.IDINVITO   
+AND Print_SoAllegato.CODTS                    = A_SoSoggetto.CODTS   
+AND Print_SoAllegato.ULSS                     = A_SoSoggetto.ULSS   
+AND A_SoSoggetto.RELEASE_CODE_COM_SCR         =A_SoComune.RELEASE_CODE(+)   
+AND A_SoInvito.IDCENTROPRELIEVO               =Print_SoCentroPrelRef.IDCENTRO   
+AND PL_SoAccCito1liv.IDINVITO(+)              =A_SoInvito.IDINVITO   
+AND A_SoSoggetto.RELEASE_CODE_COM_DOM         =A_SoComune1.RELEASE_CODE(+)   
+AND A_SoSoggetto.RELEASE_CODE_COM_RES         =A_SoComune2.RELEASE_CODE(+)   
+AND A_SoInvito.IDINVITO                       =A_SoAccColon1liv.IDINVITO(+)   
+AND A_SoInvito.IDINVITO                       =A_SoAccMammo1liv.IDINVITO(+)   
+AND A_SoInvito.IDINVITO                       =A_SoAccPfas1liv.IDINVITO(+)   
+AND A_SoInvito.IDINVITO                       =A_SoAccPfas2liv.IDINVITO(+)   
+AND A_SoMedico.CODICEREGMEDICO(+)             =A_SoSoggetto.CODICEREGMEDICO   
+AND A_SoMedico.ulss(+)                        =A_SoSoggetto.ulss   
+AND A_SoInvito.ULSS                           =A_SoSoggScr.ULSS   
+AND A_SoInvito.TPSCR                          =A_SoSoggScr.TPSCR   
+AND A_SoInvito.CODTS                          =A_SoSoggScr.CODTS   
+AND A_SoComune3.RELEASE_CODE(+)               = A_SoMedico.RELEASE_CODE_COM   
+AND Cnf_SoCnfTrialStato.IDTRIAL (+)           = A_SoSoggScr.IDTRIAL   
+AND Cnf_SoCnfTrialStato.IDSTATO_TRIAL (+)     = A_SoSoggScr.IDSTATO_TRIAL   
+AND Cnf_SoCnfTrialBraccio.IDTRIAL (+)         = A_SoSoggScr.IDTRIAL   
+AND Cnf_SoCnfTrialBraccio.IDBRACCIO_TRIAL (+) = A_SoSoggScr.IDBRACCIO_TRIAL  
+AND A_SoCnfTpinvito.IDTPINVITO 		      = A_SoInvito.IDTPINVITO  
+AND A_SoCnfTpinvito.ULSS		      = A_SoInvito.ULSS  
+AND A_SoCnfTpinvito.TPSCR		      = A_SoInvito.TPSCR 
+AND A_SoInvito.IDCENTROREF1LIV (+)            = Print_SoCentroPrelRef1.IDCENTRO"
+   RowClass="model.print.Print_SoAllegatoInvitiViewRowImpl"
+   ComponentClass="model.print.Print_SoAllegatoInvitiViewImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg|VarAccess" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <EntityUsage
+      Name="Print_SoAllegato"
+      Entity="model.print.Print_SoAllegato" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoInvito"
+      Entity="model.global.A_SoInvito"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.Print_SoAllegato"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoSoggetto"
+      Entity="model.global.A_SoSoggetto"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoInvito"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoSoggetto"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Print_SoCentroPrelRef"
+      Entity="model.print.Print_SoCentroPrelRef"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoComune"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoAccCito1liv"
+      Entity="model.pianolavoro.PL_SoAccCito1liv"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.Print_SoCentroPrelRef"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune1"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.PL_SoAccCito1liv"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune2"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoComune1"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccColon1liv"
+      Entity="model.accettazione.A_SoAccColon1liv"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoComune2"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccMammo1liv"
+      Entity="model.accettazione.A_SoAccMammo1liv"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoAccColon1liv"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoMedico"
+      Entity="model.global.A_SoMedico"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoAccMammo1liv"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoSoggScr"
+      Entity="model.global.A_SoSoggScr"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoMedico"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune3"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.Print_SoAllegato"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTrialStato"
+      Entity="model.conf.Cnf_SoCnfTrialStato"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Cnf_SoCnfTrialBraccio"
+      Entity="model.conf.Cnf_SoCnfTrialBraccio"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccPfas1liv"
+      Entity="model.accettazione.A_SoAccPfas1liv"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoAccPfas2liv"
+      Entity="model.accettazione.A_SoAccPfas2liv"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoCnfTpinvito"
+      Entity="model.global.A_SoCnfTpinvito"
+      Association="model.global.SoSoggScrTprichAssoc"
+      AssociationEnd="model.global.SoSoggScrTprichAssoc.A_SoCnfTpinvito"
+      SourceUsage="model.print.Print_SoAllegatoInvitiView.A_SoSoggScr"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"
+      JoinType="INNER JOIN">
+      <DesignTime>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="model.global.A_SoCnfTpinvito.Idtpinvito"/>
+            <Item Value="model.global.A_SoCnfTpinvito.Ulss"/>
+            <Item Value="model.global.A_SoCnfTpinvito.Tpscr"/>
+         </AttrArray>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="model.global.A_SoSoggScr.Tprichiamo"/>
+            <Item Value="model.global.A_SoSoggScr.Ulss"/>
+            <Item Value="model.global.A_SoSoggScr.Tpscr"/>
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="Print_SoCentroPrelRef1"
+      Entity="model.print.Print_SoCentroPrelRef"
+      ReadOnly="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <Attr Name="_customjoin" Value="true"/>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idallegato"
+      IsNotNull="true"
+      EntityAttrName="Idallegato"
+      EntityUsage="Print_SoAllegato"
+      AliasName="IDALLEGATO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idallegato_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      EntityAttrName="Idinvito"
+      EntityUsage="Print_SoAllegato"
+      AliasName="IDINVITO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="Print_SoAllegato"
+      AliasName="CODTS" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codts_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Lettera"
+      IsQueriable="false"
+      IsNotNull="true"
+      EntityAttrName="Lettera"
+      EntityUsage="Print_SoAllegato"
+      AliasName="LETTERA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsNotNull="true"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="Print_SoAllegato"
+      AliasName="DTCREAZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      EntityAttrName="Dtstampa"
+      EntityUsage="Print_SoAllegato"
+      AliasName="DTSTAMPA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtstampa_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtstampa_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtstampa_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stampapostel"
+      EntityAttrName="Stampapostel"
+      EntityUsage="Print_SoAllegato"
+      AliasName="STAMPAPOSTEL" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Stampapostel_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Print_SoAllegato"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Print_SoAllegato"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito1"
+      EntityAttrName="Idinvito"
+      EntityUsage="A_SoInvito"
+      AliasName="IDINVITO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idtpinvito"
+      IsNotNull="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="A_SoInvito"
+      AliasName="IDTPINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroprelievo"
+      EntityAttrName="Idcentroprelievo"
+      EntityUsage="A_SoInvito"
+      AliasName="IDCENTROPRELIEVO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Idcentroprelievo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      EntityAttrName="Dtapp"
+      EntityUsage="A_SoInvito"
+      AliasName="DTAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      EntityAttrName="Oraapp"
+      EntityUsage="A_SoInvito"
+      AliasName="ORAAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Oraapp_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      EntityAttrName="Minapp"
+      EntityUsage="A_SoInvito"
+      AliasName="MINAPP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Minapp_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts1"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODTS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoSoggetto"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="A_SoSoggetto"
+      AliasName="COGNOME" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cognome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="A_SoSoggetto"
+      AliasName="NOME" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Nome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsNotNull="true"
+      EntityAttrName="DataNascita"
+      EntityUsage="A_SoSoggetto"
+      AliasName="DATA_NASCITA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DataNascita_LABEL"/>
+            <FMT_FORMATTER
+               ResId="DataNascita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataNascita_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsNotNull="true"
+      EntityAttrName="Sesso"
+      EntityUsage="A_SoSoggetto"
+      AliasName="SESSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      EntityAttrName="Tel1"
+      EntityUsage="A_SoSoggetto"
+      AliasName="TEL1" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tel1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      EntityAttrName="Tel2"
+      EntityUsage="A_SoSoggetto"
+      AliasName="TEL2" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tel2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoScr"
+      EntityAttrName="IndirizzoScr"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_SCR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IndirizzoScr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomscr"
+      IsNotNull="true"
+      EntityAttrName="Codcomscr"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODCOMSCR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codcomscr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune"
+      AliasName="CODCOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ComuneDesc"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune"
+      AliasName="DESCRIZIONE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="ComuneDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune"
+      AliasName="CODPR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codpr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      EntityAttrName="Cf"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CentroPrel"
+      EntityAttrName="Descrizione"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentro"
+      IsNotNull="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="IDCENTRO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numvetrino"
+      EntityAttrName="Numvetrino"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="NUMVETRINO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idacc1liv"
+      IsNotNull="true"
+      EntityAttrName="Idacc1liv"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="IDACC1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito2"
+      EntityAttrName="Idinvito"
+      EntityUsage="PL_SoAccCito1liv"
+      AliasName="IDINVITO2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune1"
+      AliasName="DESCRIZIONE2" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomdom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune1"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione2"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune2"
+      AliasName="DESCRIZIONE3" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomres"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune2"
+      AliasName="CODCOM2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr1"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune1"
+      AliasName="CODPR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr2"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune2"
+      AliasName="CODPR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoDom"
+      EntityAttrName="IndirizzoDom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_DOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Data_ora_order"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Timestamp"
+      ColumnType="TIMESTAMP"
+      AliasName="DATA_ORA_ORDER"
+      Expression="TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(TO_CHAR(DTAPP,&#39;DD/mm/YYYY&#39;),&#39; &#39;),LPAD(ORAAPP,2,&#39;0&#39;)),&#39;:&#39;),LPAD(MINAPP,2,&#39;0&#39;)),&#39;DD/MM/YYYY HH24:MI&#39;)"
+      SQLType="TIMESTAMP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Data_ora_order_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Data_ora_order_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Data_ora_order_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodCampione"
+      AliasName="COD_CAMPIONE"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      Expression="DECODE(Print_SoAllegato.TPSCR,'CO',A_SoAccColon1liv.COD_CAMPIONE,'PF',A_SoAccPfas2liv.COD_CAMPIONE)"
+      SQLType="NUMERIC">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idaccco1liv"
+      IsNotNull="true"
+      EntityAttrName="Idaccco1liv"
+      EntityUsage="A_SoAccColon1liv"
+      AliasName="IDACCCO_1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NonSpedireReferto"
+      EntityAttrName="NonSpedireReferto"
+      EntityUsage="A_SoInvito"
+      AliasName="NON_SPEDIRE_REFERTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idaccma1liv"
+      IsNotNull="true"
+      EntityAttrName="Idaccma1liv"
+      EntityUsage="A_SoAccMammo1liv"
+      AliasName="IDACCMA_1LIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodRichiesta"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COD_RICHIESTA"
+      Expression="DECODE(Print_SoAllegato.TPSCR,'CO',A_SoAccColon1liv.COD_RICHIESTA,'MA',A_SoAccMammo1liv.COD_RICHIESTA,'CI',PL_SoAccCito1liv.COD_RICHIESTA,'PF',DECODE(A_SoInvito.LIVELLO,1,A_SoAccPfas1liv.COD_RICHIESTA,2,A_SoAccPfas2liv.COD_RICHIESTA),NULL)"
+      SQLType="VARCHAR"
+      IsQueriable="false">
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettInvito"
+      EntityAttrName="RaccLettInvito"
+      EntityUsage="A_SoInvito"
+      AliasName="RACC_LETT_INVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettReferto"
+      EntityAttrName="RaccLettReferto"
+      EntityUsage="A_SoInvito"
+      AliasName="RACC_LETT_REFERTO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP"
+      Expression="Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap1"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP1"
+      Expression="Decode(A_SoSoggetto.cap_comdom,null,A_SoComune1.CAP,A_SoSoggetto.cap_comdom)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap2"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP2"
+      Expression="Decode(A_SoSoggetto.cap_comres,null,A_SoComune2.CAP,A_SoSoggetto.cap_comres)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NomeMedico"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="A_SoMedico"
+      AliasName="NOME1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico"
+      IsNotNull="true"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="A_SoMedico"
+      AliasName="CODICEREGMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CognomeMedico"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="A_SoMedico"
+      AliasName="COGNOME1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoCentro"
+      IsNotNull="true"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="INDIRIZZO_RES1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss2"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoMedico"
+      AliasName="ULSS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodidsoggMx"
+      EntityAttrName="CodidsoggMx"
+      EntityUsage="A_SoSoggScr"
+      AliasName="CODIDSOGG_MX" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts2"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="A_SoSoggScr"
+      AliasName="CODTS2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss3"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoSoggScr"
+      AliasName="ULSS3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="A_SoSoggScr"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes1"
+      IsNotNull="true"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="A_SoMedico"
+      AliasName="INDIRIZZO_RES2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune3"
+      AliasName="DESCRIZIONE4" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune3"
+      AliasName="CODCOM3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr3"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune3"
+      AliasName="CODPR3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap3"
+      EntityAttrName="Cap"
+      EntityUsage="A_SoComune3"
+      AliasName="CAP3" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idapp"
+      EntityAttrName="Idapp"
+      EntityUsage="A_SoInvito"
+      AliasName="IDAPP" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sede"
+      EntityAttrName="Sede"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="SEDE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel"
+      IsNotNull="true"
+      EntityAttrName="Tel"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="TEL" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tel_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraritel"
+      EntityAttrName="Oraritel"
+      EntityUsage="Print_SoCentroPrelRef"
+      AliasName="ORARITEL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Mx45Codice"
+      PrecisionRule="true"
+      EntityAttrName="Mx45Codice"
+      EntityUsage="A_SoSoggScr"
+      AliasName="MX45_CODICE"/>
+   <ViewAttribute
+      Name="Mx45Braccio"
+      PrecisionRule="true"
+      EntityAttrName="Mx45Braccio"
+      EntityUsage="A_SoSoggScr"
+      AliasName="MX45_BRACCIO"/>
+   <ViewAttribute
+      Name="StatoTrialDescr"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTrialStato"
+      AliasName="DESCRBREVE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="StatoTrialDescr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdstatoTrial"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="IdstatoTrial"
+      EntityUsage="Cnf_SoCnfTrialStato"
+      AliasName="IDSTATO_TRIAL"/>
+   <ViewAttribute
+      Name="Idtrial"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtrial"
+      EntityUsage="Cnf_SoCnfTrialStato"
+      AliasName="IDTRIAL"/>
+   <ViewAttribute
+      Name="Tpscr2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTrialStato"
+      AliasName="TPSCR2"/>
+   <ViewAttribute
+      Name="BraccioTrialDescr"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrbreve"
+      EntityUsage="Cnf_SoCnfTrialBraccio"
+      AliasName="DESCRBREVE1">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="BraccioTrialDescr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdbraccioTrial"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="IdbraccioTrial"
+      EntityUsage="Cnf_SoCnfTrialBraccio"
+      AliasName="IDBRACCIO_TRIAL"/>
+   <ViewAttribute
+      Name="Idtrial1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtrial"
+      EntityUsage="Cnf_SoCnfTrialBraccio"
+      AliasName="IDTRIAL1"/>
+   <ViewAttribute
+      Name="Tpscr3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="Cnf_SoCnfTrialBraccio"
+      AliasName="TPSCR3"/>
+   <ViewAttribute
+      Name="Email"
+      PrecisionRule="true"
+      EntityAttrName="Email"
+      EntityUsage="A_SoSoggetto"
+      AliasName="EMAIL"/>
+   <ViewAttribute
+      Name="Cellulare"
+      PrecisionRule="true"
+      EntityAttrName="Cellulare"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CELLULARE"/>
+   <ViewAttribute
+      Name="TestProposto"
+      PrecisionRule="true"
+      EntityAttrName="TestProposto"
+      EntityUsage="A_SoInvito"
+      AliasName="TEST_PROPOSTO"/>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune"
+      AliasName="RELEASE_CODE"/>
+   <ViewAttribute
+      Name="ReleaseCodeComDom"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune1"
+      AliasName="RELEASE_CODE1"/>
+   <ViewAttribute
+      Name="ReleaseCodeComRes"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune2"
+      AliasName="RELEASE_CODE2"/>
+   <ViewAttribute
+      Name="ReleaseCode3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune3"
+      AliasName="RELEASE_CODE3"/>
+   <ViewAttribute
+      Name="Otp"
+      PrecisionRule="true"
+      EntityAttrName="Otp"
+      EntityUsage="A_SoInvito"
+      AliasName="OTP"/>
+   <ViewAttribute
+      Name="CodCampione1"
+      PrecisionRule="true"
+      EntityAttrName="CodCampione"
+      EntityUsage="A_SoAccPfas1liv"
+      AliasName="COD_CAMPIONE1"/>
+   <ViewAttribute
+      Name="Idaccpf1liv"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idaccpf1liv"
+      EntityUsage="A_SoAccPfas1liv"
+      AliasName="IDACCPF_1LIV"/>
+   <ViewAttribute
+      Name="Coddistrzona"
+      PrecisionRule="true"
+      EntityAttrName="Coddistrzona"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODDISTRZONA"/>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODANAGREG"/>
+   <ViewAttribute
+      Name="Descrizione3"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoCnfTpinvito"
+      AliasName="DESCRIZIONE5"/>
+   <ViewAttribute
+      Name="Idtpinvito1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idtpinvito"
+      EntityUsage="A_SoCnfTpinvito"
+      AliasName="IDTPINVITO1"/>
+   <ViewAttribute
+      Name="Ulss4"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoCnfTpinvito"
+      AliasName="ULSS4"/>
+   <ViewAttribute
+      Name="Tpscr4"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="A_SoCnfTpinvito"
+      AliasName="TPSCR4"/>
+   <ViewAttribute
+      Name="Descrizione4"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Print_SoCentroPrelRef1"
+      AliasName="DESCRIZIONE6"/>
+   <ViewAttribute
+      Name="Idcentro1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Idcentro"
+      EntityUsage="Print_SoCentroPrelRef1"
+      AliasName="IDCENTRO1"/>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idallegato"/>
+      <Item Value="Idinvito1"/>
+      <Item Value="Codts1"/>
+      <Item Value="Ulss1"/>
+      <Item Value="Idcentro"/>
+      <Item Value="Idacc1liv"/>
+      <Item Value="Idaccco1liv"/>
+      <Item Value="Idaccma1liv"/>
+      <Item Value="Codiceregmedico"/>
+      <Item Value="Ulss2"/>
+      <Item Value="Codts2"/>
+      <Item Value="Ulss3"/>
+      <Item Value="Tpscr1"/>
+      <Item Value="IdstatoTrial"/>
+      <Item Value="Idtrial"/>
+      <Item Value="Tpscr2"/>
+      <Item Value="IdbraccioTrial"/>
+      <Item Value="Idtrial1"/>
+      <Item Value="Tpscr3"/>
+      <Item Value="ReleaseCode"/>
+      <Item Value="ReleaseCodeComDom"/>
+      <Item Value="ReleaseCodeComRes"/>
+      <Item Value="ReleaseCode3"/>
+      <Item Value="Idaccpf1liv"/>
+   </AttrArray>
+   <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.print.common.Print_SoAllegatoInvitiViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

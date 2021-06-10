@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_comzone_param.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc3">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Comune.inputValue}"
+                                              label="#{bindings.Comune.hints.label}"
+                                              required="#{bindings.Comune.hints.mandatory}"
+                                              columns="#{bindings.Comune.hints.displayWidth}"
+                                              maximumLength="#{bindings.Comune.hints.precision}"
+                                              shortDesc="#{bindings.Comune.hints.tooltip}" id="it1" rendered="false">
+                                    <f:validator binding="#{bindings.Comune.validator}"/> 
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Codcom.inputValue}"
+                                                    label="#{bindings.Codcom.label}"
+                                                    required="#{bindings.Codcom.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codcom.hints.tooltip}" id="soc1">
+                                    <f:selectItems value="#{bindings.Codcom.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Codcom.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Zona.inputValue}" 
+                                                  label="#{bindings.Zona.hints.label}"
+                                                  required="#{bindings.Zona.hints.mandatory}"
+                                                  columns="#{bindings.Zona.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Zona.hints.precision}"
+                                                  shortDesc="#{bindings.Zona.hints.tooltip}" id="it2" rows="1" rendered="false">
+                                        <f:validator binding="#{bindings.Zona.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Coddistrzona.inputValue}"
+                                                    label="#{bindings.Coddistrzona.label}"
+                                                    required="#{bindings.Coddistrzona.hints.mandatory}"
+                                                    shortDesc="#{bindings.Coddistrzona.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.Coddistrzona.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Coddistrzona.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Altro.inputValue}"
+                                                  label="#{bindings.Altro.hints.label}"
+                                                  required="#{bindings.Altro.hints.mandatory}"
+                                                  columns="#{bindings.Altro.hints.displayWidth}"
+                                                  maximumLength="#{bindings.Altro.hints.precision}"
+                                                  shortDesc="#{bindings.Altro.hints.tooltip}" id="it3" rows="5">
+                                        <f:validator binding="#{bindings.Altro.validator}"/>
+                                    </af:inputText>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Configurazione centri di raccolta"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

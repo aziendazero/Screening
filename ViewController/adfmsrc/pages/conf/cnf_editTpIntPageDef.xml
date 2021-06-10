@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_editTpIntPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfTpinterventoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinterventoView1Iterator"/>
+    <iterator Binds="A_SoAziendaView1" RangeSize="-1" DataControl="A_AppModuleDataControl"
+              id="A_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfTpinterventoView1Iterator" id="Idintervento">
+      <AttrNames>
+        <Item Value="Idintervento"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinterventoView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinterventoView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfTpinterventoView1Iterator" id="Ordine">
+      <AttrNames>
+        <Item Value="Ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfTpinterventoView1Iterator" id="Ulss1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

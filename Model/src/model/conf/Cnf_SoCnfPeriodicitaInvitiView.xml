@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Cnf_SoCnfPeriodicitaInvitiView"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  SelectList="Cnf_SoCnfPeriodicitaInviti.CODCLASSEPOP, 
+       Cnf_SoCnfPeriodicitaInviti.IDTPINVITO, 
+       Cnf_SoCnfPeriodicitaInviti.NOTE, 
+       Cnf_SoCnfPeriodicitaInviti.DTULTMOD, 
+       Cnf_SoCnfPeriodicitaInviti.OPULTMOD, 
+       Cnf_SoCnfPeriodicitaInviti.GG_PERIODISMO, 
+       Cnf_SoCnfPeriodicitaInviti.TPSCR, 
+       Cnf_SoCnfPeriodicitaInviti.ULSS, 
+       Cnf_SoCnfPeriodicitaInviti.DTINS, 
+       Cnf_SoCnfPeriodicitaInviti.OPINS, 
+       Cnf_SoCnfClassePop.DESCRIZIONE, 
+       Cnf_SoCnfClassePop.CODCLASSE, 
+       Cnf_SoCnfClassePop.TPSCR AS TPSCR1, 
+       Cnf_SoCnfTpinvito.DESCRIZIONE AS DESCRIZIONE1, 
+       Cnf_SoCnfTpinvito.IDTPINVITO AS IDTPINVITO1, 
+       Cnf_SoCnfTpinvito.ULSS AS ULSS1, 
+       Cnf_SoCnfTpinvito.TPSCR AS TPSCR2"
+  FromList="SO_CNF_PERIODISMO Cnf_SoCnfPeriodicitaInviti, SO_CNF_CLASSE_POP Cnf_SoCnfClassePop, SO_CNF_TPINVITO Cnf_SoCnfTpinvito"
+  RowClass="model.conf.Cnf_SoCnfPeriodicitaInvitiViewRowImpl"
+  ComponentClass="model.conf.Cnf_SoCnfPeriodicitaInvitiViewImpl"
+  RowInterface="model.conf.common.Cnf_SoCnfPeriodicitaInvitiViewRow"
+  ClientRowProxyName="model.conf.client.Cnf_SoCnfPeriodicitaInvitiViewRowClient"
+  Where="Cnf_SoCnfPeriodicitaInviti.CODCLASSEPOP = Cnf_SoCnfClassePop.CODCLASSE (+)         
+and Cnf_SoCnfPeriodicitaInviti.TPSCR = Cnf_SoCnfClassePop.TPSCR (+)     
+and Cnf_SoCnfPeriodicitaInviti.IDTPINVITO = Cnf_SoCnfTpinvito.IDTPINVITO (+)    
+and Cnf_SoCnfPeriodicitaInviti.TPSCR = Cnf_SoCnfTpinvito.TPSCR (+) 
+and Cnf_SoCnfPeriodicitaInviti.ULSS=Cnf_SoCnfTpinvito.ULSS (+)"
+  OrderBy="DESCRIZIONE, DESCRIZIONE1 desc">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="Cnf_SoCnfTpinvitoView1"
+    ViewObjectName="model.conf.Cnf_SoCnfTpinvitoView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="Cnf_SoCnfClassePopView1"
+    ViewObjectName="model.conf.Cnf_SoCnfClassePopView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="Cnf_SoCnfTpscrView1"
+    ViewObjectName="model.conf.Cnf_SoCnfTpscrView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="Cnf_SoCnfPrimoInvito1"
+    ViewObjectName="model.conf.Cnf_SoCnfPrimoInvito"
+    RowLevelBinds="true"/>
+  <EntityUsage
+    Name="Cnf_SoCnfPeriodicitaInviti"
+    Entity="model.conf.Cnf_SoCnfPeriodicitaInviti"/>
+  <EntityUsage
+    Name="Cnf_SoCnfClassePop"
+    Entity="model.conf.Cnf_SoCnfClassePop"
+    ReadOnly="true"
+    DeleteParticipant="false">
+    <DesignTime>
+      <Attr Name="_customjoin" Value="true"/>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="Cnf_SoCnfTpinvito"
+    Entity="model.conf.Cnf_SoCnfTpinvito"
+    Association="model.conf.SoCnfPeriodFkTpinvitoAssoc"
+    AssociationEnd="model.conf.SoCnfPeriodFkTpinvitoAssoc.Cnf_SoCnfTpinvito"
+    SourceUsage="model.conf.Cnf_SoCnfPeriodicitaInvitiView.Cnf_SoCnfPeriodicitaInviti"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="model.conf.Cnf_SoCnfTpinvito.Idtpinvito"/>
+        <Item Value="model.conf.Cnf_SoCnfTpinvito.Ulss"/>
+        <Item Value="model.conf.Cnf_SoCnfTpinvito.Tpscr"/>
+      </AttrArray>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="model.conf.Cnf_SoCnfPeriodicitaInviti.Idtpinvito"/>
+        <Item Value="model.conf.Cnf_SoCnfPeriodicitaInviti.Ulss"/>
+        <Item Value="model.conf.Cnf_SoCnfPeriodicitaInviti.Tpscr"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Codclassepop"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Codclassepop"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="CODCLASSEPOP"/>
+  <ViewAttribute
+    Name="Idtpinvito"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Idtpinvito"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="IDTPINVITO"/>
+  <ViewAttribute
+    Name="Note"
+    PrecisionRule="true"
+    EntityAttrName="Note"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="NOTE"/>
+  <ViewAttribute
+    Name="Dtultmod"
+    PrecisionRule="true"
+    EntityAttrName="Dtultmod"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="DTULTMOD">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Dtultmod_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Opultmod"
+    PrecisionRule="true"
+    EntityAttrName="Opultmod"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="OPULTMOD">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Opultmod_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="GgPeriodismo"
+    PrecisionRule="true"
+    EntityAttrName="GgPeriodismo"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="GG_PERIODISMO"
+    IsNotNull="true"/>
+  <ViewAttribute
+    Name="Tpscr"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="TPSCR"/>
+  <ViewAttribute
+    Name="Ulss"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="ULSS"/>
+  <ViewAttribute
+    Name="Dtins"
+    PrecisionRule="true"
+    EntityAttrName="Dtins"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="DTINS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Dtins_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Opins"
+    PrecisionRule="true"
+    EntityAttrName="Opins"
+    EntityUsage="Cnf_SoCnfPeriodicitaInviti"
+    AliasName="OPINS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Opins_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Descrizione"
+    PrecisionRule="true"
+    EntityAttrName="Descrizione"
+    EntityUsage="Cnf_SoCnfClassePop"
+    AliasName="DESCRIZIONE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Descrizione_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Codclasse"
+    IsUpdateable="false"
+    IsQueriable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Codclasse"
+    EntityUsage="Cnf_SoCnfClassePop"
+    AliasName="CODCLASSE"/>
+  <ViewAttribute
+    Name="Tpscr1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Cnf_SoCnfClassePop"
+    AliasName="TPSCR1"/>
+  <ViewAttribute
+    Name="Descrizione1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Descrizione"
+    EntityUsage="Cnf_SoCnfTpinvito"
+    AliasName="DESCRIZIONE1">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="Descrizione1_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Idtpinvito1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Idtpinvito"
+    EntityUsage="Cnf_SoCnfTpinvito"
+    AliasName="IDTPINVITO1"/>
+  <ViewAttribute
+    Name="Ulss1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="Cnf_SoCnfTpinvito"
+    AliasName="ULSS1"/>
+  <ViewAttribute
+    Name="Tpscr2"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Cnf_SoCnfTpinvito"
+    AliasName="TPSCR2"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Codclassepop"/>
+    <Item Value="Idtpinvito"/>
+    <Item Value="Tpscr"/>
+    <Item Value="Ulss"/>
+    <Item Value="Codclasse"/>
+    <Item Value="Tpscr1"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.conf.common.Cnf_SoCnfPeriodicitaInvitiViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_templates.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_docsAction.templateForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempDocs.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t2">
+                                        <af:group id="g1">
+                                            <af:button text="Modifica" id="b1" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                                       action="creatEditTemplate" actionListener="#{Cnf_docsAction.onDettTempalte}">
+                                                <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Cancella" id="b2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                                       action="creatEditTemplate">
+                                                <af:showPopupBehavior popupId="p1"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                      partialTriggers="t1">
+                                                <af:dialog id="d2" title="Cancella template"
+                                                           affirmativeTextAndAccessKey="Cancella"
+                                                           cancelTextAndAccessKey="Annulla"
+                                                           dialogListener="#{ParentBackingBean.deleteAction}"
+                                                           partialTriggers="t1">
+                                                    <f:facet name="buttonBar"/>
+                                                    <h:outputText value="Cancellare definitivamente il seguente template?" id="ot1"/>
+                                                </af:dialog>
+                                            </af:popup>
+                                            <af:button text="Download" id="b3">
+                                                <af:fileDownloadActionListener filename="#{bindings.Nomefile.inputValue}"
+                                                                               method="#{Cnf_TemplateLetteraBean.downloadFileListener}"/>
+                                            </af:button>
+                                        </af:group>
+                                        
+                                        <af:button text="Nuovo" id="b4" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                                   action="creatEditTemplate">
+                                            <af:setPropertyListener to="#{requestScope.action}" from="create"
+                                                                    type="action"/>
+                                        </af:button>
+					<af:selectOneChoice value="#{pageFlowScope.ulssSelectedTemplates}" label="Azienda sanitaria"
+                                            rendered="#{sessionScope.regionale?true:false}"
+                                            shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}"
+                                            id="soc1" valueChangeListener="#{Cnf_docsAction.onChangeTemplates}" autoSubmit="true"
+                                            binding="#{Cnf_docsAction.selectedTemplates}">
+                                            <af:selectItem label="Tutte" id="si22"/>
+                                            <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si1"/>
+                                        </af:selectOneChoice>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Cnf_SoTemplateView1.collectionModel}" var="row"
+                                          rows="#{bindings.Cnf_SoTemplateView1.rangeSize}"
+                                          emptyText="#{bindings.Cnf_SoTemplateView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0" summary="#{' '}"
+                                          selectedRowKeys="#{bindings.Cnf_SoTemplateView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Cnf_SoTemplateView1.collectionModel.makeCurrent}"
+                                          rowSelection="single" fetchSize="#{bindings.Cnf_SoTemplateView1.rangeSize}"
+                                          id="t1" columnStretching="last" scrollPolicy="page" binding="#{Cnf_docsAction.tabTemplate}"
+                                          contentDelivery="immediate">
+                                    <af:column id="c12" headerText="Template regionale">
+                                        <af:selectBooleanCheckbox id="sbc1"
+                                                                  selected="#{row.Ulss == '050000'?true:false}"
+                                                                  readOnly="true"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Descrizione1.label}" rowHeader="unstyled"
+                                               id="c10" width="150" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Descrizione1.name}">
+                                        <af:outputText value="#{row.Descrizione1}"
+                                                       shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Descrizione1.tooltip}"
+                                                       id="ot10"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Descrizione.label}"
+                                               id="c9" width="250" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Descrizione.name}">
+                                        <af:outputText value="#{row.Descrizione}"
+                                                       shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Descrizione.tooltip}"
+                                                       id="ot9"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Nomefile.label}" id="c2"
+                                               width="250" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Nomefile.name}">
+                                        <af:outputText value="#{row.Nomefile}"
+                                                       shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Nomefile.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column id="c1" headerText="Inserito">
+                                        <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Dtcreazione.label}"
+                                                   id="c3" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Dtcreazione.name}">
+                                            <af:outputText value="#{row.Dtcreazione}"
+                                                           shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Dtcreazione.tooltip}"
+                                                           id="ot3">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoTemplateView1.hints.Dtcreazione.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Autore.label}"
+                                                   id="c4" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Autore.name}">
+                                            <af:outputText value="#{row.Autore}"
+                                                           shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Autore.tooltip}"
+                                                           id="ot4"/>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column id="c11" headerText="Modificato">
+                                        <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Dtultmod.label}"
+                                                   id="c5" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Dtultmod.name}">
+                                            <af:outputText value="#{row.Dtultmod}"
+                                                           shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Dtultmod.tooltip}"
+                                                           id="ot5">
+                                                <af:convertDateTime pattern="#{bindings.Cnf_SoTemplateView1.hints.Dtultmod.format}"/>
+                                            </af:outputText>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Opultmod.label}"
+                                                   id="c6" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Opultmod.name}">
+                                            <af:outputText value="#{row.Opultmod}"
+                                                           shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Opultmod.tooltip}"
+                                                           id="ot6"/>
+                                        </af:column>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Dtfinevaltempl.label}"
+                                               id="c7" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Dtfinevaltempl.name}">
+                                        <af:outputText value="#{row.Dtfinevaltempl}"
+                                                       shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Dtfinevaltempl.tooltip}"
+                                                       id="ot7">
+                                            <af:convertDateTime pattern="#{bindings.Cnf_SoTemplateView1.hints.Dtfinevaltempl.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoTemplateView1.hints.Ulss.label}" id="c8"
+                                            rendered="#{sessionScope.regionale?true:false}" sortable="true" sortProperty="#{bindings.Cnf_SoTemplateView1.hints.Ulss.name}">
+                                        <af:outputText value="#{row.Ulss}"
+                                                       shortDesc="#{bindings.Cnf_SoTemplateView1.hints.Ulss.tooltip}"
+                                                       id="ot8"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Template"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html> 
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.print.print_pianoLavoroBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.PIANO_DI_LAVORO}" id="d1">
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:resource type="javascript" source="#{resource['js:jquery-3.2.1.min.js']}"/>
+        <af:clientListener method="removeEmptyOptionList(['soc1'])"
+                       type="load"/>  
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Print_PLAction.pianoForm}">
+            <af:panelStretchLayout id="pt_psl1" bottomHeight="50px" topHeight="85px"
+                                   inlineStyle="margin:5px 5px 5px 5px;">
+                <f:facet name="center">
+                    <af:decorativeBox id="pt_db2" theme="light" topHeight="50px">
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1" >
+                                <f:facet name="footer">
+                                    <af:toolbar id="t1">
+                                        <af:button text="Crea" id="b1">
+                                            <af:fileDownloadActionListener method="#{Print_PLAction.stampa}"
+                                                                        filename="PL_etichette.pdf"/>
+                                        </af:button>
+                                        <af:button text="Annulla" id="b2" immediate="true">
+                                            <af:returnActionListener/>
+                                        </af:button>
+                                    </af:toolbar>
+                                    <af:popup id="popupFileSpecs" animate="default" contentDelivery="lazyUncached"
+                                              binding="#{Print_PLAction.pdfPopUp}"
+                                              popupCanceledListener="#{Print_PLAction.resetPdfPopup}">
+                                        <af:panelWindow id="pw1" modal="true" title="Stampa PDF"
+                                                        contentHeight="625" contentWidth="700" resize="on">
+                                            <af:inlineFrame id="if1" shortDesc="This is an inline frame"
+                                                            source="/print_pdfservlet?name=#{sessionScope.pdfToPrint}"
+                                                            styleClass="AFStretchWidth" inlineStyle="height:600px;"></af:inlineFrame>
+                                        </af:panelWindow>
+                                    </af:popup>
+                                </f:facet>
+                                <af:selectOneChoice value="#{bindings.centro.inputValue}"
+                                                    label="Centro di prelievo" 
+                                                    valueChangeListener="#{Print_PLAction.onChangeCentro}"
+                                                    shortDesc="#{bindings.centro.hints.tooltip}" id="soc1"
+                                                    required="true" autoSubmit="true" valuePassThru="true" immediate="true">
+                                    <f:selectItems value="#{bindings.centro.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.centro.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputDate value="#{bindings.data.inputValue}" label="Dal/il"
+                                              columns="#{bindings.data.hints.displayWidth}"
+                                              shortDesc="#{bindings.data.hints.tooltip}" id="id1" required="true"
+                                              autoSubmit="true">
+                                    <f:validator binding="#{bindings.data.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.data.format}"/>
+                                    <!--af:convertDateTime type="both" dateStyle="short" pattern="dd.MM.yyyy HH:mm"/-->
+
+                                </af:inputDate>
+                                <af:selectOneRadio label="Target" id="sor1" value="#{bindings.type.inputValue}"
+                                        disabled="#{sessionScope.typeDisabled}" autoSubmit="true" valuePassThru="true">
+                                    <af:selectItem label="più soggetti" id="si2" value="more"/>
+                                    <af:selectItem label="soggetto singolo" id="si3" value="single"/>
+                                </af:selectOneRadio>
+                                <af:inputDate value="#{bindings.data_al.inputValue}"
+                                              label="al (escluso)"
+                                              required="#{bindings.data_al.hints.mandatory}"
+                                              columns="#{bindings.data_al.hints.displayWidth}"
+                                              shortDesc="#{bindings.data_al.hints.tooltip}" id="id2"
+                                              disabled="#{bindings.type=='more'?false:true}" partialTriggers="sor1"
+                                              autoSubmit="true">
+                                    <f:validator binding="#{bindings.data_al.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.data_al.format}"/>
+                                </af:inputDate>
+                                <af:selectOneChoice value="#{bindings.idtpinvito.inputValue}" label="Tipo invito"
+                                                    required="#{bindings.idtpinvito.hints.mandatory}"
+                                                    valueChangeListener="#{Print_PLAction.onChangeTpinvito}"
+                                                    shortDesc="#{bindings.idtpinvito.hints.tooltip}" id="soc3"
+                                                    autoSubmit="true" valuePassThru="true" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.idtpinvito.items}" id="si8"/>
+                                    <f:validator binding="#{bindings.idtpinvito.validator}"/>
+                                </af:selectOneChoice>
+                                <af:group id="g1" rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}">
+                                    <af:inputText value="#{bindings.dalle_ore.inputValue}"
+                                                  label="Dalle ore:"
+                                                  required="#{bindings.dalle_ore.hints.mandatory}"
+                                                  columns="#{bindings.dalle_ore.hints.displayWidth}"
+                                                  maximumLength="#{bindings.dalle_ore.hints.precision}"
+                                                  shortDesc="#{bindings.dalle_ore.hints.tooltip}" id="it2"
+                                                  autoSubmit="true">
+                                        <f:validator binding="#{bindings.dalle_ore.validator}"/>
+                                        <af:validateRegExp pattern="^$|(([0-1][0-9]|2[0-3]):[0-5][0-9])"
+                                                           messageDetailNoMatch="#{viewcontrollerBundle._L_ORARIO_IMPOSTATO_NON_HA_IL_FORMATO_CORRETTO_HH_MM}"/>
+                                    </af:inputText>
+                                    <af:inputText value="#{bindings.alle_ore.inputValue}"
+                                                  label="Alle ore:"
+                                                  required="#{bindings.alle_ore.hints.mandatory}"
+                                                  columns="#{bindings.alle_ore.hints.displayWidth}"
+                                                  maximumLength="#{bindings.alle_ore.hints.precision}"
+                                                  shortDesc="#{bindings.alle_ore.hints.tooltip}" id="it3"
+                                                  autoSubmit="true">
+                                        <f:validator binding="#{bindings.alle_ore.validator}"/>
+                                        <af:validateRegExp pattern="^$|(([0-1][0-9]|2[0-3]):[0-5][0-9])"
+                                                           messageDetailNoMatch="#{viewcontrollerBundle._L_ORARIO_IMPOSTATO_NON_HA_IL_FORMATO_CORRETTO_HH_MM}"/>
+                                    </af:inputText>
+                                    <af:selectOneChoice value="#{bindings.codClassePop.inputValue}"
+                                                    label="Sottogruppo"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.codClassePop.hints.mandatory}"
+                                                    shortDesc="#{bindings.codClassePop.hints.tooltip}" id="soc6" 
+                                                    autoSubmit="true" valuePassThru="true">
+                                    <f:selectItems value="#{bindings.codClassePop.items}" id="si77"/>
+                                    <f:validator binding="#{bindings.codClassePop.validator}"/>
+                                </af:selectOneChoice>
+                                </af:group>
+                                <af:selectOneRadio label="Ordinamento" 
+                                                    partialTriggers="sor1" id="sor2" 
+                                                    value="#{bindings.ordine.inputValue}"
+                                                    disabled="#{bindings.type=='more'?false:true}" valuePassThru="true"
+                                                   autoSubmit="true">
+                                    <af:selectItem label="temporale" id="si4" value="temporale"/>
+                                    <af:selectItem label="alfabetico" id="si5" value="alfabetico"/>
+                                    <af:selectItem label="#{sessionScope.scr=='CI'?'per n° vetrino':sessionScope.scr=='CO'?'per codice campione':null}" id="si6" value="per n"
+                                                   rendered="#{sessionScope.scr!='MA' and sessionScope.scr!='CA'}"/>
+                                </af:selectOneRadio>
+                                <af:inputText value="#{bindings.codts.inputValue}"
+                                                partialTriggers="sor1"
+                                              label="Soggetto con chiave n°"
+                                              required="#{bindings.codts.hints.mandatory}"
+                                              columns="#{bindings.codts.hints.displayWidth}"
+                                              maximumLength="#{bindings.codts.hints.precision}"
+                                              shortDesc="#{bindings.codts.hints.tooltip}" id="it1"
+                                              disabled="#{bindings.type=='single'?false:true}">
+                                    <f:validator binding="#{bindings.codts.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.template.inputValue}"
+                                                    label="Template" partialTriggers="soc1 soc3"
+                                                    autoSubmit="true"
+                                                    shortDesc="#{bindings.template.hints.tooltip}" id="soc2"
+                                                    required="true" styleClass="choiceInTable">
+                                    <f:selectItems value="#{bindings.template.items}" id="si7"/>
+                                    <f:validator binding="#{bindings.template.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                                <h1 xmlns="http://www.w3.org/1999/xhtml">
+                                    Piano di lavoro/Etichette
+                                </h1>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+                <f:facet name="top">
+                    <af:decorativeBox id="pt_db1" theme="medium">
+                        <f:facet name="center">
+                            <af:panelStretchLayout id="pt_psl2" startWidth="460px" endWidth="120px" bottomHeight="20px">
+                                <f:facet name="center"></f:facet>
+                                <f:facet name="bottom">
+                                    <af:panelGroupLayout id="pt_pgl1" layout="vertical" valign="baseline" halign="end">
+                                        <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                        <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                            id="pt_of2" styleUsage="instruction"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="end"></f:facet>
+                                <f:facet name="start">
+                                    <af:panelGroupLayout id="pt_pgl5" layout="horizontal">
+                                        <af:image source="/images/logo-regione.png"
+                                                  shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                                  inlineStyle="height:25px;"/>
+                                        <af:spacer width="20" height="10" id="pt_s1"/>
+                                        <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                                       id="pt_ot1" inlineStyle="font-size:medium;"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+</f:view>

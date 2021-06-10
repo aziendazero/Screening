@@ -1,0 +1,537 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_StInvitiView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;ATTIVO&#34; DESC,&#34;DTAPP&#34; desc,&#34;MINAPP&#34; desc,&#34;ORAAPP&#34; desc,&#34;LIVELLO&#34; DESC"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_StInvitiViewImpl"
+   PageIterMode="Partial"
+   MsgBundleClass="model.soggetto.common.Sogg_StInvitiViewRowImplMsgBundle">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT    
+	SO_INVITO.IDINVITO,    
+	SO_INVITO.CODTS,    
+	DTAPP,    
+	ROUNDCOMUNE,    
+	ROUNDINDIV,    
+	ROUNDINVITI,    
+	SO_CNF_TPINVITO.IDTPINVITO || SO_CNF_TPINVITO.DESCRBREVE TPINVITO,    
+	SO_CNF_ESITOINVITO.DESCRBREVE DESC_ESITO,    
+	SO_CENTRO_PREL_REF.DESCRBREVE DESC_CPREL,    
+	NOTEINVITO,    
+	SO_INVITO.ULSS,    
+	SO_INVITO.TPSCR,    
+	SO_INVITO.ORAAPP,    
+	SO_INVITO.MINAPP,    
+	SO_INVITO.ATTIVO,    
+	SO_INVITO.LIVELLO,    
+	DECODE(SO_INVITO.LIVELLO, 2, SO_ACC_CITO2LIV.COD_RICHIESTA, SO_ACC_CITO1LIV.COD_RICHIESTA) RICHIESTA_CI,    
+	DECODE(SO_INVITO.LIVELLO, 2, SO_ACC_MAMMO2LIV.COD_RICHIESTA, SO_ACC_MAMMO1LIV.COD_RICHIESTA) RICHIESTA_MA,    
+	DECODE(SO_INVITO.LIVELLO, 2, SO_ACC_COLON2LIV.COD_RICHIESTA, SO_ACC_COLON1LIV.COD_RICHIESTA) RICHIESTA_CO,    
+  	DECODE(SO_INVITO.LIVELLO, 2, SO_ACC_PFAS2LIV.COD_RICHIESTA, SO_ACC_PFAS1LIV.COD_RICHIESTA) RICHIESTA_PF,    
+  	DECODE(SO_INVITO.LIVELLO, 2, SO_ACC_PFAS2LIV.COD_CAMPIONE, SO_ACC_PFAS1LIV.COD_CAMPIONE) CAMPIONE_PF,    
+	ROUNDINDIV_HPV,  
+        SO_INVITO.DTCREAZIONE,   
+        SO_INVITO.OPINSERIMENTO,   
+        SO_INVITO.DTULTIMAMOD,   
+        SO_INVITO.OPMODIFICA   
+FROM    
+	SO_INVITO,    
+	SO_CNF_TPINVITO,    
+	SO_CNF_ESITOINVITO,    
+	SO_CENTRO_PREL_REF,    
+	SO_ACC_CITO1LIV,    
+	SO_ACC_MAMMO1LIV,    
+	SO_ACC_COLON1LIV,    
+	SO_ACC_CITO2LIV,    
+	SO_ACC_MAMMO2LIV,    
+	SO_ACC_COLON2LIV,    
+  	SO_ACC_PFAS1LIV,    
+  	SO_ACC_PFAS2LIV    
+WHERE    
+	SO_CNF_TPINVITO.IDTPINVITO(+) = SO_INVITO.IDTPINVITO    
+	AND SO_CNF_TPINVITO.ULSS(+) = SO_INVITO.ULSS    
+	AND SO_CNF_TPINVITO.TPSCR(+) = SO_INVITO.TPSCR    
+	AND SO_CNF_ESITOINVITO.CODESITOINVITO(+) = SO_INVITO.CODESITOINVITO    
+	AND SO_CNF_ESITOINVITO.LIVESITO(+) = SO_INVITO.LIVESITO    
+	AND SO_CNF_ESITOINVITO.ULSS(+) = SO_INVITO.ULSS    
+	AND SO_CNF_ESITOINVITO.TPSCR(+) = SO_INVITO.TPSCR    
+	AND SO_CENTRO_PREL_REF.IDCENTRO(+) = SO_INVITO.IDCENTROPRELIEVO    
+	AND SO_INVITO.IDINVITO = SO_ACC_CITO1LIV.IDINVITO(+)    
+	AND SO_INVITO.IDINVITO = SO_ACC_MAMMO1LIV.IDINVITO(+)    
+	AND SO_INVITO.IDINVITO = SO_ACC_COLON1LIV.IDINVITO(+)    
+  	AND SO_INVITO.IDINVITO = SO_ACC_PFAS1LIV.IDINVITO(+)    
+	AND SO_INVITO.IDINVITO = SO_ACC_CITO2LIV.IDINVITO(+)    
+	AND SO_INVITO.IDINVITO = SO_ACC_MAMMO2LIV.IDINVITO(+)    
+	AND SO_INVITO.IDINVITO = SO_ACC_COLON2LIV.IDINVITO(+)    
+  	AND SO_INVITO.IDINVITO = SO_ACC_PFAS2LIV.IDINVITO(+)    
+	AND SO_INVITO.ULSS = :1    
+	AND SO_INVITO.TPSCR = :2    
+	AND SO_INVITO.CODTS = :3]]></SQLQuery>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtapp"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTAPP"
+      Expression="DTAPP"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundcomune"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDCOMUNE"
+      Expression="ROUNDCOMUNE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundcomune_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINDIV"
+      Expression="ROUNDINDIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundindiv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundinviti"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINVITI"
+      Expression="ROUNDINVITI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Roundinviti_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpinvito"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TPINVITO"
+      Expression="TPINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tpinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescEsito"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESC_ESITO"
+      Expression="DESC_ESITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DescEsito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescCprel"
+      IsPersistent="false"
+      Precision="15"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESC_CPREL"
+      Expression="DESC_CPREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="15" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DescCprel_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Noteinvito"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOTEINVITO"
+      Expression="NOTEINVITO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Noteinvito_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Oraapp"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ORAAPP"
+      Expression="ORAAPP"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Minapp"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MINAPP"
+      Expression="MINAPP"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Attivo"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ATTIVO"
+      Expression="ATTIVO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="LIVELLO"
+      Expression="LIVELLO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RichiestaCi"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="RICHIESTA_CI"
+      Expression="RICHIESTA_CI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RichiestaCi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RichiestaMa"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="RICHIESTA_MA"
+      Expression="RICHIESTA_MA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RichiestaMa_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RichiestaCo"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="RICHIESTA_CO"
+      Expression="RICHIESTA_CO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RichiestaCo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RichiestaPf"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="RICHIESTA_PF"
+      Expression="RICHIESTA_PF"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="CampionePf"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="CAMPIONE_PF"
+      Expression="CAMPIONE_PF"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="RoundindivHpv"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ROUNDINDIV_HPV"
+      Expression="ROUNDINDIV_HPV"
+      SQLType="NUMERIC">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="RoundindivHpv_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opinserimento"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="OPINSERIMENTO"
+      Expression="OPINSERIMENTO"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Opinserimento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultimamod"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTULTIMAMOD"
+      Expression="DTULTIMAMOD"
+      SQLType="DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMAT
+               ResId="Dtultimamod_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtultimamod_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="OPMODIFICA"
+      Expression="OPMODIFICA"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Opmodifica_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewLinkAccessor
+      Name="Sogg_StInvitiAllegView"
+      ViewLink="model.soggetto.Sogg_StInvitiAllegViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_StInvitiViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

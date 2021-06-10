@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.round.round_dettaglioPianificaInvitiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.DETTAGLIO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Round_pianificaInvitiAction.frmDettagliPianificaInviti}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelHeader text="#{viewcontrollerBundle.INVITI_DA_PIANIFICARE}" id="ph1">
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="#{viewcontrollerBundle.CHIUDI}" id="b1"
+                                               action="#{Round_pianificaInvitiAction.onBack}" partialSubmit="false"/>
+                                </af:group>
+                            </af:toolbar>
+                        </f:facet>
+                        <!--af:panelHeader text="#{viewcontrollerBundle.TIPO_TEST}" id="ph2" >
+                            <af:table value="#{bindings.Round_SoPianificazioneInvitiView1.collectionModel}" var="row"
+                                      rows="#{bindings.Round_SoPianificazioneInvitiView1.rangeSize}"
+                                      emptyText="#{bindings.Round_SoPianificazioneInvitiView1.viewable ? viewcontrollerBundle.NO_RESULTS : viewcontrollerBundle.ACCESS_DENIED}"
+                                      rowBandingInterval="0" summary="#{' '}" columnStretching="column:c9"
+                                      fetchSize="#{bindings.Round_SoPianificazioneInvitiView1.rangeSize}" id="t6">
+                                <af:column headerText="#{bindings.Round_SoPianificazioneInvitiView1.hints.TipoTest.label}"
+                                           id="c9" rowHeader="unstyled">
+                                    <af:outputText value="#{row.TipoTest}"
+                                                   shortDesc="#{bindings.Round_SoPianificazioneInvitiView1.hints.TipoTest.tooltip}"
+                                                   id="ot9"/>
+                                </af:column>
+                                <af:column headerText="#{bindings.Round_SoPianificazioneInvitiView1.hints.Conteggio.label}"
+                                           id="c19">
+                                    <af:outputText value="#{row.Conteggio}"
+                                                   shortDesc="#{bindings.Round_SoPianificazioneInvitiView1.hints.Conteggio.tooltip}"
+                                                   id="ot19">
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.Round_SoPianificazioneInvitiView1.hints.Conteggio.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                            </af:table>
+                        </af:panelHeader-->
+                        <af:panelHeader text="#{viewcontrollerBundle.SOGGETTI}" id="ph3">
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap"
+                                                rendered="#{sessionScope.listaHPV?false:true}">
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3">
+                                        <af:group id="g2">
+                                            <af:button text="#{viewcontrollerBundle.RECUPERA_STAMPA_ELENCO}" id="btprint1" 
+                                                    useWindow="true" immediate="true"
+                                                    windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                    windowHeight="300" windowWidth="600" visible="#{sessionScope.SOStampaElenco}"
+                                                    disabled="false" action="dialog:printElencoSoggetti"/>
+                                            
+                                                <af:button text="#{viewcontrollerBundle.CREA_FILE_INVITI}" id="btprintrn1" 
+                                                    useWindow="true" immediate="true"
+                                                    windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                    windowHeight="300" windowWidth="600" visible="#{sessionScope.SOStampaElenco}"
+                                                    disabled="false" action="dialog:printElencoSoggettiRowNum"
+                                                    actionListener="#{Print_elencoSoggettiRowNum.onCreaFileInviti}"/>
+                                        </af:group>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:table value="#{bindings.Round_pianificaInvitiListaSoggettiView1.collectionModel}"
+                                          var="row" rows="#{bindings.Round_pianificaInvitiListaSoggettiView1.rangeSize}"
+                                          rowBandingInterval="0" scrollPolicy="page" 
+                                          fetchSize="#{bindings.Round_pianificaInvitiListaSoggettiView1.rangeSize}"
+                                          id="t4" summary="#{' '}" columnStretching="multiple">
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Codts.label}"
+                                               id="c1" rowHeader="unstyled">
+                                        <af:outputText value="#{row.Codts}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Codts.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Cognome.label}"
+                                               id="c2">
+                                        <af:outputText value="#{row.Cognome}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Cognome.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Nome.label}"
+                                               id="c3">
+                                        <af:outputText value="#{row.Nome}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Nome.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataNascita.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.DataNascita}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataNascita.tooltip}"
+                                                       id="ot4">
+                                            <af:convertDateTime pattern="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataNascita.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Sesso.label}"
+                                               id="c5">
+                                        <af:outputText value="#{row.Sesso}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Sesso.tooltip}"
+                                                       id="ot5"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CodiceFiscale.label}"
+                                               id="c6">
+                                        <af:outputText value="#{row.CodiceFiscale}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CodiceFiscale.tooltip}"
+                                                       id="ot6"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CodClassePop.label}"
+                                               id="c7">
+                                        <af:outputText value="#{row.CodClassePop}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CodClassePop.tooltip}"
+                                                       id="ot7"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DescClassePop.label}"
+                                               id="c11">
+                                        <af:outputText value="#{row.DescClassePop}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DescClassePop.tooltip}"
+                                                       id="ot11"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataApp.label}"
+                                               id="c8">
+                                        <af:outputText value="#{row.DataApp}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataApp.tooltip}"
+                                                       id="ot8">
+                                            <af:convertDateTime pattern="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.DataApp.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CentroPrelievo.label}"
+                                               id="c12">
+                                        <af:outputText value="#{row.CentroPrelievo}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.CentroPrelievo.tooltip}"
+                                                       id="ot12"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Richiamo.label}"
+                                               id="c10">
+                                        <af:outputText value="#{row.Richiamo}"
+                                                       shortDesc="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Richiamo.tooltip}"
+                                                       id="ot10">
+                                            <af:convertDateTime pattern="#{bindings.Round_pianificaInvitiListaSoggettiView1.hints.Richiamo.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                </af:table>
+                                <!--af:table value="#{Round_pianificaInvitiAction.pianificaInvitiResults}" var="row"
+                                          rows="#{bindings.Round_SoInvitoSollecitiView2.rangeSize}"
+                                          emptyText="#{bindings.Round_SoInvitoSollecitiView2.viewable ? 'Nessun soggetto trovato.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          fetchSize="#{bindings.Round_SoInvitoSollecitiView2.rangeSize}" id="t1"
+                                          summary='#{""}' scrollPolicy="page" columnStretching="multiple">
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Cognome.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Cognome.label}"
+                                               width="10%" id="c1" rowHeader="unstyled">
+                                        <af:outputText value="#{row.Cognome}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Cognome.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Nome.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Nome.label}"
+                                               width="10%" id="c2">
+                                        <af:outputText value="#{row.Nome}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Nome.tooltip}"
+                                                       id="ot2"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.DataNascita.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.DataNascita.label}"
+                                               id="c3">
+                                        <af:outputText value="#{row.DataNascita}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.DataNascita.tooltip}"
+                                                       id="ot3">
+                                            <af:convertDateTime pattern="#{bindings.Round_SoInvitoSollecitiView2.hints.DataNascita.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Sesso.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Sesso.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.Sesso}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Sesso.tooltip}"
+                                                       id="ot4"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Residenza.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Residenza.label}"
+                                               width="10%" id="c5">
+                                        <af:outputText value="#{row.Residenza}" shortDesc="#{row.Residenza}" id="ot5"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Domicilio.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Domicilio.label}"
+                                               width="10%" id="c6">
+                                        <af:outputText value="#{row.Domicilio}" shortDesc="#{row.Domicilio}" id="ot6"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Cognomemed.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Cognomemed.label}"
+                                               width="10%" id="c7">
+                                        <af:outputText value="#{row.Cognomemed} #{row.Nomemed}"
+                                                       shortDesc="#{row.Cognomemed} #{row.Nomemed}" id="ot7"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Tel1.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Tel1.label}"
+                                               id="c8">
+                                        <af:outputText value="#{row.Tel1} - #{row.Tel2}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Tel1.tooltip}"
+                                                       id="ot8"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Dtapp.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Dtapp.label}"
+                                               id="c911">
+                                        <af:outputText value="#{row.Dtapp}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Dtapp.tooltip}"
+                                                       id="ot911">
+                                            <af:convertDateTime pattern="#{bindings.Round_SoInvitoSollecitiView2.hints.Dtapp.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Round_SoInvitoSollecitiView2.hints.Ulss.name}"
+                                               sortable="true"
+                                               headerText="#{bindings.Round_SoInvitoSollecitiView2.hints.Ulss.label}"
+                                               rendered="#{sessionScope.regionale?true:false}" id="c10">
+                                        <af:outputText value="#{row.Ulss}"
+                                                       shortDesc="#{bindings.Round_SoInvitoSollecitiView2.hints.Ulss.tooltip}"
+                                                       id="ot10"/>
+                                    </af:column>
+                                </af:table-->
+                            </af:panelCollection>
+                        </af:panelHeader>
+                    </af:panelHeader>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.PIANIFICAZIONE_INVITI}"/>
+                <f:attribute name="navigation" value="#{Round_pianificaInvitiAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

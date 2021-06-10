@@ -1,0 +1,583 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_SoEndoscopiaStoricoView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;N_ENDO&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_SoEndoscopiaStoricoViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT
+
+    SO_ENDOSCOPIA.idendo,
+
+    SO_ENDOSCOPIA.idreferto,
+
+    SO_ENDOSCOPIA.n_endo,
+
+    SO_ENDOSCOPIA.dtendo,
+
+    SO_ENDOSCOPIA.n_polipi,
+
+    DIAMETRO.descrizione DIAMETRO_MAX,
+
+    reg.descrizione REGIONE,
+
+    DECODE(ENDO_MED.TITOLO,NULL,'',ENDO_MED.TITOLO)||' '||ENDO_MED.COGNOME||' '||ENDO_MED.NOME MEDICO_ENDO,
+
+    DECODE(SO_ENDOSCOPIA.estensione,1,'Completa','Incompleta') ESTENSIONE,
+
+    MOTIVO.descrizione||DECODE(SO_ENDOSCOPIA.altro_motivo,null,'',' '||SO_ENDOSCOPIA.altro_motivo) MOTIVO,
+
+    DECODE(SO_ENDOSCOPIA.procedura,1,'Eseguita','Non eseguita') PROCEDURA,
+
+    INDICAZ.descrizione INDICAZIONE,
+
+    SO_ENDOSCOPIA.cancro,
+
+    DECODE(SO_ENDOSCOPIA.cancro,1,'Rilevato','-') CARCINOMA,
+
+    CASE WHEN SO_ENDOSCOPIA.c_istologia>0 THEN DIAGNOSIC.descrizione
+
+    ELSE DECODE(SO_ENDOSCOPIA.cancro,1,'Diagnosi non disponibile',null)
+
+    END C_DIAGNOSI,
+
+    SO_ENDOSCOPIA.polipo_1 p1,
+
+    DECODE(SO_ENDOSCOPIA.polipo_1,1,'Rilevato','-') POLIPO1,
+
+    CASE WHEN SO_ENDOSCOPIA.p1_istologia>0 THEN DIAGNOSI1.descrizione
+
+    ELSE DECODE(SO_ENDOSCOPIA.polipo_1,1,'Diagnosi non disponibile',null)
+
+    END P1_DIAGNOSI,
+
+    DECODE(SO_ENDOSCOPIA.polipo_2,1,'Rilevato','-') POLIPO2,
+
+    SO_ENDOSCOPIA.polipo_2 p2,
+
+    CASE WHEN SO_ENDOSCOPIA.p2_istologia>0 THEN DIAGNOSI2.descrizione
+
+    ELSE DECODE(SO_ENDOSCOPIA.polipo_2,1,'Diagnosi non disponibile',null)
+
+    END P2_DIAGNOSI,
+
+    SO_ENDOSCOPIA.polipo_3 p3,
+
+    DECODE(SO_ENDOSCOPIA.polipo_3,1,'Rilevato','-') POLIPO3,
+
+    CASE WHEN SO_ENDOSCOPIA.p3_istologia>0 THEN DIAGNOSI3.descrizione
+
+    ELSE DECODE(SO_ENDOSCOPIA.polipo_3,1,'Diagnosi non disponibile',null)
+
+    END P3_DIAGNOSI
+
+    
+
+    FROM SO_ENDOSCOPIA, SO_CNF_REF2LIV MOTIVO,
+
+    SO_CNF_REF2LIV INDICAZ,  SO_OPMEDICO ENDO_MED,
+
+    SO_CNF_REF2LIV diagnosi1,
+
+    SO_CNF_REF2LIV diagnosi2,
+
+    SO_CNF_REF2LIV diagnosi3,
+
+    SO_CNF_REF2LIV diagnosiC,
+
+    SO_CNF_REF2LIV DIAMETRO,
+
+    SO_CNF_REF2LIV reg
+
+    
+
+    WHERE  (SO_ENDOSCOPIA.motivo=MOTIVO.idcnfref2l(+)
+
+AND SO_ENDOSCOPIA.gr_motivo=MOTIVO.gruppo(+)
+
+AND SO_ENDOSCOPIA.ULSS=MOTIVO.ULSS(+)
+
+AND SO_ENDOSCOPIA.TPSCR=MOTIVO.TPSCR(+))
+
+AND (SO_ENDOSCOPIA.indicazioni=INDICAZ.idcnfref2l(+)
+
+AND SO_ENDOSCOPIA.gr_indicazioni=INDICAZ.gruppo(+)
+
+AND SO_ENDOSCOPIA.ULSS=INDICAZ.ULSS(+)
+
+AND SO_ENDOSCOPIA.TPSCR=INDICAZ.TPSCR(+))
+
+AND (SO_ENDOSCOPIA.IDMEDICO=ENDO_MED.idop(+))
+
+and (SO_ENDOSCOPIA.p1_istologia=diagnosi1.idcnfref2l(+)
+
+and SO_ENDOSCOPIA.gr_istologia=diagnosi1.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=diagnosi1.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=diagnosi1.tpscr(+))
+
+and (SO_ENDOSCOPIA.p2_istologia=diagnosi2.idcnfref2l(+)
+
+and SO_ENDOSCOPIA.gr_istologia=diagnosi2.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=diagnosi2.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=diagnosi2.tpscr(+))
+
+and (SO_ENDOSCOPIA.p3_istologia=diagnosi3.idcnfref2l(+)
+
+and SO_ENDOSCOPIA.gr_istologia=diagnosi3.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=diagnosi3.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=diagnosi3.tpscr(+))
+
+and (SO_ENDOSCOPIA.c_istologia=diagnosiC.idcnfref2l(+)
+
+and SO_ENDOSCOPIA.gr_c_istologia=diagnosiC.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=diagnosiC.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=diagnosiC.tpscr(+))
+
+AND (SO_ENDOSCOPIA.diametro_max=DIAMETRO.idcnfref2l(+)
+
+AND SO_ENDOSCOPIA.gr_diametro=DIAMETRO.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=DIAMETRO.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=DIAMETRO.tpscr(+))
+
+and (SO_ENDOSCOPIA.regione=reg.idcnfref2l(+)
+
+AND SO_ENDOSCOPIA.gr_regione=reg.gruppo(+)
+
+and SO_ENDOSCOPIA.ulss=reg.ulss(+)
+
+and SO_ENDOSCOPIA.tpscr=reg.tpscr(+))
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idendo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDENDO"
+      Expression="IDENDO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NEndo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_ENDO"
+      Expression="N_ENDO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NEndo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtendo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTENDO"
+      Expression="DTENDO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtendo_LABEL"/>
+            <FMT_FORMATTER
+               ResId="Dtendo_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtendo_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NPolipi"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_POLIPI"
+      Expression="N_POLIPI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NPolipi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DiametroMax"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DIAMETRO_MAX"
+      Expression="DIAMETRO_MAX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DiametroMax_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Regione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="REGIONE"
+      Expression="REGIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MedicoEndo"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDICO_ENDO"
+      Expression="MEDICO_ENDO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="MedicoEndo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Estensione"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESTENSIONE"
+      Expression="ESTENSIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Motivo"
+      IsPersistent="false"
+      Precision="401"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MOTIVO"
+      Expression="MOTIVO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="401" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Procedura"
+      IsPersistent="false"
+      Precision="12"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PROCEDURA"
+      Expression="PROCEDURA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="12" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Indicazione"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDICAZIONE"
+      Expression="INDICAZIONE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cancro"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="CANCRO"
+      Expression="CANCRO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cancro_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Carcinoma"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CARCINOMA"
+      Expression="CARCINOMA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CDiagnosi"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="C_DIAGNOSI"
+      Expression="C_DIAGNOSI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="CDiagnosi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P1"
+      Expression="P1"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo1"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="POLIPO1"
+      Expression="POLIPO1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P1Diagnosi"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="P1_DIAGNOSI"
+      Expression="P1_DIAGNOSI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P1Diagnosi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo2"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="POLIPO2"
+      Expression="POLIPO2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P2"
+      Expression="P2"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P2Diagnosi"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="P2_DIAGNOSI"
+      Expression="P2_DIAGNOSI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P2Diagnosi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="P3"
+      Expression="P3"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P3_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Polipo3"
+      IsPersistent="false"
+      Precision="8"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="POLIPO3"
+      Expression="POLIPO3"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="8" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="P3Diagnosi"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="P3_DIAGNOSI"
+      Expression="P3_DIAGNOSI"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="P3Diagnosi_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idendo" />
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_SoEndoscopiaStoricoViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

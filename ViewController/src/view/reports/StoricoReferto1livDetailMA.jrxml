@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+
+		 name="StoricoReferto1livDetailMA"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="536"
+		 columnSpacing="0"
+		 leftMargin="29"
+		 rightMargin="30"
+		 topMargin="2"
+		 bottomMargin="2"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="num_invito" isForPrompting="true" class="java.math.BigDecimal">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT a.idreferto, 
+        a.idinvito, 
+        a.codts, 
+        a.ulss, 
+        a.tpscr, 
+       a.l1_radiologo, 
+       a.l1_esito,
+       ESITO1.descrizione ESITO_L1, 
+       a.l1_sugg, 
+       S1.esitosugg ESITOSUGG1,
+       S1.descrizione SUGGERIMENTO1,
+       a.l2_radiologo, 
+       a.l2_esito, 
+       ESITO2.descrizione ESITO_L2, 
+       a.l2_sugg,
+       S2.esitosugg ESITOSUGG2,
+       S2.descrizione SUGGERIMENTO2,
+       a.revisione, 
+       a.r_radiologo,
+       a.r_esito,
+       ESITO3.descrizione ESITO_R,  
+       a.r_sugg, 
+       S3.esitosugg ESITOSUGG3,
+       S3.descrizione SUGGERIMENTO3,
+       a.idsugg,
+       S4.esitosugg,
+       S4.descrizione SUGGERIMENTO,
+       a.esito, 
+       ESITO4.descrizione ESITO_FINALE, 
+       a.dtreferto, 
+       a.completo,
+       DECODE(F.n_referti_1liv,NULL,0,F.n_referti_1liv) N_LETTURE
+  FROM so_refertomammo1liv a, SO_CNF_REF1LIV ESITO1,
+  SO_CNF_REF1LIV ESITO2, SO_CNF_REF1LIV ESITO3, SO_CNF_REF1LIV ESITO4,
+  SO_CNF_SUGG_1LIV S1, SO_CNF_SUGG_1LIV S2, SO_CNF_SUGG_1LIV S3, SO_CNF_SUGG_1LIV S4,
+  SO_CNF_FUNZ F
+  WHERE (A.l1_esito=ESITO1.idcnfref1L(+) AND A.gr_esito=ESITO1.gruppo(+)
+  AND A.ulss=ESITO1.ulss(+) AND A.tpscr=ESITO1.tpscr(+))
+  AND (A.l2_esito=ESITO2.idcnfref1L(+) AND A.gr_esito=ESITO2.gruppo(+)
+  AND A.ulss=ESITO2.ulss(+) AND A.tpscr=ESITO2.tpscr(+))
+  AND(A.R_esito=ESITO3.idcnfref1L(+) AND A.gr_esito=ESITO3.gruppo(+)
+  AND A.ulss=ESITO3.ulss(+) AND A.tpscr=ESITO3.tpscr(+))
+  AND (A.esito=ESITO4.idcnfref1L(+) AND A.gr_esito=ESITO4.gruppo(+)
+  AND A.ulss=ESITO4.ulss(+) AND A.tpscr=ESITO4.tpscr(+))
+  AND (A.l1_sugg=S1.idsugg(+) AND A.ulss=S1.ulss(+) AND A.tpscr=S1.tpscr(+))
+  AND (A.l2_sugg=S2.idsugg(+) AND A.ulss=S2.ulss(+) AND A.tpscr=S2.tpscr(+))
+  AND (A.R_sugg=S3.idsugg(+) AND A.ulss=S3.ulss(+) AND A.tpscr=S3.tpscr(+))
+  AND (A.IDsugg=S4.idsugg(+) AND A.ulss=S4.ulss(+) AND A.tpscr=S4.tpscr(+))
+  AND (A.ulss=F.ulss(+) AND A.tpscr=F.tpscr(+))
+AND IDINVITO=$P{num_invito}]]></queryString>
+
+	<field name="IDREFERTO" class="java.math.BigDecimal"/>
+	<field name="IDINVITO" class="java.math.BigDecimal"/>
+	<field name="CODTS" class="java.lang.String"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="TPSCR" class="java.lang.String"/>
+	<field name="L1_RADIOLOGO" class="java.math.BigDecimal"/>
+	<field name="L1_ESITO" class="java.math.BigDecimal"/>
+	<field name="ESITO_L1" class="java.lang.String"/>
+	<field name="L1_SUGG" class="java.math.BigDecimal"/>
+	<field name="ESITOSUGG1" class="java.lang.String"/>
+	<field name="SUGGERIMENTO1" class="java.lang.String"/>
+	<field name="L2_RADIOLOGO" class="java.math.BigDecimal"/>
+	<field name="L2_ESITO" class="java.math.BigDecimal"/>
+	<field name="ESITO_L2" class="java.lang.String"/>
+	<field name="L2_SUGG" class="java.math.BigDecimal"/>
+	<field name="ESITOSUGG2" class="java.lang.String"/>
+	<field name="SUGGERIMENTO2" class="java.lang.String"/>
+	<field name="REVISIONE" class="java.math.BigDecimal"/>
+	<field name="R_RADIOLOGO" class="java.math.BigDecimal"/>
+	<field name="R_ESITO" class="java.math.BigDecimal"/>
+	<field name="ESITO_R" class="java.lang.String"/>
+	<field name="R_SUGG" class="java.math.BigDecimal"/>
+	<field name="ESITOSUGG3" class="java.lang.String"/>
+	<field name="SUGGERIMENTO3" class="java.lang.String"/>
+	<field name="IDSUGG" class="java.math.BigDecimal"/>
+	<field name="ESITOSUGG" class="java.lang.String"/>
+	<field name="SUGGERIMENTO" class="java.lang.String"/>
+	<field name="ESITO" class="java.math.BigDecimal"/>
+	<field name="ESITO_FINALE" class="java.lang.String"/>
+	<field name="DTREFERTO" class="java.sql.Timestamp"/>
+	<field name="COMPLETO" class="java.math.BigDecimal"/>
+	<field name="N_LETTURE" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="76"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="412"
+						y="58"
+						width="122"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-6"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["1° liv. "+new String($F{COMPLETO}!=null && $F{COMPLETO}.intValue()==1?"CHIUSO":"aperto")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="2"
+						width="535"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-8"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esito prima lettura: "+new String($F{ESITO_L1}==null?"":$F{ESITO_L1}+",  ")+$F{SUGGERIMENTO1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="16"
+						width="535"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-9"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{N_LETTURE}.intValue()<2?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esito seconda lettura: "+new String($F{ESITO_L2}==null?"":$F{ESITO_L2}+",  ")+$F{SUGGERIMENTO2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="30"
+						width="535"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-10"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{REVISIONE}.intValue()!=1?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esito revisione: "+new String($F{ESITO_R}==null?"":$F{ESITO_R}+",  ")+$F{SUGGERIMENTO3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="45"
+						width="535"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-11"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ESITO CONCLUSIVO: "+new String($F{ESITO_FINALE}==null?"":$F{ESITO_FINALE}+",  ")+$F{SUGGERIMENTO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

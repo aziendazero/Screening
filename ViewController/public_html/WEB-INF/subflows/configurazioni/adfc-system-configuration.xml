@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="cnf_esclusioni">
+    <page>/pages/conf/cnf_esclusioni.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editEsclusione">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editEsclusione.xml</document>
+      <id>cnf_editEsclusione</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <view id="cnf_esiti">
+    <page>/pages/conf/cnf_esiti.jsf</page>
+  </view>
+  <task-flow-call id="cnf_editEsito">
+    <task-flow-reference>
+      <document>/WEB-INF/subflows/configurazioni/cnf_editEsito.xml</document>
+      <id>cnf_editEsito</id>
+    </task-flow-reference>
+  </task-flow-call>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__28">
+      <from-outcome>esclusioni</from-outcome>
+      <to-activity-id>cnf_esclusioni</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__9">
+      <from-outcome>esiti</from-outcome>
+      <to-activity-id>cnf_esiti</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__10">
+    <from-activity-id>cnf_esclusioni</from-activity-id>
+    <control-flow-case id="__11">
+      <from-outcome>creatEditEsclusione</from-outcome>
+      <to-activity-id>cnf_editEsclusione</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__12">
+    <from-activity-id>cnf_esiti</from-activity-id>
+    <control-flow-case id="__13">
+      <from-outcome>creatEditEsito</from-outcome>
+      <to-activity-id>cnf_editEsito</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__3">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>system_configuration_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__4">
+      <property-name>createHiddenNodes</property-name>
+      <value>false</value>
+    </managed-property>
+    <managed-property id="__5">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/menu/system_configuration_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__2">
+    <managed-bean-name>Cnf_esitiBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_esitiBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__6">
+    <managed-bean-name>Cnf_esclusioniBean</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_esclusioniBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__7">
+    <managed-bean-name>Cnf_esitoInvitoAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_esitoInvitoAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__8">
+    <managed-bean-name>Cnf_esclusioniAction</managed-bean-name>
+    <managed-bean-class>view.conf.Cnf_esclusioniAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

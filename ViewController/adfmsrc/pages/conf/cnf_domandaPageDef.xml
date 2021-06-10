@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_domandaPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoCnfDomandeView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfDomandeView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfRefCa1livGRUPPIView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfRefCa1livGRUPPIView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Domanda">
+      <AttrNames>
+        <Item Value="Domanda"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Modificabile">
+      <AttrNames>
+        <Item Value="Modificabile"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Lunghezza">
+      <AttrNames>
+        <Item Value="Lunghezza"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Minval">
+      <AttrNames>
+        <Item Value="Minval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Maxval">
+      <AttrNames>
+        <Item Value="Maxval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Note">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfDomandeView1Iterator" id="DtFineVal">
+      <AttrNames>
+        <Item Value="DtFineVal"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Tipo" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="true">
+      <AttrNames>
+        <Item Value="Tipo"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="TITOLO"/>
+        <Item Value="TESTO"/>
+        <Item Value="NUM"/>
+        <Item Value="INT"/>
+        <Item Value="DATA"/>
+        <Item Value="SEL"/>
+        <Item Value="MUL"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Cnf_SoCnfDomandeView1Iterator" id="Gruppo" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Cnf_SoCnfRefCa1livGRUPPIView1Iterator"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="Gruppo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Gruppo"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

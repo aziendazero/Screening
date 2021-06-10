@@ -1,0 +1,1317 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Print_SoAllegatoRefView"
+   Version="12.2.1.11.57"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.print.Print_SoAllegatoRefViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[SELECT     
+Print_SoAllegato.IDALLEGATO,      
+	Print_SoAllegato.IDINVITO,      
+	Print_SoAllegato.CODTS,      
+	Print_SoAllegato.DTCREAZIONE,      
+	Print_SoAllegato.DTSTAMPA,      
+	Print_SoAllegato.STAMPAPOSTEL,      
+	Print_SoAllegato.ULSS,      
+	Print_SoAllegato.TPSCR,      
+	A_SoSoggetto.COGNOME,      
+	A_SoSoggetto.NOME,      
+	A_SoSoggetto.DATA_NASCITA,      
+	A_SoSoggetto.SESSO,      
+	A_SoSoggetto.TEL1,      
+	A_SoSoggetto.TEL2,      
+	A_SoSoggetto.INDIRIZZO_SCR,      
+	A_SoSoggetto.CODCOMSCR,      
+	A_SoComune.DESCRIZIONE COMUNE_DESC,      
+	A_SoComune.CODPR,      
+	Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc) CAP,     
+	A_SoSoggetto.INDIRIZZO_DOM,     
+	A_SoSoggetto.CODCOMDOM,      
+	A_SoComune1.DESCRIZIONE DESCRIZIONE1,      
+	A_SoComune1.CODPR CODPR1,      
+	Decode(A_SoSoggetto.cap_comdom,null,A_SoComune1.CAP,A_SoSoggetto.cap_comdom) CAP1,     
+	A_SoSoggetto.INDIRIZZO_RES,     
+	A_SoSoggetto.CODCOMRES,      
+	A_SoComune2.DESCRIZIONE DESCRIZIONE2,      
+	A_SoComune2.CODPR CODPR2,      
+	Decode(A_SoSoggetto.cap_comres,null,A_SoComune2.CAP,A_SoSoggetto.cap_comres) CAP2,     
+	Print_SoRefertocito1liv.IDREFERTO,     
+	Print_SoRefertocito1liv.IDSUGG,     
+	Print_SoCnfSugg1liv.ESITOSUGG,      
+	Print_SoCnfSugg1liv.DESCRIZIONE DESC_SUGG,     
+	'1' LIVELLO,     
+	'1' LIVELLO_REF,     
+	Print_SoCentroPrelRef.DESCRIZIONE CENTRO_PREL,     
+	A_SoSoggetto.CF,     
+	Ref_SoAccCito1liv.IDACC1LIV,       
+	Ref_SoAccCito1liv.NUMVETRINO,     
+	Print_SoCentroPrelRef.IDCENTRO ID_CENTRO_PREL,     
+	A_SoInvito.IDCENTROREF1LIV IDCENTROREF,     
+		TO_DATE(CONCAT(     
+		CONCAT(CONCAT     
+			(CONCAT(TO_CHAR(A_SoInvito.DTAPP,'DD/mm/YYYY'),' '),     
+				LPAD(A_SoInvito.ORAAPP,2,'0')),':'),LPAD(A_SoInvito.MINAPP,2,'0')),'DD/MM/YYYY HH24:MI') AS DATA_ORA_ORDER,     
+	A_SoInvito.DTAPP,     
+	A_SoInvito.NON_SPEDIRE_REFERTO,     
+	A_SoInvito.racc_lett_invito,     
+	A_SoInvito.racc_lett_referto,     
+	Ref_SoAccCito1liv.cod_richiesta,     
+	A_SoSoggScr.codidsogg_mx,     
+	A_SoMedico.NOME AS NOME_MEDICO,      
+	A_SoMedico.COGNOME AS COGNOME_MEDICO,      
+	A_SoMedico.INDIRIZZO_RES AS INDIRIZZO_RES1,      
+	A_SoComune3.CAP AS CAP3,     
+	A_SoComune3.DESCRIZIONE AS DESCRIZIONE,      
+	A_SoComune3.CODPR AS CODPR3,      
+	Print_SoRefertocito1liv.dtprelievo,     
+	Print_SoRefertocito1liv.NOTEREFERTO NOTE,     
+	Print_SoCentroPrelRef.INDIRIZZO_RES INDIRIZZO_PREL,     
+	Print_SoCentroPrelRef.SEDE SEDE_PREL,     
+	Print_SoCentroPrelRef.ORARITEL ORARI_PREL,     
+	Print_SoCentroPrelRef.TEL TEL_PREL,     
+	SO_CNF_TRIAL_STATO.DESCRBREVE STATO_TRIAL_DESCR,     
+	SO_CNF_TRIAL_BRACCIO.DESCRBREVE BRACCIO_TRIAL_DESCR,     
+	A_SoSoggScr.IDSTATO_TRIAL IDSTATO_TRIAL,     
+	A_SoSoggScr.IDBRACCIO_TRIAL IDBRACCIO_TRIAL,     
+	A_SoSoggetto.EMAIL,     
+	A_SoSoggetto.CELLULARE,     
+	Ref_SoAccCito1liv.PRELIEVO_HPV,     
+	A_SoInvito.TEST_PROPOSTO,    
+        A_SoCnfTpinvito.DESCRIZIONE DESCRIZIONE3,   
+        Print_SoCentroPrelRef1.DESCRIZIONE DESCRIZIONE4   
+FROM     
+	SO_ALLEGATO Print_SoAllegato,     
+	SO_SOGGETTO A_SoSoggetto,     
+	SO_COMUNE A_SoComune,     
+	SO_COMUNE A_SoComune1,     
+	SO_COMUNE A_SoComune2,     
+	SO_INVITO A_SoInvito,     
+	SO_CENTRO_PREL_REF Print_SoCentroPrelRef,     
+	SO_ACC_CITO1LIV Ref_SoAccCito1liv,     
+	SO_REFERTOCITO1LIV Print_SoRefertocito1liv,     
+	SO_CNF_SUGG_1LIV Print_SoCnfSugg1liv,     
+	SO_SOGG_SCR A_SoSoggScr,     
+	SO_MEDICO A_SoMedico,     
+	SO_COMUNE A_SoComune3,     
+	SO_CNF_TRIAL_STATO,     
+	SO_CNF_TRIAL_BRACCIO,    
+        SO_CNF_TPINVITO A_SoCnfTpinvito,  
+        SO_CENTRO_PREL_REF Print_SoCentroPrelRef1  
+WHERE     
+	Print_SoAllegato.CODTS = A_SoSoggetto.CODTS     
+	AND Print_SoAllegato.ULSS = A_SoSoggetto.ULSS     
+	AND A_SoSoggetto.RELEASE_CODE_COM_SCR = A_SoComune.RELEASE_CODE(+)     
+	AND A_SoSoggetto.RELEASE_CODE_COM_DOM = A_SoComune1.RELEASE_CODE(+)     
+	AND A_SoSoggetto.RELEASE_CODE_COM_RES = A_SoComune2.RELEASE_CODE(+)     
+	AND Print_SoCentroPrelRef.IDCENTRO (+)= A_SoInvito.IDCENTROPRELIEVO     
+	AND Ref_SoAccCito1liv.IDINVITO (+)= A_SoInvito.IDINVITO     
+	AND (Print_SoRefertocito1liv.IDSUGG = Print_SoCnfSugg1liv.IDSUGG     
+		AND Print_SoRefertocito1liv.ULSS = Print_SoCnfSugg1liv.ULSS     
+		AND Print_SoRefertocito1liv.TPSCR = Print_SoCnfSugg1liv.TPSCR)     
+	AND Print_SoRefertocito1liv.IDALLEGATO = Print_SoAllegato.IDALLEGATO      
+	AND Print_SoRefertocito1liv.IDINVITO = A_SoInvito.IDINVITO     
+	AND A_SoSoggScr.CODTS = Print_SoAllegato.CODTS     
+	AND A_SoSoggScr.ULSS = Print_SoAllegato.ULSS     
+	AND A_SoSoggScr.TPSCR = Print_SoAllegato.TPSCR     
+	AND A_SoMedico.CODICEREGMEDICO (+)= A_SoSoggetto.CODICEREGMEDICO     
+	AND A_SoMedico.ulss (+)= A_SoSoggetto.ulss     
+	AND A_SoComune3.RELEASE_CODE (+)= A_SoMedico.RELEASE_CODE_COM     
+	AND Print_SoRefertocito1liv.ULSS = Print_SoAllegato.ULSS     
+	AND SO_CNF_TRIAL_STATO.IDTRIAL (+) = A_SoSoggScr.IDTRIAL     
+	AND SO_CNF_TRIAL_STATO.IDSTATO_TRIAL (+) = A_SoSoggScr.IDSTATO_TRIAL     
+	AND SO_CNF_TRIAL_BRACCIO.IDTRIAL (+) = A_SoSoggScr.IDTRIAL     
+	AND SO_CNF_TRIAL_BRACCIO.IDBRACCIO_TRIAL (+) = A_SoSoggScr.IDBRACCIO_TRIAL     
+        AND A_SoCnfTpinvito.IDTPINVITO 	= A_SoInvito.IDTPINVITO    
+        AND A_SoCnfTpinvito.ULSS = A_SoInvito.ULSS    
+        AND A_SoCnfTpinvito.TPSCR = A_SoInvito.TPSCR 
+        AND A_SoInvito.IDCENTROREF1LIV (+)            = Print_SoCentroPrelRef1.IDCENTRO 
+     
+UNION ALL     
+     
+SELECT     
+	Print_SoAllegato.IDALLEGATO,      
+	Print_SoAllegato.IDINVITO,      
+	Print_SoAllegato.CODTS,      
+	Print_SoAllegato.DTCREAZIONE,      
+	Print_SoAllegato.DTSTAMPA,      
+	Print_SoAllegato.STAMPAPOSTEL,      
+	Print_SoAllegato.ULSS,      
+	Print_SoAllegato.TPSCR,      
+	A_SoSoggetto.COGNOME,      
+	A_SoSoggetto.NOME,      
+	A_SoSoggetto.DATA_NASCITA,      
+	A_SoSoggetto.SESSO,      
+	A_SoSoggetto.TEL1,      
+	A_SoSoggetto.TEL2,      
+	A_SoSoggetto.INDIRIZZO_SCR,      
+	A_SoSoggetto.CODCOMSCR,      
+	A_SoComune.DESCRIZIONE COMUNE_DESC,      
+	A_SoComune.CODPR,      
+	Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc) CAP,     
+	A_SoSoggetto.INDIRIZZO_DOM,     
+	A_SoSoggetto.CODCOMDOM,      
+	A_SoComune1.DESCRIZIONE DESCRIZIONE1,      
+	A_SoComune1.CODPR CODPR1,      
+	Decode(A_SoSoggetto.cap_comdom, NULL, A_SoComune1.CAP, A_SoSoggetto.cap_comdom) CAP1,     
+	A_SoSoggetto.INDIRIZZO_RES,     
+	A_SoSoggetto.CODCOMRES,      
+	A_SoComune2.DESCRIZIONE DESCRIZIONE2,      
+	A_SoComune2.CODPR CODPR2,     
+	Decode(A_SoSoggetto.cap_comres, NULL, A_SoComune2.CAP, A_SoSoggetto.cap_comres) CAP2,     
+	Print_SoRefertocito2liv.IDREFERTO,     
+	DECODE(Print_SoInterventocito.IDSUGG, NULL, Print_SoRefertocito2liv.IDSUGG, Print_SoInterventocito.IDSUGG) IDSUGG,     
+	DECODE(Print_SoInterventocito.IDSUGG, NULL, Print_SoCnfSugg2liv.ESITOSUGG, Print_SoCnfSugg3liv.ESITOSUGG) ESITOSUGG,     
+	DECODE(Print_SoInterventocito.IDSUGG, NULL, Print_SoCnfSugg2liv.DESCRIZIONE, Print_SoCnfSugg3liv.DESCRIZIONE) DESC_SUGG,     
+	'2' LIVELLO,     
+	DECODE(Print_SoInterventocito.IDSUGG, NULL, '2', '3') LIVELLO_REF,     
+	Print_SoCentroPrelRef.DESCRIZIONE CENTRO_PREL,     
+	A_SoSoggetto.CF,     
+	NULL IDACC1LIV,     
+	NULL NUMVETRINO,     
+	Print_SoCentroPrelRef.IDCENTRO ID_CENTRO_PREL,     
+	A_SoInvito.IDCENTROREF1LIV IDCENTROREF,     
+	TO_DATE(CONCAT(     
+		CONCAT(CONCAT     
+			(CONCAT(TO_CHAR(A_SoInvito.DTAPP,'DD/mm/YYYY'),' '),     
+				LPAD(A_SoInvito.ORAAPP,2,'0')),':'),LPAD(A_SoInvito.MINAPP,2,'0')),'DD/MM/YYYY HH24:MI') AS DATA_ORA_ORDER,     
+     
+	A_SoInvito.DTAPP,     
+	A_SoInvito.NON_SPEDIRE_REFERTO,     
+	A_SoInvito.racc_lett_invito,     
+	A_SoInvito.racc_lett_referto,     
+	Ref_SoAccCito2liv.cod_richiesta,     
+	A_SoSoggScr.codidsogg_mx,     
+	A_SoMedico.NOME AS NOME_MEDICO,      
+	A_SoMedico.COGNOME AS COGNOME_MEDICO,      
+	A_SoMedico.INDIRIZZO_RES AS INDIRIZZO_RES1,      
+	A_SoComune3.CAP AS CAP3,     
+	A_SoComune3.DESCRIZIONE AS DESCRIZIONE,      
+	A_SoComune3.CODPR AS CODPR3,      
+	A_SoInvito.DTAPP dtprelievo ,            
+	Print_SoRefertocito2liv.NOTECONCL NOTE,     
+	Print_SoCentroPrelRef.INDIRIZZO_RES INDIRIZZO_PREL,     
+	Print_SoCentroPrelRef.SEDE SEDE_PREL,     
+	Print_SoCentroPrelRef.ORARITEL ORARI_PREL,     
+	Print_SoCentroPrelRef.TEL TEL_PREL,     
+	SO_CNF_TRIAL_STATO.DESCRBREVE STATO_TRIAL_DESCR,     
+	SO_CNF_TRIAL_BRACCIO.DESCRBREVE BRACCIO_TRIAL_DESCR,     
+	A_SoSoggScr.IDSTATO_TRIAL IDSTATO_TRIAL,     
+	A_SoSoggScr.IDBRACCIO_TRIAL IDBRACCIO_TRIAL,     
+	A_SoSoggetto.EMAIL,     
+	A_SoSoggetto.CELLULARE,     
+	NULL AS PRELIEVO_HPV,     
+	NULL AS TEST_PROPOSTO,    
+        A_SoCnfTpinvito.DESCRIZIONE DESCRIZIONE3, 
+        null 
+FROM     
+	SO_ALLEGATO Print_SoAllegato,     
+	SO_SOGGETTO A_SoSoggetto,      
+	SO_COMUNE A_SoComune,     
+	SO_COMUNE A_SoComune1,     
+	SO_COMUNE A_SoComune2,     
+	SO_INVITO A_SoInvito,     
+	SO_CENTRO_PREL_REF Print_SoCentroPrelRef,     
+	SO_REFERTOCITO2LIV Print_SoRefertocito2liv,     
+	SO_INTERVENTOCITO Print_SoInterventocito,     
+	SO_CNF_SUGG_2LIV Print_SoCnfSugg2liv,     
+	SO_CNF_SUGG_3LIV Print_SoCnfSugg3liv,     
+	SO_SOGG_SCR A_SoSoggScr,     
+	SO_MEDICO A_SoMedico,     
+	SO_COMUNE A_SoComune3,     
+	SO_ACC_CITO2LIV Ref_SoAccCito2liv,     
+	SO_CNF_TRIAL_STATO,     
+	SO_CNF_TRIAL_BRACCIO,    
+        SO_CNF_TPINVITO A_SoCnfTpinvito    
+WHERE     
+	Print_SoAllegato.CODTS = A_SoSoggetto.CODTS     
+	AND Print_SoAllegato.ULSS = A_SoSoggetto.ULSS     
+	AND A_SoSoggetto.RELEASE_CODE_COM_SCR = A_SoComune.RELEASE_CODE(+)     
+	AND A_SoSoggetto.RELEASE_CODE_COM_DOM = A_SoComune1.RELEASE_CODE(+)     
+	AND A_SoSoggetto.RELEASE_CODE_COM_RES = A_SoComune2.RELEASE_CODE(+)     
+	AND Print_SoCentroPrelRef.IDCENTRO (+)= A_SoInvito.IDCENTROPRELIEVO     
+	AND Print_SoInterventocito.IDREFERTO (+)= Print_SoRefertocito2liv.IDREFERTO     
+	AND NOT EXISTS (     
+		SELECT 1 FROM so_interventocito int1     
+		WHERE Print_SoRefertocito2liv.IDREFERTO = int1.idreferto     
+		AND int1.n_int > Print_SoInterventocito.n_int)     
+	AND Print_SoCnfSugg2liv.IDSUGG2L (+)= Print_SoRefertocito2liv.IDSUGG     
+	AND Print_SoCnfSugg3liv.IDSUGG3L (+)= Print_SoInterventocito.IDSUGG     
+	AND Print_SoRefertocito2liv.ULSS = Print_SoCnfSugg2liv.ULSS(+)     
+	AND Print_SoRefertocito2liv.TPSCR = Print_SoCnfSugg2liv.TPSCR(+)     
+	AND Print_SoInterventocito.ULSS = Print_SoCnfSugg3liv.ULSS(+)     
+	AND Print_SoInterventocito.TPSCR = Print_SoCnfSugg3liv.TPSCR(+)     
+	AND Print_SoRefertocito2liv.IDALLEGATO = Print_SoAllegato.IDALLEGATO      
+	AND Print_SoRefertocito2liv.IDINVITO = A_SoInvito.IDINVITO     
+	AND A_SoSoggScr.CODTS = Print_SoAllegato.CODTS     
+	AND A_SoSoggScr.ULSS = Print_SoAllegato.ULSS     
+	AND A_SoSoggScr.TPSCR = Print_SoAllegato.TPSCR     
+	AND A_SoMedico.CODICEREGMEDICO (+)= A_SoSoggetto.CODICEREGMEDICO     
+	AND A_SoMedico.ulss (+)= A_SoSoggetto.ulss     
+	AND A_SoComune3.RELEASE_CODE (+)= A_SoMedico.RELEASE_CODE_COM     
+	AND Ref_SoAccCito2liv.IDINVITO (+)= A_SoInvito.IDINVITO     
+	AND SO_CNF_TRIAL_STATO.IDTRIAL (+) = A_SoSoggScr.IDTRIAL     
+	AND SO_CNF_TRIAL_STATO.IDSTATO_TRIAL (+) = A_SoSoggScr.IDSTATO_TRIAL     
+	AND SO_CNF_TRIAL_BRACCIO.IDTRIAL (+) = A_SoSoggScr.IDTRIAL     
+	AND SO_CNF_TRIAL_BRACCIO.IDBRACCIO_TRIAL (+) = A_SoSoggScr.IDBRACCIO_TRIAL    
+        AND A_SoCnfTpinvito.IDTPINVITO 	= A_SoInvito.IDTPINVITO    
+        AND A_SoCnfTpinvito.ULSS = A_SoInvito.ULSS    
+        AND A_SoCnfTpinvito.TPSCR = A_SoInvito.TPSCR]]></SQLQuery>
+   <ViewAttribute
+      Name="Idallegato"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDALLEGATO"
+      Expression="IDALLEGATO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Timestamp"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONE"
+      Expression="DTCREAZIONE"
+      SQLType="TIMESTAMP" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtcreazione_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtcreazione_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtcreazione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Timestamp"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="TIMESTAMP" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtstampa_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtstampa_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtstampa_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Stampapostel"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="STAMPAPOSTEL"
+      Expression="STAMPAPOSTEL"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Stampapostel_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COGNOME"
+      Expression="COGNOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cognome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOME"
+      Expression="NOME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Nome_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DATA_NASCITA"
+      Expression="DATA_NASCITA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="DataNascita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="DataNascita_FMT_FORMAT"/>
+            <LABEL
+               ResId="DataNascita_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="SESSO"
+      Expression="SESSO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEL1"
+      Expression="TEL1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEL2"
+      Expression="TEL2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoScr"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO_SCR"
+      Expression="INDIRIZZO_SCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IndirizzoScr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomscr"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOMSCR"
+      Expression="CODCOMSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ComuneDesc"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COMUNE_DESC"
+      Expression="COMUNE_DESC"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="ComuneDesc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODPR"
+      Expression="CODPR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Codpr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP"
+      Expression="CAP"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Cap_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoDom"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO_DOM"
+      Expression="INDIRIZZO_DOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomdom"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOMDOM"
+      Expression="CODCOMDOM"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE1"
+      Expression="DESCRIZIONE1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr1"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODPR1"
+      Expression="CODPR1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap1"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP1"
+      Expression="CAP1"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO_RES"
+      Expression="INDIRIZZO_RES"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomres"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODCOMRES"
+      Expression="CODCOMRES"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione2"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE2"
+      Expression="DESCRIZIONE2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione2_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr2"
+      IsPersistent="false"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CODPR2"
+      Expression="CODPR2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap2"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP2"
+      Expression="CAP2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG"
+      Expression="IDSUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOSUGG"
+      Expression="ESITOSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescSugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESC_SUGG"
+      Expression="DESC_SUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Livello"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LIVELLO"
+      Expression="LIVELLO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LivelloRef"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LIVELLO_REF"
+      Expression="LIVELLO_REF"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CentroPrel"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CENTRO_PREL"
+      Expression="CENTRO_PREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CF"
+      Expression="CF"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idacc1liv"
+      IsPersistent="false"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDACC1LIV"
+      Expression="IDACC1LIV"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numvetrino"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="NUMVETRINO"
+      Expression="NUMVETRINO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdCentroPrel"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ID_CENTRO_PREL"
+      Expression="ID_CENTRO_PREL"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcentroref"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCENTROREF"
+      Expression="IDCENTROREF"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsDataOraOrder"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName='"AS DATA_ORA_ORDER"'
+      Expression='"AS DATA_ORA_ORDER"'
+      SQLType="DATE"/>
+   <ViewAttribute
+      Name="Dtapp"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTAPP"
+      Expression="DTAPP"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtapp_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtapp_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtapp_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NonSpedireReferto"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="NON_SPEDIRE_REFERTO"
+      Expression="NON_SPEDIRE_REFERTO"
+      SQLType="NUMERIC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettInvito"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RACC_LETT_INVITO"
+      Expression="RACC_LETT_INVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RaccLettReferto"
+      IsPersistent="false"
+      Precision="1"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="RACC_LETT_REFERTO"
+      Expression="RACC_LETT_REFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodRichiesta"
+      IsPersistent="false"
+      Type="java.math.BigDecimal"
+      ColumnType="NUMBER"
+      AliasName="COD_RICHIESTA"
+      Expression="COD_RICHIESTA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodidsoggMx"
+      IsPersistent="false"
+      Precision="18"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODIDSOGG_MX"
+      Expression="CODIDSOGG_MX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="18" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsNomeMedico"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName='"AS NOME_MEDICO"'
+      Expression='"AS NOME_MEDICO"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsCognomeMedico"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName='"AS COGNOME_MEDICO"'
+      Expression='"AS COGNOME_MEDICO"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsIndirizzoRes1"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName='"AS INDIRIZZO_RES1"'
+      Expression='"AS INDIRIZZO_RES1"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsCap3"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName='"AS CAP3"'
+      Expression='"AS CAP3"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsDescrizione"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName='"AS DESCRIZIONE"'
+      Expression='"AS DESCRIZIONE"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AsCodpr3"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName='"AS CODPR3"'
+      Expression='"AS CODPR3"'
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprelievo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTPRELIEVO"
+      Expression="DTPRELIEVO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Note"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NOTE"
+      Expression="NOTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoPrel"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INDIRIZZO_PREL"
+      Expression="INDIRIZZO_PREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SedePrel"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SEDE_PREL"
+      Expression="SEDE_PREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OrariPrel"
+      IsPersistent="false"
+      Precision="50"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORARI_PREL"
+      Expression="ORARI_PREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TelPrel"
+      IsPersistent="false"
+      Precision="13"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEL_PREL"
+      Expression="TEL_PREL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="13" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="StatoTrialDescr"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="STATO_TRIAL_DESCR"
+      Expression="STATO_TRIAL_DESCR"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="StatoTrialDescr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BraccioTrialDescr"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="BRACCIO_TRIAL_DESCR"
+      Expression="BRACCIO_TRIAL_DESCR"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="BraccioTrialDescr_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdstatoTrial"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSTATO_TRIAL"
+      Expression="IDSTATO_TRIAL"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="IdbraccioTrial"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDBRACCIO_TRIAL"
+      Expression="IDBRACCIO_TRIAL"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="Email"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="320"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="EMAIL"
+      Expression="EMAIL"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="320"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cellulare"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="50"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CELLULARE"
+      Expression="CELLULARE"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="50"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PrelievoHpv"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="PRELIEVO_HPV"
+      Expression="PRELIEVO_HPV"
+      SQLType="NUMERIC"/>
+   <ViewAttribute
+      Name="TestProposto"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="3"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEST_PROPOSTO"
+      Expression="TEST_PROPOSTO"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="3"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione3"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE3"
+      Expression="DESCRIZIONE3"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione4"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="400"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DESCRIZIONE4"
+      Expression="DESCRIZIONE4"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="400"/>
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idallegato" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="Print_SoAllegatoView"
+      ViewLink="model.print.Print_FKAllegatoRefAllegatoLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Print_SoRefertocito1livView"
+      ViewLink="model.print.Print_FKAllegatoRefRef1livLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="Print_SoRefertocito2livView"
+      ViewLink="model.print.Print_FKAllegatoRefRef2livLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.print.common.Print_SoAllegatoRefViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

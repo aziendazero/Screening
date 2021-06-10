@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="round_spostaRichiamiPageDef"
+                Package="pages.round">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Round_ParamSpostaRichDataControl"
+              id="Round_ParamSpostaRichDataControlIterator"/>
+    <iterator Binds="Round_RichSelCprelView1" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_RichSelCprelView1Iterator"/>
+    <iterator Binds="Round_RichSelCprelView2" RangeSize="-1" DataControl="Round_AppModuleDataControl"
+              id="Round_RichSelCprelView2Iterator"/>
+    <iterator id="Round_LovComuneView1Iterator" Binds="Round_LovComuneView1" DataControl="Round_AppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Round_ParamSpostaRichDataControlIterator" id="ctPart" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_RichSelCprelView1Iterator">
+      <AttrNames>
+        <Item Value="ctPart"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Round_ParamSpostaRichDataControlIterator" id="ctArr" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Round_RichSelCprelView2Iterator">
+      <AttrNames>
+        <Item Value="ctArr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Round_ParamSpostaRichDataControlIterator" id="dtRichDa">
+      <AttrNames>
+        <Item Value="dtRichDa"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_ParamSpostaRichDataControlIterator" id="dtRichA">
+      <AttrNames>
+        <Item Value="dtRichA"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_ParamSpostaRichDataControlIterator" id="desCom">
+      <AttrNames>
+        <Item Value="desCom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Round_ParamSpostaRichDataControlIterator" id="codCom">
+      <AttrNames>
+        <Item Value="codCom"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

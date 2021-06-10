@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="med_critStampa.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Reimposta" id="b1"
+                                               actionListener="#{Med_critStampaAction.reimposta}"/>
+                                    <af:button text="Stampa" id="b2">
+                                        <af:fileDownloadActionListener method="#{Med_critStampaAction.stampa}"
+                                                                       filename="elenco.pdf"/>
+                                    </af:button>
+                                    <af:button text="Chiudi" id="b3" action="med_ini" partialSubmit="false"
+                                               immediate="true"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl5" halign="center" layout="scroll">
+                                <af:panelFormLayout id="pfl1" partialTriggers="b1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.template.inputValue}"
+                                                        label="Tipo stampa"
+                                                        required="true" 
+                                                        shortDesc="#{bindings.template.hints.tooltip}" id="soc1"
+                                                        styleClass="choiceInTable" autoSubmit="true"
+                                                        valuePassThru="true">
+                                        <f:selectItems value="#{bindings.template.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.template.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{bindings.roundCom.inputValue}"
+                                                  label="Round comune soggetto"
+                                                  required="#{bindings.roundCom.hints.mandatory}"
+                                                  columns="#{bindings.roundCom.hints.displayWidth}"
+                                                  maximumLength="#{bindings.roundCom.hints.precision}"
+                                                  shortDesc="#{bindings.roundCom.hints.tooltip}" id="it1">
+                                        <f:validator binding="#{bindings.roundCom.validator}"/>
+                                        <af:convertNumber groupingUsed="false" pattern="#{bindings.roundCom.format}"/>
+                                    </af:inputText>
+                                    <af:panelLabelAndMessage label="Comune soggetto" id="plam1">
+                                        <af:panelGroupLayout id="pgl4" layout="horizontal">
+                                            <af:inputText value="#{bindings.codComu.inputValue}" columns="10" simple="true"
+                                                           id="it2" binding="#{Med_critStampaAction.codComu}">
+                                            </af:inputText>
+                                            <af:spacer width="10" height="10" id="s2"/>
+                                            <af:inputText value="#{bindings.desComu.inputValue}" columns="60" simple="true"
+                                                          id="it5" binding="#{Med_critStampaAction.desComu}">
+                                                <af:clientListener type="keyUp" method="toUppercase"/>
+                                            </af:inputText>
+                                        </af:panelGroupLayout>
+                                        <f:facet name="end">
+                                            <af:link id="l1" icon="/images/search_16.png" iconPosition="leading"
+                                                     action="#{Med_critStampaAction.chDesComu}" inlineStyle="padding: 1px;"
+                                                     shortDesc="Cerca comune" useWindow="true" windowHeight="650"
+                                                     windowWidth="800"
+                                                     returnListener="#{Med_critStampaAction.lovComuneReturnListener}">
+                                                <af:setPropertyListener from="#{bindings.desComu.inputValue != null ? bindings.desComu.inputValue : ''}"
+                                                                        to="#{requestScope.searchText}" type="action"/>
+                                                <af:setPropertyListener from="VB_desComu" to="#{requestScope.source}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="#{bindings.Med_ComuneView1Iterator}"
+                                                                        to="#{requestScope.iteratorBinding}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="#{viewScope.onClick != null ? viewScope.onClick : true}"
+                                                                        to="#{requestScope.onClick}" type="action"/>
+                                                <af:setPropertyListener from="#{viewScope.onOneReturn != null ? viewScope.onOneReturn : false}"
+                                                                        to="#{requestScope.onOneReturn}" type="action"/>
+                                            </af:link>
+                                        </f:facet>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="Data ultimo invito da" id="plam2">
+                                        <af:panelGroupLayout id="pgl2" layout="horizontal">
+                                            <af:inputDate value="#{bindings.dtIni.inputValue}"
+                                                          required="#{bindings.dtIni.hints.mandatory}"
+                                                          columns="#{bindings.dtIni.hints.displayWidth}"
+                                                          shortDesc="#{bindings.dtIni.hints.tooltip}" id="id1"
+                                                          simple="true">
+                                                <f:validator binding="#{bindings.dtIni.validator}"/>
+                                                <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </af:inputDate>
+                                            <af:inputDate value="#{bindings.dtFin.inputValue}"
+                                                          label="a"
+                                                          required="#{bindings.dtFin.hints.mandatory}"
+                                                          columns="#{bindings.dtFin.hints.displayWidth}"
+                                                          shortDesc="#{bindings.dtFin.hints.tooltip}" id="id2">
+                                                <f:validator binding="#{bindings.dtFin.validator}"/>
+                                                <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </af:inputDate>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="Età da" id="plam3">
+                                        <af:panelGroupLayout id="pgl3" layout="horizontal">
+                                            <af:inputText value="#{bindings.etaMin.inputValue}"
+                                                          label="#{bindings.etaMin.hints.label}"
+                                                          required="#{bindings.etaMin.hints.mandatory}"
+                                                          columns="#{bindings.etaMin.hints.displayWidth}"
+                                                          maximumLength="#{bindings.etaMin.hints.precision}"
+                                                          shortDesc="#{bindings.etaMin.hints.tooltip}" id="it3"
+                                                          simple="true">
+                                                <f:validator binding="#{bindings.etaMin.validator}"/>
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.etaMin.format}"/>
+                                            </af:inputText>
+                                            <af:inputText value="#{bindings.etaMax.inputValue}"
+                                                          label="a"
+                                                          required="#{bindings.etaMax.hints.mandatory}"
+                                                          columns="#{bindings.etaMax.hints.displayWidth}"
+                                                          maximumLength="#{bindings.etaMax.hints.precision}"
+                                                          shortDesc="#{bindings.etaMax.hints.tooltip}" id="it4">
+                                                <f:validator binding="#{bindings.etaMax.validator}"/>
+                                                <af:convertNumber groupingUsed="false"
+                                                                  pattern="#{bindings.etaMax.format}"/>
+                                            </af:inputText>
+                                            <af:spacer width="20" height="10" id="s1"/>
+                                            <af:inputDate value="#{bindings.dtRif.inputValue}"
+                                                          label="Data di riferimento"
+                                                          required="true"
+                                                          columns="#{bindings.dtRif.hints.displayWidth}"
+                                                          shortDesc="#{bindings.dtRif.hints.tooltip}" id="id3"
+                                                          requiredMessageDetail="E' necessario impostare la data di riferimento per il calcolo dell'età">
+                                                <f:validator binding="#{bindings.dtRif.validator}"/>
+                                                <af:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </af:inputDate>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:selectOneChoice label="Sesso" id="soc2" value="#{bindings.sesso.inputValue}"
+                                                        styleClass="choiceInTable" autoSubmit="true"
+                                                        valuePassThru="true">
+                                        <af:selectItem label="" value="" id="si4"/>               
+                                        <af:selectItem label="Maschio" value="M" id="si2"/>
+                                        <af:selectItem label="Femmina" value="F" id="si3"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita"
+                             value="#{sessionScope.medStsing eq 'true' ? 'Stampa medico selezionato - '.concat(bindings.Cognome.inputValue).concat(' ').concat(bindings.Nome.inputValue) : 'Stampa medici in elenco'}"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

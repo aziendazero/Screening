@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_esclusione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:inputText value="#{bindings.Idcnfescl.inputValue}"
+                                              label="#{bindings.Idcnfescl.hints.label}"
+                                              required="#{bindings.Idcnfescl.hints.mandatory}"
+                                              columns="#{bindings.Idcnfescl.hints.displayWidth}"
+                                              maximumLength="#{bindings.Idcnfescl.hints.precision}"
+                                              shortDesc="#{bindings.Idcnfescl.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.Idcnfescl.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Idcnfescl.format}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it2">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Tpescl.inputValue}"
+                                              label="#{bindings.Tpescl.hints.label}"
+                                              required="#{bindings.Tpescl.hints.mandatory}"
+                                              columns="#{bindings.Tpescl.hints.displayWidth}"
+                                              maximumLength="#{bindings.Tpescl.hints.precision}"
+                                              shortDesc="#{bindings.Tpescl.hints.tooltip}" id="it3" rendered="false">
+                                    <f:validator binding="#{bindings.Tpescl.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Numgiorni.inputValue}"
+                                              label="#{bindings.Numgiorni.hints.label}"
+                                              required="#{bindings.Numgiorni.hints.mandatory}"
+                                              columns="#{bindings.Numgiorni.hints.displayWidth}"
+                                              maximumLength="#{bindings.Numgiorni.hints.precision}"
+                                              shortDesc="#{bindings.Numgiorni.hints.tooltip}" id="it4"
+                                              rendered="#{bindings.Tpescl.attributeValue=='T'}">
+                                    <f:validator binding="#{bindings.Numgiorni.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Numgiorni.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Idtpinvito1.inputValue}"
+                                                    label="#{bindings.Idtpinvito1.label}"
+                                                    rendered="#{bindings.Tpescl.attributeValue=='T'}"
+                                                    required="#{bindings.Idtpinvito1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Idtpinvito1.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable" unselectedLabel="#{&quot;&quot;}">
+                                    <f:selectItems value="#{bindings.Idtpinvito1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idtpinvito1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectBooleanCheckbox value="#{bindings.Propagabile.inputValue}"
+                                                          label="#{bindings.Propagabile.hints.label}"
+                                                          required="#{bindings.Propagabile.hints.mandatory}"
+                                                          shortDesc="#{bindings.Propagabile.hints.tooltip}" id="it6"/>
+                                <af:selectBooleanCheckbox value="#{bindings.MergeIgnore.inputValue}"
+                                                          label="#{bindings.MergeIgnore.hints.label}"
+                                                          required="#{bindings.MergeIgnore.hints.mandatory}"
+                                                          shortDesc="#{bindings.MergeIgnore.hints.tooltip}" id="it10"/>
+                                <af:inputText value="#{bindings.Codregionale.inputValue}"
+                                              label="#{bindings.Codregionale.hints.label}"
+                                              rendered="#{sessionScope.regionale==true}"
+                                              required="#{bindings.Codregionale.hints.mandatory}"
+                                              columns="#{bindings.Codregionale.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codregionale.hints.precision}"
+                                              shortDesc="#{bindings.Codregionale.hints.tooltip}" id="it7"
+                                              styleClass="choiceInTable">
+                                    <f:validator binding="#{bindings.Codregionale.validator}"/>
+                                    <af:convertNumber groupingUsed="false" pattern="#{bindings.Codregionale.format}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.Codregionale1.inputValue}"
+                                                    label="#{bindings.Codregionale1.label}"
+                                                    rendered="#{sessionScope.regionale!=true}"
+                                                    required="#{bindings.Codregionale1.hints.mandatory}"
+                                                    shortDesc="#{bindings.Codregionale1.hints.tooltip}" id="soc3"
+                                                    styleClass="choiceInTable" unselectedLabel="#{&quot;&quot;}">
+                                    <f:selectItems value="#{bindings.Codregionale1.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.Codregionale1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}"
+                                                    required="#{bindings.Ulss.hints.mandatory}"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc2"
+                                                    styleClass="choiceInTable" unselectedLabel="#{&quot;&quot;}">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita"
+                             value="Esclusione #{bindings.Tpescl.attributeValue=='T'?'temporanea':'definitiva'}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

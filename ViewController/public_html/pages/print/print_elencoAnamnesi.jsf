@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.print.print_elencoAnamnesiBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.STAMPA_ELENCO_ANAMNESI}" id="d1">
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:resource type="javascript" source="#{resource['js:jquery-3.2.1.min.js']}"/>
+        <af:clientListener method="removeEmptyOptionList(['soc3'])"
+                           type="load"/>    
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:panelStretchLayout id="pt_psl1" bottomHeight="50px" topHeight="85px"
+                                   inlineStyle="margin:5px 5px 5px 5px;">
+                <f:facet name="center">
+                    <af:panelSplitter id="pt_ps1" orientation="vertical" positionedFromEnd="true" splitterPosition="20">
+                        <f:facet name="first">
+                            <af:decorativeBox id="pt_db2" theme="light" topHeight="50px">
+                                <f:facet name="center">
+                                    <af:panelFormLayout id="pfl1">
+                                        <f:facet name="footer"/>
+                                        <af:selectOneChoice value="#{bindings.export_type.inputValue}"
+                                                            label="#{viewcontrollerBundle.TIPO_ANAMNESI}"
+                                                            styleClass="choiceInTable"
+                                                            required="#{bindings.export_type.hints.mandatory}"
+                                                            shortDesc="#{bindings.export_type.hints.tooltip}" id="soc3">
+                                            <f:selectItems value="#{bindings.export_type.items}" id="si4"/>
+                                            <f:validator binding="#{bindings.export_type.validator}"/>
+                                        </af:selectOneChoice>
+                                        <af:spacer width="10" height="10" id="s1"/>
+                                        <af:panelGroupLayout id="pgl1" layout="horizontal">
+                                            <af:button text="#{viewcontrollerBundle.STAMPA}" id="b11"
+                                                   actionListener="#{Print_elencoAnamStampaAction.downloadListener}">     
+                                                <af:setPropertyListener from="btSinglePrintHidden" to="#{requestScope.btnHiddenId}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="#{''}"
+                                                       id="btSinglePrintHidden"
+                                                       binding="#{Print_elencoAnamStampaAction.btnStampaHidden}"
+                                                       clientComponent="true" inlineStyle="visibility: hidden;">
+                                            </af:button>
+                                            
+                                            <af:spacer width="10" height="10" id="s2"/>
+                                            <af:button text="Annulla" id="b2" action="close">
+                                                <af:returnActionListener/>
+                                            </af:button>
+                                        </af:panelGroupLayout>
+                                    </af:panelFormLayout>
+                                </f:facet>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                                        <h1>#{viewcontrollerBundle.STAMPA_ELENCO_ANAMNESI}</h1>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:decorativeBox>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelGroupLayout id="pt_pgl2" halign="start" layout="horizontal">
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="infoPopup">
+                                    <af:dialog id="pt_d1" title="Info" type="ok">
+                                        <f:facet name="buttonBar"/>
+                                        <af:panelGroupLayout id="pt_pgl3" halign="center" layout="vertical">
+                                            <af:outputText value="Screening" id="pt_ot2"/>
+                                            <af:outputText value="Versione #{initParam.VERSIONE}" id="pt_ot3"/>
+                                            <af:outputText value="Versione base dati #{initParam.VERSIONE_DATABASE}"
+                                                           id="pt_ot5"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                <af:outputFormatted value="info" id="pt_of1" styleUsage="pageStamp"
+                                                    inlineStyle="text-align:right;">
+                                    <af:showPopupBehavior popupId="infoPopup" triggerType="click"/>
+                                </af:outputFormatted>
+                                <af:spacer width="20" height="10" id="pt_s2"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+                <f:facet name="top">
+                    <af:decorativeBox id="pt_db1" theme="medium">
+                        <f:facet name="center">
+                            <af:panelStretchLayout id="pt_psl2" startWidth="460px" endWidth="120px" bottomHeight="20px">
+                                <f:facet name="center"></f:facet>
+                                <f:facet name="bottom">
+                                    <af:panelGroupLayout id="pt_pgl1" layout="vertical" valign="baseline" halign="end">
+                                        <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                        <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                            id="pt_of2" styleUsage="instruction"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="end"></f:facet>
+                                <f:facet name="start">
+                                    <af:panelGroupLayout id="pt_pgl5" layout="horizontal">
+                                        <af:image source="/images/logo-regione.png"
+                                                  shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                                  inlineStyle="height:25px;"/>
+                                        <af:spacer width="20" height="10" id="pt_s1"/>
+                                        <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                                       id="pt_ot1" inlineStyle="font-size:medium;"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+</f:view>

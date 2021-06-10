@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_tpinvitiPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfTpinvitoView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfTpinvitoView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+    <iterator Binds="A_SoAziendaView1" RangeSize="10" DataControl="A_AppModuleDataControl"
+              id="A_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfPeriodicitaInvitiView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfPeriodicitaInvitiView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfPrimoInvito1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfPrimoInvito1Iterator"/>
+    <iterator Binds="Cnf_SoCnfClassePopView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfClassePopView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Cnf_SoCnfTpinvitoView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfTpinvitoView" Name="Cnf_SoCnfTpinvitoView10">
+        <AttrNames>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Descrbreve"/>
+          <Item Value="Livello"/>
+          <Item Value="Descrizione1"/>
+          <Item Value="Appuntamento"/>
+          <Item Value="Ggsollecito"/>
+          <Item Value="Descrbreve1"/>
+          <Item Value="Codregionale"/>
+          <Item Value="Ordine"/>
+          <Item Value="Hpv"/>
+          <Item Value="Ulss"/>
+          <Item Value="Dtfinevalidita"/>
+          <Item Value="Esporta"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfTpinvitoView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfTpinvitoView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list ListOperMode="navigation" IterBinding="Cnf_SoAziendaView1Iterator" id="Codaz" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+    <attributeValues IterBinding="Cnf_SoCnfPeriodicitaInvitiView1Iterator" id="Dtultmod">
+      <AttrNames>
+        <Item Value="Dtultmod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfPrimoInvito1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfClassePopView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

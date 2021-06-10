@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_dwhcentri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_flussiRegionaliAction.sdoCentriForm}"> 
+            <af:pageTemplate viewId="/WEB-INF/templates/tempFlussiReg.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" actionListener="#{Cnf_flussiRegionaliAction.onDettCentri}" action="creatEditDwhCentri">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella codifica"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente la seguente codifica?"
+                                                              id="ot14"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditDwhCentri">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedCentri}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_flussiRegionaliAction.onChangeCentri}" autoSubmit="true"
+                                    binding="#{Cnf_flussiRegionaliAction.selectedCentri}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfDwhCentriView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfDwhCentriView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfDwhCentriView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfDwhCentriView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfDwhCentriView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfDwhCentriView1.rangeSize}"
+                                  id="t1" binding="#{Cnf_flussiRegionaliAction.tabCentri}" scrollPolicy="page">
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Idcentro.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Idcentro.label}" id="c1">
+                                <af:outputText value="#{row.Idcentro}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Idcentro.tooltip}"
+                                               id="ot1">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Idcentro.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrbreve.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrbreve.label}" id="c2">
+                                <af:outputText value="#{row.Descrbreve}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrbreve.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Codice.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Codice.label}" id="c3">
+                                <af:outputText value="#{row.Codice}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Codice.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrizione.name}"
+                                       sortable="true"
+                                       headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrizione.label}" id="c4">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Descrizione.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Tipo.name}"
+                                       sortable="true" headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Tipo.label}"
+                                       id="c5" rendered="#{sessionScope.scr eq 'MA'}">
+                                <af:outputText value="#{row.Tipo}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Tipo.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column sortProperty="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Ulss.name}"
+                                       sortable="true" headerText="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Ulss.label}"
+                                       id="c6" rendered="#{sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfDwhCentriView1.hints.Ulss.tooltip}"
+                                               id="ot6"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Codifiche ministeriali - Elenco"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

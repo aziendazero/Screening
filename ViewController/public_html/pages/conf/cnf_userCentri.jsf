@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_userCentri.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b3" action="confirm"
+                                               actionListener="#{Cnf_centriAction.updateCentriUser}"/>
+                                    <af:button text="Annulla" id="b1" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b2" action="apply"
+                                               actionListener="#{Cnf_centriAction.updateCentriUser}"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <f:facet name="footer"/>
+                                <af:selectOneChoice value="#{bindings.userId.inputValue}"
+                                                    label="Utente"
+                                                    required="true"
+                                                    shortDesc="#{bindings.userId.hints.tooltip}" id="soc1"
+                                                    disabled="#{sessionScope.action eq 'edit' ? true : false}"
+                                                    unselectedLabel="">
+                                    <f:selectItems value="#{bindings.userId.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.userId.validator}"/>
+                                </af:selectOneChoice>
+                                <!--<af:selectManyListbox value="#{sessionScope.listacentri}"
+                                                      label="Centri abilitati" id="sml1" size="8" required="true">
+                                    <f:selectItems value="#{bindings.Cnf_SoCentroPrelRefView1.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Cnf_SoCentroPrelRefView1.validator}"/>
+                                </af:selectManyListbox>-->
+                                <af:selectManyListbox value="#{sessionScope.listacentri}"
+                                                      label="Centri abilitati" id="sml1" size="8" required="true">
+                                    <f:selectItems value="#{bindings.Cnf_SoCnfCentroPrelView1.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.Cnf_SoCnfCentroPrelView1.validator}"/>
+                                </af:selectManyListbox>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Centri autorizzati per l'utente"/>
+            </af:pageTemplate>        
+        </af:form>
+    </af:document>
+</f:view>

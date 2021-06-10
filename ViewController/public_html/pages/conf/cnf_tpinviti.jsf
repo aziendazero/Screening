@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_tpinviti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_tpInvitiAction.tpInvForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempInviti.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelBox text="Regole di modifica" id="pb1">
+                        <f:facet name="toolbar"/>
+                        <af:panelList id="pl1">
+                            <h:outputText value="Ogni azienda sanitaria ha una copia locale dello standard regionale, di cui E' VIETATO MODIFICARE IL CODICE" id="ot13"/>
+                            <h:outputText value="E' possibile aggiungere nuovi tipi di invito che ricadano all'interno dei codici regionali" id="ot14"/>
+                        </af:panelList>
+                    </af:panelBox>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" action="creatEditTpinvito" actionListener="#{Cnf_tpInvitiAction.onDettTpinv}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                   affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar">
+                                                <h:outputText value="Cancellare definitivamente il seguente tipo di invito?" id="ot11"/>
+                                            </f:facet>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditTpinvito">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelected}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Codaz.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_tpInvitiAction.onChange}" autoSubmit="true"
+                                    binding="#{Cnf_tpInvitiAction.selectedUlss}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Codaz.items}" id="si4"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfTpinvitoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfTpinvitoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfTpinvitoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfTpinvitoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfTpinvitoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfTpinvitoView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_tpInvitiAction.tabTpinv}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Idtpinvito.label}" id="c1"
+                                       width="40">
+                                <af:outputText value="#{row.Idtpinvito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Idtpinvito.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrizione.label}" id="c2"
+                                       width="160">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrizione.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrbreve.label}" id="c3">
+                                <af:outputText value="#{row.Descrbreve}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrbreve.tooltip}"
+                                               id="ot3"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Livello.label}" id="c4"
+                                       width="60">
+                                <af:outputText value="#{row.Livello}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Livello.tooltip}"
+                                               id="ot4">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Livello.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrizione1.label}" id="c5"
+                                       width="100">
+                                <af:outputText value="#{row.Descrizione1}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrizione1.tooltip}"
+                                               id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Appuntamento.label}" id="c6"
+                                       width="80">
+                                <af:selectBooleanCheckbox selected ="#{row.Appuntamento}" id="sbc1" readOnly="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ggsollecito.label}" id="c7"
+                                       width="50">
+                                <af:outputText value="#{row.Ggsollecito}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ggsollecito.tooltip}"
+                                               id="ot7">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ggsollecito.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrbreve1.label}" id="c8">
+                                <af:outputText value="#{row.Descrbreve1}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrbreve1.tooltip}"
+                                               id="ot8"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Codregionale.label}" id="c9"
+                                       width="50">
+                                <af:outputText value="#{row.Codregionale}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Codregionale.tooltip}"
+                                               id="ot9"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ordine.label}" id="c10"
+                                       width="80">
+                                <af:outputText value="#{row.Ordine}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ordine.tooltip}"
+                                               id="ot10">
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ordine.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Hpv.label}" id="c11" rendered="#{sessionScope.HPV==true?true: sessionScope.regionale}">
+                                <af:selectOneChoice value="#{row.Hpv}" readOnly="true" id="soc1">
+                                    <af:selectItem label="NO" value="0" id="si1"/>
+                                    <af:selectItem label="SI" value="1" id="si2"/>
+                                    <af:selectItem label="SI, ma solo in fascia" value="2" id="si3"/>
+                                </af:selectOneChoice>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ulss.label}" id="c12" rendered="#{sessionScope.regionale}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Ulss.tooltip}"
+                                               id="ot12"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Esporta.label}" id="c14"
+                                       width="30">
+                                <af:selectBooleanCheckbox selected ="#{row.Esporta}" id="sbc2" readOnly="true"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Dtfinevalidita.label}"
+                                       id="c13" width="70">
+                                <af:outputText value="#{row.Dtfinevalidita}"
+                                               shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Dtfinevalidita.tooltip}"
+                                               id="ot6">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Dtfinevalidita.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Tipi di invito"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

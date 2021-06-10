@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="adfc-lovZone">
+    <default-activity>init</default-activity>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <input-parameter-definition id="__7">
+      <name>searchText</name>
+      <value>#{requestScope.searchText}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__8">
+      <name>onOneReturn</name>
+      <value>#{requestScope.onOneReturn}</value>
+      <class>java.lang.Boolean</class>
+    </input-parameter-definition>
+    <managed-bean id="__1">
+      <managed-bean-name>LovZoneAction</managed-bean-name>
+      <managed-bean-class>view.zona.LovZoneAction</managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <view id="lovZone">
+      <page>/pages/zona/lovZone.jsf</page>
+    </view>
+    <task-flow-return id="return">
+      <outcome>
+        <name>return</name>
+      </outcome>
+    </task-flow-return>
+    <method-call id="init">
+      <method>#{LovZoneAction.onLovFilter}</method>
+      <outcome>
+        <fixed-outcome>searchcompleted</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id>lovZone</from-activity-id>
+      <control-flow-case id="__3">
+        <from-outcome>annulla</from-outcome>
+        <to-activity-id>return</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__4">
+        <from-outcome>selected</from-outcome>
+        <to-activity-id>return</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__5">
+      <from-activity-id>init</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome>searchcompleted</from-outcome>
+        <to-activity-id>lovZone</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>

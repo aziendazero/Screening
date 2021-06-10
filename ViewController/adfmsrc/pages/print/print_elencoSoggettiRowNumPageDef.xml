@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="print_elencoSoggettiRowNumPageDef"
+                Package="pages.print">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PL_BeanDataControl" id="PL_BeanDataControlIterator"/>
+    <iterator Binds="Print_SoTemplateElenchiSoggView1" RangeSize="-1" DataControl="Print_AppModuleDataControl"
+              id="Print_SoTemplateElenchiSoggView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Cnf_selectionBean" id="Cnf_selectionBeanIterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="PL_BeanDataControlIterator" id="template" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Print_SoTemplateElenchiSoggView1Iterator">
+      <AttrNames>
+        <Item Value="template"/>
+        <Item Value="nome_file"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codtempl"/>
+        <Item Value="Nomefile"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="export_type">
+      <AttrNames>
+        <Item Value="export_type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_selectionBeanIterator" id="inClause">
+      <AttrNames>
+        <Item Value="inClause"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="nome_file">
+      <AttrNames>
+        <Item Value="nome_file"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_selectionBeanIterator" id="rowNum1">
+      <AttrNames>
+        <Item Value="rowNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PL_BeanDataControlIterator" id="template1">
+      <AttrNames>
+        <Item Value="template"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

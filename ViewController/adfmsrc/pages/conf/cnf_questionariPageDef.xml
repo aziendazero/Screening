@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_questionariPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfQuestionarioView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfQuestionarioView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfQuestDomandeView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfQuestDomandeView1Iterator"/>
+    <iterator id="Cnf_SoCnfDomandeView2Iterator" Binds="Cnf_SoCnfDomandeView2" DataControl="Cnf_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="Cnf_SoCnfQuestDomandeView2Iterator" Binds="Cnf_SoCnfQuestDomandeView2"
+              DataControl="Cnf_AppModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfQuestionarioView1Iterator" id="Cnf_SoCnfQuestionarioView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfQuestionarioView" Name="Cnf_SoCnfQuestionarioView10">
+        <AttrNames>
+          <Item Value="DescrBreve"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Note"/>
+          <Item Value="DtFineVal"/>
+          <Item Value="Algoritmo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Cnf_SoCnfQuestDomandeView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfQuestDomandeView" Name="Cnf_SoCnfQuestDomandeView10">
+        <AttrNames>
+          <Item Value="Domanda"/>
+          <Item Value="Livello"/>
+          <Item Value="Sezione"/>
+          <Item Value="Ordine"/>
+          <Item Value="Obbligatorio"/>
+          <Item Value="CodiceDom"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfQuestionarioView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfQuestionarioView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="Cnf_SoCnfQuestDomandeView1Iterator" id="Delete1"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfQuestDomandeView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

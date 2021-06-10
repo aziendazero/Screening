@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="PL_SoEsclusioneExtendedView"
+   Version="11.1.2.62.76"
+   SelectList="PL_SoEsclusione.IDESCL, 
+       PL_SoEsclusione.IDCNFESCL, 
+       PL_SoEsclusione.IDINVITO, 
+       PL_SoEsclusione.CODTS, 
+       PL_SoEsclusione.DTESCL, 
+       PL_SoEsclusione.ULTIMA, 
+       PL_SoEsclusione.DTRICHIAMO, 
+       PL_SoEsclusione.LETTRICHIAMO, 
+       PL_SoEsclusione.ROUNDORGESCL, 
+       PL_SoEsclusione.ROUNDINDIV, 
+       PL_SoEsclusione.DTANNULL, 
+       PL_SoEsclusione.DTMODESCL, 
+       PL_SoEsclusione.NOTEESCL, 
+       PL_SoEsclusione.ULSS, 
+       PL_SoEsclusione.TPSCR, 
+       PL_SoEsclusione.DTCREAZIONE, 
+       PL_SoEsclusione.OPCREAZIONE, 
+       PL_SoEsclusione.OPMODIFICA, 
+       PL_SoCnfEsclusione.IDCNFESCL AS IDCNFESCL1, 
+       PL_SoCnfEsclusione.ULSS AS ULSS1, 
+       PL_SoCnfEsclusione.TPSCR AS TPSCR1, 
+       PL_SoCnfEsclusione.DESCRIZIONE, 
+       PL_SoCnfEsclusione.NUMGIORNI, 
+       (DTESCL+NUMGIORNI) AS FINE_ESCLUSIONE, 
+       PL_SoCnfEsclusione.TPESCL"
+   FromList="SO_ESCLUSIONE PL_SoEsclusione, SO_CNF_ESCLUSIONE PL_SoCnfEsclusione"
+   Where="((PL_SoEsclusione.IDCNFESCL = PL_SoCnfEsclusione.IDCNFESCL) AND (PL_SoEsclusione.ULSS = PL_SoCnfEsclusione.ULSS)) AND (PL_SoEsclusione.TPSCR = PL_SoCnfEsclusione.TPSCR)"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.pianolavoro.PL_SoEsclusioneExtendedViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+   </DesignTime>
+   <EntityUsage
+      Name="PL_SoEsclusione"
+      Entity="model.pianolavoro.PL_SoEsclusione" >
+   </EntityUsage>
+   <EntityUsage
+      Name="PL_SoCnfEsclusione"
+      Entity="model.pianolavoro.PL_SoCnfEsclusione"
+      SourceUsage="model.pianolavoro.PL_SoEsclusioneExtendedView.PL_SoEsclusione"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Idescl"
+      IsNotNull="true"
+      EntityAttrName="Idescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="IDESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfescl"
+      IsNotNull="true"
+      EntityAttrName="Idcnfescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="IDCNFESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      EntityAttrName="Idinvito"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="IDINVITO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtescl"
+      IsNotNull="true"
+      EntityAttrName="Dtescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="DTESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ultima"
+      IsNotNull="true"
+      EntityAttrName="Ultima"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="ULTIMA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrichiamo"
+      EntityAttrName="Dtrichiamo"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="DTRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Lettrichiamo"
+      EntityAttrName="Lettrichiamo"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="LETTRICHIAMO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundorgescl"
+      EntityAttrName="Roundorgescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="ROUNDORGESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Roundindiv"
+      EntityAttrName="Roundindiv"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="ROUNDINDIV" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtannull"
+      EntityAttrName="Dtannull"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="DTANNULL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtmodescl"
+      EntityAttrName="Dtmodescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="DTMODESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Noteescl"
+      EntityAttrName="Noteescl"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="NOTEESCL" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="TPSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazione"
+      EntityAttrName="Dtcreazione"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="DTCREAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opcreazione"
+      EntityAttrName="Opcreazione"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="OPCREAZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      EntityAttrName="Opmodifica"
+      EntityUsage="PL_SoEsclusione"
+      AliasName="OPMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcnfescl1"
+      IsNotNull="true"
+      EntityAttrName="Idcnfescl"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="IDCNFESCL1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr1"
+      IsNotNull="true"
+      EntityAttrName="Tpscr"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="TPSCR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esclusione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Numgiorni"
+      EntityAttrName="Numgiorni"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="NUMGIORNI" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FineEsclusione"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="FINE_ESCLUSIONE"
+      Expression="DTESCL+NUMGIORNI"
+      SQLType="DATE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpescl"
+      IsNotNull="true"
+      EntityAttrName="Tpescl"
+      EntityUsage="PL_SoCnfEsclusione"
+      AliasName="TPESCL" >
+   </ViewAttribute>
+</ViewObject>

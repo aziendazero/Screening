@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_comzone_paramPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfComuniZoneParamView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfComuniZoneParamView1Iterator"/>
+    <iterator Binds="Cnf_SoComuneView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoComuneView1Iterator"/>
+    <iterator Binds="Cnf_SoDistrettoZonaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoDistrettoZonaView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Comune">
+      <AttrNames>
+        <Item Value="Comune"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Zona">
+      <AttrNames>
+        <Item Value="Zona"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Altro">
+      <AttrNames>
+        <Item Value="Altro"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Comune1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoComuneView1Iterator">
+      <AttrNames>
+        <Item Value="ReleaseCodeCom"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codcom"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Zona1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoDistrettoZonaView1Iterator">
+      <AttrNames>
+        <Item Value="Zona"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Codcom" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoComuneView1Iterator">
+      <AttrNames>
+        <Item Value="Codcom"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codcom"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Coddistrzona" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoDistrettoZonaView1Iterator">
+      <AttrNames>
+        <Item Value="Coddistrzona"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

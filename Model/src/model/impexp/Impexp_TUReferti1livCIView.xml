@@ -1,0 +1,395 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Impexp_TUReferti1livCIView"
+   Version="11.1.2.62.76"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.impexp.Impexp_TUReferti1livCIViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT
+    R.IDREFERTO,
+    R.IDINVITO,
+    R.CODTS,
+    R.ULSS,
+    R.TPSCR,
+    R.COMPLETO,
+    R.DTPRELIEVO,
+    R.DTREFERTO,
+    R.DTINSERIMENTO,
+    R.DTCREAZIONE DTCREAZIONELETTERA,
+    R.DTSPEDIZIONE DTSTAMPA,
+    R.IDMEDREF IDSUPERVISORE,
+    R.IDCITOSCREENER,
+    ADEPRE.CODREG ADEGUATEZZA,
+    INALIM.CODREG MOTIVO,
+    GIUDIA.CODREG GIUDIZIO_DIAGNOSTICO,
+    SO_CODREF1LIVC.CODREG POSITIVITA,  
+    SUGG1LIV.IDSUGG
+ FROM SO_REFERTOCITO1LIV R,
+ (SELECT SO_CODREF1LIVC.*,
+ SO_CNF_REF1LIV.CODREG,
+ SO_CNF_REF1LIV.DESCRIZIONE,
+SO_CNF_REF1LIV.ORDINE
+FROM SO_CODREF1LIVC,
+SO_CNF_REF1LIV
+WHERE SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L
+AND SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO
+AND SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS
+AND SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR) ADEPRE,
+(SELECT SO_CODREF1LIVC.*,
+ SO_CNF_REF1LIV.CODREG,
+ SO_CNF_REF1LIV.DESCRIZIONE,
+SO_CNF_REF1LIV.ORDINE
+FROM SO_CODREF1LIVC,
+SO_CNF_REF1LIV
+WHERE SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L
+AND SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO
+AND SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS
+AND SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR) GIUDIA,
+(SELECT ULSS.IDSUGG IDSUGG1L, ULSS.ULSS ULSS1L, REG.*
+FROM SO_CNF_SUGG_1LIV ULSS, SO_CNF_SUGG_1LIV REG
+WHERE ULSS.CODREGIONALE=REG.IDSUGG AND ULSS.TPSCR=REG.TPSCR) SUGG1LIV,
+(SELECT SO_CODREF1LIVC.*,
+ SO_CNF_REF1LIV.CODREG,
+ SO_CNF_REF1LIV.DESCRIZIONE,
+SO_CNF_REF1LIV.ORDINE
+FROM SO_CODREF1LIVC,
+SO_CNF_REF1LIV
+WHERE SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L
+AND SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO
+AND SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS
+AND SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR
+) SO_CODREF1LIVC,
+(SELECT SO_CODREF1LIVC.*,
+ SO_CNF_REF1LIV.CODREG,
+ SO_CNF_REF1LIV.DESCRIZIONE,
+SO_CNF_REF1LIV.ORDINE
+FROM SO_CODREF1LIVC,
+SO_CNF_REF1LIV
+WHERE SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L
+AND SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO
+AND SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS
+AND SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR) INALIM
+
+WHERE R.TPREFERTO=0
+--ADEGUATEZZA
+AND (R.IDREFERTO=ADEPRE.IDREFERTO(+)
+AND ADEPRE.GRUPPO(+)='ADEPRE' 
+and R.ULSS=ADEPRE.ULSS(+) AND R.TPSCR=ADEPRE.TPSCR(+))
+--MOTIVO DI INADEGUATEZZA
+AND (R.IDREFERTO=INALIM.IDREFERTO(+)
+AND INALIM.GRUPPO(+)='INALIM'
+and R.ULSS=INALIM.ULSS(+) AND R.TPSCR=INALIM.TPSCR(+))
+--GIUDIZIO DIAGNOSTICO
+AND (R.IDREFERTO=GIUDIA.IDREFERTO(+)
+AND GIUDIA.GRUPPO(+)='GIUDIA'
+and R.ULSS=GIUDIA.ULSS(+) AND R.TPSCR=GIUDIA.TPSCR(+))
+--SUGGERIMENTO
+AND (SUGG1LIV.IDSUGG1L=R.IDSUGG
+AND SUGG1LIV.ULSS1L=R.ULSS
+AND SUGG1LIV.TPSCR=R.TPSCR
+AND SUGG1LIV.ULSS='050000')
+--ALTRI DATI (POSITIVITà)
+AND (R.IDREFERTO=SO_CODREF1LIVC.IDREFERTO(+)
+and SO_CODREF1LIVC.gruppo(+)='POSITI'
+and R.ULSS=SO_CODREF1LIVC.ULSS(+) AND R.TPSCR=SO_CODREF1LIVC.TPSCR(+)
+AND  (SO_CODREF1LIVC.ORDINE is null or not exists
+( SELECT 1
+FROM SO_CODREF1LIVC C1,
+SO_CNF_REF1LIV R1
+WHERE C1.IDCNFREF=R1.IDCNFREF1L
+AND C1.GRUPPO=R1.GRUPPO
+AND C1.ULSS=R1.ULSS
+AND C1.TPSCR=R1.TPSCR
+
+AND C1.IDREFERTO=R.IDREFERTO
+  AND C1.GRUPPO=SO_CODREF1LIVC.GRUPPO
+  AND R1.ORDINE<SO_CODREF1LIVC.ORDINE
+
+)
+))
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinvito"
+      IsPersistent="false"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDINVITO"
+      Expression="IDINVITO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="11"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CODTS"
+      Expression="CODTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="11" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="ULSS"
+      Expression="ULSS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpscr"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="2"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TPSCR"
+      Expression="TPSCR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Completo"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="COMPLETO"
+      Expression="COMPLETO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtprelievo"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTPRELIEVO"
+      Expression="DTPRELIEVO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTREFERTO"
+      Expression="DTREFERTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinserimento"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINSERIMENTO"
+      Expression="DTINSERIMENTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtcreazionelettera"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTCREAZIONELETTERA"
+      Expression="DTCREAZIONELETTERA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtstampa"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTSTAMPA"
+      Expression="DTSTAMPA"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties >
+         <CustomProperties>
+            <Property Name ="EXPORT_FORMAT" Value ="yyyyMMdd" />
+         </CustomProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsupervisore"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUPERVISORE"
+      Expression="IDSUPERVISORE"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idcitoscreener"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDCITOSCREENER"
+      Expression="IDCITOSCREENER"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Adeguatezza"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ADEGUATEZZA"
+      Expression="ADEGUATEZZA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Motivo"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MOTIVO"
+      Expression="MOTIVO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GiudizioDiagnostico"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="GIUDIZIO_DIAGNOSTICO"
+      Expression="GIUDIZIO_DIAGNOSTICO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Positivita"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="POSITIVITA"
+      Expression="POSITIVITA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG"
+      Expression="IDSUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Idreferto" />
+   </AttrArray>
+</ViewObject>

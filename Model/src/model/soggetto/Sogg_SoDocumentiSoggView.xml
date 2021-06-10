@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Version="12.2.1.11.57"
+   Name="Sogg_SoDocumentiSoggView"
+   SelectList="Sogg_SoDocumentiSogg.ID_TIPO_DOC, 
+       Sogg_SoDocumentiSogg.DOC_IDENT, 
+       Sogg_SoDocumentiSogg.CODTS, 
+       Sogg_SoDocumentiSogg.ULSS, 
+       Sogg_SoDocumentiSogg.DTRILASCIO, 
+       Sogg_SoDocumentiSogg.DTFINEVALIDITA, 
+       Sogg_SoDocumentiSogg.DOC_IDENT_ANAG, 
+       Sogg_SoDocumentiSogg.ID_IST_COMP, 
+       Sogg_SoDocumentiSogg.DTINSERIMENTO, 
+       Sogg_SoDocumentiSogg.OPINSERIMENTO, 
+       Sogg_SoDocumentiSogg.DTULTMODIFICA, 
+       Sogg_SoDocumentiSogg.OPMODIFICA, 
+       Sogg_SoCnfTipiDoc.ROWID, 
+       Sogg_SoCnfTipiDoc.DESCRIZIONE, 
+       Sogg_SoCnfTipiDoc.ORDINE, 
+       (Sogg_SoCnfTipiDoc.DESCRIZIONE) AS VIEW_ATTR"
+   FromList="SO_DOCUMENTI_SOGG Sogg_SoDocumentiSogg, SO_CNF_TIPI_DOC Sogg_SoCnfTipiDoc"
+   Where="((Sogg_SoDocumentiSogg.ID_TIPO_DOC = Sogg_SoCnfTipiDoc.ID_TIPO_DOC)AND (Sogg_SoDocumentiSogg.ULSS = Sogg_SoCnfTipiDoc.ULSS))"
+   OrderBy="Sogg_SoCnfTipiDoc.ORDINE"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="model.soggetto.Sogg_SoDocumentiSoggViewImpl"
+   PageIterMode="Partial"
+   MsgBundleClass="model.soggetto.common.Sogg_SoDocumentiSoggViewRowImplMsgBundle"
+   RowClass="model.soggetto.Sogg_SoDocumentiSoggViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Msg" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <EntityUsage
+      Name="Sogg_SoDocumentiSogg"
+      Entity="model.soggetto.Sogg_SoDocumentiSogg" />
+   <EntityUsage
+      Name="Sogg_SoCnfTipiDoc"
+      Entity="model.soggetto.Sogg_SoCnfTipiDoc"
+      SourceUsage="model.soggetto.Sogg_SoDocumentiSoggView.Sogg_SoDocumentiSogg"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false"/>
+   <ViewAttribute
+      Name="IdTipoDoc"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="IdTipoDoc"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="ID_TIPO_DOC" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IdTipoDoc_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocIdent"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="DocIdent"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DOC_IDENT" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DocIdent_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Codts"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsUnique="true"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ulss"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtrilascio"
+      PrecisionRule="true"
+      EntityAttrName="Dtrilascio"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DTRILASCIO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtrilascio_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtrilascio_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtrilascio_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtfinevalidita"
+      PrecisionRule="true"
+      EntityAttrName="Dtfinevalidita"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DTFINEVALIDITA" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtfinevalidita_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtfinevalidita_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtfinevalidita_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DocIdentAnag"
+      PrecisionRule="true"
+      EntityAttrName="DocIdentAnag"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DOC_IDENT_ANAG" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="DocIdentAnag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IdIstComp"
+      PrecisionRule="true"
+      EntityAttrName="IdIstComp"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="ID_IST_COMP" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="IdIstComp_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtinserimento"
+      PrecisionRule="true"
+      EntityAttrName="Dtinserimento"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DTINSERIMENTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="Dtinserimento_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="Dtinserimento_FMT_FORMAT"/>
+            <LABEL
+               ResId="Dtinserimento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opinserimento"
+      PrecisionRule="true"
+      EntityAttrName="Opinserimento"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="OPINSERIMENTO" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Opinserimento_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtultmodifica"
+      PrecisionRule="true"
+      EntityAttrName="Dtultmodifica"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="DTULTMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Opmodifica"
+      PrecisionRule="true"
+      EntityAttrName="Opmodifica"
+      EntityUsage="Sogg_SoDocumentiSogg"
+      AliasName="OPMODIFICA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RowID"
+      IsUpdateable="false"
+      PrecisionRule="true"
+      EntityAttrName="RowID"
+      EntityUsage="Sogg_SoCnfTipiDoc"
+      AliasName="ROWID"/>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="Sogg_SoCnfTipiDoc"
+      AliasName="DESCRIZIONE">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Descrizione_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ordine"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="Ordine"
+      EntityUsage="Sogg_SoCnfTipiDoc"
+      AliasName="ORDINE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DescrizioneTipoDoc"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="VIEW_ATTR"
+      SQLType="VARCHAR"
+      Expression="Sogg_SoCnfTipiDoc.DESCRIZIONE"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_SoDocumentiSoggViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

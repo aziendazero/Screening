@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_agendaFasciaPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempSinglePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Cnf_SoAgendacentroView2" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAgendacentroView2Iterator"/>
+    <iterator Binds="Cnf_SoCentroPrelRefView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCentroPrelRefView1Iterator"/>
+    <iterator Binds="Cnf_SoAgendacentroView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAgendacentroView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Cnf_SoAgendacentroView2Iterator" id="Oraapp">
+      <AttrNames>
+        <Item Value="Oraapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoAgendacentroView2Iterator" id="Minapp">
+      <AttrNames>
+        <Item Value="Minapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoAgendacentroView2Iterator" id="Disporaria">
+      <AttrNames>
+        <Item Value="Disporaria"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCentroPrelRefView1Iterator" id="Descrbreve">
+      <AttrNames>
+        <Item Value="Descrbreve"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Cnf_SoAgendacentroView2Iterator" id="Nascosto" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Nascosto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Cnf_SoAgendacentroView2Iterator" id="Ggsettimana">
+      <AttrNames>
+        <Item Value="Ggsettimana"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

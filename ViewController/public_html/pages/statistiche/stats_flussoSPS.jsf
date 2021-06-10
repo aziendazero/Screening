@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.statistiche.stats_flussoSPSBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.STATISTICHE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{pageFlowScope.Stats_flussoSPSAction.spsFrm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempStatistiche.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="100px" endWidth="450px">
+                        <f:facet name="start"/>
+                        <f:facet name="end">
+                            <af:table value="#{pageFlowScope.Stats_flussoSPSAction.zipFiles}" var="row"
+                                      rowBandingInterval="0" id="t4" columnStretching="column:c7"
+                                      partialTriggers="b3 ::pc1:b6 ::soc1">
+                                <af:column sortable="false" headerText="Tracciati prodotti" align="start" id="c7"
+                                           width="150">
+                                    <af:outputText value="#{row.viewName}" id="ot4"
+                                                   binding="#{pageFlowScope.Stats_flussoSPSAction.fileZipName}"/>
+                                </af:column>
+                                <af:column id="c8" width="80">
+                                    <af:button text="Download" id="b2">
+                                        <af:fileDownloadActionListener method="#{pageFlowScope.Stats_flussoSPSAction.downloadZip}" filename="#{row.viewName}.zip"/>
+                                    </af:button>
+                                </af:column>
+                                <af:column id="c9" width="90">
+                                    <af:button text="Cancella file" id="b3"
+                                               action="#{pageFlowScope.Stats_flussoSPSAction.onFileDelete}">
+                                        <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il file selezionato?')"
+                                                           type="action"/>
+                                    </af:button>
+                                </af:column>
+                                <af:column id="c10" width="40">
+                                    <af:button text="Log" id="b4">
+                                        <af:fileDownloadActionListener method="#{pageFlowScope.Stats_flussoSPSAction.downloadLog}" filename="LOG_#{row.viewName}.pdf"/>
+                                    </af:button>
+                                </af:column>
+                            </af:table>
+                        </f:facet>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelGridLayout id="pgl1">
+                                    <af:gridRow marginTop="5px" height="auto" id="gr1">
+                                        <af:gridCell marginStart="5px" columnSpan="2" marginEnd="5px" id="gc1">
+                                            <af:selectOneChoice value="#{bindings.SPS_ulss.inputValue}" label="Ulss"
+                                                                styleClass="choiceInTable"
+                                                                rendered="#{sessionScope.regionale?true:false}"
+                                                                required="#{bindings.SPS_ulss.hints.mandatory}"
+                                                                shortDesc="#{bindings.SPS_ulss.hints.tooltip}" id="soc1"
+                                                                valuePassThru="true"
+                                                                valueChangeListener="#{pageFlowScope.Stats_flussoSPSAction.onSelectUlss}"
+                                                                autoSubmit="true">
+                                                <f:selectItems value="#{bindings.SPS_ulss.items}" id="si1"/>
+                                                <f:validator binding="#{bindings.SPS_ulss.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:panelFormLayout id="pfl1" maxColumns="5" rows="1">
+                                                <af:inputDate value="#{bindings.SPS_dal.inputValue}" label="Periodo dal"
+                                                              required="#{bindings.SPS_dal.hints.mandatory}"
+                                                              columns="#{bindings.SPS_dal.hints.displayWidth}"
+                                                              shortDesc="#{bindings.SPS_dal.hints.tooltip}" id="id1">
+                                                    <f:validator binding="#{bindings.SPS_dal.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.SPS_dal.format}"/>
+                                                </af:inputDate>
+                                                <af:inputDate value="#{bindings.SPS_al.inputValue}" label="al (incluso)"
+                                                              required="#{bindings.SPS_al.hints.mandatory}"
+                                                              columns="#{bindings.SPS_al.hints.displayWidth}"
+                                                              shortDesc="#{bindings.SPS_al.hints.tooltip}" id="id2">
+                                                    <f:validator binding="#{bindings.SPS_al.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.SPS_al.format}"/>
+                                                </af:inputDate>
+                                                <af:button text="Estrai flusso" id="b1"
+                                                           actionListener="#{pageFlowScope.Stats_flussoSPSAction.onGenerate}"/>
+                                            </af:panelFormLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow marginTop="15px" height="auto" marginBottom="5px" id="gr2">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc2" halign="stretch" rendered="#{sessionScope.scr=='CI'}">
+                                            <af:table value="#{bindings.Cnf_SoCnfTpinvitoView1.collectionModel}"
+                                                      var="row" rows="#{bindings.Cnf_SoCnfTpinvitoView1.rangeSize}"
+                                                      emptyText="#{bindings.Cnf_SoCnfTpinvitoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0" 
+                                                      selectedRowKeys="#{bindings.Cnf_SoCnfTpinvitoView1.collectionModel.selectedRow}"
+                                                      rowSelection="multiple"
+                                                      fetchSize="#{bindings.Cnf_SoCnfTpinvitoView1.rangeSize}" id="t1"
+                                                      columnStretching="last" partialTriggers="::soc1">
+                                                <af:column headerText="" id="c1" width="40">
+                                                    <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                              label="#{row.bindings.Selected.label}"
+                                                                              shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Selected.tooltip}"
+                                                                              id="sbc1"/>
+                                                </af:column>
+                                                <af:column headerText="Tipo di invito"
+                                                           id="c2">
+                                                    <af:outputText value="#{row.Descrizione}"
+                                                                   shortDesc="#{bindings.Cnf_SoCnfTpinvitoView1.hints.Descrizione.tooltip}"
+                                                                   id="ot1"/>
+                                                </af:column>
+                                            </af:table>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="15px" width="50%" marginEnd="5px" id="gc3">
+                                            <af:panelGroupLayout id="pgl2" layout="scroll">
+                                                <af:selectOneChoice value="#{bindings.SPS_centro_prel.inputValue}"
+                                                                    label="Centro dell'invito"
+                                                                    styleClass="choiceInTable"
+                                                                    required="#{bindings.SPS_centro_prel.hints.mandatory}"
+                                                                    shortDesc="#{bindings.SPS_centro_prel.hints.tooltip}"
+                                                                    id="soc2">
+                                                    <f:selectItems value="#{bindings.SPS_centro_prel.items}" id="si2"/>
+                                                    <f:validator binding="#{bindings.SPS_centro_prel.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:spacer width="10" height="20" id="s3" rendered="#{sessionScope.scr=='CI'}"/>
+                                                <af:table value="#{bindings.Cnf_SoAmbIstricView1.collectionModel}"
+                                                          var="row" rendered="#{sessionScope.scr=='CI'}"
+                                                          rows="#{bindings.Cnf_SoAmbIstricView1.rangeSize}"
+                                                          emptyText="#{bindings.Cnf_SoAmbIstricView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Cnf_SoAmbIstricView1.collectionModel.selectedRow}"
+                                                          rowSelection="multiple"
+                                                          fetchSize="#{bindings.Cnf_SoAmbIstricView1.rangeSize}" id="t2"
+                                                          columnStretching="last">
+                                                    <af:column headerText="" id="c3" width="40">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Cnf_SoAmbIstricView1.hints.Selected.tooltip}"
+                                                                                  id="sbc2"/>
+                                                    </af:column>
+                                                    <af:column headerText="Centro refertazione HPV" id="c4">
+                                                        <af:outputText value="#{row.Descrbreve}"
+                                                                       shortDesc="#{bindings.Cnf_SoAmbIstricView1.hints.Descrbreve.tooltip}"
+                                                                       id="ot2"/>
+                                                    </af:column>
+                                                </af:table>
+                                                <af:spacer width="10" height="20" id="s1" rendered="#{sessionScope.scr=='CI'}"/>
+                                                <af:table value="#{bindings.Cnf_SoCnfCentroRefView1.collectionModel}"
+                                                          var="row" rows="#{bindings.Cnf_SoCnfCentroRefView1.rangeSize}"
+                                                          emptyText="#{bindings.Cnf_SoCnfCentroRefView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0" rendered="#{sessionScope.scr=='CI'}"
+                                                          selectedRowKeys="#{bindings.Cnf_SoCnfCentroRefView1.collectionModel.selectedRow}"
+                                                          rowSelection="multiple"
+                                                          fetchSize="#{bindings.Cnf_SoCnfCentroRefView1.rangeSize}"
+                                                          id="t3" columnStretching="last">
+                                                    <af:column headerText="" id="c5" width="40">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Cnf_SoCnfCentroRefView1.hints.Selected.tooltip}"
+                                                                                  id="sbc3"/>
+                                                    </af:column>
+                                                    <af:column headerText="Centro refertazione PAP TEST" id="c6">
+                                                        <af:outputText value="#{row.Descrbreve}"
+                                                                       shortDesc="#{bindings.Cnf_SoCnfCentroRefView1.hints.Descrbreve.tooltip}"
+                                                                       id="ot3"/>
+                                                    </af:column>
+                                                </af:table>
+                                                <af:spacer width="10" height="20" id="s2" rendered="#{sessionScope.scr=='CI'}"/>
+                                                <af:panelFormLayout id="pfl2" maxColumns="1">
+                                                    <f:facet name="footer"/>
+                                                    <af:selectOneChoice value="#{bindings.SPS_centro_ref.inputValue}"
+                                                                        label="Centro di refertazione"
+                                                                        rendered="#{sessionScope.scr!='CI'}"
+                                                                        styleClass="choiceInTable"
+                                                                        required="#{bindings.SPS_centro_ref.hints.mandatory}"
+                                                                        shortDesc="#{bindings.SPS_centro_ref.hints.tooltip}"
+                                                                        id="soc3">
+                                                        <f:selectItems value="#{bindings.SPS_centro_ref.items}"
+                                                                       id="si3"/>
+                                                        <f:validator binding="#{bindings.SPS_centro_ref.validator}"/>
+                                                    </af:selectOneChoice>
+                                                    <af:selectBooleanCheckbox value="#{bindings.SPS_prestazione1.inputValue}"
+                                                                              shortDesc="#{bindings.SPS_prestazione1.hints.tooltip}"
+                                                                              id="sbc4" label=""
+                                                                              rendered="#{bindings.SPS_label1.inputValue != null}"
+                                                                              text="#{bindings.SPS_label1.inputValue}"/>
+                                                    <af:selectBooleanCheckbox value="#{bindings.SPS_prestazione2.inputValue}"
+                                                                              label=""
+                                                                              shortDesc="#{bindings.SPS_prestazione2.hints.tooltip}"
+                                                                              id="sbc5"
+                                                                              rendered="#{bindings.SPS_label2.inputValue != null}"
+                                                                              text="#{bindings.SPS_label2.inputValue}"/>
+                                                    <af:selectBooleanCheckbox value="#{bindings.SPS_prestazione3.inputValue}"
+                                                                              label=""
+                                                                              shortDesc="#{bindings.SPS_prestazione3.hints.tooltip}"
+                                                                              id="sbc6"
+                                                                              rendered="#{bindings.SPS_label3.inputValue != null}"
+                                                                              text="#{bindings.SPS_label3.inputValue}"/>
+                                                    <af:selectBooleanCheckbox value="#{bindings.SPS_prestazione4.inputValue}"
+                                                                              label="#{bindings.SPS_prestazione4.label}"
+                                                                              shortDesc="#{bindings.SPS_prestazione4.hints.tooltip}"
+                                                                              id="sbc7"
+                                                                              rendered="#{bindings.SPS_label4.inputValue != null}"
+                                                                              text="#{bindings.SPS_label4.inputValue}"/>
+                                                </af:panelFormLayout>
+                                            </af:panelGroupLayout>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                    <af:gridRow id="gr3">
+                                        <af:gridCell id="gc4" marginStart="5px" columnSpan="2" marginEnd="5px">
+                                            <af:panelAccordion discloseMany="false" id="pa1">
+                                                <af:showDetailItem id="pane1" text="Log" disclosed="true">
+                                                    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                                                        featuresOff="viewMenu detach freeze wrap">
+                                                        <f:facet name="menus"/>
+                                                        <f:facet name="toolbar">
+                                                            <af:toolbar id="t6">
+                                                                <af:button text="Pulizia log" id="b5"
+                                                                           action="#{pageFlowScope.Stats_flussoSPSAction.onCleanLog}"
+                                                                           partialSubmit="false"/>
+                                                                <af:button text="Aggiorna" id="b6"
+                                                                           actionListener="#{bindings.Execute.execute}"
+                                                                           disabled="#{!bindings.Execute.enabled}"
+                                                                           action="#{pageFlowScope.Stats_flussoSPSAction.onRefeshFiles}"/>
+                                                            </af:toolbar>
+                                                        </f:facet>
+                                                        <f:facet name="statusbar"/>
+                                                        <af:table value="#{bindings.Impexp_SoLogTransferSPSView1.collectionModel}"
+                                                                  var="row"
+                                                                  rows="#{bindings.Impexp_SoLogTransferSPSView1.rangeSize}"
+                                                                  emptyText="#{bindings.Impexp_SoLogTransferSPSView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                                  rowBandingInterval="0"
+                                                                  fetchSize="#{bindings.Impexp_SoLogTransferSPSView1.rangeSize}"
+                                                                  id="t5" partialTriggers="::b6 :::soc1"
+                                                                  columnStretching="column:c12">
+                                                            <af:column headerText="#{bindings.Impexp_SoLogTransferSPSView1.hints.Data.label}"
+                                                                       id="c11">
+                                                                <af:outputText value="#{row.Data}"
+                                                                               shortDesc="#{bindings.Impexp_SoLogTransferSPSView1.hints.Data.tooltip}"
+                                                                               id="ot5">
+                                                                    <af:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                                </af:outputText>
+                                                            </af:column>
+                                                            <af:column headerText="#{bindings.Impexp_SoLogTransferSPSView1.hints.Descrizione.label}"
+                                                                       id="c12">
+                                                                <af:outputText value="#{row.Descrizione}"
+                                                                               shortDesc="#{bindings.Impexp_SoLogTransferSPSView1.hints.Descrizione.tooltip}"
+                                                                               id="ot6"/>
+                                                            </af:column>
+                                                        </af:table>
+                                                    </af:panelCollection>
+                                                </af:showDetailItem>
+                                            </af:panelAccordion>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.STATISTICHE}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

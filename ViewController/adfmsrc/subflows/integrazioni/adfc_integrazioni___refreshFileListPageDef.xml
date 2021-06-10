@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="adfc_integrazioni___refreshFileListPageDef" Package="subflows.integrazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <methodIterator Binds="findFileList.result" DataControl="ImpexpProviderDataControl" RangeSize="25"
+                    BeanClass="model.bean.ImpexpFile" id="findFileListIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <methodAction id="findFileList" RequiresUpdateModel="true" Action="invokeMethod" MethodName="findFileList"
+                  IsViewObjectMethod="false" DataControl="ImpexpProviderDataControl"
+                  InstanceName="data.ImpexpProviderDataControl.dataProvider"
+                  ReturnName="data.ImpexpProviderDataControl.methodResults.findFileList_ImpexpProviderDataControl_dataProvider_findFileList_result"/>
+    <action IterBinding="findFileListIterator" id="Execute" RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

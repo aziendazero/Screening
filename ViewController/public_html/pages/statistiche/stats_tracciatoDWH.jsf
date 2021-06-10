@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle"
+           value="#{adfBundle['viewcontroller.pages.statistiche.stats_tracciatoDWHBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.STATISTICHE}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{viewScope.Stats_tracciatoDWHAction.dwHFrm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempStatistiche.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="100px" endWidth="450px">
+                        <f:facet name="start"/>
+                        <f:facet name="end">
+                            <af:table value="#{viewScope.Stats_tracciatoDWHAction.zipFiles}" var="row"
+                                      rowBandingInterval="0" id="t1" columnStretching="column:c1"
+                                      columnSelection="single"
+                                      binding="#{viewScope.Stats_tracciatoDWHAction.zipTable}"
+                                      rowSelection="single" partialTriggers="::soc1 ::pc2:b6 b3">
+                                <af:column sortable="false" headerText="Tracciati prodotti" align="start" id="c1"
+                                           width="150">
+                                    <af:outputText value="#{row.viewName}" id="ot1"
+                                                   binding="#{viewScope.Stats_tracciatoDWHAction.zipFileName}"/>
+                                </af:column>
+                                <af:column id="c4" width="80">
+                                    <af:button text="Download" id="b2">
+                                        <af:fileDownloadActionListener method="#{viewScope.Stats_tracciatoDWHAction.downloadZip}" filename="#{row.viewName}.zip"/>
+                                    </af:button>
+                                </af:column>
+                                <af:column id="c5" width="90">
+                                    <af:button text="Cancella file" id="b3"
+                                               action="#{viewScope.Stats_tracciatoDWHAction.onFileDelete}">
+                                        <af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il file selezionato?')"
+                                                           type="action"/>
+                                    </af:button>
+                                </af:column>
+                                <af:column id="c6" width="40">
+                                    <af:button text="Log" id="b4" rendered="true" disabled="false">
+                                        <af:fileDownloadActionListener method="#{viewScope.Stats_tracciatoDWHAction.downloadLog}" filename="LOG_#{row.viewName}.pdf"/>
+                                    </af:button>
+                                </af:column>
+                            </af:table>
+                        </f:facet>
+                        <f:facet name="top">
+                            <af:panelFormLayout id="pfl1" rows="1"
+                                                maxColumns="10">
+                                <f:facet name="footer"/>
+                                <af:selectOneChoice value="#{bindings.DWH_ulss.inputValue}" label="Ulss"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    required="#{bindings.DWH_ulss.hints.mandatory}"
+                                                    styleClass="choiceInTable"
+                                                    shortDesc="#{bindings.DWH_ulss.hints.tooltip}" id="soc1"
+                                                    valueChangeListener="#{viewScope.Stats_tracciatoDWHAction.onSelectUlss}"
+                                                    valuePassThru="true" autoSubmit="true">
+                                    <f:selectItems value="#{bindings.DWH_ulss.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.DWH_ulss.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.DWH_periodo.inputValue}" label="Periodo"
+                                                    required="#{bindings.DWH_periodo.hints.mandatory}"
+                                                    styleClass="choiceInTable"
+                                                    shortDesc="#{bindings.DWH_periodo.hints.tooltip}" id="soc2">
+                                    <f:selectItems value="#{bindings.DWH_periodo.items}" id="si2"/>
+                                    <f:validator binding="#{bindings.DWH_periodo.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.DWH_anno.inputValue}" label="Anno"
+                                              required="#{bindings.DWH_anno.hints.mandatory}"
+                                              columns="#{bindings.DWH_anno.hints.displayWidth}"
+                                              maximumLength="#{bindings.DWH_anno.hints.precision}"
+                                              shortDesc="#{bindings.DWH_anno.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.DWH_anno.validator}"/>
+                                </af:inputText>
+                                <af:button text="Crea tracciato" id="b1"
+                                           actionListener="#{viewScope.Stats_tracciatoDWHAction.onGenerate}"/>
+                                <af:selectBooleanCheckbox text="export di test (con separatore)" label="" id="sbc1"
+                                                          value="#{bindings.DWH_test.inputValue}"/>
+                            </af:panelFormLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelAccordion discloseMany="false" id="pa1" styleClass="AFStretchWidth"
+                                               inlineStyle="margin-bottom:30px; margin-left:30px; margin-right:30px; margin-top:30px;">
+                                <af:showDetailItem id="pane1" text="Log" disclosed="true"
+                                                   inlineStyle="margin:0px; padding:0px;">
+                                    <af:panelCollection id="pc2" styleClass="AFStretchWidth"
+                                                        featuresOff="viewMenu detach freeze wrap">
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t4">
+                                                <af:button text="Pulizia log" id="b5"
+                                                           action="#{viewScope.Stats_tracciatoDWHAction.onCleanLog}">
+                                                    <!--<af:clientListener method="askBeforeGoingOn('Cancellare definitivamente il contenuto del log?')"
+                                                                       type="action"/>-->
+                                                                       </af:button>
+                                                <af:button text="Aggiorna" id="b6"
+                                                           actionListener="#{bindings.Execute.execute}"
+                                                           disabled="#{!bindings.Execute.enabled}"
+                                                           action="#{viewScope.Stats_tracciatoDWHAction.onRefeshFiles}"/>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="statusbar"/>
+                                        <af:table value="#{bindings.Impexp_SoLogTransferDWHView1.collectionModel}"
+                                                  var="row" rows="#{bindings.Impexp_SoLogTransferDWHView1.rangeSize}"
+                                                  emptyText="#{bindings.Impexp_SoLogTransferDWHView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  fetchSize="#{bindings.Impexp_SoLogTransferDWHView1.rangeSize}"
+                                                  id="t3" partialTriggers="::b6 :::soc1" columnStretching="last">
+                                            <af:column headerText="#{bindings.Impexp_SoLogTransferDWHView1.hints.Data.label}"
+                                                       id="c2">
+                                                <af:outputText value="#{row.Data}"
+                                                               shortDesc="#{bindings.Impexp_SoLogTransferDWHView1.hints.Data.tooltip}"
+                                                               id="ot2">
+                                                    <af:convertDateTime pattern="#{bindings.Impexp_SoLogTransferDWHView1.hints.Data.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Impexp_SoLogTransferDWHView1.hints.Descrizione.label}"
+                                                       id="c3">
+                                                <af:outputText value="#{row.Descrizione}"
+                                                               shortDesc="#{bindings.Impexp_SoLogTransferDWHView1.hints.Descrizione.tooltip}"
+                                                               id="ot3"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelCollection>
+                                </af:showDetailItem>
+                            </af:panelAccordion>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.STATISTICHE}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

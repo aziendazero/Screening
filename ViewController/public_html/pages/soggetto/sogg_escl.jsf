@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.soggetto.sogg_esclBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.GESTIONE_SOGGETTO}" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Sogg_preEsclAction.frmescl}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl3" layout="scroll" partialTriggers="bcreateescl">
+                        <af:switcher id="s1" facetName="#{sessionScope.esisteEscl?'esiste':'da_creare'}">
+                            <f:facet name="da_creare">
+                                <af:showDetailHeader messageType="info" text="Il soggetto non ha esclusioni attive."
+                                                     disclosed="true" id="sdh1" styleClass="AFStretchWidth"
+                                                     inlineStyle="font-weight:bold; background-color:InfoBackground; padding-bottom:30px; padding-top:30px;">
+                                    <f:facet name="toolbar">
+                                        <af:toolbar id="t3">
+                                            <af:button text="Inserisci esclusione" id="bcreateescl"
+                                                       actionListener="#{Sogg_esclAction.onCrea}"/>
+                                            <af:button text="Chiudi" id="b2" action="rbSogg"/>
+                                        </af:toolbar>
+                                    </f:facet>
+                                </af:showDetailHeader>
+                            </f:facet>
+                            <f:facet name="esiste">
+                                <af:panelStretchLayout id="psl1">
+                                    <f:facet name="start"/>
+                                    <f:facet name="end"/>
+                                    <f:facet name="top">
+                                        <af:panelGridLayout id="pgl1">
+                                            <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                                <af:gridCell marginStart="5px" width="50%" id="gc1" halign="end">
+                                                    <af:button text="Annulla esclusione" id="b5"
+                                                               disabled="#{!sessionScope.esclSalvata}"
+                                                               action="#{Sogg_esclAction.onAnnulla}">
+                                                        <af:setPropertyListener type="action" from="annulla"
+                                                                                to="#{requestScope.event}"/>
+                                                    </af:button>
+                                                </af:gridCell>
+                                                <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2"
+                                                             halign="end">
+                                                    <af:toolbar id="t1">
+                                                        <af:button text="Conferma" id="b1"
+                                                                   action="#{Sogg_esclAction.onConf}"/>
+                                                        <af:button text="Annulla" id="b3" action="rbSogg"
+                                                                   immediate="true"/>
+                                                        <af:button text="Applica" id="b4"
+                                                                   action="#{Sogg_esclAction.onAppl}"/>
+                                                    </af:toolbar>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </f:facet>
+                                    <f:facet name="bottom"/>
+                                    <f:facet name="center">
+                                        <af:panelGroupLayout id="pgl2" layout="scroll" halign="center"
+                                                             partialTriggers="soc2 b7 b5">
+                                            <af:panelFormLayout id="pfl1">
+                                                <f:facet name="footer"/>
+                                                <af:inputDate value="#{bindings.Dtescl.inputValue}"
+                                                              label="#{bindings.Dtescl.hints.label}"
+                                                              required="#{bindings.Dtescl.hints.mandatory}"
+                                                              columns="#{bindings.Dtescl.hints.displayWidth}"
+                                                              shortDesc="#{bindings.Dtescl.hints.tooltip}" id="id1"
+                                                              valueChangeListener="#{Sogg_esclAction.onChData}"
+                                                              autoSubmit="true">
+                                                    <f:validator binding="#{bindings.Dtescl.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.Dtescl.format}"/>
+                                                </af:inputDate>
+                                                <af:selectOneChoice label="Tipo esclusione"
+                                                                    value="#{bindings.Tpescl.inputValue}" id="soc1"
+                                                                    required="false"
+                                                                    disabled="#{sessionScope.esclSalvata}"
+                                                                    valueChangeListener="#{Sogg_esclAction.onChTipo}"
+                                                                    autoSubmit="true" valuePassThru="true"
+                                                                    styleClass="choiceInTable">
+                                                    <af:selectItem label="Temporanea" value="T" id="si1"/>
+                                                    <af:selectItem label="Definitiva" value="D" id="si2"/>
+                                                </af:selectOneChoice>
+                                                <af:selectOneChoice value="#{bindings.Idcnfescl.inputValue}"
+                                                                    label="Motivo esclusione"
+                                                                    shortDesc="#{bindings.Idcnfescl.hints.tooltip}"
+                                                                    id="soc2" disabled="#{sessionScope.esclSalvata}"
+                                                                    styleClass="choiceInTable"
+                                                                    valuePassThru="true" autoSubmit="true" 
+                                                                    valueChangeListener="#{Sogg_esclAction.onChMot}"
+                                                                    partialTriggers="soc1" unselectedLabel="">
+                                                    <f:selectItems value="#{bindings.Idcnfescl.items}" id="si3"/>
+                                                    <!--<f:validator binding="#{bindings.Idcnfescl.validator}"/>-->
+                                                </af:selectOneChoice>
+                                                <af:inputDate value="#{bindings.Dtfine.inputValue}"
+                                                              label="#{bindings.Dtfine.hints.label}"
+                                                              required="#{bindings.Dtfine.hints.mandatory}"
+                                                              columns="#{bindings.Dtfine.hints.displayWidth}"
+                                                              shortDesc="#{bindings.Dtfine.hints.tooltip}" id="id2"
+                                                              disabled="true" rendered="#{bindings.Tpescl == 'T'}"
+                                                              partialTriggers="soc1">
+                                                    <f:validator binding="#{bindings.Dtfine.validator}"/>
+                                                    <af:convertDateTime pattern="#{bindings.Dtfine.format}"/>
+                                                </af:inputDate>
+                                                <af:selectOneChoice value="#{bindings.Tprich.inputValue}"
+                                                                    label="#{bindings.Tprich.label}"
+                                                                    required="#{bindings.Tprich.hints.mandatory}"
+                                                                    shortDesc="#{bindings.Tprich.hints.tooltip}"
+                                                                    id="soc3" disabled="true"
+                                                                    rendered="#{bindings.Tpescl == 'T'}"
+                                                                    partialTriggers="soc1" styleClass="choiceInTable">
+                                                    <f:selectItems value="#{bindings.Tprich.items}" id="si4"/>
+                                                    <f:validator binding="#{bindings.Tprich.validator}"/>
+                                                </af:selectOneChoice>
+                                                <af:inputText value="#{bindings.Noteescl.inputValue}"
+                                                              label="#{bindings.Noteescl.hints.label}"
+                                                              required="#{bindings.Noteescl.hints.mandatory}"
+                                                              columns="60"
+                                                              maximumLength="#{bindings.Noteescl.hints.precision}"
+                                                              shortDesc="#{bindings.Noteescl.hints.tooltip}" id="it1"
+                                                              rows="5">
+                                                    <f:validator binding="#{bindings.Noteescl.validator}"/>
+                                                </af:inputText>
+                                            </af:panelFormLayout>
+                                            <af:panelHeader text="Propagazione allo Screening Cervicale" id="ph1"
+                                                            rendered="#{sessionScope.propagaCI}" partialTriggers="soc2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:table value="#{bindings.Cnf_EsclProposteViewCI.collectionModel}"
+                                                          var="row" rows="#{bindings.Cnf_EsclProposteViewCI.rangeSize}"
+                                                          emptyText="#{bindings.Cnf_EsclProposteViewCI.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Cnf_EsclProposteViewCI.collectionModel.selectedRow}"
+                                                          rowSelection="multiple"
+                                                          fetchSize="#{bindings.Cnf_EsclProposteViewCI.rangeSize}"
+                                                          id="t2">
+                                                    <af:column headerText="Seleziona"
+                                                               id="c1">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Cnf_EsclProposteViewCI.hints.Selected.tooltip}"
+                                                                                  id="sbc1" autoSubmit="true"/>
+                                                    </af:column>
+                                                    <af:column headerText="Codice"
+                                                               id="c2">
+                                                        <af:outputText value="#{row.bindings.Idcnfescl.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewCI.hints.Idcnfescl.tooltip}"
+                                                                       id="it2">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Cnf_EsclProposteViewCI.hints.Idcnfescl.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Descrizione"
+                                                               id="c3" width="200">
+                                                        <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewCI.hints.Descrizione.tooltip}"
+                                                                       id="it3"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelHeader>
+                                            <af:panelHeader text="Propagazione allo Screening Mammografico" id="ph2"
+                                                            rendered="#{sessionScope.propagaMA}" partialTriggers="soc2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:table value="#{bindings.Cnf_EsclProposteViewMA.collectionModel}"
+                                                          var="row" rows="#{bindings.Cnf_EsclProposteViewMA.rangeSize}"
+                                                          emptyText="#{bindings.Cnf_EsclProposteViewMA.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Cnf_EsclProposteViewMA.collectionModel.selectedRow}"
+                                                          rowSelection="multiple"
+                                                          fetchSize="#{bindings.Cnf_EsclProposteViewMA.rangeSize}"
+                                                          id="t4">
+                                                    <af:column headerText="Seleziona"
+                                                               id="c4">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Cnf_EsclProposteViewMA.hints.Selected.tooltip}"
+                                                                                  id="sbc2" autoSubmit="true"/>
+                                                    </af:column>
+                                                    <af:column headerText="Codice"
+                                                               id="c5">
+                                                        <af:outputText value="#{row.bindings.Idcnfescl.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewMA.hints.Idcnfescl.tooltip}"
+                                                                       id="it4">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Cnf_EsclProposteViewMA.hints.Idcnfescl.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Descrizione"
+                                                               id="c6" width="200">
+                                                        <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewMA.hints.Descrizione.tooltip}"
+                                                                       id="it5"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelHeader>
+                                            <af:panelHeader text="Propagazione allo Screening Colon-retto" id="ph3"
+                                                            rendered="#{sessionScope.propagaCO}" partialTriggers="soc2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:table value="#{bindings.Cnf_EsclProposteViewCO.collectionModel}"
+                                                          var="row" rows="#{bindings.Cnf_EsclProposteViewCO.rangeSize}"
+                                                          emptyText="#{bindings.Cnf_EsclProposteViewCO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          selectedRowKeys="#{bindings.Cnf_EsclProposteViewCO.collectionModel.selectedRow}"
+                                                          rowSelection="multiple"
+                                                          fetchSize="#{bindings.Cnf_EsclProposteViewCO.rangeSize}"
+                                                          id="t5">
+                                                    <af:column headerText="Seleziona"
+                                                               id="c7">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Cnf_EsclProposteViewCO.hints.Selected.tooltip}"
+                                                                                  id="sbc3" autoSubmit="true"/>
+                                                    </af:column>
+                                                    <af:column headerText="Codice"
+                                                               id="c8">
+                                                        <af:outputText value="#{row.bindings.Idcnfescl.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewCO.hints.Idcnfescl.tooltip}"
+                                                                       id="it6">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Cnf_EsclProposteViewCO.hints.Idcnfescl.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="Descrizione"
+                                                               id="c9" width="200">
+                                                        <af:outputText value="#{row.bindings.Descrizione.inputValue}"
+                                                                       shortDesc="#{bindings.Cnf_EsclProposteViewCO.hints.Descrizione.tooltip}"
+                                                                       id="it7"/>
+                                                    </af:column>
+                                                </af:table>
+                                            </af:panelHeader>
+                                            <af:panelGroupLayout id="pgl4" layout="vertical"
+                                                                 rendered="#{sessionScope.esclModAnnullo}">
+                                                <af:spacer width="10" height="20" id="s5"/>
+                                                <af:outputText value="Non sono presenti esclusioni collegate." id="ot1"
+                                                               rendered="#{!sessionScope.exEsclColleg}"
+                                                               inlineStyle="font-size:large;"/>
+                                                <af:outputText value="Selezionare esclusioni collegate da annullare." id="ot2"
+                                                               rendered="#{sessionScope.exEsclColleg}"
+                                                               inlineStyle="font-size:large;"/>
+                                                <af:spacer width="10" height="20" id="s2"/>
+                                                <af:table value="#{bindings.Sogg_EsclusioniCollegateView1.collectionModel}"
+                                                          var="row"
+                                                          rows="#{bindings.Sogg_EsclusioniCollegateView1.rangeSize}"
+                                                          emptyText="#{bindings.Sogg_EsclusioniCollegateView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                          rowBandingInterval="0"
+                                                          fetchSize="#{bindings.Sogg_EsclusioniCollegateView1.rangeSize}"
+                                                          id="t6" rendered="#{sessionScope.exEsclColleg}"
+                                                          rowSelection="multiple">
+                                                    <af:column headerText="Seleziona"
+                                                               id="c16">
+                                                        <af:selectBooleanCheckbox value="#{row.bindings.Selected.inputValue}"
+                                                                                  label="#{row.bindings.Selected.label}"
+                                                                                  shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.Selected.tooltip}"
+                                                                                  id="sbc4" autoSubmit="true"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.TipoScr.label}"
+                                                               id="c10">
+                                                        <af:outputText value="#{row.TipoScr}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.TipoScr.tooltip}"
+                                                                       id="ot3"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.Idcnfescl.label}"
+                                                               id="c11">
+                                                        <af:outputText value="#{row.Idcnfescl}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.Idcnfescl.tooltip}"
+                                                                       id="ot4">
+                                                            <af:convertNumber groupingUsed="false"
+                                                                              pattern="#{bindings.Sogg_EsclusioniCollegateView1.hints.Idcnfescl.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.Descrizione.label}"
+                                                               id="c12">
+                                                        <af:outputText value="#{row.Descrizione}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.Descrizione.tooltip}"
+                                                                       id="ot5"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.TipoEscl.label}"
+                                                               id="c13">
+                                                        <af:outputText value="#{row.TipoEscl}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.TipoEscl.tooltip}"
+                                                                       id="ot6"/>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtescl.label}"
+                                                               id="c14">
+                                                        <af:outputText value="#{row.Dtescl}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtescl.tooltip}"
+                                                                       id="ot7">
+                                                            <af:convertDateTime pattern="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtescl.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                    <af:column headerText="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtfine.label}"
+                                                               id="c15">
+                                                        <af:outputText value="#{row.Dtfine}"
+                                                                       shortDesc="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtfine.tooltip}"
+                                                                       id="ot8">
+                                                            <af:convertDateTime pattern="#{bindings.Sogg_EsclusioniCollegateView1.hints.Dtfine.format}"/>
+                                                        </af:outputText>
+                                                    </af:column>
+                                                </af:table>
+                                                <af:spacer width="10" height="20" id="s3"/>
+                                                <af:outputText value="Si conferma di voler annullare l'esclusione?" id="ot9"
+                                                               rendered="#{!sessionScope.exEsclColleg}"
+                                                               inlineStyle="font-size:large;"/>
+                                                <af:outputText value="Si conferma di voler annullare l'esclusione e le esclusioni collegate selezionate?" id="ot10"
+                                                               rendered="#{sessionScope.exEsclColleg}"
+                                                               inlineStyle="font-size:large;"/>
+                                                <af:spacer width="10" height="10" id="s4"/>
+                                                <af:panelGroupLayout id="pgl5" layout="horizontal" halign="center">
+                                                    <af:toolbar id="t7">
+                                                        <af:button text="Si" id="b6"
+                                                                   action="#{Sogg_esclAction.onConfAnnullo}"/>
+                                                        <af:button text="No" id="b7"
+                                                                   action="#{Sogg_esclAction.onRinAnnullo}"/>
+                                                    </af:toolbar>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                </af:panelStretchLayout>
+                            </f:facet>
+                        </af:switcher>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.GESTIONE_SOGGETTO}"/>
+                <f:attribute name="viewSubmenuLevel" value="2"/>
+                <f:attribute name="viewSubmenu"
+                             value="#{sessionScope.showTabs and !sessionScope.LINK_ACC and !sessionScope.LINK_REF}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="navigation" value="#{Sogg_esclAction}"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue, bindings.Nome.inputValue, bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="stats_invitiEsitiPageDef"
+                Package="pages.statistiche">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempStatistichePageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Stats_paramBeanDataControl"
+              id="Stats_paramBeanDataControlIterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+    <iterator Binds="Cnf_SoComuneView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoComuneView1Iterator"/>
+    <iterator Binds="Cnf_SoDistrettoZonaView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoDistrettoZonaView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroPrelView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoCnfCentroPrelView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef1livGIUDIAView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef1livGIUDIAView1Iterator"/>
+    <iterator Binds="Stats_InvitiEsitiMatrix" RangeSize="25" DataControl="Stats_AppModuleDataControl"
+              id="Stats_InvitiEsitiMatrixIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Stats_dynamicFilterDataControl"
+              id="Stats_dynamicFilterDataControlIterator"/>
+    <iterator Binds="Stats_SoMedicoView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoMedicoView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCentroRefView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Cnf_SoCnfCentroRefView1Iterator"/>
+    <iterator Binds="Stats_SoCnfCategTpinvitoView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfCategTpinvitoView2Iterator"/>
+    <iterator Binds="Stats_SoCnfTpinvitoRegionaleView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfTpinvitoRegionaleView1Iterator"/>
+    <iterator Binds="Stat_SoCnfCodEsitoInvitoView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stat_SoCnfCodEsitoInvitoView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef1livADEPREView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef1livADEPREView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef1livINALIMView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef1livINALIMView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef1livPOSITIView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef1livPOSITIView2Iterator"/>
+    <iterator Binds="Stats_SoCnfRef1livMXEST1View2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef1livMXEST1View2Iterator"/>
+    <iterator Binds="Stats_SoCnfSugg1livView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfSugg1livView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livCOLPVLView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livCOLPVLView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livCOLPESView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livCOLPESView2Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livRACDIAView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livRACDIAView2Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livRACDIAView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livRACDIAView2Iterator1"/>
+    <iterator Binds="Stats_SoCnfRef2livRXCONCView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livRXCONCView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livENDMOTView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Ref_SoCnfRef2livENDMOTView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livENDCOMView1" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livENDCOMView1Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livCO2LIVView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livCO2LIVView2Iterator"/>
+    <iterator Binds="Stats_SoCnfRef2livISTOCOView2" RangeSize="-1" DataControl="Stats_AppModuleDataControl"
+              id="Stats_SoCnfRef2livISTOCOView2Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="stats_type">
+      <AttrNames>
+        <Item Value="stats_type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="INVITI_ESITI">
+      <AttrNames>
+        <Item Value="INVITI_ESITI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="ESCLUSIONI">
+      <AttrNames>
+        <Item Value="ESCLUSIONI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="PERIODISMO">
+      <AttrNames>
+        <Item Value="PERIODISMO"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="SCREENATI">
+      <AttrNames>
+        <Item Value="SCREENATI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="DIAGNOSI1LIV">
+      <AttrNames>
+        <Item Value="DIAGNOSI1LIV"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="ESITI_COLPO">
+      <AttrNames>
+        <Item Value="ESITI_COLPO"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="DIAGNOSI_PEGGIORE">
+      <AttrNames>
+        <Item Value="DIAGNOSI_PEGGIORE"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="CONCLUSIONI2L">
+      <AttrNames>
+        <Item Value="CONCLUSIONI2L"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="APPROFONDIMENTO_CO">
+      <AttrNames>
+        <Item Value="APPROFONDIMENTO_CO"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="RAC2LIV">
+      <AttrNames>
+        <Item Value="RAC2LIV"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="INDICAZIONI2LIV">
+      <AttrNames>
+        <Item Value="INDICAZIONI2LIV"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="DETECTION_RATE">
+      <AttrNames>
+        <Item Value="DETECTION_RATE"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="CHIRURGIE_CO">
+      <AttrNames>
+        <Item Value="CHIRURGIE_CO"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="PN_PT">
+      <AttrNames>
+        <Item Value="PN_PT"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="TEMPI">
+      <AttrNames>
+        <Item Value="TEMPI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="OPMEDICI">
+      <AttrNames>
+        <Item Value="OPMEDICI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="stats_tab">
+      <AttrNames>
+        <Item Value="stats_tab"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="formato" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="formato"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="aggregato"/>
+        <Item Value="esteso"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="ulss" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoAziendaView1Iterator">
+      <AttrNames>
+        <Item Value="ulss"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codaz"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codaz"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="coorte" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="coorte"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="INVITATI"/>
+        <Item Value="SCREENATI"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="dal">
+      <AttrNames>
+        <Item Value="dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="al_escluso">
+      <AttrNames>
+        <Item Value="al_escluso"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="comune" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoComuneView1Iterator">
+      <AttrNames>
+        <Item Value="comune"/>
+        <Item Value="nome_comune"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codcom"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+        <Item Value="Codcom"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="zona" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoDistrettoZonaView1Iterator">
+      <AttrNames>
+        <Item Value="zona"/>
+        <Item Value="nome_zona"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="centro_prel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroPrelView1Iterator">
+      <AttrNames>
+        <Item Value="centro_prel"/>
+        <Item Value="nome_centro"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="eta_da">
+      <AttrNames>
+        <Item Value="eta_da"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="eta_a">
+      <AttrNames>
+        <Item Value="eta_a"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="sesso">
+      <AttrNames>
+        <Item Value="sesso"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="round_ind" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="round_ind"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="tutti"/>
+        <Item Value="Primi esami"/>
+        <Item Value="Esami successivi"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="round_org">
+      <AttrNames>
+        <Item Value="round_org"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="round_inviti">
+      <AttrNames>
+        <Item Value="round_inviti"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="accesso" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="accesso"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Tutti"/>
+        <Item Value="Invitati"/>
+        <Item Value="Spontanei"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="livello">
+      <AttrNames>
+        <Item Value="livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="liv_successivo">
+      <AttrNames>
+        <Item Value="liv_successivo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="giudia" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livGIUDIAView1Iterator">
+      <AttrNames>
+        <Item Value="giudia"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="tpescl" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="tpescl"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="tutte"/>
+        <Item Value="definitive"/>
+        <Item Value="temporanee"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="data_esclusione">
+      <AttrNames>
+        <Item Value="data_esclusione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="tipo_operatore">
+      <AttrNames>
+        <Item Value="tipo_operatore"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="durata_int">
+      <AttrNames>
+        <Item Value="durata_int"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="inizio_int">
+      <AttrNames>
+        <Item Value="inizio_int"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="fine_int">
+      <AttrNames>
+        <Item Value="fine_int"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="lesione" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="lesione"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="carcinoma"/>
+        <Item Value="adenoma alto rischio"/>
+        <Item Value="adenoma basso rischio"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_paramBeanDataControlIterator" id="lesione1">
+      <AttrNames>
+        <Item Value="lesione"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Stats_InvitiEsitiMatrixIterator" id="Stats_InvitiEsitiMatrix">
+      <nodeDefinition DefName="model.stats.Stats_StandardMatrix" Name="Stats_InvitiEsitiMatrix0">
+        <AttrNames>
+          <Item Value="Row_id"/>
+          <Item Value="Row_label"/>
+          <Item Value="Field_0"/>
+          <Item Value="Field_1"/>
+          <Item Value="Field_2"/>
+          <Item Value="Field_3"/>
+          <Item Value="Field_4"/>
+          <Item Value="Field_5"/>
+          <Item Value="Field_6"/>
+          <Item Value="Field_7"/>
+          <Item Value="Field_8"/>
+          <Item Value="Field_9"/>
+          <Item Value="Field_10"/>
+          <Item Value="Field_11"/>
+          <Item Value="Field_12"/>
+          <Item Value="Field_13"/>
+          <Item Value="Field_14"/>
+          <Item Value="Field_15"/>
+          <Item Value="Field_16"/>
+          <Item Value="Field_17"/>
+          <Item Value="Field_18"/>
+          <Item Value="Field_19"/>
+          <Item Value="Field_20"/>
+          <Item Value="Field_21"/>
+          <Item Value="Field_22"/>
+          <Item Value="Field_23"/>
+          <Item Value="Field_24"/>
+          <Item Value="Field_25"/>
+          <Item Value="Field_26"/>
+          <Item Value="Field_27"/>
+          <Item Value="Field_28"/>
+          <Item Value="Field_29"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Stats_InvitiEsitiMatrixIterator" id="Row_id">
+      <AttrNames>
+        <Item Value="Row_id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="periodo_dal">
+      <AttrNames>
+        <Item Value="periodo_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="periodo_al">
+      <AttrNames>
+        <Item Value="periodo_al"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="comune1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoComuneView1Iterator"
+          NullValueFlag="start" NullValueId="comune1_null">
+      <AttrNames>
+        <Item Value="comune"/>
+        <Item Value="comune_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codcom"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="zona1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoDistrettoZonaView1Iterator"
+          NullValueFlag="start" NullValueId="zona1_null">
+      <AttrNames>
+        <Item Value="zona"/>
+        <Item Value="zona_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="medico" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoMedicoView1Iterator"
+          NullValueFlag="start" NullValueId="medico_null">
+      <AttrNames>
+        <Item Value="medico"/>
+        <Item Value="medico_desc"/>
+        <Item Value="medico_desc_2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codiceregmedico"/>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Cognome"/>
+        <Item Value="Nome"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="eta_da1">
+      <AttrNames>
+        <Item Value="eta_da"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="eta_a1">
+      <AttrNames>
+        <Item Value="eta_a"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="round_indiv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="round_indiv"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="tutti"/>
+        <Item Value="Primi esami"/>
+        <Item Value="Esami successivi"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="round_comune">
+      <AttrNames>
+        <Item Value="round_comune"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="round_inviti1">
+      <AttrNames>
+        <Item Value="round_inviti"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="accesso1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="accesso"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Tutti"/>
+        <Item Value="Invitati"/>
+        <Item Value="Spontanei"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="alto_rischio">
+      <AttrNames>
+        <Item Value="alto_rischio"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_dynamicFilterDataControlIterator" id="esclusi" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="esclusi"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="tpescl1">
+      <AttrNames>
+        <Item Value="tpescl"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_dynamicFilterDataControlIterator" id="invitati" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="invitati"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="centro_invito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroPrelView1Iterator"
+          NullValueFlag="start" NullValueId="centro_invito_null">
+      <AttrNames>
+        <Item Value="centro_invito"/>
+        <Item Value="centro_invito_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_paramBeanDataControlIterator" id="centro_ref" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCentroRefView1Iterator"
+          NullValueFlag="start" NullValueId="centro_ref_null">
+      <AttrNames>
+        <Item Value="centro_ref"/>
+        <Item Value="centro_ref_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="cat_invito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfCategTpinvitoView2Iterator"
+          NullValueFlag="start" NullValueId="cat_invito_null">
+      <AttrNames>
+        <Item Value="cat_invito"/>
+        <Item Value="cat_invito_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcateg"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="tipo_invito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfTpinvitoRegionaleView1Iterator"
+          NullValueFlag="start" NullValueId="tipo_invito_null">
+      <AttrNames>
+        <Item Value="tipo_invito"/>
+        <Item Value="tipo_invito_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="esito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stat_SoCnfCodEsitoInvitoView1Iterator"
+          NullValueFlag="start" NullValueId="esito_null">
+      <AttrNames>
+        <Item Value="esito"/>
+        <Item Value="esito_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Codesitoinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codesitoinvito"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="tipo_richiamo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfTpinvitoRegionaleView1Iterator"
+          NullValueFlag="start" NullValueId="tipo_richiamo_null">
+      <AttrNames>
+        <Item Value="tipo_richiamo"/>
+        <Item Value="tipo_richiamo_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="livello1">
+      <AttrNames>
+        <Item Value="livello"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_dynamicFilterDataControlIterator" id="referto" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="referto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="completo">
+      <AttrNames>
+        <Item Value="completo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="adepre" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livADEPREView1Iterator"
+          NullValueFlag="start" NullValueId="adepre_null">
+      <AttrNames>
+        <Item Value="adepre"/>
+        <Item Value="adepre_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="inalim" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livINALIMView1Iterator"
+          NullValueFlag="start" NullValueId="inalim_null">
+      <AttrNames>
+        <Item Value="inalim"/>
+        <Item Value="inalim_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="giudia1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livGIUDIAView1Iterator"
+          NullValueFlag="start" NullValueId="giudia1_null">
+      <AttrNames>
+        <Item Value="giudia"/>
+        <Item Value="giudia_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="positi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livPOSITIView2Iterator"
+          NullValueFlag="start" NullValueId="positi_null">
+      <AttrNames>
+        <Item Value="positi"/>
+        <Item Value="positi_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="mx_esito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef1livMXEST1View2Iterator"
+          NullValueFlag="start" NullValueId="mx_esito_null">
+      <AttrNames>
+        <Item Value="mx_esito"/>
+        <Item Value="mx_esito_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref1l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="quantita">
+      <AttrNames>
+        <Item Value="quantita"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="idsugg1l" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfSugg1livView1Iterator">
+      <AttrNames>
+        <Item Value="idsugg1l"/>
+        <Item Value="idsugg1l_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsugg"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="filtro_2">
+      <AttrNames>
+        <Item Value="filtro_2"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="cat_invito_2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfCategTpinvitoView2Iterator">
+      <AttrNames>
+        <Item Value="cat_invito_2"/>
+        <Item Value="cat_invito_desc_2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcateg"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="tipo_invito_2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfTpinvitoRegionaleView1Iterator">
+      <AttrNames>
+        <Item Value="tipo_invito_2"/>
+        <Item Value="tipo_invito_desc_2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="esito_2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stat_SoCnfCodEsitoInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="esito_2"/>
+        <Item Value="esito_desc_2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codesitoinvito"/>
+        <Item Value="Codesitoinvito"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codesitoinvito"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="tipo_richiamo_2" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfTpinvitoRegionaleView1Iterator">
+      <AttrNames>
+        <Item Value="tipo_richiamo_2"/>
+        <Item Value="tipo_richiamo_desc_2"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="livello_2">
+      <AttrNames>
+        <Item Value="livello_2"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Stats_dynamicFilterDataControlIterator" id="referto2" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="referto2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="colpvl" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livCOLPVLView1Iterator">
+      <AttrNames>
+        <Item Value="colpvl"/>
+        <Item Value="colpvl_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="colpes" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livCOLPESView2Iterator">
+      <AttrNames>
+        <Item Value="colpes"/>
+        <Item Value="colpes_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="lesione_hpv">
+      <AttrNames>
+        <Item Value="lesione_hpv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="ist_bio">
+      <AttrNames>
+        <Item Value="ist_bio"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="ist_bio_diagnosi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livRACDIAView2Iterator">
+      <AttrNames>
+        <Item Value="ist_bio_diagnosi"/>
+        <Item Value="ist_bio_diagnosi_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="racdia" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livRACDIAView2Iterator1">
+      <AttrNames>
+        <Item Value="racdia"/>
+        <Item Value="racdia_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="rxcolon">
+      <AttrNames>
+        <Item Value="rxcolon"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="rx_conclusioni" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livRXCONCView1Iterator">
+      <AttrNames>
+        <Item Value="rx_conclusioni"/>
+        <Item Value="rx_conclusioni_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="endo_estensione">
+      <AttrNames>
+        <Item Value="endo_estensione"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="motivo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livENDMOTView1Iterator">
+      <AttrNames>
+        <Item Value="motivo"/>
+        <Item Value="motivo_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Stats_dynamicFilterDataControlIterator" id="procedura">
+      <AttrNames>
+        <Item Value="procedura"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="endo_complicanze" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livENDCOMView1Iterator">
+      <AttrNames>
+        <Item Value="endo_complicanze"/>
+        <Item Value="endo_complicanze_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="conclusioni2l" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livCO2LIVView2Iterator">
+      <AttrNames>
+        <Item Value="conclusioni2l"/>
+        <Item Value="conclusioni2l_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Stats_dynamicFilterDataControlIterator" id="diagnosi_co" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Stats_SoCnfRef2livISTOCOView2Iterator">
+      <AttrNames>
+        <Item Value="diagnosi_co"/>
+        <Item Value="diagnosi_co_desc"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="pages.statistiche.common.stats_invitiEsitiPageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

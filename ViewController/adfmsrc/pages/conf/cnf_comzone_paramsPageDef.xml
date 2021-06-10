@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_comzone_paramsPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfComuniZoneParamView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfComuniZoneParamView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Cnf_SoCnfComuniZoneParamView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfComuniZoneParamView" Name="Cnf_SoCnfComuniZoneParamView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Codcom"/>
+          <Item Value="Coddistrzona"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Altro"/>
+          <Item Value="Ulss"/>
+          <Item Value="Comune"/>
+          <Item Value="Codcom1"/>
+          <Item Value="Zona"/>
+          <Item Value="Coddistrzona1"/>
+          <Item Value="Ulss1"/>
+          <Item Value="ReleaseCodeCom"/>
+          <Item Value="ReleaseCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Cnf_SoCnfComuniZoneParamView11">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfComuniZoneParamView" Name="Cnf_SoCnfComuniZoneParamView110">
+        <AttrNames>
+          <Item Value="Comune"/>
+          <Item Value="Zona"/>
+          <Item Value="Altro"/>
+          <Item Value="Ulss"/>
+          <Item Value="Codcom"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Cnf_SoCnfComuniZoneParamView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfComuniZoneParamView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

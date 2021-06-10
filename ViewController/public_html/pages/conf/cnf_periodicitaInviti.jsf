@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_periodicitaInviti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_periodicitaInviti.tabPeriodicitaInviti}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempInviti.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <!--af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Annulla" id="b4" action="cancel" immediate="true"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout--> 
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                                <f:facet name="menus"/>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t3"
+                                                rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:group id="g1">
+                                            <af:button text="Modifica" id="b1" action="creatEditPerInv"
+                                                       actionListener="#{Cnf_periodicitaInviti.onDettPer}">
+                                                <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                        type="action"/>
+                                            </af:button>
+                                            <af:button text="Cancella" id="b2">
+                                                <af:showPopupBehavior popupId="p1"/>
+                                            </af:button>
+                                            <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                      partialTriggers="b2">
+                                                <af:dialog id="d2" title="Cancella configurazione"
+                                                           cancelTextAndAccessKey="Annulla" partialTriggers="t2"
+                                                           affirmativeTextAndAccessKey="Cancella"
+                                                           dialogListener="#{ParentBackingBean.deleteAction}">
+                                                    <f:facet name="buttonBar">
+                                                        <h:outputText value="Cancellare definitivamente la seguente periodicità invito?"
+                                                                      id="ot11"/>
+                                                    </f:facet>
+                                                </af:dialog>
+                                            </af:popup>
+                                        </af:group>
+                                        <af:button text="Nuovo" id="b3" action="creatEditPerInv">
+                                            <af:setPropertyListener from="create" to="#{requestScope.action}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:selectOneChoice value="#{pageFlowScope.ulssSelected}" label="Azienda sanitaria"
+                                            rendered="#{sessionScope.regionale?true:false}"
+                                            shortDesc="#{bindings.Codaz.hints.tooltip}"
+                                            valueChangeListener="#{Cnf_periodicitaInviti.onChange}" autoSubmit="true" id="soc1"
+                                            binding="#{Cnf_periodicitaInviti.selectedUlss}">
+                                            <af:selectItem label="Tutte" id="si22"/>
+                                            <f:selectItems value="#{bindings.Codaz.items}" id="si1"/>
+                                        </af:selectOneChoice>
+                                    </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar"/>
+                                <af:table value="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.collectionModel}" var="row"
+                                          rows="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.rangeSize}"
+                                          emptyText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0"
+                                          selectedRowKeys="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.collectionModel.selectedRow}"
+                                          selectionListener="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.collectionModel.makeCurrent}"
+                                          rowSelection="single"
+                                          fetchSize="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.rangeSize}" id="t2"
+                                          scrollPolicy="page" binding="#{Cnf_periodicitaInviti.tabPer}">
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Ulss.label}"
+                                               rendered="#{sessionScope.regionale}" id="c8">
+                                        <af:outputText value="#{row.Ulss}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Ulss.tooltip}"
+                                                       id="ot8"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Descrizione.label}"
+                                               id="c2" sortable="true" width="350px">
+                                        <af:outputText value="#{row.Descrizione}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Descrizione.tooltip}"
+                                                       id="ot1"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Descrizione1.label}"
+                                               id="c3" sortable="true" width="350px">
+                                        <af:outputText value="#{row.Descrizione1}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Descrizione1.tooltip}"
+                                                       id="ot3"/>
+                                    </af:column>
+                                    <af:column sortProperty="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.GgPeriodismo.name}"
+                                               width="150px"
+                                               headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.GgPeriodismo.label}"
+                                               id="c5">
+                                        <af:outputText value="#{row.GgPeriodismo}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.GgPeriodismo.tooltip}"
+                                                       id="ot5">
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.GgPeriodismo.format}"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Dtins.label}"
+                                               id="c1">
+                                        <af:outputText value="#{row.Dtins}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Dtins.tooltip}"
+                                                       id="ot2">
+                                            <af:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Opins.label}"
+                                               id="c4">
+                                        <af:outputText value="#{row.Opins}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Opins.tooltip}"
+                                                       id="ot4"/>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Dtultmod.label}"
+                                               id="c6">
+                                        <af:outputText value="#{row.Dtultmod}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Dtultmod.tooltip}"
+                                                       id="ot6">
+                                            <af:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                                        </af:outputText>
+                                    </af:column>
+                                    <af:column headerText="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Opultmod.label}"
+                                               id="c7">
+                                        <af:outputText value="#{row.Opultmod}"
+                                                       shortDesc="#{bindings.Cnf_SoCnfPeriodicitaInvitiView1.hints.Opultmod.tooltip}"
+                                                       id="ot7"/>
+                                    </af:column>
+                                </af:table>
+                            </af:panelCollection>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Periodicità inviti"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

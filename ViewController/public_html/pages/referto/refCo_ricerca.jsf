@@ -1,0 +1,515 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.referto.refCo_ricercaBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.REFERTAZIONE}" id="d1" initialFocusId="pt1:cognome">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOptionList(['pt1:soc3'])"
+                           type="load"/> 
+        <af:clientListener method="showGlobalMessage" type="load"/>
+        <af:form id="f1" binding="#{RefCo_ricercaAction.frmSearch}" defaultCommand="pt1:btcerca">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl1" partialTriggers="breset" layout="scroll">
+                        <af:panelHeader text="#{viewcontrollerBundle.PANEL_SEARCH_TITLE}" id="ph1">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t4">
+                                    <af:button text="Piano di lavoro/Etichette" id="b3"
+                                               rendered="#{!sessionScope.SONoDatiSensibili==true and sessionScope.SOPianoLavoro==true}" useWindow="true" immediate="true"
+                                               windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                               windowHeight="600" windowWidth="600"
+                                               action="dialog:printPianoLavoro">
+                                        <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                to="#{pageFlowScope.pl_centro}" type="action"></af:setPropertyListener>
+                                        <af:setPropertyListener from="#{bindings.Dtapp.inputValue}" to="#{pageFlowScope.pl_data}" type="action"/>
+                                        <af:setPropertyListener from="#{bindings.Codts.inputValue}" to="#{pageFlowScope.pl_codts}" type="action"/>
+                                        <af:setPropertyListener from="more" to="#{pageFlowScope.pl_type}"
+                                                                type="action"/>
+                                    </af:button>
+                                    <af:button text="Ricerca referti intermedi" id="b2" action="intermediCo" rendered="#{sessionScope.interm2liv and sessionScope.SORef2Liv}">
+                                        <af:setPropertyListener from="i" to="#{sessionScope.ref_livello}"
+                                                                type="action"/>
+                                    </af:button>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:panelFormLayout id="pfl223" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.centro_ref.inputValue}"
+                                                    label="#{viewcontrollerBundle.CENTRO_DI_REFERTAZIONE}"
+                                                    required="#{bindings.centro_ref.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro_ref.hints.tooltip}" id="soc19"
+                                                    styleClass="choiceInTable" unselectedLabel="#{''}"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.centro_ref.items}" id="si19"/>
+                                    <f:validator binding="#{bindings.centro_ref.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl1" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.centro_prel.inputValue}"
+                                                    label="#{bindings.centro_prel.label}"
+                                                    required="#{bindings.centro_prel.hints.mandatory}"
+                                                    shortDesc="#{bindings.centro_prel.hints.tooltip}" id="soc1"
+                                                    styleClass="choiceInTable" unselectedLabel="#{''}"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.centro_prel.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.centro_prel.validator}"/>
+                                </af:selectOneChoice>
+                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.DATA_INVITO}" id="plam2">
+                                    <af:selectOneChoice value="#{bindings.prelievo_al.inputValue}"
+                                                        label="#{bindings.prelievo_al.label}"
+                                                        required="#{bindings.prelievo_al.hints.mandatory}"
+                                                        styleClass="choiceInTable" simple="true"
+                                                        shortDesc="#{bindings.prelievo_al.hints.tooltip}" id="soc2">
+                                        <f:selectItems value="#{bindings.prelievo_al.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.prelievo_al.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s6"/>
+                                   <af:inputDate value="#{bindings.prelievo_dal.inputValue}"
+                                                  label="#{bindings.prelievo_dal.hints.label}"
+                                                  required="#{bindings.prelievo_dal.hints.mandatory}"
+                                                  columns="#{bindings.prelievo_dal.hints.displayWidth}"
+                                                  shortDesc="#{bindings.prelievo_dal.hints.tooltip}" id="id1" simple="true">
+                                        <f:validator binding="#{bindings.prelievo_dal.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.prelievo_dal.format}"/>
+                                    </af:inputDate>
+                                </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl2" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                                rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:inputText value="#{bindings.cognome.inputValue}"
+                                              label="#{bindings.cognome.hints.label}"
+                                              required="#{bindings.cognome.hints.mandatory}"
+                                              columns="#{bindings.cognome.hints.displayWidth}"
+                                              maximumLength="#{bindings.cognome.hints.precision}"
+                                              shortDesc="#{bindings.cognome.hints.tooltip}" id="cognome"
+                                              contentStyle="text-transform: uppercase;">
+                                    <f:validator binding="#{bindings.cognome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.nome.inputValue}" label="#{bindings.nome.hints.label}"
+                                              required="#{bindings.nome.hints.mandatory}"
+                                              columns="#{bindings.nome.hints.displayWidth}"
+                                              maximumLength="#{bindings.nome.hints.precision}"
+                                              shortDesc="#{bindings.nome.hints.tooltip}" id="it2"
+                                              contentStyle="text-transform: uppercase;">
+                                    <f:validator binding="#{bindings.nome.validator}"/>
+                                    <af:clientListener type="keyUp" method="toUppercase"/>
+                                </af:inputText>
+                           </af:panelFormLayout>
+                           <af:panelFormLayout id="pfl3" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                                rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:inputText value="#{bindings.codts.inputValue}" label="#{bindings.codts.hints.label}"
+                                              required="#{bindings.codts.hints.mandatory}"
+                                              columns="#{bindings.codts.hints.displayWidth}"
+                                              maximumLength="#{bindings.codts.hints.precision}"
+                                              shortDesc="#{bindings.codts.hints.tooltip}" id="it3">
+                                    <f:validator binding="#{bindings.codts.validator}"/>
+                                </af:inputText>
+                                <af:panelLabelAndMessage label="#{viewcontrollerBundle.DATA_DI_NASCITA}" id="plam1">
+                                    <af:inputText value="#{bindings.giorno_nascita.inputValue}"
+                                                  label="#{bindings.giorno_nascita.hints.label}"
+                                                  required="#{bindings.giorno_nascita.hints.mandatory}" columns="2"
+                                                  maximumLength="#{bindings.giorno_nascita.hints.precision}"
+                                                  shortDesc="#{bindings.giorno_nascita.hints.tooltip}" id="it4"
+                                                  autoSubmit="true"
+                                                  simple="true">
+                                        <f:validator binding="#{bindings.giorno_nascita.validator}"/>
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.giorno_nascita.format}"/>
+                                    </af:inputText>
+                                    <af:spacer width="10" height="10" id="s3"/>
+                                    <af:outputLabel value="/" id="ol1"/>
+                                    <af:spacer width="10" height="10" id="s4"/>
+                                    <af:inputText value="#{bindings.mese_nascita.inputValue}"
+                                                  label="#{bindings.mese_nascita.hints.label}"
+                                                  required="#{bindings.mese_nascita.hints.mandatory}"
+                                                  columns="2"
+                                                  autoSubmit="true"
+                                                  maximumLength="#{bindings.mese_nascita.hints.precision}"
+                                                  shortDesc="#{bindings.mese_nascita.hints.tooltip}" id="it5"
+                                                  simple="true">
+                                        <f:validator binding="#{bindings.mese_nascita.validator}"/>
+                                        <af:convertNumber groupingUsed="false" 
+                                                          pattern="#{bindings.mese_nascita.format}"/>
+                                    </af:inputText>
+                                    <af:spacer width="10" height="10" id="s5"/>
+                                    <af:outputLabel value="/" id="ol2"/>
+                                    <af:spacer width="10" height="10" id="s62"/>
+                                    <af:inputText value="#{bindings.anno_nascita.inputValue}"
+                                                  label="#{bindings.anno_nascita.hints.label}"
+                                                  required="#{bindings.anno_nascita.hints.mandatory}"
+                                                  columns="4"
+                                                  autoSubmit="true"
+                                                  maximumLength="#{bindings.anno_nascita.hints.precision}"
+                                                  shortDesc="#{bindings.anno_nascita.hints.tooltip}" id="it6"
+                                                  simple="true">
+                                        <f:validator binding="#{bindings.anno_nascita.validator}"/>
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.anno_nascita.format}" integerOnly="true"/>
+                                    </af:inputText>
+                                </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl4" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150"
+                                rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                <af:inputText value="#{bindings.codiceDocumento.inputValue}"
+                                              label="#{bindings.codiceDocumento.hints.label}"
+                                              required="#{bindings.codiceDocumento.hints.mandatory}"
+                                              columns="#{bindings.codiceDocumento.hints.displayWidth}"
+                                              maximumLength="#{bindings.codiceDocumento.hints.precision}"
+                                              shortDesc="#{bindings.codiceDocumento.hints.tooltip}" id="it1">
+                                    <f:validator binding="#{bindings.codiceDocumento.validator}"/>
+                                </af:inputText>
+                                <af:selectOneChoice value="#{bindings.tipoDocumento.inputValue}"
+                                                    label="#{bindings.tipoDocumento.label}"
+                                                    required="#{bindings.tipoDocumento.hints.mandatory}"
+                                                    styleClass="choiceInTable"
+                                                    shortDesc="#{bindings.tipoDocumento.hints.tooltip}" id="soc3">
+                                    <f:selectItems value="#{bindings.tipoDocumento.items}" id="si3"/>
+                                    <f:validator binding="#{bindings.tipoDocumento.validator}"/>
+                                </af:selectOneChoice>
+                           </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl5" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                               <af:selectBooleanCheckbox value="#{bindings.soloStorico.inputValue}"
+                                                          label="#{viewcontrollerBundle.SOLO_STORICO_DOCUMENTI}"
+                                                          shortDesc="#{bindings.soloStorico.hints.tooltip}" id="sbc1"
+                                                          rendered="#{!sessionScope.SONoDatiSensibili==true}"/>
+                                <af:selectOneRadio value="#{bindings.livello.inputValue}"
+                                                   label="Livello"
+                                                   required="#{bindings.livello.hints.mandatory}"
+                                                   autoSubmit="true"
+                                                   rendered="#{sessionScope.SORef2Liv==true}"
+                                                   shortDesc="#{bindings.livello.hints.tooltip}" id="chkliv"
+                                                   layout="horizontal" styleClass="choiceInTable"
+                                                   labelStyle="vertical-align: middle;">
+                                    <f:selectItems value="#{bindings.livello.items}" id="si6"/>
+                                    <f:validator binding="#{bindings.livello.validator}"/>
+                                </af:selectOneRadio>
+                            </af:panelFormLayout>
+                           <af:panelFormLayout id="pfl31" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.referti_chiusi.inputValue}"
+                                                    label="#{bindings.referti_chiusi.label}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.referti_chiusi.hints.mandatory}"
+                                                    shortDesc="#{bindings.referti_chiusi.hints.tooltip}" id="soc4">
+                                    <f:selectItems value="#{bindings.referti_chiusi.items}" id="si4"/>
+                                    <f:validator binding="#{bindings.referti_chiusi.validator}"/>
+                                </af:selectOneChoice>
+                                <af:panelLabelAndMessage partialTriggers="chkliv" label="#{viewcontrollerBundle.CODICE_CAMPIONE_DAL}" id="plam199">
+                                    <af:inputText value="#{bindings.vetrino_dal.inputValue}"
+                                                  label="#{bindings.vetrino_dal.hints.label}"
+                                                  required="#{bindings.vetrino_dal.hints.mandatory}"
+                                                  simple="true"
+                                                  disabled="#{bindings.livello.inputValue!=1?true:false}"
+                                                  columns="#{bindings.vetrino_dal.hints.displayWidth}"
+                                                  maximumLength="#{bindings.vetrino_dal.hints.precision}"
+                                                  shortDesc="#{bindings.vetrino_dal.hints.tooltip}" id="it8">
+                                        <f:validator binding="#{bindings.vetrino_dal.validator}"/>
+                                        <af:convertNumber groupingUsed="false"
+                                                          pattern="#{bindings.vetrino_dal.format}"/>
+                                    </af:inputText>
+                                    <af:spacer width="10" height="10" id="s39"/>
+                                    <af:outputLabel value="#{viewcontrollerBundle.AL}" id="ol19"/>
+                                    <af:spacer width="10" height="10" id="s49"/>
+                                    <af:inputText value="#{bindings.vetrino_al.inputValue}"
+                                                  label="#{bindings.vetrino_al.hints.label}"
+                                                  required="#{bindings.vetrino_al.hints.mandatory}"
+                                                  simple="true"
+                                                  disabled="#{bindings.livello.inputValue!=1?true:false}"
+                                                  columns="#{bindings.vetrino_al.hints.displayWidth}"
+                                                  maximumLength="#{bindings.vetrino_al.hints.precision}"
+                                                  shortDesc="#{bindings.vetrino_al.hints.tooltip}" id="it9">
+                                        <f:validator binding="#{bindings.vetrino_al.validator}"/>
+                                        <af:convertNumber groupingUsed="false" pattern="#{bindings.vetrino_al.format}"/>
+                                    </af:inputText>
+                                </af:panelLabelAndMessage>
+                           </af:panelFormLayout>
+                           <af:panelFormLayout id="pfl3123" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice label="#{viewcontrollerBundle.NUMERO_PROVETTE}" 
+                                                    id="soc223" 
+                                                    partialTriggers="chkliv"
+                                                    rendered="#{sessionScope.n_referti_1liv!='1'}"
+                                                    disabled="#{bindings.livello.inputValue!=1?true:false}"
+                                                    value="#{bindings.anno_vetrino.inputValue}">
+                                    <af:selectItem label="qualsiasi" value="-1" id="si234"/>
+                                    <af:selectItem label="1" value="1" id="si335"/>
+                                    <af:selectItem label="2" value="2" id="si436"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl6" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectBooleanCheckbox value="#{bindings.inviti_attivi.inputValue}"
+                                                          label="#{bindings.inviti_attivi.label}"
+                                                          shortDesc="#{bindings.inviti_attivi.hints.tooltip}"
+                                                          id="sbc2"/>
+                                <af:panelLabelAndMessage label="#{bindings.pendente.label}" id="plam3">
+                                    <af:selectBooleanCheckbox value="#{bindings.pendente.inputValue}"
+                                                              label="#{bindings.pendente.label}" simple="true"
+                                                              shortDesc="#{bindings.pendente.hints.tooltip}" id="sbc3"/>
+                                    <af:spacer width="10" height="10" id="s8"/>
+                                    <af:outputLabel value="#{viewcontrollerBundle.DA_PI_U00F9_DI}" id="ol3"/>
+                                    <af:spacer width="10" height="10" id="s9"/>
+                                    <f:facet name="end">
+                                        <af:inputText value="#{bindings.giorni_pendente.inputValue}"
+                                                      required="#{bindings.giorni_pendente.hints.mandatory}" columns="4"
+                                                      maximumLength="#{bindings.giorni_pendente.hints.precision}"
+                                                      shortDesc="#{bindings.giorni_pendente.hints.tooltip}" id="it7">
+                                            <f:validator binding="#{bindings.giorni_pendente.validator}"/>
+                                            <af:convertNumber groupingUsed="false"
+                                                              pattern="#{bindings.giorni_pendente.format}"/>
+                                        </af:inputText>
+                                        <af:spacer width="10" height="10" id="s10"/>
+                                        <af:outputLabel value="#{viewcontrollerBundle.GIORNI}" id="ol4"/>
+                                    </f:facet>
+                                </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl7" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectBooleanCheckbox value="#{bindings.pres_no_referto.inputValue}"
+                                                          label="#{viewcontrollerBundle.PRESENZA_SENZA_REFERTO}"
+                                                          shortDesc="#{bindings.pres_no_referto.hints.tooltip}"
+                                                          id="sbc298"/>
+                                <af:selectOneChoice value="#{bindings.follow_up.inputValue}"
+                                                    label="#{viewcontrollerBundle.CATEGORIA_DI_INVITO}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.follow_up.hints.mandatory}"
+                                                    shortDesc="#{bindings.follow_up.hints.tooltip}" id="soc5345"
+                                                    unselectedLabel="#{''}" autoSubmit="true">
+                                    <f:selectItems value="#{bindings.follow_up.items}" id="si534"/>
+                                    <f:validator binding="#{bindings.follow_up.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl723" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <af:selectOneChoice value="#{bindings.cat_richiamo.inputValue}"
+                                                    label="#{viewcontrollerBundle.CATEGORIA_PROSSIMO_RICHIAMO}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.cat_richiamo.hints.mandatory}"
+                                                    shortDesc="#{bindings.cat_richiamo.hints.tooltip}" id="soc543"
+                                                    unselectedLabel="#{''}" autoSubmit="true">
+                                    <f:selectItems value="#{bindings.cat_richiamo.items}" id="si543"/>
+                                    <f:validator binding="#{bindings.cat_richiamo.validator}"/>
+                                </af:selectOneChoice>
+                                <af:selectOneChoice value="#{bindings.sugg_esito.inputValue}"
+                                                    label="#{bindings.sugg_esito.label}"
+                                                    styleClass="choiceInTable"
+                                                    required="#{bindings.sugg_esito.hints.mandatory}"
+                                                    shortDesc="#{bindings.sugg_esito.hints.tooltip}" id="soc5"
+                                                    autoSubmit="true">
+                                    <f:selectItems value="#{bindings.sugg_esito.items}" id="si5"/>
+                                    <f:validator binding="#{bindings.sugg_esito.validator}"/>
+                                </af:selectOneChoice>
+                            </af:panelFormLayout>
+                            <af:panelFormLayout id="pfl8" maxColumns="2" rows="1" fieldWidth="450" labelWidth="150">
+                                <f:facet name="footer">
+                                    <af:toolbar id="t3">
+                                        <af:button action="#{RefCo_ricercaAction.onCerca}"
+                                                   disabled="#{sessionScope.SORefertazione!=true}"
+                                                   text="#{viewcontrollerBundle.CERCA}" id="btcerca"
+                                                   clientComponent="true">
+                                            <af:setPropertyListener from="#{1!=1}"
+                                                                    to="#{bindings.emptyQuery.inputValue}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button actionListener="#{RefCo_ricercaAction.reset}" text="Reimposta"
+                                                   disabled="false" id="breset">
+                                            <af:setPropertyListener from="#{1==1}"
+                                                                    to="#{bindings.emptyQuery.inputValue}"
+                                                                    type="action"/>
+                                        </af:button>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:selectOneChoice value="#{bindings.codClassePop.inputValue}"
+                                                    label="#{bindings.codClassePop.label}"
+                                                    styleClass="choiceInTable"
+                                                    rendered="#{sessionScope.scr eq 'CO' and sessionScope.covid19==true}"
+                                                    required="#{bindings.codClassePop.hints.mandatory}"
+                                                    shortDesc="#{bindings.codClassePop.hints.tooltip}" id="soc6" 
+                                                    autoSubmit="true" valuePassThru="true" unselectedLabel=""
+                                                    valueChangeListener="#{RefCo_ricercaAction.onChangeCodClassePop}">
+                                    <f:selectItems value="#{bindings.codClassePop.items}" id="si7"/>
+                                    <f:validator binding="#{bindings.codClassePop.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.chiave.inputValue}"
+                                              label="Chiave anonima" rendered="#{sessionScope.SOAccessoAnonimo==true}"
+                                              required="#{bindings.chiave.hints.mandatory}"
+                                              columns="#{bindings.chiave.hints.displayWidth}"
+                                              maximumLength="#{bindings.chiave.hints.precision}"
+                                              shortDesc="#{bindings.chiave.hints.tooltip}" id="it10">
+                                    <f:validator binding="#{bindings.chiave.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </af:panelHeader>
+                        <af:spacer width="10" height="10" id="s7"/>
+                        <af:panelCollection rendered="#{sessionScope.SORefertazione==true}" id="pc1" featuresOff="detach freeze wrap" styleClass="AFStretchWidth">
+                            <f:facet name="toolbar">
+                                <af:toolbar id="t2" partialTriggers="t1 ::btcerca ::breset">
+                                    <af:button text="#{viewcontrollerBundle.REFERTO}" id="b1"
+                                               action="#{RefCo_ricercaAction.onReferto}"
+                                               disabled="#{bindings.Ref_SoInvitiPerRefertiCOView1.estimatedRowCount>0?false:true}"
+                                               >
+                                        <af:setPropertyListener from="#{bindings.Livello.inputValue}" to="#{sessionScope.ref_livello}" type="action"/>
+                                    </af:button>
+                                    <af:group id="g2">
+                                        <af:button text="#{viewcontrollerBundle.STAMPA_SOGGETTI}" id="btprint" useWindow="true" immediate="true"
+                                                windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                                disabled="#{bindings.Ref_SoInvitiPerRefertiCOView1Iterator.estimatedRowCount>0?false:true}"
+                                                windowHeight="300" windowWidth="600" visible="#{!sessionScope.SONoDatiSensibili==true and sessionScope.SOStampaElenco}" action="dialog:printElencoSoggetti"/>
+                                    </af:group>
+                                </af:toolbar>
+                            </f:facet>
+                            <af:table value="#{bindings.Ref_SoInvitiPerRefertiCOView1.collectionModel}" var="row"
+                                      rows="#{bindings.Ref_SoInvitiPerRefertiCOView1.rangeSize}"
+                                      emptyText="#{bindings.Ref_SoInvitiPerRefertiCOView1.viewable ? 'Nessun referto trovato.' : 'Access Denied.'}"
+                                      rowBandingInterval="0"
+                                      selectedRowKeys="#{bindings.Ref_SoInvitiPerRefertiCOView1.collectionModel.selectedRow}"
+                                      selectionListener="#{bindings.Ref_SoInvitiPerRefertiCOView1.collectionModel.makeCurrent}"
+                                      rowSelection="single"
+                                      fetchSize="#{bindings.Ref_SoInvitiPerRefertiCOView1.rangeSize}" id="t1"
+                                      columnStretching="column:c2" summary="#{''}"
+                                      binding="#{RefCo_ricercaAction.tableSearchResult}" styleClass="highlighting"
+                                      scrollPolicy="page">
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Attivo.name}"
+                                           sortable="true" rendered="#{bindings.inviti_attivi.inputValue}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Attivo.label}"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           id="c1" align="center" width="40">
+                                    <af:image rendered="#{row.Attivo==1}" source="/images/checked_16.png" id="i1"
+                                              shortDesc="#{viewcontrollerBundle.ULTIMO_INVITO}"/>                                           
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Cognome.name}"
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           rowHeader="unstyled" 
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Cognome.label}"
+                                           id="c2"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}" width="150">
+                                    <af:outputText value="#{row.Cognome}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Cognome.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Nome.name}"
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Nome.label}"
+                                           id="c3"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           width="140">
+                                    <af:outputText value="#{row.Nome}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Nome.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.DataNascita.name}"
+                                           sortable="true" rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.DataNascita.label}"
+                                           id="c4"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           width="70">
+                                    <af:outputText value="#{row.DataNascita}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.DataNascita.tooltip}"
+                                                   id="ot4">
+                                        <af:convertDateTime pattern="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.DataNascita.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Dtapp.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Dtapp.label}"
+                                           id="c5"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           width="70">
+                                    <af:outputText value="#{row.Dtapp}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Dtapp.tooltip}"
+                                                   id="ot5">
+                                        <af:convertDateTime pattern="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Dtapp.format}"/>
+                                    </af:outputText>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Ulss.name}"
+                                           sortable="true" rendered="#{sessionScope.regionale?true:false}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Ulss.label}"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           id="c6">
+                                    <af:outputText value="#{row.Ulss}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Ulss.tooltip}"
+                                                   id="ot6"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Tipoinvitobreve.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Tipoinvitobreve.label}"
+                                           id="c7"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           width="70">
+                                    <af:outputText value="#{row.Tipoinvitobreve}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Tipoinvitobreve.tooltip}"
+                                                   id="ot7"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Esitobreve.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Esitobreve.label}"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           id="c8" width="40">
+                                    <af:outputText value="#{row.Esitobreve}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Esitobreve.tooltip}"
+                                                   id="ot8"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroPrelievo.name}"
+                                           sortable="true"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroPrelievo.label}"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           id="c9" width="90">
+                                    <af:outputText value="#{row.CentroPrelievo}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroPrelievo.tooltip}"
+                                                   id="ot9"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroReferto.name}"
+                                           sortable="true"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroReferto.label}"
+                                           id="c91">
+                                    <af:outputText value="#{row.CentroReferto}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.CentroReferto.tooltip}"
+                                                   id="ot92"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Sugg.name}"
+                                           sortable="true"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Sugg.label}"
+                                           id="c10" width="150" noWrap="false">
+                                    <af:outputText value="#{row.Sugg}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Sugg.tooltip}"
+                                                   id="ot10"/>
+                                </af:column>
+                                <af:column sortProperty="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.RichiamoDesc.name}"
+                                           sortable="true"
+                                           styleClass="#{row.Livello.intValue() == 2?'CellaImportante':null}"
+                                           headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.RichiamoDesc.label}"
+                                           id="c11" width="100">
+                                    <af:outputText value="#{row.RichiamoDesc}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.RichiamoDesc.tooltip}"
+                                                   id="ot11"/>
+                                </af:column>
+                                <af:column id="c12" headerText="#{viewcontrollerBundle.REFERTO}" align="center"
+                                           styleClass="img16" width="70">
+                                    <af:switcher id="s11"
+                                                 facetName="#{row.Completo==1 || row.Completo2==1? 'completo' : row.Idreferto==null &amp;&amp; row.Idreferto2liv==null ? 'null' : 'inserito'}"
+                                                 defaultFacet="#{'null'}">
+                                        <f:facet name="completo">
+                                            <af:image source="/images/folder_locked.png"
+                                                      shortDesc="#{viewcontrollerBundle.REFERTO_CHIUSO}" id="i2"/>
+                                        </f:facet>
+                                        <f:facet name="inserito">
+                                            <af:image source="/images/folder.png"
+                                                      shortDesc="#{viewcontrollerBundle.REFERTO_INSERITO}" id="i3"/>
+                                        </f:facet>
+                                    </af:switcher>
+                                </af:column>
+                                <af:column headerText="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Chiave.label}"
+                                    id="c13" rendered="#{sessionScope.SOAccessoAnonimo==true}">
+                                    <af:outputText value="#{row.Chiave}"
+                                                   shortDesc="#{bindings.Ref_SoInvitiPerRefertiCOView1.hints.Chiave.tooltip}"
+                                                   id="ot1"/>
+                                </af:column>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="#{viewcontrollerBundle.REFERTAZIONE}"/>
+                <f:attribute name="navigation" value="#{RefCo_ricercaAction}"/>
+                <f:attribute name="viewSubmenu" value="false"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

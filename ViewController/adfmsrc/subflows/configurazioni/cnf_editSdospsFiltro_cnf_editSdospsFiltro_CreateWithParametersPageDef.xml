@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57"
+                id="cnf_editSdospsFiltro_cnf_editSdospsFiltro_CreateWithParametersPageDef"
+                Package="subflows.configurazioni" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Cnf_SoCnfSdoSpsElencoView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfSdoSpsElencoView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="Cnf_SoCnfSdoSpsElencoView1Iterator" id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams" InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfSdoSpsElencoView1"
+            DataControl="Cnf_AppModuleDataControl">
+      <NamedData NDName="Codsdosps" NDType="java.lang.String"/>
+      <NamedData NDName="Descrizione" NDType="java.lang.String"/>
+      <NamedData NDName="TipoFlusso" NDValue='#{"SDO"}' NDType="java.lang.String"/>
+      <NamedData NDName="DataInizioValidita" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

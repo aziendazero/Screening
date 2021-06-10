@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="CReferto_Conclusivo2LIV"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="36"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_referto" isForPrompting="true" class="java.lang.Double">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+    SO_INVITO.IDINVITO,
+    FUN_CODTS_TROVA_DOC(SO_INVITO.CODTS,SO_INVITO.ULSS,'TS') CODTS,
+    SO_INVITO.IDTPINVITO,
+    SO_INVITO.CODESITOINVITO,
+    SO_INVITO.LIVESITO,
+    SO_INVITO.ATTIVO,
+    SO_INVITO.IDCENTROPRELIEVO,
+    SO_INVITO.IDCENTRORICHIAMO,
+    SO_INVITO.IDCENTROREF1LIV,
+    SO_INVITO.DTAPP,
+    SO_INVITO.ORAAPP,
+    SO_INVITO.MINAPP,
+    SO_INVITO.ULSS,
+    SO_INVITO.TPSCR,
+    SO_INVITO.LIVELLO,
+    SO_REFERTOCITO2LIV.IDREFERTO,
+    SO_REFERTOCITO2LIV.DTINSERIMENTO,
+    SO_REFERTOCITO2LIV.IDINVITO REF_IDINVITO,
+    SO_REFERTOCITO2LIV.DTCONCL,
+    SO_REFERTOCITO2LIV.NOTECONCL,
+    SO_REFERTOCITO2LIV.IDMEDCONCL,
+    SO_REFERTOCITO2LIV.IDSUGG,
+    SO_REFERTOCITO2LIV.COMPLETO,
+    SO_REFERTOCITO2LIV.COLPOSCOPIA,
+    SO_REFERTOCITO2LIV.DTCOLPOSCOPIA,
+    SO_REFERTOCITO2LIV.NOTECOLPOSCOPIA,
+    SO_REFERTOCITO2LIV.IDMEDCOLPO,
+    SO_REFERTOCITO2LIV.IDMEDCOLPO2,
+    SO_REFERTOCITO2LIV.PRECITO,
+    SO_REFERTOCITO2LIV.PREBIO,
+    SO_REFERTOCITO2LIV.ISTBIOPTICA,
+    SO_REFERTOCITO2LIV.DTBIOPSIA,
+    SO_REFERTOCITO2LIV.NOTEBIOPSIA,
+    SO_REFERTOCITO2LIV.IDMEDBIOPATO,
+    SO_REFERTOCITO2LIV.IDMEDBIOPATO2,
+    SO_REFERTOCITO2LIV.BIOHIV,
+    SO_REFERTOCITO2LIV.BIOHPV,
+    SO_REFERTOCITO2LIV.INTCHIUSI,
+    SO_REFERTOCITO2LIV.TPREFERTO,
+    SO_SOGGETTO.CODTS SOGG_CODTS,
+    SO_SOGGETTO.CODDISTRZONA SOGG_CODDISTRZONA,
+    SO_SOGGETTO.CF,
+    SO_SOGGETTO.COGNOME,
+    SO_SOGGETTO.NOME,
+    SO_SOGGETTO.COGNOME_CONIUGE,
+    SO_SOGGETTO.DATA_NASCITA,
+    SO_SOGGETTO.SESSO,
+    SO_SOGGETTO.TEL1,
+    SO_SOGGETTO.TEL2,
+    SO_SOGGETTO.ULSS SOGG_ULSS,
+    DECODE(SO_SOGGETTO.CODCOMSCR,NULL,DECODE(SO_SOGGETTO.CODCOMDOM,NULL,SO_SOGGETTO.CODCOMRES,SO_SOGGETTO.CODCOMDOM),SO_SOGGETTO.CODCOMSCR) CODCOMUNE,
+    DECODE(SO_SOGGETTO.CODCOMSCR,NULL,DECODE(SO_SOGGETTO.CODCOMDOM,NULL,SO_SOGGETTO.INDIRIZZO_RES,SO_SOGGETTO.INDIRIZZO_DOM),SO_SOGGETTO.INDIRIZZO_SCR) INDIRIZZO,
+    DECODE(SO_SOGGETTO.CODCOMSCR,NULL,DECODE(SO_SOGGETTO.CODCOMDOM,NULL,SO_COMUNE2.DESCRIZIONE,SO_COMUNE1.DESCRIZIONE),SO_COMUNE.DESCRIZIONE) COMUNE,
+    DECODE(SO_SOGGETTO.CODCOMSCR,NULL,DECODE(SO_SOGGETTO.CODCOMDOM,NULL,SO_COMUNE2.CODPR,SO_COMUNE1.CODPR),SO_COMUNE.CODPR) PROVINCIA,
+    DECODE(SO_SOGGETTO.CODCOMSCR,NULL,DECODE(SO_SOGGETTO.CODCOMDOM,NULL,SO_COMUNE2.CAP,SO_COMUNE1.CAP),SO_COMUNE.CAP) CAP,
+    SO_DISTRETTO_ZONA.CODDISTRZONA,
+    SO_DISTRETTO_ZONA.DESCRIZIONE ZONA,
+    SO_CENTRO_PREL_REF.IDCENTRO,
+    SO_CENTRO_PREL_REF.DESCRIZIONE CENTRO_REF,
+    SO_OPMEDICO.IDOP,
+    SO_OPMEDICO.COGNOME COGNOME_MED,
+    SO_OPMEDICO.NOME NOME_MED,
+    SO_OPMEDICO.TITOLO TITOLO_MED,
+    SO_CNF_SUGG_2LIV.IDSUGG2L,
+    SO_CNF_SUGG_2LIV.ESITOSUGG,
+    SO_CNF_SUGG_2LIV.DESCRIZIONE DESC_SUGG2LIV,
+    SO_CNF_SUGG_2LIV.ULSS SUGG2L_ULSS,
+    SO_CNF_SUGG_2LIV.TPSCR SUGG2L_TPSCR,
+    COLPES.COLPES_IDREF,
+    COLPES.COLPES_DESC,
+    BIODIA.BIODIA_IDREF,
+    BIODIA.BIODIA_DESC,
+    S1.ID_OLD IDINVITO_LIV1,
+    S1.DTAPP_OLD DTAPP_LIV1,
+    INTERVENTO.IDINT,
+    INTERVENTO.DTINTERVENTO,
+    INTERVENTO.MEDICOINT1,
+    INTERVENTO.MINT_COGNOME,
+    INTERVENTO.MINT_NOME,
+    INTERVENTO.MINT_TITOLO,
+    INTERVENTO.CODINTERVENTO,
+    INTERVENTO.NUMSDO,
+    INTERVENTO.COMPLETO INT_COMPLETO,
+    INTERVENTO.ESEGUITO,
+    INTERVENTO.MOTIVOESEC,
+    INTERVENTO.MOTIVO,
+    INTERVENTO.TIPO_INTERVENTO,
+    INTERVENTO.DTRACCOMANDAZIONE,
+    INTERVENTO.MEDICORACC,
+    INTERVENTO.MRACC_COGNOME,
+    INTERVENTO.MRACC_NOME,
+    INTERVENTO.MRACC_TITOLO,
+    INTERVENTO.SUGGERIMENTO3L,
+    INTERVENTO.ISTCHIRURGICA,
+    INTERVENTO.DTISTCHIR,
+    INTERVENTO.IDMEDISTCHI,
+    INTERVENTO.MIST_COGNOME,
+    INTERVENTO.MIST_NOME,
+    INTERVENTO.MIST_TITOLO,
+    INTERVENTO.DIAGNOSI,
+    INTERVENTO.NOTE_INTERV
+ FROM SO_INVITO, SO_REFERTOCITO2LIV, SO_SOGGETTO,
+ SO_COMUNE, SO_COMUNE SO_COMUNE1, SO_COMUNE SO_COMUNE2,
+ SO_DISTRETTO_ZONA,SO_CENTRO_PREL_REF, SO_OPMEDICO,
+ SO_CNF_SUGG_2LIV,
+ (SELECT
+    SO_CODREF2LIVC2.IDREFERTO COLPES_IDREF,
+    SO_CNF_REF2LIV.DESCRIZIONE COLPES_DESC
+ FROM SO_CODREF2LIVC2, SO_CNF_REF2LIV
+ WHERE (SO_CODREF2LIVC2.IDCNFREF=SO_CNF_REF2LIV.IDCNFREF2L AND
+ SO_CODREF2LIVC2.GRUPPO=SO_CNF_REF2LIV.GRUPPO AND
+ SO_CODREF2LIVC2.ULSS=SO_CNF_REF2LIV.ULSS AND
+ SO_CODREF2LIVC2.TPSCR=SO_CNF_REF2LIV.TPSCR)
+ AND SO_CODREF2LIVC2.GRUPPO='COLPES'
+ ) COLPES,
+ (SELECT
+    SO_CODREF2LIVC2.IDREFERTO BIODIA_IDREF,
+    SO_CNF_REF2LIV.DESCRIZIONE BIODIA_DESC
+ FROM SO_CODREF2LIVC2, SO_CNF_REF2LIV
+ WHERE (SO_CODREF2LIVC2.IDCNFREF=SO_CNF_REF2LIV.IDCNFREF2L AND
+ SO_CODREF2LIVC2.GRUPPO=SO_CNF_REF2LIV.GRUPPO AND
+ SO_CODREF2LIVC2.ULSS=SO_CNF_REF2LIV.ULSS AND
+ SO_CODREF2LIVC2.TPSCR=SO_CNF_REF2LIV.TPSCR)
+ AND SO_CODREF2LIVC2.GRUPPO='BIODIA'
+ ) BIODIA,
+ (SELECT S.IDINVITO ID_OLD,
+S.DTAPP DTAPP_OLD,
+SS.IDINVITO,
+SS.DTAPP
+ FROM SO_INVITO S,SO_INVITO SS
+ WHERE (S.CODTS(+)=SS.CODTS AND S.ULSS(+)=SS.ULSS AND S.LIVELLO(+)=1 AND SS.LIVELLO=2)
+ AND NOT EXISTS (SELECT 1 FROM SO_INVITO L2
+WHERE L2.codts=SS.CODTS AND L2.ULSS=SS.ULSS AND L2.TPSCR=SS.TPSCR
+AND L2.livello=1 AND L2.dtapp>S.DTAPP AND L2.dtapp<=SS.DTAPP)
+) S1,
+(SELECT
+    SO_INTERVENTOCITO.IDINT,
+    SO_INTERVENTOCITO.DTINTERVENTO,
+    SO_INTERVENTOCITO.MEDICOINT1,
+    MEDICO_INT.COGNOME MINT_COGNOME,
+    MEDICO_INT.NOME MINT_NOME,
+    MEDICO_INT.TITOLO MINT_TITOLO,
+    SO_INTERVENTOCITO.MEDICOINT2,
+    SO_INTERVENTOCITO.CODINTERVENTO,
+    SO_INTERVENTOCITO.NUMSDO,
+    SO_INTERVENTOCITO.COMPLETO,
+    SO_INTERVENTOCITO.OPZIONEESEC,
+    SO_INTERVENTOCITO.GROPZIONE,
+    ESEC.DESCRIZIONE ESEGUITO,
+    SO_INTERVENTOCITO.MOTIVOESEC,
+    SO_INTERVENTOCITO.GRMOTIVO,
+    INESEC.DESCRIZIONE MOTIVO,
+    SO_INTERVENTOCITO.TPINTERVENTO,
+    SO_INTERVENTOCITO.GRTPINTERVENTO,
+    TPINT.DESCRIZIONE TIPO_INTERVENTO,
+    SO_INTERVENTOCITO.DTRACCOMANDAZIONE,
+    SO_INTERVENTOCITO.MEDICORACC,
+    MEDICO_RACC.COGNOME MRACC_COGNOME,
+    MEDICO_RACC.NOME MRACC_NOME,
+    MEDICO_RACC.TITOLO MRACC_TITOLO,
+    SO_INTERVENTOCITO.IDSUGG,
+    SO_CNF_SUGG_3LIV.DESCRIZIONE SUGGERIMENTO3L,
+    SO_INTERVENTOCITO.IDREFERTO,
+    SO_INTERVENTOCITO.CENTRORICOVERO,
+    SO_INTERVENTOCITO.ISTCHIRURGICA,
+    SO_INTERVENTOCITO.DTISTCHIR,
+    SO_INTERVENTOCITO.NOTEISTOLOGIA,
+    SO_INTERVENTOCITO.IDMEDISTCHI,
+    MEDICO_IST.COGNOME MIST_COGNOME,
+    MEDICO_IST.NOME MIST_NOME,
+    MEDICO_IST.TITOLO MIST_TITOLO,
+    SO_INTERVENTOCITO.IDMEDISTCHI2,
+    SO_INTERVENTOCITO.IDCENTROISTCHI,
+    SO_INTERVENTOCITO.ISTDIA,
+    SO_INTERVENTOCITO.GRISTDIA,
+    ISTODIA.DESCRIZIONE DIAGNOSI,
+    SO_INTERVENTOCITO.ISTOLM,
+    SO_INTERVENTOCITO.GRISTOLM,
+    SO_INTERVENTOCITO.ISTOPN,
+    SO_INTERVENTOCITO.GRISTOPN,
+    SO_INTERVENTOCITO.ISTOPT,
+    SO_INTERVENTOCITO.GRISTOPT,
+    SO_INTERVENTOCITO.ULSS,
+    SO_INTERVENTOCITO.TPSCR,
+    SO_INTERVENTOCITO.note_interv,
+	SO_INTERVENTOCITO.N_INT
+ FROM SO_INTERVENTOCITO , SO_CNF_REF2LIV ESEC,
+ SO_CNF_REF2LIV INESEC, SO_CNF_REF2LIV TPINT,
+ SO_CNF_REF2LIV ISTODIA,SO_OPMEDICO MEDICO_INT,
+ SO_OPMEDICO MEDICO_RACC, SO_OPMEDICO MEDICO_IST,
+ SO_CNF_SUGG_3LIV
+ WHERE (SO_INTERVENTOCITO.OPZIONEESEC=ESEC.IDCNFREF2L(+) AND
+ SO_INTERVENTOCITO.GROPZIONE=ESEC.GRUPPO(+) AND
+ SO_INTERVENTOCITO.ULSS=ESEC.ULSS(+) AND
+ SO_INTERVENTOCITO.TPSCR=ESEC.TPSCR(+))
+ AND (SO_INTERVENTOCITO.MOTIVOESEC=INESEC.IDCNFREF2L(+) AND
+ SO_INTERVENTOCITO.GRMOTIVO=INESEC.GRUPPO(+) AND
+ SO_INTERVENTOCITO.ULSS=INESEC.ULSS(+) AND
+ SO_INTERVENTOCITO.TPSCR=INESEC.TPSCR(+))
+ AND (SO_INTERVENTOCITO.TPINTERVENTO=TPINT.IDCNFREF2L(+) AND
+ SO_INTERVENTOCITO.GRTPINTERVENTO=TPINT.GRUPPO(+) AND
+ SO_INTERVENTOCITO.ULSS=TPINT.ULSS(+) AND
+ SO_INTERVENTOCITO.TPSCR=TPINT.TPSCR(+))
+ AND (SO_INTERVENTOCITO.ISTDIA=ISTODIA.IDCNFREF2L(+) AND
+ SO_INTERVENTOCITO.GRISTDIA=ISTODIA.GRUPPO(+) AND
+ SO_INTERVENTOCITO.ULSS=ISTODIA.ULSS(+) AND
+ SO_INTERVENTOCITO.TPSCR=ISTODIA.TPSCR(+))
+ AND (SO_INTERVENTOCITO.MEDICOINT1=MEDICO_INT.IDOP(+))
+ AND (SO_INTERVENTOCITO.MEDICORACC=MEDICO_RACC.IDOP(+))
+ AND (SO_INTERVENTOCITO.IDMEDISTCHI=MEDICO_IST.IDOP(+))
+ AND (SO_INTERVENTOCITO.IDSUGG=SO_CNF_SUGG_3LIV.IDSUGG3L(+) AND
+ SO_INTERVENTOCITO.ULSS=SO_CNF_SUGG_3LIV.ULSS(+) AND
+ SO_INTERVENTOCITO.TPSCR=SO_CNF_SUGG_3LIV.TPSCR(+))
+) INTERVENTO
+
+ 
+ where SO_INVITO.IDINVITO=SO_REFERTOCITO2LIV.IDINVITO
+AND (SO_INVITO.CODTS=SO_SOGGETTO.CODTS AND SO_INVITO.ULSS=SO_SOGGETTO.ULSS)
+AND SO_SOGGETTO.RELEASE_CODE_COM_SCR=SO_COMUNE.RELEASE_CODE(+)
+AND SO_SOGGETTO.RELEASE_CODE_COM_DOM=SO_COMUNE1.RELEASE_CODE(+)
+AND SO_SOGGETTO.RELEASE_CODE_COM_RES=SO_COMUNE2.RELEASE_CODE(+)
+AND SO_SOGGETTO.CODDISTRZONA=SO_DISTRETTO_ZONA.CODDISTRZONA(+)
+AND SO_SOGGETTO.ULSS=SO_DISTRETTO_ZONA.ULSS(+)
+AND SO_INVITO.IDCENTROREF1LIV=SO_CENTRO_PREL_REF.IDCENTRO(+)
+AND SO_REFERTOCITO2LIV.IDMEDCONCL=SO_OPMEDICO.IDOP(+)
+AND  (SO_REFERTOCITO2LIV.IDSUGG=SO_CNF_SUGG_2LIV.IDSUGG2L(+) AND
+SO_REFERTOCITO2LIV.ULSS=SO_CNF_SUGG_2LIV.ULSS(+) AND
+SO_REFERTOCITO2LIV.TPSCR=SO_CNF_SUGG_2LIV.TPSCR(+))
+AND SO_REFERTOCITO2LIV.IDREFERTO=COLPES.COLPES_IDREF(+)
+AND SO_REFERTOCITO2LIV.IDREFERTO=BIODIA.BIODIA_IDREF(+)
+AND S1.IDINVITO(+)=SO_REFERTOCITO2LIV.IDINVITO
+AND SO_REFERTOCITO2LIV.IDREFERTO=INTERVENTO.IDREFERTO(+)
+AND SO_REFERTOCITO2LIV.IDREFERTO=$P{id_referto}
+ORDER BY INTERVENTO.N_INT]]></queryString>
+
+	<field name="IDINVITO" class="java.math.BigDecimal"/>
+	<field name="CODTS" class="java.lang.String"/>
+	<field name="IDTPINVITO" class="java.lang.String"/>
+	<field name="CODESITOINVITO" class="java.lang.String"/>
+	<field name="LIVESITO" class="java.math.BigDecimal"/>
+	<field name="ATTIVO" class="java.math.BigDecimal"/>
+	<field name="IDCENTROPRELIEVO" class="java.math.BigDecimal"/>
+	<field name="IDCENTRORICHIAMO" class="java.math.BigDecimal"/>
+	<field name="IDCENTROREF1LIV" class="java.math.BigDecimal"/>
+	<field name="DTAPP" class="java.sql.Timestamp"/>
+	<field name="ORAAPP" class="java.math.BigDecimal"/>
+	<field name="MINAPP" class="java.math.BigDecimal"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="TPSCR" class="java.lang.String"/>
+	<field name="LIVELLO" class="java.math.BigDecimal"/>
+	<field name="IDREFERTO" class="java.math.BigDecimal"/>
+	<field name="DTINSERIMENTO" class="java.sql.Timestamp"/>
+	<field name="REF_IDINVITO" class="java.math.BigDecimal"/>
+	<field name="DTCONCL" class="java.sql.Timestamp"/>
+	<field name="NOTECONCL" class="java.lang.String"/>
+	<field name="IDMEDCONCL" class="java.math.BigDecimal"/>
+	<field name="IDSUGG" class="java.math.BigDecimal"/>
+	<field name="COMPLETO" class="java.math.BigDecimal"/>
+	<field name="COLPOSCOPIA" class="java.math.BigDecimal"/>
+	<field name="DTCOLPOSCOPIA" class="java.sql.Timestamp"/>
+	<field name="NOTECOLPOSCOPIA" class="java.lang.String"/>
+	<field name="IDMEDCOLPO" class="java.math.BigDecimal"/>
+	<field name="IDMEDCOLPO2" class="java.math.BigDecimal"/>
+	<field name="PRECITO" class="java.math.BigDecimal"/>
+	<field name="PREBIO" class="java.math.BigDecimal"/>
+	<field name="ISTBIOPTICA" class="java.math.BigDecimal"/>
+	<field name="DTBIOPSIA" class="java.sql.Timestamp"/>
+	<field name="NOTEBIOPSIA" class="java.lang.String"/>
+	<field name="IDMEDBIOPATO" class="java.math.BigDecimal"/>
+	<field name="IDMEDBIOPATO2" class="java.math.BigDecimal"/>
+	<field name="BIOHIV" class="java.math.BigDecimal"/>
+	<field name="BIOHPV" class="java.math.BigDecimal"/>
+	<field name="INTCHIUSI" class="java.math.BigDecimal"/>
+	<field name="TPREFERTO" class="java.math.BigDecimal"/>
+	<field name="SOGG_CODTS" class="java.lang.String"/>
+	<field name="SOGG_CODDISTRZONA" class="java.math.BigDecimal"/>
+	<field name="CF" class="java.lang.String"/>
+	<field name="COGNOME" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="COGNOME_CONIUGE" class="java.lang.String"/>
+	<field name="DATA_NASCITA" class="java.sql.Timestamp"/>
+	<field name="SESSO" class="java.lang.String"/>
+	<field name="TEL1" class="java.lang.String"/>
+	<field name="TEL2" class="java.lang.String"/>
+	<field name="SOGG_ULSS" class="java.lang.String"/>
+	<field name="CODCOMUNE" class="java.lang.String"/>
+	<field name="INDIRIZZO" class="java.lang.String"/>
+	<field name="COMUNE" class="java.lang.String"/>
+	<field name="PROVINCIA" class="java.lang.String"/>
+	<field name="CAP" class="java.lang.String"/>
+	<field name="CODDISTRZONA" class="java.math.BigDecimal"/>
+	<field name="ZONA" class="java.lang.String"/>
+	<field name="IDCENTRO" class="java.math.BigDecimal"/>
+	<field name="CENTRO_REF" class="java.lang.String"/>
+	<field name="IDOP" class="java.math.BigDecimal"/>
+	<field name="COGNOME_MED" class="java.lang.String"/>
+	<field name="NOME_MED" class="java.lang.String"/>
+	<field name="TITOLO_MED" class="java.lang.String"/>
+	<field name="IDSUGG2L" class="java.math.BigDecimal"/>
+	<field name="ESITOSUGG" class="java.lang.String"/>
+	<field name="DESC_SUGG2LIV" class="java.lang.String"/>
+	<field name="SUGG2L_ULSS" class="java.lang.String"/>
+	<field name="SUGG2L_TPSCR" class="java.lang.String"/>
+	<field name="COLPES_IDREF" class="java.math.BigDecimal"/>
+	<field name="COLPES_DESC" class="java.lang.String"/>
+	<field name="BIODIA_IDREF" class="java.math.BigDecimal"/>
+	<field name="BIODIA_DESC" class="java.lang.String"/>
+	<field name="IDINVITO_LIV1" class="java.math.BigDecimal"/>
+	<field name="DTAPP_LIV1" class="java.sql.Timestamp"/>
+	<field name="IDINT" class="java.math.BigDecimal"/>
+	<field name="DTINTERVENTO" class="java.sql.Timestamp"/>
+	<field name="MEDICOINT1" class="java.math.BigDecimal"/>
+	<field name="MINT_COGNOME" class="java.lang.String"/>
+	<field name="MINT_NOME" class="java.lang.String"/>
+	<field name="MINT_TITOLO" class="java.lang.String"/>
+	<field name="CODINTERVENTO" class="java.math.BigDecimal"/>
+	<field name="NUMSDO" class="java.math.BigDecimal"/>
+	<field name="INT_COMPLETO" class="java.math.BigDecimal"/>
+	<field name="ESEGUITO" class="java.lang.String"/>
+	<field name="MOTIVOESEC" class="java.math.BigDecimal"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<field name="TIPO_INTERVENTO" class="java.lang.String"/>
+	<field name="DTRACCOMANDAZIONE" class="java.sql.Timestamp"/>
+	<field name="MEDICORACC" class="java.math.BigDecimal"/>
+	<field name="MRACC_COGNOME" class="java.lang.String"/>
+	<field name="MRACC_NOME" class="java.lang.String"/>
+	<field name="MRACC_TITOLO" class="java.lang.String"/>
+	<field name="SUGGERIMENTO3L" class="java.lang.String"/>
+	<field name="ISTCHIRURGICA" class="java.math.BigDecimal"/>
+	<field name="DTISTCHIR" class="java.sql.Timestamp"/>
+	<field name="IDMEDISTCHI" class="java.math.BigDecimal"/>
+	<field name="MIST_COGNOME" class="java.lang.String"/>
+	<field name="MIST_NOME" class="java.lang.String"/>
+	<field name="MIST_TITOLO" class="java.lang.String"/>
+	<field name="DIAGNOSI" class="java.lang.String"/>
+	<field name="NOTE_INTERV" class="java.lang.String"/>
+
+	<variable name="date_pattern" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA["dd/MM/yyyy"]]></variableExpression>
+	</variable>
+
+		<group  name="REFERTO" >
+			<groupExpression><![CDATA[$F{IDREFERTO}]]></groupExpression>
+			<groupHeader>
+			<band height="446"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="72"
+						width="533"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-1"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CENTRO_REF}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Centro: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Centro: </style>"+$F{CENTRO_REF}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="104"
+						y="6"
+						width="334"
+						height="26"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[CONCLUSIONI FINALI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="385"
+						width="150"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-2"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Medico raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="153"
+						y="386"
+						width="379"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-13"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$F{COGNOME_MED}==null && $F{NOME_MED}==null && $F{TITOLO_MED}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{TITOLO_MED}==null?"":$F{TITOLO_MED})+" "+$F{COGNOME_MED}+" "+$F{NOME_MED}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="406"
+						width="120"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="124"
+						y="406"
+						width="410"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-14"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESC_SUGG2LIV}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="273"
+						width="173"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data e esito colposcopia:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="317"
+						width="173"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data e esito istologia bioptica:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="175"
+						y="273"
+						width="360"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-15"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{DTCOLPOSCOPIA}==null?"":new SimpleDateFormat("dd/MM/yyyy").format($F{DTCOLPOSCOPIA})+"\n")+new String($F{COLPES_DESC}==null?"":$F{COLPES_DESC})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="175"
+						y="317"
+						width="360"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-16"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{DTBIOPSIA}==null?"":new SimpleDateFormat("dd/MM/yyyy").format($F{DTBIOPSIA})+"\n")+new String($F{BIODIA_DESC}==null?"":$F{BIODIA_DESC})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="363"
+						width="147"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-6"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="150"
+						y="364"
+						width="378"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-17"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTCONCL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="269"
+						y="167"
+						width="264"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TEL2}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Telefono2: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Telefono2: </style>"+$F{TEL2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="269"
+						y="142"
+						width="264"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CF}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Codice fiscale: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Codice fiscale: </style>"+$F{CF}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="269"
+						y="116"
+						width="264"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{COMUNE}==null && $F{PROVINCIA}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Comune: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Comune: </style>"+$F{COMUNE}+" ("+$F{PROVINCIA}+")"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="269"
+						y="91"
+						width="264"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CODTS}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">N° Tessera: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">N° Tessera: </style>"+$F{CODTS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="91"
+						width="259"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-6"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{COGNOME}==null && $F{NOME}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Assistito: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Assistito: </style>"+$F{COGNOME}+" "+$F{NOME}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="116"
+						width="261"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{INDIRIZZO}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Indirizzo: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Indirizzo: </style>"+$F{INDIRIZZO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="142"
+						width="262"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-8"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DATA_NASCITA}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Data di nascita: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Data di nascita: </style>"+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_NASCITA})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="168"
+						width="262"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-9"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TEL1}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Telefono1: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Telefono1: </style>"+$F{TEL1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="194"
+						width="261"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-10"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" isStyledText="true" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ZONA}==null?"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Zona: </style>":"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Zona: </style>"+$F{ZONA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="228"
+						width="87"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-15"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data 1° livello:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="92"
+						y="229"
+						width="378"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-25"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTAPP_LIV1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="250"
+						width="86"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-16"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data 2° livello:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="92"
+						y="251"
+						width="378"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-26"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTAPP}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="426"
+						width="532"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-28"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{NOTECONCL}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" topPadding="3" leftBorder="None" leftBorderColor="#000000" leftPadding="5" rightBorder="None" rightBorderColor="#000000" rightPadding="5" bottomBorder="None" bottomBorderColor="#000000" bottomPadding="3"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Oblique" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["NOTE: "+$F{NOTECONCL}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="40"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="189"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{IDINT}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="20"
+						y="42"
+						width="118"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Tipo di intervento:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="141"
+						y="42"
+						width="224"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-18"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TIPO_INTERVENTO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="375"
+						y="42"
+						width="33"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-8"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="412"
+						y="42"
+						width="121"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-19"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTINTERVENTO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="2"
+						width="95"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-9"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue()==1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[INTERVENTI:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="125"
+						y="21"
+						width="402"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-20"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{ESEGUITO}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ESEGUITO}+new String($F{MOTIVOESEC}.intValue()==0?"":" ("+$F{MOTIVO}+")")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="21"
+						y="128"
+						width="150"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-10"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Medico raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="174"
+						y="129"
+						width="359"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-21"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{MRACC_TITOLO}==null && $F{MRACC_COGNOME}==null && $F{MRACC_NOME}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{MRACC_TITOLO}==null?"":$F{MRACC_TITOLO})+" "+$F{MRACC_COGNOME}+" "+$F{MRACC_NOME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="23"
+						y="149"
+						width="120"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-11"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="145"
+						y="149"
+						width="387"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-22"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SUGGERIMENTO3L}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="21"
+						y="106"
+						width="147"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-12"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data raccomandazione:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="171"
+						y="107"
+						width="362"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-23"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DTRACCOMANDAZIONE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="19"
+						y="62"
+						width="185"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-13"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[Data e esito istologia chirurgica:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="206"
+						y="62"
+						width="327"
+						height="43"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-24"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new String($F{DTISTCHIR}==null?"__/__/____":new SimpleDateFormat("dd/MM/yyyy").format($F{DTISTCHIR}))+"\n"+new String($F{DIAGNOSI}==null?"":$F{DIAGNOSI})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="50"
+						y="21"
+						width="73"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-14"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<text><![CDATA[- Intervento:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="21"
+						y="21"
+						width="27"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-27"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{REFERTO_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="23"
+						y="168"
+						width="509"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-29"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{NOTE_INTERV}==null?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" topPadding="3" leftBorder="None" leftBorderColor="#000000" leftPadding="5" rightBorder="None" rightBorderColor="#000000" rightPadding="5" bottomBorder="None" bottomBorderColor="#000000" bottomPadding="3"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont" pdfFontName="Helvetica-Oblique" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["NOTE: "+$F{NOTE_INTERV}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="30"
+						y="188"
+						width="80"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-1"
+						positionType="Float"/>
+					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" />
+				</line>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

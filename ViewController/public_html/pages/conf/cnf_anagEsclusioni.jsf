@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_anagEsclusioni.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_anagraficheAction.sdoEsclusioniForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempCnfAnag.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:message id="m2"
+                                message="Esclusioni assegnate ai soggetti che ricadono nei codici anagrafici regionali designati"
+                                messageType="info"/>
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1" actionListener="#{Cnf_anagraficheAction.onDettEsclusioni}" action="creatEditAnagEscl">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Cancella centro" cancelTextAndAccessKey="Annulla"
+                                                   partialTriggers="t1" affirmativeTextAndAccessKey="Cancella"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar"/>
+                                            <h:outputText value="Cancellare definitivamente la seguente associazione esclusione-codice anagrafico?" id="ot5"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3" action="creatEditAnagEscl">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                 <af:selectOneChoice value="#{pageFlowScope.ulssSelectedEscl}" label="Azienda sanitaria"
+                                    rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                    valueChangeListener="#{Cnf_anagraficheAction.onChangeEsclusioni}" autoSubmit="true"
+                                    binding="#{Cnf_anagraficheAction.selectedEsclusioni}">
+                                    <af:selectItem label="Tutte" id="si22"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si11"/>
+                                </af:selectOneChoice>
+
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfEsclAnagView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfEsclAnagView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfEsclAnagView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfEsclAnagView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfEsclAnagView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfEsclAnagView1.rangeSize}"
+                                  id="t1" scrollPolicy="page" binding="#{Cnf_anagraficheAction.tabEsclusioni}">
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Ulss.label}" id="c1" rendered="#{sessionScope.regionale?true:false}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Ulss.tooltip}"
+                                               id="ot1"/>
+                            </af:column>
+                            <af:column id="c5" headerText="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Sigla.label}">
+                                <af:column headerText="" id="c2">
+                                    <af:outputText value="#{row.Sigla}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Sigla.tooltip}"
+                                                   id="ot2"/>
+                                </af:column>
+                                <af:column headerText=""
+                                           id="c3" width="250">
+                                    <af:outputText value="#{row.Descrizione}"
+                                                   shortDesc="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Descrizione.tooltip}"
+                                                   id="ot3"/>
+                                </af:column>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Descrizione1.label}" id="c4"
+                                       width="250">
+                                <af:outputText value="#{row.Descrizione1}"
+                                               shortDesc="#{bindings.Cnf_SoCnfEsclAnagView1.hints.Descrizione1.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Esclusioni - codici anagrafici regionali"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

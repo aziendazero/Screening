@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <metadata-resource id="__4">/WEB-INF/subflows/configurazioni/adfc-system-configuration.xml</metadata-resource>
+  <metadata-resource id="__5">/WEB-INF/subflows/configurazioni/adfc-cnf_centri.xml</metadata-resource>
+  <metadata-resource id="__6">/WEB-INF/subflows/op_functions/adfc-op_function.xml</metadata-resource>
+  <metadata-resource id="__15">/WEB-INF/subflows/round/adfc-round.xml</metadata-resource>
+  <metadata-resource id="__16">/WEB-INF/subflows/configurazioni/adfc-cnf_documentale.xml</metadata-resource>
+  <metadata-resource id="__18">/WEB-INF/subflows/agenda/adfc-agenda.xml</metadata-resource>
+  <metadata-resource id="__20">/WEB-INF/subflows/configurazioni/adfc-cnf_operatori.xml</metadata-resource>
+  <metadata-resource id="__21">/WEB-INF/subflows/configurazioni/adfc-cnf_geografiche.xml</metadata-resource>
+  <metadata-resource id="__22">/WEB-INF/subflows/configurazioni/adfc-cnf_confanag.xml</metadata-resource>
+  <metadata-resource id="__24">/WEB-INF/subflows/configurazioni/adfc-cnf_impexp.xml</metadata-resource>
+  <metadata-resource id="__25">/WEB-INF/subflows/configurazioni/adfc-cnf_flussiregionali.xml</metadata-resource>
+  <metadata-resource id="__26">/WEB-INF/subflows/configurazioni/adfc-cnf_inviti.xml</metadata-resource>
+  <metadata-resource id="__29">/WEB-INF/subflows/configurazioni/adfc-cnf_suggerimenti.xml</metadata-resource>
+  <metadata-resource id="__30">/WEB-INF/subflows/configurazioni/adfc-cnf_questionari.xml</metadata-resource>
+  <metadata-resource id="__31">/WEB-INF/subflows/configurazioni/adfc-global-configuration.xml</metadata-resource>
+  <metadata-resource id="__32">/WEB-INF/subflows/integrazioni/adfc-integrazioni.xml</metadata-resource>
+  <metadata-resource id="__33">/WEB-INF/subflows/configurazioni/adfc-cnf_accettazioni.xml</metadata-resource>
+  <metadata-resource id="__37">/WEB-INF/subflows/statistiche/adfc-statistiche.xml</metadata-resource>
+  <view id="menuConfig">
+    <page>/menu-config.jsf</page>
+  </view>
+  <view id="home">
+    <page>/menu.jsf</page>
+  </view>
+  <view id="welcome">
+    <page>/welcome.jsf</page>
+  </view>
+  <view id="logout">
+    <page>/logout.jsf</page>
+  </view>
+  <view id="round_scadenze">
+    <page>/pages/round/round_scadenze.jsf</page>
+  </view>
+  <control-flow-rule id="__7">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__8">
+      <from-outcome>adfMenu_menuConfig</from-outcome>
+      <to-activity-id>menuConfig</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__14">
+      <from-outcome>adfMenu_home</from-outcome>
+      <to-activity-id>home</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__10">
+      <from-outcome>adfMenu_logout</from-outcome>
+      <to-activity-id>logout</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__19">
+      <from-outcome>#{requestScope.LogoutBean.logoutAction}</from-outcome>
+      <to-activity-id>logout</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__1">
+    <from-activity-id>welcome</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>home</from-outcome>
+      <to-activity-id>home</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__23">
+    <from-activity-id>home</from-activity-id>
+    <control-flow-case id="__27">
+      <from-outcome>noNav</from-outcome>
+      <to-activity-id>home</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <control-flow-rule id="__35">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__36">
+      <from-outcome>dialog:scadenze</from-outcome>
+      <to-activity-id>round_scadenze</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__11">
+    <description>Menu Model Managed Bean</description>
+    <managed-bean-name>root_menu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property id="__12">
+      <property-name>createHiddenNodes</property-name>
+      <value>true</value>
+    </managed-property>
+    <managed-property id="__13">
+      <property-name>source</property-name>
+      <property-class>java.lang.String</property-class>
+      <value>/WEB-INF/root_menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__3">
+    <managed-bean-name>InitializeActionBean</managed-bean-name>
+    <managed-bean-class>view.backing.InitializeActionBean</managed-bean-class>
+    <managed-bean-scope>view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__17">
+    <managed-bean-name>LogoutBean</managed-bean-name>
+    <managed-bean-class>view.backing.LogoutBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__9">
+    <managed-bean-name>MenuUtilBean</managed-bean-name>
+    <managed-bean-class>view.util.MenuUtilBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__28">
+    <managed-bean-name>Utility</managed-bean-name>
+    <managed-bean-class>view.util.Utility</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__34">
+    <managed-bean-name>Ref_ricercaAction</managed-bean-name>
+    <managed-bean-class>view.referto.Ref_ricercaAction</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="mrg_unmrg_detail.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl11" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Chiudi" id="b2" action="mrg_toUnmerge" partialSubmit="false"/>
+                                    <af:button text="Unmerge" id="b1" rendered="#{bindings.Unmerge.inputValue=='1'}">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" title="Unmerge" cancelTextAndAccessKey="Annulla"
+                                                   partialTriggers="t1" affirmativeTextAndAccessKey="Ok"
+                                                   dialogListener="#{Mrg_unmergeAction.unmerge}">
+                                            <f:facet name="buttonBar"/>
+                                            <af:outputText value="Si conferma l'operazione di unmerge?" id="ot21"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl1" layout="scroll">
+                                <af:panelHeader text="Anagrafica valida" id="ph1">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:panelFormLayout id="pfl1" maxColumns="4" rows="3">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Idinterno.hints.label}" id="plam1">
+                                            <af:outputText value="#{bindings.Idinterno.inputValue}"
+                                                           shortDesc="#{bindings.Idinterno.hints.tooltip}" id="ot1"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Cognome.hints.label}" id="plam2">
+                                            <af:outputText value="#{bindings.Cognome.inputValue}"
+                                                           shortDesc="#{bindings.Cognome.hints.tooltip}" id="ot2"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Nome.hints.label}" id="plam3">
+                                            <af:outputText value="#{bindings.Nome.inputValue}"
+                                                           shortDesc="#{bindings.Nome.hints.tooltip}" id="ot3"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.DataNascita.hints.label}" id="plam4">
+                                            <af:outputText value="#{bindings.DataNascita.inputValue}"
+                                                           shortDesc="#{bindings.DataNascita.hints.tooltip}" id="ot4">
+                                                <af:convertDateTime pattern="#{bindings.DataNascita.format}"/>
+                                            </af:outputText>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Sesso.hints.label}" id="plam5">
+                                            <af:outputText value="#{bindings.Sesso.inputValue}"
+                                                           shortDesc="#{bindings.Sesso.hints.tooltip}" id="ot5"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Codts.hints.label}" id="plam6">
+                                            <af:outputText value="#{bindings.Codts.inputValue}"
+                                                           shortDesc="#{bindings.Codts.hints.tooltip}" id="ot6"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Cf.hints.label}" id="plam7">
+                                            <af:outputText value="#{bindings.Cf.inputValue}"
+                                                           shortDesc="#{bindings.Cf.hints.tooltip}" id="ot7"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.DocIdent.hints.label}" id="plam8">
+                                            <af:outputText value="#{bindings.DocIdent.inputValue}"
+                                                           shortDesc="#{bindings.DocIdent.hints.tooltip}" id="ot8"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.CognomeMed.hints.label}" id="plam9">
+                                            <af:outputText value="#{bindings.CognomeMed.inputValue}"
+                                                           shortDesc="#{bindings.CognomeMed.hints.tooltip}" id="ot9"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.NomeMed.hints.label}" id="plam10">
+                                            <af:outputText value="#{bindings.NomeMed.inputValue}"
+                                                           shortDesc="#{bindings.NomeMed.hints.tooltip}" id="ot10"/>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:panelHeader text="Anagrafica deprecata" id="ph2">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:panelFormLayout id="pfl2" maxColumns="4" rows="3">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Idinterno1.hints.label}" id="plam11">
+                                            <af:outputText value="#{bindings.Idinterno1.inputValue}"
+                                                           shortDesc="#{bindings.Idinterno1.hints.tooltip}" id="ot11"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Cognome1.hints.label}" id="plam12">
+                                            <af:outputText value="#{bindings.Cognome1.inputValue}"
+                                                           shortDesc="#{bindings.Cognome1.hints.tooltip}" id="ot12"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Nome1.hints.label}" id="plam13">
+                                            <af:outputText value="#{bindings.Nome1.inputValue}"
+                                                           shortDesc="#{bindings.Nome1.hints.tooltip}" id="ot13"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.DataNascita1.hints.label}"
+                                                                 id="plam14">
+                                            <af:outputText value="#{bindings.DataNascita1.inputValue}"
+                                                           shortDesc="#{bindings.DataNascita1.hints.tooltip}" id="ot14">
+                                                <af:convertDateTime pattern="#{bindings.DataNascita1.format}"/>
+                                            </af:outputText>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Sesso1.hints.label}" id="plam15">
+                                            <af:outputText value="#{bindings.Sesso1.inputValue}"
+                                                           shortDesc="#{bindings.Sesso1.hints.tooltip}" id="ot15"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Codts1.hints.label}" id="plam16">
+                                            <af:outputText value="#{bindings.Codts1.inputValue}"
+                                                           shortDesc="#{bindings.Codts1.hints.tooltip}" id="ot16"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Cf1.hints.label}" id="plam17">
+                                            <af:outputText value="#{bindings.Cf1.inputValue}"
+                                                           shortDesc="#{bindings.Cf1.hints.tooltip}" id="ot17"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.DocIdent1.hints.label}" id="plam18">
+                                            <af:outputText value="#{bindings.DocIdent1.inputValue}"
+                                                           shortDesc="#{bindings.DocIdent1.hints.tooltip}" id="ot18"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.CognomeMed1.hints.label}"
+                                                                 id="plam19">
+                                            <af:outputText value="#{bindings.CognomeMed1.inputValue}"
+                                                           shortDesc="#{bindings.CognomeMed1.hints.tooltip}" id="ot19"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.NomeMed1.hints.label}" id="plam20">
+                                            <af:outputText value="#{bindings.NomeMed1.inputValue}"
+                                                           shortDesc="#{bindings.NomeMed1.hints.tooltip}" id="ot20"/>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:panelHeader text="Merge anagrafico" id="ph3">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:panelFormLayout id="pfl3" maxColumns="4" rows="2">
+                                        <f:facet name="footer"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Dtinsert.hints.label}" id="plam21">
+                                            <af:outputText value="#{bindings.Dtinsert.inputValue}"
+                                                           shortDesc="#{bindings.Dtinsert.hints.tooltip}" id="ot22">
+                                                <af:convertDateTime pattern="#{bindings.Dtinsert.format}"/>
+                                            </af:outputText>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Opinsert.hints.label}" id="plam22">
+                                            <af:outputText value="#{bindings.Opinsert.inputValue}"
+                                                           shortDesc="#{bindings.Opinsert.hints.tooltip}" id="ot23"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Note.hints.label}" id="plam23">
+                                            <af:outputText value="#{bindings.Note.inputValue}"
+                                                           shortDesc="#{bindings.Note.hints.tooltip}" id="ot24"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:selectBooleanCheckbox value="#{bindings.Unmerge.inputValue}"
+                                                                  label="#{bindings.Unmerge.label}"
+                                                                  disabled="true"
+                                                                  shortDesc="#{bindings.Unmerge.hints.tooltip}"
+                                                                  id="sbc1"/>
+                                        <af:panelLabelAndMessage label="#{bindings.Dtunmerge.hints.label}" id="plam24">
+                                            <af:outputText value="#{bindings.Dtunmerge.inputValue}"
+                                                           shortDesc="#{bindings.Dtunmerge.hints.tooltip}" id="ot25">
+                                                <af:convertDateTime pattern="#{bindings.Dtunmerge.format}"/>
+                                            </af:outputText>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Opunmerge.hints.label}" id="plam25">
+                                            <af:outputText value="#{bindings.Opunmerge.inputValue}"
+                                                           shortDesc="#{bindings.Opunmerge.hints.tooltip}" id="ot26"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="#{bindings.Noteunmerge.hints.label}"
+                                                                 id="plam26">
+                                            <af:outputText value="#{bindings.Noteunmerge.inputValue}"
+                                                           shortDesc="#{bindings.Noteunmerge.hints.tooltip}" id="ot27"/>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                </af:panelHeader>
+                                <af:panelHeader text="Operazioni effettuate dal merge" id="ph4">
+                                    <f:facet name="context"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="menuBar"/>
+                                    <f:facet name="legend"/>
+                                    <f:facet name="info"/>
+                                    <af:table value="#{bindings.Mrg_SoMergeOperazioniView1.collectionModel}" var="row"
+                                              rows="#{bindings.Mrg_SoMergeOperazioniView1.rangeSize}"
+                                              emptyText="#{bindings.Mrg_SoMergeOperazioniView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              rowBandingInterval="0"
+                                              fetchSize="#{bindings.Mrg_SoMergeOperazioniView1.rangeSize}" id="t2">
+                                        <af:column headerText="Modificato"
+                                                   id="c1" width="250">
+                                            <af:outputText value="#{row.Tabella}.#{row.CampoChiave}=#{row.Chiave}"
+                                                           shortDesc="#{bindings.Mrg_SoMergeOperazioniView1.hints.Tabella.tooltip}"
+                                                           id="ot28"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Mrg_SoMergeOperazioniView1.hints.OldCodts.label}"
+                                                   id="c4" width="150">
+                                            <af:outputText value="#{row.OldCodts}"
+                                                           shortDesc="#{bindings.Mrg_SoMergeOperazioniView1.hints.OldCodts.tooltip}"
+                                                           id="ot31"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Mrg_SoMergeOperazioniView1.hints.Note.label}"
+                                                   id="c5" width="250">
+                                            <af:outputText value="#{row.Note}"
+                                                           shortDesc="#{bindings.Mrg_SoMergeOperazioniView1.hints.Note.tooltip}"
+                                                           id="ot32"/>
+                                        </af:column>
+                                        <af:column headerText="#{bindings.Mrg_SoMergeOperazioniView1.hints.Annullata.label}"
+                                                   id="c6">
+                                            <af:selectBooleanCheckbox selected="#{row.Annullata == 1}" readOnly="true"
+                                                                      id="sbc2"/>
+                                        </af:column>
+                                    </af:table>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Merge anagrafico"/>
+                <f:attribute name="navigation" value="#{Mrg_unmergeAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

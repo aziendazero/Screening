@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="mrg_archiviazione.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:panelStretchLayout id="pt_psl1" bottomHeight="50px" topHeight="85px"
+                                   inlineStyle="margin:5px 5px 5px 5px;">
+                <f:facet name="center">
+                    <af:panelSplitter id="pt_ps1" orientation="vertical" positionedFromEnd="true" splitterPosition="20">
+                        <f:facet name="first">
+                            <af:decorativeBox id="pt_db2" theme="light" topHeight="50px">
+                                <f:facet name="center">
+                                    <af:panelFormLayout id="pfl1">
+                                        <f:facet name="footer">
+                                            <af:toolbar id="t1">
+                                                <af:button text="Conferma" id="b1"
+                                                           actionListener="#{Mrg_segnalazioniAction.archivia}"/>
+                                                <af:button text="Annulla" id="b2">
+                                                    <af:returnActionListener/>
+                                                </af:button>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <af:inputDate label="Data archiviazione" id="id1" readOnly="true"
+                                                      value="#{Mrg_segnalazioniAction.currentDate}"/>
+                                        <af:inputText label="Operatore archiviazione" id="it1" value="#{sessionScope.user}"
+                                                      disabled="true"/>
+                                        <af:selectBooleanCheckbox value="#{bindings.Evasione.inputValue}"
+                                                                  label="#{bindings.Evasione.label}"
+                                                                  shortDesc="#{bindings.Evasione.hints.tooltip}"
+                                                                  id="sbc1"/>
+                                        <af:inputText value="#{bindings.Notearchiv.inputValue}"
+                                                      label="#{bindings.Notearchiv.hints.label}"
+                                                      required="#{bindings.Notearchiv.hints.mandatory}"
+                                                      columns="60"
+                                                      maximumLength="#{bindings.Notearchiv.hints.precision}"
+                                                      shortDesc="#{bindings.Notearchiv.hints.tooltip}" id="it2"
+                                                      rows="3">
+                                            <f:validator binding="#{bindings.Notearchiv.validator}"/>
+                                        </af:inputText>
+                                    </af:panelFormLayout>
+                                </f:facet>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                                        <h1>Archiviazione proposta di merge</h1>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:decorativeBox>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelGroupLayout id="pt_pgl2" halign="start" layout="horizontal">
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="infoPopup">
+                                    <af:dialog id="pt_d1" title="Info" type="ok">
+                                        <f:facet name="buttonBar"/>
+                                        <af:panelGroupLayout id="pt_pgl3" halign="center" layout="vertical">
+                                            <af:outputText value="Screening" id="pt_ot2"/>
+                                            <af:outputText value="Versione #{initParam.VERSIONE}" id="pt_ot3"/>
+                                            <af:outputText value="Versione base dati #{initParam.VERSIONE_DATABASE}"
+                                                           id="pt_ot5"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                <af:outputFormatted value="info" id="pt_of1" styleUsage="pageStamp"
+                                                    inlineStyle="text-align:right;">
+                                    <af:showPopupBehavior popupId="infoPopup" triggerType="click"/>
+                                </af:outputFormatted>
+                                <af:spacer width="20" height="10" id="pt_s2"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+                <f:facet name="top">
+                    <af:decorativeBox id="pt_db1" theme="medium">
+                        <f:facet name="center">
+                            <af:panelStretchLayout id="pt_psl2" startWidth="460px" endWidth="120px" bottomHeight="20px">
+                                <f:facet name="center"></f:facet>
+                                <f:facet name="bottom">
+                                    <af:panelGroupLayout id="pt_pgl1" layout="vertical" valign="baseline" halign="end">
+                                        <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                        <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                            id="pt_of2" styleUsage="instruction"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="end"></f:facet>
+                                <f:facet name="start">
+                                    <af:panelGroupLayout id="pt_pgl5" layout="horizontal">
+                                        <af:image source="/images/logo-regione.png"
+                                                  shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                                  inlineStyle="height:25px;"/>
+                                        <af:spacer width="20" height="10" id="pt_s1"/>
+                                        <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                                       id="pt_ot1" inlineStyle="font-size:medium;"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+</f:view>

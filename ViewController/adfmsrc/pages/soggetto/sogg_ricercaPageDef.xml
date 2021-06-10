@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="sogg_ricercaPageDef"
+                Package="pages.soggetto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator id="A_SelTrialBraccioView1Iterator" Binds="A_SelTrialBraccioView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="A_SelTrialStatoView1Iterator" Binds="A_SelTrialStatoView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="Sogg_DistrettiView1Iterator" Binds="Sogg_DistrettiView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="Sogg_RicercaView1Iterator" Binds="Sogg_RicercaView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="10"/>
+    <iterator id="Sogg_SelCprelView1Iterator" Binds="Sogg_SelCprelView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="Sogg_SoCnfTipiDocView1Iterator" Binds="Sogg_SoCnfTipiDocView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="Sogg_RicParamDataControl_dataProvider_rootIter" Binds="root" DataControl="Sogg_RicParamDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Sogg_SelCprelView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SelCprelView1Iterator1"/>
+    <iterator id="Sogg_ComuneView1Iterator" Binds="Sogg_ComuneView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Sogg_SoChiaviView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoChiaviView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AURRequestDataControl" id="AURRequestDataControlIterator"/>
+    <accessorIterator MasterBinding="AURRequestDataControlIterator" Binds="AURFilter" RangeSize="10"
+                      DataControl="AURRequestDataControl" BeanClass="model.datacontrol.aur.AURFilter"
+                      id="AURFilterIterator"/>
+    <iterator Binds="Sogg_SoCnfClassePopView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfClassePopView1Iterator"/>
+    <iterator id="PL_BeanDataControl_dataProvider_rootIter" Binds="root" DataControl="PL_BeanDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Cnf_SoCnfInvitiFastView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Cnf_SoCnfInvitiFastView1Iterator"/>
+    <iterator Binds="Sogg_CprelInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_CprelInvitoView1Iterator"/>
+    <iterator Binds="Sogg_TipoInvitoView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_TipoInvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idCprel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SelCprelView1Iterator1">
+      <AttrNames>
+        <Item Value="idCprel"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codFisc">
+      <AttrNames>
+        <Item Value="codFisc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="tessSan">
+      <AttrNames>
+        <Item Value="tessSan"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="desComRes">
+      <AttrNames>
+        <Item Value="desComRes"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idDistr" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_DistrettiView1Iterator"
+          NullValueFlag="start" NullValueId="idDistr_null">
+      <AttrNames>
+        <Item Value="idDistr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="desMedico">
+      <AttrNames>
+        <Item Value="desMedico"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="inEta" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="inEta"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="etaMin">
+      <AttrNames>
+        <Item Value="etaMin"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="etaMax">
+      <AttrNames>
+        <Item Value="etaMax"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="tipoDocumento" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfTipiDocView1Iterator"
+          NullValueFlag="start" NullValueId="tipoDocumento_null">
+      <AttrNames>
+        <Item Value="tipoDocumento"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdTipoDoc"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codiceDocumento">
+      <AttrNames>
+        <Item Value="codiceDocumento"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="soloStorico" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="soloStorico"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="altoRischio" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="altoRischio"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="restituire" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="restituire"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idStatoTrial" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SelTrialStatoView1Iterator">
+      <AttrNames>
+        <Item Value="idStatoTrial"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdstatoTrial"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idBraccioTrial" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="A_SelTrialBraccioView1Iterator">
+      <AttrNames>
+        <Item Value="idBraccioTrial"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdbraccioTrial"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="testProposto" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="testProposto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="HPV"/>
+        <Item Value="PAP"/>
+      </ValueList>
+    </list>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="prelievoHpv" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="prelievoHpv"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Si"/>
+        <Item Value="No"/>
+      </ValueList>
+    </list>
+    <tree IterBinding="Sogg_RicercaView1Iterator" id="Sogg_RicercaView1">
+      <nodeDefinition DefName="model.soggetto.Sogg_RicercaView" Name="Sogg_RicercaView10">
+        <AttrNames>
+          <Item Value="TrialStatoDescr"/>
+          <Item Value="TrialBraccioDescr"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Escl"/>
+          <Item Value="Dtapp"/>
+          <Item Value="DescTpinv"/>
+          <Item Value="DescEsito"/>
+          <Item Value="Consenso"/>
+          <Item Value="Idcentroprelievo"/>
+          <Item Value="Cf"/>
+          <Item Value="Codts"/>
+          <Item Value="Codcomres"/>
+          <Item Value="Coddistrzona"/>
+          <Item Value="Codiceregmedico"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Ulss"/>
+          <Item Value="Invpres"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Eta"/>
+          <Item Value="Idcref"/>
+          <Item Value="Livello"/>
+          <Item Value="Dtrichiamo"/>
+          <Item Value="Tprich"/>
+          <Item Value="Altorischio" Binds="Altorischio"/>
+          <Item Value="Restituire"/>
+          <Item Value="Orario"/>
+          <Item Value="Centro"/>
+          <Item Value="Idcentro1liv"/>
+          <Item Value="Idcentro2liv"/>
+          <Item Value="Sollecitare" Binds="Sollecitare"/>
+          <Item Value="VaccHpv"/>
+          <Item Value="VaccinatoHpv"/>
+          <Item Value="Sigla"/>
+          <Item Value="IdstatoTrial"/>
+          <Item Value="IdbraccioTrial"/>
+          <Item Value="TestProposto"/>
+          <Item Value="PrelievoHpv"/>
+          <Item Value="PrelievoHpvDescr"/>
+          <Item Value="FasciaHpv" Binds="FasciaHpv"/>
+          <Item Value="Codesitoinvito"/>
+          <Item Value="ReleaseCodeComRes"/>
+          <Item Value="Confermato"/>
+          <Item Value="Chiave"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="Sogg_RicercaView1Iterator" id="FasciaHpv" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FasciaHpv"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Sogg_RicercaView1Iterator" id="Sollecitare" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Sollecitare"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Sogg_RicercaView1Iterator" id="Altorischio" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Altorischio"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codComRes">
+      <AttrNames>
+        <Item Value="codComRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicercaView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idComRes">
+      <AttrNames>
+        <Item Value="idComRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="idMedico">
+      <AttrNames>
+        <Item Value="idMedico"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="mpiRegionale">
+      <AttrNames>
+        <Item Value="mpiRegionale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicercaView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicercaView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoChiaviView1Iterator" id="DataCreazione">
+      <AttrNames>
+        <Item Value="DataCreazione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="fiscalCode">
+      <AttrNames>
+        <Item Value="fiscalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="nameFam">
+      <AttrNames>
+        <Item Value="nameFam"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="nameGiv">
+      <AttrNames>
+        <Item Value="nameGiv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="cs">
+      <AttrNames>
+        <Item Value="cs"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="mpi">
+      <AttrNames>
+        <Item Value="mpi"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AURFilterIterator" id="birthTimeDate">
+      <AttrNames>
+        <Item Value="birthTimeDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codClassePop" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfClassePopView1Iterator"
+          NullValueFlag="start" NullValueId="codClassePop_null">
+      <AttrNames>
+        <Item Value="codClassePop"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codclasse"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="AURFilterIterator" id="birthTime">
+      <AttrNames>
+        <Item Value="birthTime"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicercaView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="chiave">
+      <AttrNames>
+        <Item Value="chiave"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="annoNascita">
+      <AttrNames>
+        <Item Value="annoNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codRichiesta">
+      <AttrNames>
+        <Item Value="codRichiesta"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_RicParamDataControl_dataProvider_rootIter" id="codCampione">
+      <AttrNames>
+        <Item Value="codCampione"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Cnf_SoCnfInvitiFastView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfInvitiFastView" Name="Cnf_SoCnfInvitiFastView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="NomeConf"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tpscr"/>
+          <Item Value="Idtpinvito"/>
+          <Item Value="Idcentro"/>
+          <Item Value="DataCorrente"/>
+          <Item Value="Data"/>
+          <Item Value="Codesitoinvito"/>
+          <Item Value="StampaEtichetta"/>
+          <Item Value="Note"/>
+          <Item Value="Dtins"/>
+          <Item Value="Opins"/>
+          <Item Value="Dtmod"/>
+          <Item Value="Utilizza"/>
+          <Item Value="Ordine"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Cnf_SoCnfInvitiFastView11">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfInvitiFastView" Name="Cnf_SoCnfInvitiFastView110">
+        <AttrNames>
+          <Item Value="NomeConf"/>
+          <Item Value="Ordine"/>
+          <Item Value="Idcentro" Binds="Idcentro"/>
+          <Item Value="Idtpinvito" Binds="Idtpinvito"/>
+          <Item Value="DataCorrente" Binds="DataCorrente"/>
+          <Item Value="Data"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" ListOperMode="navigation"
+          ListIter="Cnf_SoCnfInvitiFastView1Iterator" id="Cnf_SoCnfInvitiFastView12" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="NomeConf"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Idcentro" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_CprelInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="Idtpinvito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_TipoInvitoView1Iterator">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Ulss"/>
+        <Item Value="Tpscr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Idtpinvito"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="Cnf_SoCnfInvitiFastView1Iterator" id="DataCorrente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DataCorrente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+  </bindings>
+  <ResourceBundle>
+    <PropertiesBundle xmlns="http://xmlns.oracle.com/adfm/resourcebundle"
+                      PropertiesFile="pages.soggetto.common.sogg_ricercaPageDefMsgBundle"/>
+  </ResourceBundle>
+</pageDefinition>

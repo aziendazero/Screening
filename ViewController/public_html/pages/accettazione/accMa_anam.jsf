@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.pages.accettazione.accMa_anamBundle']}"/>
+    <af:document title="#{viewcontrollerBundle.ANAMNESI}" id="d1">
+        <af:messages id="m1"/>
+        <af:clientListener method="removeEmptyOptionList(['pt1:Idopanamnesi'])"
+                       type="load"/> 
+        <af:form id="f1"  binding="#{AccMa_anamAction.frm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempOpFunction.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1" topHeight="80px">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl10" layout="vertical">
+                                <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                    <af:toolbar id="t4">
+                                        <af:button text="#{viewcontrollerBundle.REFERTO}" id="b10"
+                                            rendered="#{!sessionScope.SONoDatiSensibili==true}"
+                                            action="#{MenuUtilBean.doAction('to_refMa_Anam', AccMa_anamAction, 'tsk=view_refMa_ricercaPageDef')}"/>
+                                    </af:toolbar>
+                                    <af:spacer width="100" height="10" id="s69"/>
+                                    <af:toolbar id="t1">
+                                        <af:button text="Precedente" id="b3" disabled="#{!bindings.Previous.enabled}"
+                                                   actionListener="#{AccMa_anamAction.prevInvitoMammo}"
+                                                   partialSubmit="true"/>
+                                        <af:button text="Successivo" id="b1" disabled="#{!bindings.Next.enabled}"
+                                                   actionListener="#{AccMa_anamAction.nextInvitoMammo}"
+                                                   partialSubmit="true"/>
+                                    </af:toolbar>
+                                    <af:spacer width="30" height="10" id="s4"/>
+                                    <af:spacer width="100" height="10" id="s6"/>
+                                    <af:toolbar id="t2">
+                                        <af:button text="Scheda compilata" id="b8" rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                            <af:showPopupBehavior popupId="Scheda_compilata"/>
+                                        </af:button>
+                                        <af:popup childCreation="deferred" autoCancel="disabled" id="Scheda_compilata">
+                                            <af:dialog id="d3"
+                                                       title="#{viewcontrollerBundle.SALVATAGGIO_SCHEDA_ANAMNESI}"
+                                                       type="none">
+                                                <af:message id="m2" messageType="info"
+                                                            message="#{viewcontrollerBundle.ATTENZIONE__CONTINUANDO__VERRANNO_AUTOMATICAMENTE_SALVATE_LE_MODIFICHE_ALLA_SCHEDA_ANAMNESI_}"/>
+                                                <f:facet name="buttonBar">
+                                                    <af:panelGroupLayout id="pgl211" halign="end" layout="horizontal">
+                                                        <af:toolbar id="t311">
+                                                            <af:button text="#{viewcontrollerBundle.SALVA_E_STAMPA}"
+                                                                       id="b311">
+                                                                <af:setPropertyListener from="#{bindings.IdAnamma.inputValue}"
+                                                                                        to="#{requestScope.idAnamma}"
+                                                                                        type="action"/>
+                                                                <af:setPropertyListener from="#{1!=1}"
+                                                                                        to="#{requestScope.schedaEmpty}"
+                                                                                        type="action"/>
+                                                                <af:fileDownloadActionListener filename="SchedaAnamMx_#{bindings.IdAnamma.inputValue}.pdf"
+                                                                                               method="#{AccMa_anamAction.stampaScheda}"
+                                                                                               contentType="application/pdf"/>
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                            <af:button text="Annulla" id="b611">
+                                                                <af:clientListener method="showHidePopup('pt1:Scheda_compilata', false)"
+                                                                                   type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </af:panelGroupLayout>
+                                                </f:facet>
+                                            </af:dialog>
+                                        </af:popup>
+                                        <af:button text="Scheda da compilare" id="b9" rendered="#{!sessionScope.SONoDatiSensibili==true}">
+                                            <af:setPropertyListener from="#{bindings.Idinvito.inputValue}"
+                                                                    to="#{requestScope.Idinvito}" type="action"/>
+                                            <af:setPropertyListener from="#{1==1}" to="#{requestScope.schedaEmpty}"
+                                                                    type="action"/>
+                                            <af:fileDownloadActionListener filename="SchedaAnamMxVuota_#{bindings.Idinvito.inputValue}.pdf"
+                                                                           method="#{AccMa_anamAction.stampaScheda}"
+                                                                           contentType="application/pdf"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s2"/>
+                                        <af:button text="Etichette" id="b2"
+                                                   rendered="#{sessionScope.SOPianoLavoro==true and !sessionScope.SONoDatiSensibili==true}" useWindow="true"
+                                                   immediate="true" windowEmbedStyle="inlineDocument"
+                                                   windowModalityType="applicationModal" windowHeight="600"
+                                                   windowWidth="600" action="dialog:printPianoLavoro">
+                                            <af:setPropertyListener from="#{bindings.Idcentroprelievo.inputValue}"
+                                                                    to="#{pageFlowScope.pl_centro}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Dtapp.inputValue}"
+                                                                    to="#{pageFlowScope.pl_data}" type="action"/>
+                                            <af:setPropertyListener from="#{bindings.Codts.inputValue}"
+                                                                    to="#{pageFlowScope.pl_codts}" type="action"/>
+                                            <af:setPropertyListener from="single" to="#{pageFlowScope.pl_type}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:spacer width="30" height="10" id="s7"/>
+                                        <af:button text="Aggiorna anamnesi" id="b7"
+                                                   action="#{AccMa_ricercaAction.onAgganam}"/>
+                                        <af:button text="Conferma" id="b4"
+                                                   disabled="#{bindings.Escl.inputValue != null}"
+                                                   action="#{AccMa_anamAction.onConf}" partialSubmit="false"/>
+                                        <af:button text="Annulla" id="b5" action="acc_toMammo" immediate="true">
+                                            <af:setPropertyListener from="#{true}" to="#{sessionScope.fromDett}"
+                                                                    type="action"/>
+                                        </af:button>
+                                        <af:button text="Applica" id="b6" disabled="#{bindings.Escl.inputValue != null}"
+                                                   actionListener="#{AccMa_anamAction.onAppl}"/>
+                                    </af:toolbar>
+                                </af:panelGroupLayout>
+                                <af:spacer width="10" height="10" id="s16"/>
+                                <af:outputText value="#{viewcontrollerBundle.Soggettoescluso}" id="ot1"
+                                               rendered="#{bindings.Escl.inputValue != null}"
+                                               inlineStyle="color:Red; font-size:large;" noWrap="true"/>
+                                 <af:spacer width="30" height="10" id="s5" rendered="#{bindings.Escl.inputValue != null}"/>
+                                <af:outputText value="#{viewcontrollerBundle.Sollecitare}" id="ot2"
+                                               rendered="#{bindings.Sollecitare == '1'}"
+                                               inlineStyle="color:Red; font-size:large;"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pgl3" layout="scroll">
+                                <af:panelFormLayout id="pfl1" rows="1" maxColumns="2">
+                                    <f:facet name="footer"/>
+                                    <af:inputDate value="#{bindings.Dtanamnesi.inputValue}"
+                                                  label="#{bindings.Dtanamnesi.hints.label}"
+                                                  required="#{bindings.Dtanamnesi.hints.mandatory}"
+                                                  columns="#{bindings.Dtanamnesi.hints.displayWidth}"
+                                                  shortDesc="#{bindings.Dtanamnesi.hints.tooltip}" id="id1">
+                                        <f:validator binding="#{bindings.Dtanamnesi.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.Dtanamnesi.format}"/>
+                                    </af:inputDate>
+                                    <af:selectOneChoice value="#{bindings.Idopanamnesi.inputValue}"
+                                                        label="#{bindings.Idopanamnesi.label}"
+                                                        id="Idopanamnesi"
+                                                        shortDesc="#{bindings.Idopanamnesi.hints.tooltip}"
+                                                        autoSubmit="true" valuePassThru="true" showRequired="true">
+                                        <f:selectItems value="#{bindings.Idopanamnesi.items}" id="si1"/>
+                                        <f:validator binding="#{bindings.Idopanamnesi.validator}"/>
+                                    </af:selectOneChoice>
+                                </af:panelFormLayout>
+                                <af:separator id="s1"/>
+                                <af:panelFormLayout id="pfl2" rows="2" maxColumns="2">
+                                    <f:facet name="footer"/>
+                                    <af:selectBooleanCheckbox value="#{bindings.UmFuoriscr.inputValue}"
+                                                              label="#{bindings.UmFuoriscr.label}"
+                                                              shortDesc="#{bindings.UmFuoriscr.hints.tooltip}"
+                                                              id="sbc1" autoSubmit="true"
+                                                              valueChangeListener="#{AccMa_anamAction.onChfscr}"/>
+                                    <af:panelLabelAndMessage label="Lastre consegnate" id="plam1">
+                                        <af:panelGroupLayout id="pgl2" layout="horizontal">
+                                            <af:selectBooleanCheckbox value="#{bindings.UmCons.inputValue}"
+                                                                    disabled="#{bindings.UmFuoriscr.inputValue == '0'}"
+                                                                      shortDesc="#{bindings.UmCons.hints.tooltip}"
+                                                                      id="sbc2" simple="true" partialTriggers="sbc1"
+                                                                      valueChangeListener="#{AccMa_anamAction.onChlc}"
+                                                                      autoSubmit="true"/>
+                                            <af:inputDate value="#{bindings.UmDtcons.inputValue}"
+                                                          label="#{bindings.UmDtcons.hints.label}"
+                                                          required="#{bindings.UmDtcons.hints.mandatory}"
+                                                          disabled="#{bindings.UmFuoriscr.inputValue == '0' || bindings.UmCons.inputValue == '0'}"
+                                                          columns="#{bindings.UmDtcons.hints.displayWidth}"
+                                                          shortDesc="#{bindings.UmDtcons.hints.tooltip}" id="id3"
+                                                          partialTriggers="sbc1 sbc2">
+                                                <f:validator binding="#{bindings.UmDtcons.validator}"/>
+                                                <af:convertDateTime pattern="#{bindings.UmDtcons.format}"/>
+                                            </af:inputDate>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:inputDate value="#{bindings.UmData.inputValue}"
+                                                  label="#{bindings.UmData.hints.label}"
+                                                  required="#{bindings.UmData.hints.mandatory}"
+                                                  disabled="#{bindings.UmFuoriscr.inputValue == '0'}"
+                                                  columns="#{bindings.UmData.hints.displayWidth}"
+                                                  shortDesc="#{bindings.UmData.hints.tooltip}" id="id2"
+                                                  partialTriggers="sbc1">
+                                        <f:validator binding="#{bindings.UmData.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.UmData.format}"/>
+                                    </af:inputDate>
+                                    <af:panelLabelAndMessage label="Lastre restituite" id="plam2">
+                                        <af:panelGroupLayout id="pgl4" layout="horizontal">
+                                            <af:selectBooleanCheckbox value="#{bindings.UmRest.inputValue}"
+                                            disabled="#{bindings.UmFuoriscr.inputValue == '0' || bindings.UmCons.inputValue == '0'}"
+                                                                      shortDesc="#{bindings.UmRest.hints.tooltip}"
+                                                                      id="sbc3" simple="true"
+                                                                      partialTriggers="sbc1 sbc2" autoSubmit="true"
+                                                                      valueChangeListener="#{AccMa_anamAction.onChlr}"/>
+                                            <af:inputDate value="#{bindings.UmDtrest.inputValue}"
+                                                          label="#{bindings.UmDtrest.hints.label}"
+                                                          required="#{bindings.UmDtrest.hints.mandatory}"
+                                                          disabled="#{bindings.UmFuoriscr.inputValue == '0' || bindings.UmCons.inputValue == '0' || bindings.UmRest.inputValue == '0'}"
+                                                          columns="#{bindings.UmDtrest.hints.displayWidth}"
+                                                          shortDesc="#{bindings.UmDtrest.hints.tooltip}" id="id4"
+                                                          partialTriggers="sbc1 sbc2 sbc3">
+                                                <f:validator binding="#{bindings.UmDtrest.validator}"/>
+                                                <af:convertDateTime pattern="#{bindings.UmDtrest.format}"/>
+                                            </af:inputDate>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                </af:panelFormLayout>
+                                <af:separator id="s3"/>
+                                <af:panelFormLayout id="pfl3" rows="1">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.AfEsito.inputValue}"
+                                                        label="#{bindings.AfEsito.label}"
+                                                        required="#{bindings.AfEsito.hints.mandatory}"
+                                                        shortDesc="#{bindings.AfEsito.hints.tooltip}" id="soc2"
+                                                        styleClass="choiceInTable" autoSubmit="true"
+                                                        valuePassThru="true"
+                                                        valueChangeListener="#{AccMa_anamAction.onChfam}">
+                                        <f:selectItems value="#{bindings.AfEsito.items}" id="si2"/>
+                                        <f:validator binding="#{bindings.AfEsito.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:panelGroupLayout id="pgl5" layout="horizontal">
+                                        <af:selectBooleanCheckbox value="#{bindings.AfMadre.inputValue}"
+                                                                  label="#{bindings.AfMadre.label}"
+                                                                  disabled="#{bindings.AfEsito.attributeValue != '2'}"
+                                                                  shortDesc="#{bindings.AfMadre.hints.tooltip}"
+                                                                  id="sbc4" partialTriggers="soc2"/>
+                                        <af:spacer width="10" height="10" id="s9"/>
+                                        <af:selectBooleanCheckbox value="#{bindings.AfSorella.inputValue}"
+                                                                  label="#{bindings.AfSorella.label}"
+                                                                  disabled="#{bindings.AfEsito.attributeValue != '2'}"
+                                                                  shortDesc="#{bindings.AfSorella.hints.tooltip}"
+                                                                  id="sbc5" partialTriggers="soc2"/>
+                                        <af:spacer width="10" height="10" id="s10"/>
+                                        <af:selectBooleanCheckbox value="#{bindings.AfAltro.inputValue}"
+                                                                  label="#{bindings.AfAltro.label}"
+                                                                  disabled="#{bindings.AfEsito.attributeValue != '2'}"
+                                                                  shortDesc="#{bindings.AfAltro.hints.tooltip}"
+                                                                  id="sbc6" autoSubmit="true" partialTriggers="soc2"
+                                                                  valueChangeListener="#{AccMa_anamAction.onChfamaltro}"/>
+                                        <af:spacer width="10" height="10" id="s11"/>
+                                        <af:inputText value="#{bindings.AfAltroTesto.inputValue}" simple="true"
+                                                      required="#{bindings.AfAltroTesto.hints.mandatory}"
+                                                      columns="20"
+                                                      rendered="#{bindings.AfAltro.inputValue != '0'}"
+                                                      maximumLength="#{bindings.AfAltroTesto.hints.precision}"
+                                                      shortDesc="#{bindings.AfAltroTesto.hints.tooltip}" id="it1"
+                                                      partialTriggers="sbc6">
+                                            <f:validator binding="#{bindings.AfAltroTesto.validator}"/>
+                                        </af:inputText>
+                                    </af:panelGroupLayout>
+                                </af:panelFormLayout>
+                                <af:separator id="s8"/>
+                                <af:panelFormLayout id="pfl4" rows="1" maxColumns="3">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.ToPresente.inputValue}"
+                                                        label="#{bindings.ToPresente.label}"
+                                                        required="#{bindings.ToPresente.hints.mandatory}"
+                                                        shortDesc="#{bindings.ToPresente.hints.tooltip}" id="soc3"
+                                                        autoSubmit="true" valuePassThru="true"
+                                                        valueChangeListener="#{AccMa_anamAction.onChtop}"
+                                                        styleClass="choiceInTable">
+                                        <f:selectItems value="#{bindings.ToPresente.items}" id="si3"/>
+                                        <f:validator binding="#{bindings.ToPresente.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:selectBooleanCheckbox value="#{bindings.ToIncorso.inputValue}"
+                                                              label="#{bindings.ToIncorso.label}"
+                                                              disabled="#{bindings.ToPresente.attributeValue != '2'}"
+                                                              shortDesc="#{bindings.ToIncorso.hints.tooltip}"
+                                                              id="sbc7" partialTriggers="soc3"/>
+                                    <af:panelGroupLayout id="pgl6" layout="horizontal">
+                                        <af:inputDate value="#{bindings.ToDal.inputValue}"
+                                                      label="#{bindings.ToDal.hints.label}"
+                                                      disabled="#{bindings.ToPresente.attributeValue != '2'}"
+                                                      required="#{bindings.ToDal.hints.mandatory}"
+                                                      columns="#{bindings.ToDal.hints.displayWidth}"
+                                                      shortDesc="#{bindings.ToDal.hints.tooltip}" id="id5"
+                                                      partialTriggers="soc3">
+                                            <f:validator binding="#{bindings.ToDal.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.ToDal.format}"/>
+                                        </af:inputDate>
+                                        <af:inputDate value="#{bindings.ToAl.inputValue}"
+                                                      label="#{bindings.ToAl.hints.label}"
+                                                      disabled="#{bindings.ToPresente.attributeValue != '2'}"
+                                                      required="#{bindings.ToAl.hints.mandatory}"
+                                                      columns="#{bindings.ToAl.hints.displayWidth}"
+                                                      shortDesc="#{bindings.ToAl.hints.tooltip}" id="id6"
+                                                      partialTriggers="soc3">
+                                            <f:validator binding="#{bindings.ToAl.validator}"/>
+                                            <af:convertDateTime pattern="#{bindings.ToAl.format}"/>
+                                        </af:inputDate>
+                                    </af:panelGroupLayout>
+                                </af:panelFormLayout>
+                                <af:separator id="s12"/>
+                                <af:panelFormLayout id="pfl5" rows="3" maxColumns="2">
+                                    <f:facet name="footer"/>
+                                    <af:selectOneChoice value="#{bindings.IcPresente.inputValue}"
+                                                        label="#{bindings.IcPresente.label}"
+                                                        required="#{bindings.IcPresente.hints.mandatory}"
+                                                        shortDesc="#{bindings.IcPresente.hints.tooltip}" id="soc4"
+                                                        autoSubmit="true" valuePassThru="true"
+                                                        styleClass="choiceInTable">
+                                        <f:selectItems value="#{bindings.IcPresente.items}" id="si4"/>
+                                        <f:validator binding="#{bindings.IcPresente.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:inputDate value="#{bindings.IcDataint.inputValue}"
+                                                  label="#{bindings.IcDataint.hints.label}"
+                                                  disabled="#{bindings.IcPresente.attributeValue != '2'}"
+                                                  required="#{bindings.IcDataint.hints.mandatory}"
+                                                  columns="#{bindings.IcDataint.hints.displayWidth}"
+                                                  shortDesc="#{bindings.IcDataint.hints.tooltip}" id="id7"
+                                                  partialTriggers="soc4">
+                                        <f:validator binding="#{bindings.IcDataint.validator}"/>
+                                        <af:convertDateTime pattern="#{bindings.IcDataint.format}"/>
+                                    </af:inputDate>
+                                    <af:selectOneChoice value="#{bindings.IcSedeint.inputValue}"
+                                                        label="#{bindings.IcSedeint.label}"
+                                                        disabled="#{bindings.IcPresente.attributeValue != '2'}"
+                                                        required="#{bindings.IcSedeint.hints.mandatory}"
+                                                        shortDesc="#{bindings.IcSedeint.hints.tooltip}" id="soc5"
+                                                        partialTriggers="soc4" styleClass="choiceInTable">
+                                        <f:selectItems value="#{bindings.IcSedeint.items}" id="si5"/>
+                                        <f:validator binding="#{bindings.IcSedeint.validator}"/>
+                                    </af:selectOneChoice>
+                                    <af:spacer width="10" height="10" id="s13"/>
+                                    <af:panelLabelAndMessage label="Tipo intervento" id="plam3">
+                                        <af:panelGroupLayout id="pgl7">
+                                            <af:selectOneChoice value="#{bindings.IcIdintervento.inputValue}"
+                                                                required="#{bindings.IcIdintervento.hints.mandatory}"
+                                                                disabled="#{bindings.IcPresente.attributeValue != '2'}"
+                                                                shortDesc="#{bindings.IcIdintervento.hints.tooltip}"
+                                                                id="soc6" simple="true" autoSubmit="true"
+                                                                valuePassThru="true" styleClass="choiceInTable"
+                                                                partialTriggers="soc4">
+                                                <f:selectItems value="#{bindings.IcIdintervento.items}" id="si6"/>
+                                                <f:validator binding="#{bindings.IcIdintervento.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:inputText value="#{bindings.IcAltroint.inputValue}" simple="true"
+                                                          required="#{bindings.IcAltroint.hints.mandatory}"
+                                                          columns="40"
+                                                          rendered="#{bindings.IcIdintervento.attributeValue == '3'}"
+                                                          maximumLength="#{bindings.IcAltroint.hints.precision}"
+                                                          shortDesc="#{bindings.IcAltroint.hints.tooltip}" id="it3"
+                                                          partialTriggers="soc6">
+                                                <f:validator binding="#{bindings.IcAltroint.validator}"/>
+                                            </af:inputText>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                    <af:panelLabelAndMessage label="Motivo intervento" id="plam4">
+                                        <af:panelGroupLayout id="pgl8" layout="horizontal">
+                                            <af:selectOneChoice value="#{bindings.IcIdmot.inputValue}"
+                                                                required="#{bindings.IcIdmot.hints.mandatory}"
+                                                                disabled="#{bindings.IcPresente.attributeValue != '2'}"
+                                                                shortDesc="#{bindings.IcIdmot.hints.tooltip}" id="soc7"
+                                                                simple="true" partialTriggers="soc4"
+                                                                valuePassThru="true" autoSubmit="true"
+                                                                styleClass="choiceInTable">
+                                                <f:selectItems value="#{bindings.IcIdmot.items}" id="si7"/>
+                                                <f:validator binding="#{bindings.IcIdmot.validator}"/>
+                                            </af:selectOneChoice>
+                                            <af:inputText value="#{bindings.IcAltromot.inputValue}" simple="true"
+                                                          required="#{bindings.IcAltromot.hints.mandatory}"
+                                                          columns="40"
+                                                          rendered="${bindings.IcIdmot.attributeValue == '4'}"
+                                                          maximumLength="#{bindings.IcAltromot.hints.precision}"
+                                                          shortDesc="#{bindings.IcAltromot.hints.tooltip}" id="it2"
+                                                          partialTriggers="soc7">
+                                                <f:validator binding="#{bindings.IcAltromot.validator}"/>
+                                            </af:inputText>
+                                        </af:panelGroupLayout>
+                                    </af:panelLabelAndMessage>
+                                </af:panelFormLayout>
+                                <af:separator id="s14"/>
+                                <af:panelGridLayout id="pgl9">
+                                    <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                                        <af:gridCell marginStart="5px" width="50%" id="gc1" halign="stretch">
+                                            <af:table value="#{bindings.AccMa_SoAnamnesimxSintomiView1.collectionModel}"
+                                                      var="row"
+                                                      rows="#{bindings.AccMa_SoAnamnesimxSintomiView1.rangeSize}"
+                                                      emptyText="#{bindings.AccMa_SoAnamnesimxSintomiView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                      rowBandingInterval="0"
+                                                      fetchSize="#{bindings.AccMa_SoAnamnesimxSintomiView1.rangeSize}"
+                                                      id="t3" rowSelection="single">
+                                                <af:column headerText="#{bindings.AccMa_SoAnamnesimxSintomiView1.hints.Descr.label}"
+                                                           id="c1" width="150">
+                                                    <af:outputText value="#{row.bindings.Descr.inputValue}"
+                                                                   shortDesc="#{bindings.AccMa_SoAnamnesimxSintomiView1.hints.Descr.tooltip}"
+                                                                   id="it4"/>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.AccMa_SoAnamnesimxSintomiView1.hints.DxIdsede.label}"
+                                                           id="c2" width="200">
+                                                    <af:selectOneChoice value="#{row.bindings.DxIdsede.inputValue}"
+                                                                        label="#{row.bindings.DxIdsede.label}"
+                                                                        id="soc8">
+                                                        <f:selectItems value="#{row.bindings.DxIdsede.items}" id="si8"/>
+                                                        <f:validator binding="#{row.bindings.DxIdsede.validator}"/>
+                                                    </af:selectOneChoice>
+                                                </af:column>
+                                                <af:column headerText="#{bindings.AccMa_SoAnamnesimxSintomiView1.hints.SxIdsede.label}"
+                                                           id="c3" width="200">
+                                                    <af:selectOneChoice value="#{row.bindings.SxIdsede.inputValue}"
+                                                                        label="#{row.bindings.SxIdsede.label}"
+                                                                        id="soc9">
+                                                        <f:selectItems value="#{row.bindings.SxIdsede.items}" id="si9"/>
+                                                        <f:validator binding="#{row.bindings.SxIdsede.validator}"/>
+                                                    </af:selectOneChoice>
+                                                </af:column>
+                                            </af:table>
+                                        </af:gridCell>
+                                        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2"
+                                                     halign="center" valign="middle">
+                                            <af:image source="/images/quadrantiseno.GIF" shortDesc="Quadranti seno"
+                                                      id="i1"/>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                                <af:separator id="s15"/>
+                                <af:inputText value="#{bindings.Note.inputValue}" label="#{bindings.Note.hints.label}"
+                                              required="#{bindings.Note.hints.mandatory}"
+                                              columns="200"
+                                              maximumLength="#{bindings.Note.hints.precision}"
+                                              shortDesc="#{bindings.Note.hints.tooltip}" id="it5" rows="3">
+                                    <f:validator binding="#{bindings.Note.validator}"/>
+                                </af:inputText>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="viewSubmenu" value="true"/>
+                <f:attribute name="funzionalita"
+                             value="#{bindings.Livello == '1'?'Accettazione 1° livello':'Accettazione 2° livello'}"/>
+                <f:attribute name="viewAnag" value="true"/>
+                <f:attribute name="soggData"
+                             value="#{[bindings.Cognome.inputValue,bindings.Nome.inputValue,bindings.DataNascita.inputValue, bindings.Chiave.inputValue]}"/>
+                <f:attribute name="navigation" value="#{AccMa_anamAction}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

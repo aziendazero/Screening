@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Predisposizione sistema" id="d1">
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSingle.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGridLayout id="pgl5">
+                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+                            <af:gridCell marginStart="5px" width="50%" id="gc1">
+                                <af:panelHeader text="Configurazioni globali" id="ph2">
+                                    <af:panelGroupLayout id="pgl3" layout="vertical">
+                                        <af:navigationPane hint="list" id="np1" value="#{global_configuration_menu}"
+                                                           var="configMenu">
+                                            <f:facet name="nodeStamp">
+                                                <af:commandNavigationItem text="#{configMenu.label}"
+                                                                          action="#{configMenu.doAction}"
+                                                                          rendered="#{configMenu.rendered}" id="cni1"/>
+                                            </f:facet>
+                                        </af:navigationPane>
+                                        <af:showDetail id="sd3" disclosedText="Centri"
+                                                       undisclosedText="Centri">
+                                            <af:navigationPane hint="list" id="np2" value="#{cnf_centri_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni2"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd1" disclosedText="Gestione documentale"
+                                                       undisclosedText="Gestione documentale">
+                                            <af:navigationPane hint="list" id="np3" value="#{cnf_documentale_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni3"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd2" disclosedText="Personale medico"
+                                                       undisclosedText="Personale medico">
+                                            <af:navigationPane hint="list" id="np4" value="#{cnf_operatori_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni4"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd4" disclosedText="Aree geografiche"
+                                                       undisclosedText="Aree geografiche">
+                                            <af:navigationPane hint="list" id="np5" value="#{cnf_geografiche_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni5"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd5" disclosedText="Configurazioni anagrafiche"
+                                                       undisclosedText="Configurazioni anagrafiche">
+                                            <af:navigationPane hint="list" id="np6" value="#{cnf_confanag_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni6"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd6" disclosedText="Import/Export"
+                                                       undisclosedText="Import/Export">
+                                            <af:navigationPane hint="list" id="np7" value="#{cnf_impexp_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni7"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd7" disclosedText="Flussi regionali"
+                                                       undisclosedText="Flussi regionali">
+                                            <af:navigationPane hint="list" id="np8" value="#{cnf_flussiregionali_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni8"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                    </af:panelGroupLayout>
+                                </af:panelHeader>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2">
+                                <af:panelHeader text="Configurazioni di screening" id="ph1">
+                                    <af:panelGroupLayout id="pgl2" layout="vertical">
+                                        <af:navigationPane hint="list" id="np12" value="#{system_configuration_menu}"
+                                                           var="screenMenu">
+                                            <f:facet name="nodeStamp">
+                                                <af:commandNavigationItem text="#{screenMenu.label}"
+                                                                          action="#{screenMenu.doAction}"
+                                                                          rendered="#{screenMenu.rendered}" id="cni12"/>
+                                            </f:facet>
+                                        </af:navigationPane>
+                                        <af:showDetail id="sd8" disclosedText="Inviti"
+                                                       undisclosedText="Inviti">
+                                            <af:navigationPane hint="list" id="np9" value="#{cnf_inviti_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni9"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd9" disclosedText="Suggerimenti dei referti"
+                                                       undisclosedText="Suggerimenti dei referti">
+                                            <af:navigationPane hint="list" id="np10" value="#{cnf_suggerimenti_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni10"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd10" disclosedText="Questionari"
+                                                       undisclosedText="Questionari" 
+                                                       rendered="#{sessionScope.scr=='CA' or sessionScope.scr=='PF'}">
+                                            <af:navigationPane hint="list" id="np11" value="#{cnf_questionari_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni11"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                        <af:showDetail id="sd11" rendered="#{sessionScope.scr=='CI'}" disclosedText="Accettazione"
+                                                       undisclosedText="Accettazione">
+                                            <af:navigationPane hint="list" id="np13" value="#{cnf_accettazioni_menu}"
+                                                               var="menuModel">
+                                                <f:facet name="nodeStamp">
+                                                    <af:commandNavigationItem text="#{menuModel.label}" id="cni13"
+                                                                              action="#{menuModel.doAction}"
+                                                                              rendered="#{menuModel.rendered}"/>
+                                                </f:facet>
+                                            </af:navigationPane>
+                                        </af:showDetail>
+                                    </af:panelGroupLayout>
+                                </af:panelHeader>
+                            </af:gridCell>
+                        </af:gridRow>
+                    </af:panelGridLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Predisposizione del sistema"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

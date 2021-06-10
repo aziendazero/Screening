@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Round_SoCnfDistrzona"
+   Version="11.1.2.62.76"
+   DBObjectType="table"
+   DBObjectName="SO_CNF_DISTRZONA"
+   AliasName="Round_SoCnfDistrzona"
+   BindingStyle="Oracle"
+   UseGlueCode="false"
+   RowClass="model.round.Round_SoCnfDistrzonaImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Idcnf"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCNF"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_DISTRZONA"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="CODDISTRZONA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_DISTRZONA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentro1liv"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTRO1LIV"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_DISTRZONA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentro2liv"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTRO2LIV"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_CNF_DISTRZONA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_DISTRZONA"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_CNF_DISTRZONA"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Cnf_SoCentroPrelRef"
+      Association="model.FkSoCnfDHaC1livSoCentrAssoc"
+      AssociationEnd="model.FkSoCnfDHaC1livSoCentrAssoc.Cnf_SoCentroPrelRef"
+      AssociationOtherEnd="model.FkSoCnfDHaC1livSoCentrAssoc.Round_SoCnfDistrzona"
+      Type="model.conf.Cnf_SoCentroPrelRefImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoCentroPrelRef1"
+      Association="model.FkSoCnfDHaC2livSoCentrAssoc"
+      AssociationEnd="model.FkSoCnfDHaC2livSoCentrAssoc.Cnf_SoCentroPrelRef1"
+      AssociationOtherEnd="model.FkSoCnfDHaC2livSoCentrAssoc.Round_SoCnfDistrzona1"
+      Type="model.conf.Cnf_SoCentroPrelRefImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoDistrettoZona"
+      Association="model.FkSoCnfDHaRunCnSoDistrAssoc"
+      AssociationEnd="model.FkSoCnfDHaRunCnSoDistrAssoc.Cnf_SoDistrettoZona"
+      AssociationOtherEnd="model.FkSoCnfDHaRunCnSoDistrAssoc.Round_SoCnfDistrzona"
+      Type="model.conf.Cnf_SoDistrettoZonaImpl"
+      IsUpdateable="true">
+   </AccessorAttribute>
+   <Key
+      Name="PkSoCnfDistrzona"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_CNF_DISTRZONA"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoCnfDistrzona.Idcnf" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoCnfDFkCnfDzSoDistr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_DISTRETTO_ZONA"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_CNF_D_FK_CNF_DZ_SO_DISTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoCnfDistrzona.Coddistrzona" />
+         <Item Value="model.round.Round_SoCnfDistrzona.Ulss" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoCnfDHaC1livSoCentr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_CNF_D_HA_C1LIV_SO_CENTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoCnfDistrzona.Idcentro1liv" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoCnfDHaC2livSoCentr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_CNF_D_HA_C2LIV_SO_CENTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.round.Round_SoCnfDistrzona.Idcentro2liv" />
+      </AttrArray>
+   </Key>
+</Entity>

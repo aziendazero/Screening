@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="sogg_anagPageDef"
+                Package="pages.soggetto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Name="onOneReturn" Type="java.lang.Boolean"/>
+    </variableIterator>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Sogg_SoSoggettoView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggettoView1Iterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Sogg_NuovoParamDataControl"
+              id="Sogg_NuovoParamDataControlIterator"/>
+    <iterator Binds="Sogg_ProvinciaView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_ProvinciaView1Iterator"/>
+    <iterator Binds="Sogg_SoCittadinanzaView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCittadinanzaView1Iterator"/>
+    <iterator Binds="Sogg_SoDocumentiSoggView1" RangeSize="10" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoDocumentiSoggView1Iterator"/>
+    <iterator Binds="Sogg_SoSoggScrView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoSoggScrView1Iterator"/>
+    <iterator id="Sogg_ComuneView1Iterator" Binds="Sogg_ComuneView1" DataControl="Sogg_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Cnf_SoCnfAnagRegView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Cnf_SoCnfAnagRegView1Iterator"/>
+    <iterator id="ComuneIterator" Binds="Sogg_ComuneView1" DataControl="Sogg_AppModuleDataControl" RangeSize="25"/>
+    <iterator Binds="Sogg_SinondView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SinondView1Iterator"/>
+    <iterator Binds="Sogg_ProvinciaView2" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_ProvinciaView2Iterator"/>
+    <iterator Binds="Sogg_DistrettiView2" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_DistrettiView2Iterator"/>
+    <iterator Binds="Sogg_SoCnfCentro1livView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfCentro1livView1Iterator"/>
+    <iterator Binds="Sogg_SoCnfCentro2livView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfCentro2livView1Iterator"/>
+    <iterator Binds="Sogg_SoCnfClassePopView1" RangeSize="-1" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoCnfClassePopView1Iterator"/>
+    <iterator id="Sogg_SoMedicoAURView1Iterator" Binds="Sogg_SoMedicoAURView1" DataControl="AurAppModuleDataControl"
+              RangeSize="25"/>
+    <iterator Binds="Sogg_SoInvitoView1" RangeSize="25" DataControl="Sogg_AppModuleDataControl"
+              id="Sogg_SoInvitoView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cf">
+      <AttrNames>
+        <Item Value="Cf"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Coddistrzona">
+      <AttrNames>
+        <Item Value="Coddistrzona"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codcomnascita">
+      <AttrNames>
+        <Item Value="Codcomnascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codcomres">
+      <AttrNames>
+        <Item Value="Codcomres"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codcomdom">
+      <AttrNames>
+        <Item Value="Codcomdom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codcomscr">
+      <AttrNames>
+        <Item Value="Codcomscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codiceregmedico">
+      <AttrNames>
+        <Item Value="Codiceregmedico"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codst">
+      <AttrNames>
+        <Item Value="Codst"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Idinterno">
+      <AttrNames>
+        <Item Value="Idinterno"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="CognomeConiuge">
+      <AttrNames>
+        <Item Value="CognomeConiuge"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Sesso">
+      <AttrNames>
+        <Item Value="Sesso"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="CapComres">
+      <AttrNames>
+        <Item Value="CapComres"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="IndirizzoRes">
+      <AttrNames>
+        <Item Value="IndirizzoRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="CapComdom">
+      <AttrNames>
+        <Item Value="CapComdom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="IndirizzoDom">
+      <AttrNames>
+        <Item Value="IndirizzoDom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="CapComsrc">
+      <AttrNames>
+        <Item Value="CapComsrc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="IndirizzoScr">
+      <AttrNames>
+        <Item Value="IndirizzoScr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Tel1">
+      <AttrNames>
+        <Item Value="Tel1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Tel2">
+      <AttrNames>
+        <Item Value="Tel2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Datasceltammg">
+      <AttrNames>
+        <Item Value="Datasceltammg"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Ulss">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codpr">
+      <AttrNames>
+        <Item Value="Codpr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodePr">
+      <AttrNames>
+        <Item Value="ReleaseCodePr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Descomres">
+      <AttrNames>
+        <Item Value="Descomres"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Provres">
+      <AttrNames>
+        <Item Value="Provres"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodePrRes">
+      <AttrNames>
+        <Item Value="ReleaseCodePrRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Descomdom">
+      <AttrNames>
+        <Item Value="Descomdom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Provdom">
+      <AttrNames>
+        <Item Value="Provdom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodePrDom">
+      <AttrNames>
+        <Item Value="ReleaseCodePrDom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Descomscr">
+      <AttrNames>
+        <Item Value="Descomscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodePrScr">
+      <AttrNames>
+        <Item Value="ReleaseCodePrScr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Sigla">
+      <AttrNames>
+        <Item Value="Sigla"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Descodanag">
+      <AttrNames>
+        <Item Value="Descodanag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Dtcreazione">
+      <AttrNames>
+        <Item Value="Dtcreazione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Dtultmodifica">
+      <AttrNames>
+        <Item Value="Dtultmodifica"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Noteanag">
+      <AttrNames>
+        <Item Value="Noteanag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Opcreazione">
+      <AttrNames>
+        <Item Value="Opcreazione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Opultmodifica">
+      <AttrNames>
+        <Item Value="Opultmodifica"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Dtdecesso">
+      <AttrNames>
+        <Item Value="Dtdecesso"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cognmed">
+      <AttrNames>
+        <Item Value="Cognmed"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Nomemed">
+      <AttrNames>
+        <Item Value="Nomemed"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Desstato">
+      <AttrNames>
+        <Item Value="Desstato"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Email">
+      <AttrNames>
+        <Item Value="Email"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cellulare">
+      <AttrNames>
+        <Item Value="Cellulare"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeCit">
+      <AttrNames>
+        <Item Value="ReleaseCodeCit"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeComNas">
+      <AttrNames>
+        <Item Value="ReleaseCodeComNas"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeComRes">
+      <AttrNames>
+        <Item Value="ReleaseCodeComRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeComDom">
+      <AttrNames>
+        <Item Value="ReleaseCodeComDom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeComScr">
+      <AttrNames>
+        <Item Value="ReleaseCodeComScr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeStNas">
+      <AttrNames>
+        <Item Value="ReleaseCodeStNas"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeStRes">
+      <AttrNames>
+        <Item Value="ReleaseCodeStRes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="ReleaseCodeStDom">
+      <AttrNames>
+        <Item Value="ReleaseCodeStDom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Cittadinanza">
+      <AttrNames>
+        <Item Value="Cittadinanza"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_NuovoParamDataControlIterator" id="codPr" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_ProvinciaView1Iterator">
+      <AttrNames>
+        <Item Value="codPr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codpr"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="CodCitt">
+      <AttrNames>
+        <Item Value="CodCitt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="Descrizione1">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="Dtinizioval">
+      <AttrNames>
+        <Item Value="Dtinizioval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="Dtfineval">
+      <AttrNames>
+        <Item Value="Dtfineval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoCittadinanzaView1Iterator" id="ReleaseCode">
+      <AttrNames>
+        <Item Value="ReleaseCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="IdTipoDoc">
+      <AttrNames>
+        <Item Value="IdTipoDoc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="DocIdent">
+      <AttrNames>
+        <Item Value="DocIdent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Codts1">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Ulss1">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtrilascio">
+      <AttrNames>
+        <Item Value="Dtrilascio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtfinevalidita">
+      <AttrNames>
+        <Item Value="Dtfinevalidita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="DocIdentAnag">
+      <AttrNames>
+        <Item Value="DocIdentAnag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="IdIstComp">
+      <AttrNames>
+        <Item Value="IdIstComp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtinserimento">
+      <AttrNames>
+        <Item Value="Dtinserimento"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Opinserimento">
+      <AttrNames>
+        <Item Value="Opinserimento"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Dtultmodifica1">
+      <AttrNames>
+        <Item Value="Dtultmodifica"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Opmodifica">
+      <AttrNames>
+        <Item Value="Opmodifica"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="RowID">
+      <AttrNames>
+        <Item Value="RowID"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Descrizione2">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Ordine">
+      <AttrNames>
+        <Item Value="Ordine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Codts2">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Ulss2">
+      <AttrNames>
+        <Item Value="Ulss"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Tpscr">
+      <AttrNames>
+        <Item Value="Tpscr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Roundindiv">
+      <AttrNames>
+        <Item Value="Roundindiv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Numanatomia">
+      <AttrNames>
+        <Item Value="Numanatomia"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Numradiologia">
+      <AttrNames>
+        <Item Value="Numradiologia"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Numlab">
+      <AttrNames>
+        <Item Value="Numlab"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Roundinviti">
+      <AttrNames>
+        <Item Value="Roundinviti"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Altorischio">
+      <AttrNames>
+        <Item Value="Altorischio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="CodidsoggMx">
+      <AttrNames>
+        <Item Value="CodidsoggMx"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Tprichiamo">
+      <AttrNames>
+        <Item Value="Tprichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idcentrorichiamo">
+      <AttrNames>
+        <Item Value="Idcentrorichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Dtrichiamo">
+      <AttrNames>
+        <Item Value="Dtrichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idcentro1liv">
+      <AttrNames>
+        <Item Value="Idcentro1liv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idcentro2liv">
+      <AttrNames>
+        <Item Value="Idcentro2liv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Consenso">
+      <AttrNames>
+        <Item Value="Consenso"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Mx45Braccio">
+      <AttrNames>
+        <Item Value="Mx45Braccio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Mx45Codice">
+      <AttrNames>
+        <Item Value="Mx45Codice"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="InizioVal">
+      <AttrNames>
+        <Item Value="InizioVal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idstorico">
+      <AttrNames>
+        <Item Value="Idstorico"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="IdstatoTrial">
+      <AttrNames>
+        <Item Value="IdstatoTrial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idtrial">
+      <AttrNames>
+        <Item Value="Idtrial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="IdbraccioTrial">
+      <AttrNames>
+        <Item Value="IdbraccioTrial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="TrialBraccioDescr">
+      <AttrNames>
+        <Item Value="TrialBraccioDescr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="IdbraccioTrial1">
+      <AttrNames>
+        <Item Value="IdbraccioTrial1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idtrial1">
+      <AttrNames>
+        <Item Value="Idtrial1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Tpscr1">
+      <AttrNames>
+        <Item Value="Tpscr1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="TrialStatoDescr">
+      <AttrNames>
+        <Item Value="TrialStatoDescr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="IdstatoTrial1">
+      <AttrNames>
+        <Item Value="IdstatoTrial1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idtrial2">
+      <AttrNames>
+        <Item Value="Idtrial2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Tpscr2">
+      <AttrNames>
+        <Item Value="Tpscr2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="RoundindivHpv">
+      <AttrNames>
+        <Item Value="RoundindivHpv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="ConsensoCond">
+      <AttrNames>
+        <Item Value="ConsensoCond"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="InizioVal1">
+      <AttrNames>
+        <Item Value="InizioVal1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idstorico1">
+      <AttrNames>
+        <Item Value="Idstorico1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="VaccinatoHpv">
+      <AttrNames>
+        <Item Value="VaccinatoHpv"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="LivelloRichiamo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Idtpinvito">
+      <AttrNames>
+        <Item Value="Idtpinvito"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Ulss11">
+      <AttrNames>
+        <Item Value="Ulss1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Sogg_SoSoggScrView1Iterator" id="Tpscr3">
+      <AttrNames>
+        <Item Value="Tpscr3"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Codpr1" DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="false" ListIter="Sogg_ProvinciaView1Iterator">
+      <AttrNames>
+        <Item Value="ReleaseCodePr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="ReleaseCode"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Codanagreg1">
+      <AttrNames>
+        <Item Value="Codanagreg"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Codanagreg" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfAnagRegView1Iterator">
+      <AttrNames>
+        <Item Value="Codanagreg"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codanagreg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Sigla"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="variables" id="onOneReturn1">
+      <AttrNames>
+        <Item Value="onOneReturn"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Sogg_SoSoggScrView1Iterator" id="Consenso1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SinondView1Iterator">
+      <AttrNames>
+        <Item Value="Consenso"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggScrView1Iterator" id="ConsensoCond1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SinondView1Iterator">
+      <AttrNames>
+        <Item Value="ConsensoCond"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idsinond"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Sogg_SoDocumentiSoggView1">
+      <nodeDefinition DefName="model.soggetto.Sogg_SoDocumentiSoggView" Name="Sogg_SoDocumentiSoggView10">
+        <AttrNames>
+          <Item Value="Descrizione"/>
+          <Item Value="IdTipoDoc"/>
+          <Item Value="DocIdent"/>
+          <Item Value="Dtrilascio"/>
+          <Item Value="Dtfinevalidita"/>
+          <Item Value="DocIdentAnag"/>
+          <Item Value="IdIstComp"/>
+          <Item Value="Dtinserimento"/>
+          <Item Value="Opinserimento"/>
+          <Item Value="DescrizioneTipoDoc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="Sogg_SoDocumentiSoggView1Iterator" id="Create" RequiresUpdateModel="true" Action="createRow"/>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Provres1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_ProvinciaView2Iterator">
+      <AttrNames>
+        <Item Value="ReleaseCodePrRes"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="ReleaseCode"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Coddistrzona1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_DistrettiView2Iterator">
+      <AttrNames>
+        <Item Value="Coddistrzona"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Coddistrzona"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Provdom1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_ProvinciaView2Iterator">
+      <AttrNames>
+        <Item Value="ReleaseCodePrDom"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="ReleaseCode"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggettoView1Iterator" id="Provscr1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_ProvinciaView2Iterator">
+      <AttrNames>
+        <Item Value="ReleaseCodePrScr"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="ReleaseCode"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Codpr"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggScrView1Iterator" id="Idcentro1liv1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfCentro1livView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro1liv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Sogg_SoSoggScrView1Iterator" id="Idcentro2liv1" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfCentro2livView1Iterator">
+      <AttrNames>
+        <Item Value="Idcentro2liv"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <methodAction id="updateAURAnag" RequiresUpdateModel="true" Action="invokeMethod" MethodName="updateAURAnag"
+                  IsViewObjectMethod="false" DataControl="AURRequestDataControl"
+                  InstanceName="data.AURRequestDataControl.dataProvider"
+                  ReturnName="data.AURRequestDataControl.methodResults.updateAURAnag_AURRequestDataControl_dataProvider_updateAURAnag_result">
+      <NamedData NDName="mpi" NDValue="#{bindings.Idinterno.inputValue}" NDType="java.lang.String"/>
+      <NamedData NDName="cf" NDValue="#{bindings.Cf.inputValue}" NDType="java.lang.String"/>
+    </methodAction>
+    <list IterBinding="Sogg_SoSoggScrView1Iterator" id="Codclassepop" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Sogg_SoCnfClassePopView1Iterator">
+      <AttrNames>
+        <Item Value="Codclassepop"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Codclasse"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="Sogg_SoSoggettoView1Iterator" id="CellConfermato" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="CellConfermato"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Sogg_SoSoggettoView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

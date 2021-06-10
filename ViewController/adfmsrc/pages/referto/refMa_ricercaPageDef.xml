@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refMa_ricercaPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="root" RangeSize="25" DataControl="Ref_SearchBeanDataControl"
+              id="Ref_SearchBeanDataControlIterator"/>
+    <iterator Binds="Ref_SoCentroRefertoView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCentroRefertoView1Iterator"/>
+    <iterator Binds="Ref_SoCentroPrelievoView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCentroPrelievoView1Iterator"/>
+    <iterator Binds="Ref_SelTipiDocView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SelTipiDocView1Iterator"/>
+    <iterator Binds="Cnf_SoCnfCategTpinvitoView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Cnf_SoCnfCategTpinvitoView1Iterator"/>
+    <iterator Binds="Ref_SoCnfCategTpinvito1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoCnfCategTpinvito1Iterator"/>
+    <iterator Binds="Ref_SoSuggerimentiView1" RangeSize="-1" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoSuggerimentiView1Iterator"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiMAView1" RangeSize="10" DataControl="RefMa_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiMAView1Iterator"/>
+    <iterator id="A_SoAziendaView1Iterator" Binds="A_SoAziendaView1" DataControl="RefMa_AppModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="A_SoCnfPartemplateView1Iterator" Binds="A_SoCnfPartemplateView1"
+              DataControl="RefMa_AppModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="centro_ref" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCentroRefertoView1Iterator">
+      <AttrNames>
+        <Item Value="centro_ref"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="centro_prel" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCentroPrelievoView1Iterator">
+      <AttrNames>
+        <Item Value="centro_prel"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcentro"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrbreve"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="cognome">
+      <AttrNames>
+        <Item Value="cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="codts">
+      <AttrNames>
+        <Item Value="codts"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="tipoDocumento" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SelTipiDocView1Iterator">
+      <AttrNames>
+        <Item Value="tipoDocumento"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="IdTipoDoc"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="soloStorico" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="soloStorico"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="referti_chiusi" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="referti_chiusi"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="tutti"/>
+        <Item Value="aperti"/>
+        <Item Value="chiusi"/>
+        <Item Value="con 3 livello aperto"/>
+        <Item Value="con 3 livello chiuso"/>
+      </ValueList>
+    </list>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="inviti_attivi" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="inviti_attivi"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="pendente" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="pendente"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="giorni_pendente">
+      <AttrNames>
+        <Item Value="giorni_pendente"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="pres_no_referto" DTSupportsMRU="false"
+            StaticList="true">
+      <AttrNames>
+        <Item Value="pres_no_referto"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="prelievo_al" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="prelievo_al"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="il"/>
+        <Item Value="prima del"/>
+        <Item Value="dopo il"/>
+      </ValueList>
+    </list>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="prelievo_dal">
+      <AttrNames>
+        <Item Value="prelievo_dal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="nome">
+      <AttrNames>
+        <Item Value="nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="giorno_nascita">
+      <AttrNames>
+        <Item Value="giorno_nascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="mese_nascita">
+      <AttrNames>
+        <Item Value="mese_nascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="anno_nascita">
+      <AttrNames>
+        <Item Value="anno_nascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="codiceDocumento">
+      <AttrNames>
+        <Item Value="codiceDocumento"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="livello" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject" StaticList="true">
+      <AttrNames>
+        <Item Value="livello"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="tutti"/>
+        <Item Value="1"/>
+        <Item Value="2"/>
+      </ValueList>
+    </list>
+    <button IterBinding="Ref_SearchBeanDataControlIterator" id="da_revisionare" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="da_revisionare"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="follow_up" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Cnf_SoCnfCategTpinvitoView1Iterator">
+      <AttrNames>
+        <Item Value="follow_up"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcateg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="cat_richiamo" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfCategTpinvito1Iterator">
+      <AttrNames>
+        <Item Value="cat_richiamo"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcateg"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <list IterBinding="Ref_SearchBeanDataControlIterator" id="sugg_esito" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoSuggerimentiView1Iterator">
+      <AttrNames>
+        <Item Value="sugg_esito"/>
+        <Item Value="sugg_descrizione"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Esitosugg"/>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <tree IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Ref_SoInvitiPerRefertiMAView1">
+      <nodeDefinition DefName="model.referto.Ref_SoInvitiPerRefertiMAView" Name="Ref_SoInvitiPerRefertiMAView10">
+        <AttrNames>
+          <Item Value="Attivo"/>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Dtapp"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tipoinvitobreve"/>
+          <Item Value="Esitobreve"/>
+          <Item Value="CentroPrelievo"/>
+          <Item Value="CentroReferto"/>
+          <Item Value="Sugg"/>
+          <Item Value="RichiamoDesc"/>
+          <Item Value="Idinvito"/>
+          <Item Value="Codts"/>
+          <Item Value="Livello"/>
+          <Item Value="Idreferto2liv"/>
+          <Item Value="Idreferto"/>
+          <Item Value="Completo"/>
+          <Item Value="Completo2"/>
+          <Item Value="Confermato"/>
+          <Item Value="Chiave"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Idcentroprelievo">
+      <AttrNames>
+        <Item Value="Idcentroprelievo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Codts">
+      <AttrNames>
+        <Item Value="Codts"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiMAView1Iterator" id="Livello">
+      <AttrNames>
+        <Item Value="Livello"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="emptyQuery">
+      <AttrNames>
+        <Item Value="emptyQuery"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SearchBeanDataControlIterator" id="chiave">
+      <AttrNames>
+        <Item Value="chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

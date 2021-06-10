@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<af:pageTemplateDef xmlns:af="http://xmlns.oracle.com/adf/faces/rich" var="attrs" definition="private"
+                    xmlns:afc="http://xmlns.oracle.com/adf/faces/rich/component" xmlns:f="http://java.sun.com/jsf/core">
+    <af:xmlContent>
+        <afc:component>
+            <afc:description/>
+            <afc:display-name>tempSugg</afc:display-name>
+            <afc:facet>
+                <afc:facet-name>
+                    content
+                </afc:facet-name>
+            </afc:facet>
+            <afc:attribute>
+                <afc:attribute-name>funzionalita</afc:attribute-name>
+                <afc:attribute-class>java.lang.String</afc:attribute-class>
+            </afc:attribute>
+        </afc:component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="pt_psl1" topHeight="85px">
+        <f:facet name="start"/>
+        <f:facet name="end"/>
+        <f:facet name="top">
+            <af:decorativeBox id="pt_db1" theme="medium">
+                <f:facet name="center">
+                    <af:panelStretchLayout id="pt_psl2" startWidth="460px" endWidth="140px" bottomHeight="20px">
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pt_pgl6" layout="horizontal" halign="center">
+                                <af:button text="Predisposizione sistema" id="cil1"
+                                                         action="adfMenu_menuConfig" icon="/images/wrench.png"/>
+                            </af:panelGroupLayout>
+                            
+                        </f:facet>
+                        <f:facet name="bottom">
+                            <af:panelGroupLayout id="pt_pgl1" layout="vertical" valign="baseline" halign="end">
+                                <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                    id="pt_of2" styleUsage="instruction"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="end">
+                            <af:panelGroupLayout id="pt_pgl7" layout="horizontal">
+                                <!--<af:navigationPane id="pt_np1" hint="buttons" level="0">
+                                    <af:commandNavigationItem text="Esci" id="pt_cni1" icon="/images/door_in.png"
+                                                              action="#{LogoutBean.logoutAction}"/>
+                                </af:navigationPane>-->
+                                <af:navigationPane id="pt_np1" hint="buttons" var="menuInfo" value="#{root_menu}"
+                                                   level="0">
+                                    <f:facet name="nodeStamp">
+                                        <af:commandNavigationItem text="#{menuInfo.label}" id="pt_cni1"
+                                                                  destination="#{menuInfo.destination}"
+                                                                  action="#{menuInfo.doAction}"
+                                                                  icon="#{menuInfo.icon}"/>
+                                    </f:facet>
+                                </af:navigationPane>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="start">
+                            <af:panelGroupLayout id="pt_pgl5" layout="horizontal">
+                                <af:image source="/images/logo-regione.png"
+                                          shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                          inlineStyle="height:25px;"/>
+                                <af:spacer width="20" height="10" id="pt_s1"/>
+                                <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                               id="pt_ot1" inlineStyle="font-size:medium;"
+                                               styleClass="#{sessionScope.scr=='CI'?'TitoloCI':sessionScope.scr=='MA'?'TitoloMA':sessionScope.scr=='CO'?'TitoloCO':sessionScope.scr=='CA'?'TitoloCA':sessionScope.scr=='PF'?'TitoloPF':'Titolo'}"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:decorativeBox>
+        </f:facet>
+        <f:facet name="bottom"/>
+        <f:facet name="center">
+            <af:decorativeBox id="pt_db3" topHeight="32px">
+                <f:facet name="center">
+                    <af:panelSplitter id="pt_ps1" orientation="vertical" positionedFromEnd="true" splitterPosition="20">
+                        <f:facet name="first">
+                            <af:decorativeBox id="pt_db2" theme="light" topHeight="30px">
+                                <f:facet name="center">
+                                    <af:facetRef facetName="content"/>
+                                </f:facet>
+                                <f:facet name="top">
+                                    <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                                        <af:outputText value="#{attrs.funzionalita}" id="pt_ot4"
+                                                       inlineStyle="font-size:large;"/>
+                                        <af:separator id="pt_s4"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:decorativeBox>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelGroupLayout id="pt_pgl2" halign="start" layout="horizontal">
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="infoPopup">
+                                    <af:dialog id="pt_d1" title="Info" type="ok">
+                                        <f:facet name="buttonBar"/>
+                                        <af:panelGroupLayout id="pt_pgl3" halign="center" layout="vertical">
+                                            <af:outputText value="Screening" id="pt_ot2"/>
+                                            <af:outputText value="Versione #{initParam.VERSIONE}" id="pt_ot3"/>
+                                            <af:outputText value="Versione base dati #{initParam.VERSIONE_DATABASE}"
+                                                           id="pt_ot5"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                <af:outputFormatted value="info" id="pt_of1" styleUsage="pageStamp"
+                                                    inlineStyle="text-align:right;">
+                                    <af:showPopupBehavior popupId="infoPopup" triggerType="click"/>
+                                </af:outputFormatted>
+                                <af:spacer width="20" height="10" id="pt_s2"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+                <f:facet name="top">
+                    <af:navigationPane id="pt_np3" level="0" value="#{cnf_suggerimenti_menu}"  var="menuInfo">
+                        <f:facet name="nodeStamp">
+                            <af:commandNavigationItem text="#{menuInfo.label}" id="cni1" 
+                                                      destination="#{menuInfo.destination}"
+                                                      rendered="#{menuInfo.rendered}"
+                                                      action="#{menuInfo.doAction}"/>
+                        </f:facet>
+                    </af:navigationPane>
+                </f:facet>
+            </af:decorativeBox>
+        </f:facet>
+    </af:panelStretchLayout>
+</af:pageTemplateDef>
+
+

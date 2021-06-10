@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="StoricoReferto1livDetail"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="536"
+		 columnSpacing="0"
+		 leftMargin="29"
+		 rightMargin="30"
+		 topMargin="2"
+		 bottomMargin="2"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+	<reportFont name="CustomFont" isDefault="true" fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+
+	<parameter name="denominazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="intestazione" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pieDiPagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giorni_orari" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="telefono" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_inviti" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref1" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_ref2" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="firma_lmed" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="luogo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo" isForPrompting="false" class="java.io.File">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="num_invito" isForPrompting="true" class="java.math.BigDecimal">
+		<defaultValueExpression ><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+    SO_REFERTOCITO1LIV.IDREFERTO,
+    SO_REFERTOCITO1LIV.DTREFERTO,
+    SO_REFERTOCITO1LIV.IDINVITO,
+    SO_REFERTOCITO1LIV.NOTEREFERTO,
+    SO_REFERTOCITO1LIV.COMPLETO,
+    SO_REFERTOCITO1LIV.IDSUGG,
+    SO_REFERTOCITO1LIV.ULSS,
+    SO_REFERTOCITO1LIV.TPSCR,
+    SO_CNF_SUGG_1LIV.DESCRIZIONE SUGGERIMENTO,
+    DECODE(SO_OPMEDICO.TITOLO,NULL,'',SO_OPMEDICO.TITOLO)||' ' ||
+    SO_OPMEDICO.COGNOME||' '||
+    SO_OPMEDICO.NOME SUPERVISORE,
+    ADEPRE.CONF_DESC ADEGUATEZZA,
+    DECODE(INALIM.CONF_DESC,NULL,NULL,CONCAT('Motivo ',INALIM.CONF_DESC)) MOTIVO,
+    GIUDIA.CONF_DESC GIUDIZIO,
+    DECODE(POSITI.CONF_DESC,NULL,NULL,CONCAT(' per ',POSITI.CONF_DESC)) POSITIVITA,
+    SO_CNF_REF1LIV.descrizione HPV_ESITO,
+    SO_CNF_REF1LIV.idcnfref1l HPV_codesito
+
+ FROM SO_REFERTOCITO1LIV, SO_CNF_SUGG_1LIV,
+ (SELECT
+    SO_CODREF1LIVC.ID,
+    SO_CODREF1LIVC.GRUPPO,
+    SO_CODREF1LIVC.IDCNFREF,
+    SO_CODREF1LIVC.IDREFERTO,
+    SO_CODREF1LIVC.ULSS,
+    SO_CODREF1LIVC.TPSCR,
+    SO_CNF_REF1LIV.DESCRIZIONE CONF_DESC
+ FROM SO_CODREF1LIVC JOIN SO_CNF_REF1LIV
+ ON (SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L AND
+ SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO AND
+ SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS AND
+ SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR)
+ WHERE SO_CODREF1LIVC.GRUPPO='ADEPRE'
+ ) ADEPRE,
+  (SELECT
+    SO_CODREF1LIVC.ID,
+    SO_CODREF1LIVC.GRUPPO,
+    SO_CODREF1LIVC.IDCNFREF,
+    SO_CODREF1LIVC.IDREFERTO,
+    SO_CODREF1LIVC.ULSS,
+    SO_CODREF1LIVC.TPSCR,
+    SO_CNF_REF1LIV.DESCRIZIONE CONF_DESC
+ FROM SO_CODREF1LIVC JOIN SO_CNF_REF1LIV
+ ON (SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L AND
+ SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO AND
+ SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS AND
+ SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR)
+ WHERE SO_CODREF1LIVC.GRUPPO='INALIM'
+ ) INALIM,
+ (SELECT
+    SO_CODREF1LIVC.ID,
+    SO_CODREF1LIVC.GRUPPO,
+    SO_CODREF1LIVC.IDCNFREF,
+    SO_CODREF1LIVC.IDREFERTO,
+    SO_CODREF1LIVC.ULSS,
+    SO_CODREF1LIVC.TPSCR,
+    SO_CNF_REF1LIV.DESCRIZIONE CONF_DESC
+ FROM SO_CODREF1LIVC JOIN SO_CNF_REF1LIV
+ ON (SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L AND
+ SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO AND
+ SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS AND
+ SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR)
+ WHERE SO_CODREF1LIVC.GRUPPO='GIUDIA'
+ ) GIUDIA,
+ (SELECT
+    SO_CODREF1LIVC.ID,
+    SO_CODREF1LIVC.GRUPPO,
+    SO_CODREF1LIVC.IDCNFREF,
+    SO_CODREF1LIVC.IDREFERTO,
+    SO_CODREF1LIVC.ULSS,
+    SO_CODREF1LIVC.TPSCR,
+    SO_CNF_REF1LIV.DESCRIZIONE CONF_DESC
+ FROM SO_CODREF1LIVC JOIN SO_CNF_REF1LIV
+ ON (SO_CODREF1LIVC.IDCNFREF=SO_CNF_REF1LIV.IDCNFREF1L AND
+ SO_CODREF1LIVC.GRUPPO=SO_CNF_REF1LIV.GRUPPO AND
+ SO_CODREF1LIVC.ULSS=SO_CNF_REF1LIV.ULSS AND
+ SO_CODREF1LIVC.TPSCR=SO_CNF_REF1LIV.TPSCR)
+ WHERE SO_CODREF1LIVC.GRUPPO='POSITI'
+ ) POSITI,
+ SO_OPMEDICO, so_cnf_ref1liv
+ 
+ where (SO_REFERTOCITO1LIV.IDSUGG=SO_CNF_SUGG_1LIV.IDSUGG(+) AND
+ SO_REFERTOCITO1LIV.ULSS=SO_CNF_SUGG_1LIV.ULSS(+) AND
+ SO_REFERTOCITO1LIV.TPSCR=SO_CNF_SUGG_1LIV.TPSCR(+))
+ AND ADEPRE.IDREFERTO(+)=SO_REFERTOCITO1LIV.IDREFERTO
+ AND INALIM.IDREFERTO(+)=SO_REFERTOCITO1LIV.IDREFERTO
+ AND GIUDIA.IDREFERTO(+)=SO_REFERTOCITO1LIV.IDREFERTO
+ AND POSITI.IDREFERTO(+)=SO_REFERTOCITO1LIV.IDREFERTO
+ AND SO_REFERTOCITO1LIV.IDMEDREF=SO_OPMEDICO.IDOP(+)
+ AND SO_REFERTOCITO1LIV.esito_hpv=SO_CNF_REF1LIV.idcnfref1l(+)
+ AND SO_REFERTOCITO1LIV.GR_esito_hpv=SO_CNF_REF1LIV.gruppo(+)
+ AND SO_REFERTOCITO1LIV.ulss=SO_CNF_REF1LIV.ulss(+)
+ AND SO_REFERTOCITO1LIV.tpscr=SO_CNF_REF1LIV.tpscr(+)
+AND SO_REFERTOCITO1LIV.IDINVITO=$P{num_invito}]]></queryString>
+
+	<field name="IDREFERTO" class="java.math.BigDecimal"/>
+	<field name="DTREFERTO" class="java.sql.Timestamp"/>
+	<field name="IDINVITO" class="java.math.BigDecimal"/>
+	<field name="NOTEREFERTO" class="java.lang.String"/>
+	<field name="COMPLETO" class="java.math.BigDecimal"/>
+	<field name="IDSUGG" class="java.math.BigDecimal"/>
+	<field name="ULSS" class="java.lang.String"/>
+	<field name="TPSCR" class="java.lang.String"/>
+	<field name="SUGGERIMENTO" class="java.lang.String"/>
+	<field name="SUPERVISORE" class="java.lang.String"/>
+	<field name="ADEGUATEZZA" class="java.lang.String"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<field name="GIUDIZIO" class="java.lang.String"/>
+	<field name="POSITIVITA" class="java.lang.String"/>
+	<field name="HPV_ESITO" class="java.lang.String"/>
+	<field name="HPV_CODESITO" class="java.math.BigDecimal"/>
+
+
+		<group  name="giudia" >
+			<groupExpression><![CDATA[$F{IDREFERTO}+$F{GIUDIZIO}]]></groupExpression>
+			<groupHeader>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="1"
+						width="533"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Adeguatezza del preparato: "+$F{ADEGUATEZZA}+"  "+new String($F{MOTIVO}==null?"":$F{MOTIVO})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="60"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="30"
+						width="367"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-1"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Refertato: "+new SimpleDateFormat("dd/MM/yyyy").format($F{DTREFERTO})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="1"
+						width="535"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Consiglio: "+$F{SUGGERIMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="414"
+						y="41"
+						width="122"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-6"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["1° liv. "+new String($F{COMPLETO}!=null && $F{COMPLETO}.intValue()==1?"CHIUSO":"aperto")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="14"
+						width="451"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-2"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Supervisore: "+new String($F{SUPERVISORE}==null?null:$F{SUPERVISORE})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="30"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="1"
+						width="532"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-3"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[$F{HPV_CODESITO}==null || $F{HPV_CODESITO}.intValue()==0?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Esito HPV: "+$F{HPV_ESITO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="240"
+						y="15"
+						width="294"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-4"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{POSITIVITA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="15"
+						width="236"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-7"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font reportFont="CustomFont"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Giudizio diagnostico: "+$F{GIUDIZIO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

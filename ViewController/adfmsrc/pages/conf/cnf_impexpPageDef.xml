@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="cnf_impexpPageDef"
+                Package="pages.conf">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Cnf_SoCnfImpexpView1" RangeSize="10" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoCnfImpexpView1Iterator"/>
+    <iterator Binds="Cnf_SoAziendaView1" RangeSize="25" DataControl="Cnf_AppModuleDataControl"
+              id="Cnf_SoAziendaView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Cnf_SoCnfImpexpView1">
+      <nodeDefinition DefName="model.conf.Cnf_SoCnfImpexpView" Name="Cnf_SoCnfImpexpView10">
+        <AttrNames>
+          <Item Value="Progrulss"/>
+          <Item Value="Idcentroref"/>
+          <Item Value="Suffisso"/>
+          <Item Value="Impexp"/>
+          <Item Value="Tpdip"/>
+          <Item Value="Modalita"/>
+          <Item Value="Email"/>
+          <Item Value="Cancellazione"/>
+          <Item Value="CancellazioneDip"/>
+          <Item Value="LunghRecord"/>
+          <Item Value="Ulss"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Nomefilepart">
+      <AttrNames>
+        <Item Value="Nomefilepart"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Nomefilearr">
+      <AttrNames>
+        <Item Value="Nomefilearr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Posizfilepart">
+      <AttrNames>
+        <Item Value="Posizfilepart"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Posizfilearr">
+      <AttrNames>
+        <Item Value="Posizfilearr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Ippart">
+      <AttrNames>
+        <Item Value="Ippart"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Usrftp">
+      <AttrNames>
+        <Item Value="Usrftp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Pwdftp">
+      <AttrNames>
+        <Item Value="Pwdftp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Orasched">
+      <AttrNames>
+        <Item Value="Orasched"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Intervallo">
+      <AttrNames>
+        <Item Value="Intervallo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Ipdirvirtuale">
+      <AttrNames>
+        <Item Value="Ipdirvirtuale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Posizdirvirtuale">
+      <AttrNames>
+        <Item Value="Posizdirvirtuale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Dirvirtuale">
+      <AttrNames>
+        <Item Value="Dirvirtuale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Filevirtuale">
+      <AttrNames>
+        <Item Value="Filevirtuale"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Ftpport">
+      <AttrNames>
+        <Item Value="Ftpport"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Dblink">
+      <AttrNames>
+        <Item Value="Dblink"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Consenso" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Consenso"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Test">
+      <AttrNames>
+        <Item Value="Test"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Tipo">
+      <AttrNames>
+        <Item Value="Tipo"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="Cnf_SoCnfImpexpView1Iterator" id="Delete"
+            InstanceName="Cnf_AppModuleDataControl.Cnf_SoCnfImpexpView1" DataControl="Cnf_AppModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="Cnf_AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <list IterBinding="Cnf_SoAziendaView1Iterator" ListOperMode="navigation" ListIter="Cnf_SoAziendaView1Iterator"
+          id="Cnf_SoAziendaView1" DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Codaz"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

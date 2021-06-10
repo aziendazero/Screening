@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_zone.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_geog.zoneForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempGeo.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top"/>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelSplitter id="ps1" splitterPosition="700">
+                                <f:facet name="first">
+                                    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                                        featuresOff="detach freeze wrap">
+                                        <f:facet name="menus"/>
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t4" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}" >
+                                                <af:group id="g1">
+                                                    <af:button text="Modifica" id="b1"
+                                                               action="creatEditZona" actionListener="#{Cnf_geog.onDettZone}">
+                                                        <af:setPropertyListener from="edit" to="#{requestScope.action}"
+                                                                                type="action"/>
+                                                    </af:button>
+                                                    <af:button text="Cancella" id="b2">
+                                                        <af:showPopupBehavior popupId="p1"/>
+                                                    </af:button>
+                                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                              partialTriggers="t1">
+                                                        <af:dialog id="d2" title="Cancella comune"
+                                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                                   affirmativeTextAndAccessKey="Cancella"
+                                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                                            <f:facet name="buttonBar"/>
+                                                            <h:outputText value="Cancellare definitivamente la seguente zona?" id="ot7"/>
+                                                        </af:dialog>
+                                                    </af:popup>
+                                                </af:group>
+                                                <af:button text="Nuovo" id="b3"
+                                                           action="creatEditZona">
+                                                    <af:setPropertyListener from="create" to="#{requestScope.action}"
+                                                                            type="action"/>
+                                                </af:button>
+                                                <af:selectOneChoice value="#{pageFlowScope.ulssSelectedZone}" label="Azienda sanitaria"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc2"
+                                                    valueChangeListener="#{Cnf_geog.onChangeZone}" autoSubmit="true"
+                                                    binding="#{Cnf_geog.selectedUlssZone}">
+                                                <af:selectItem label="Tutte" id="si22"/>
+                                                <f:selectItems  value="#{bindings.Cnf_SoAziendaView1.items}" id="si4"/>
+                                                </af:selectOneChoice>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="statusbar"/>
+                                        <af:table value="#{bindings.Cnf_SoDistrettoZonaView1.collectionModel}" var="row"
+                                                  rows="#{bindings.Cnf_SoDistrettoZonaView1.rangeSize}"
+                                                  emptyText="#{bindings.Cnf_SoDistrettoZonaView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                  rowBandingInterval="0"
+                                                  selectedRowKeys="#{bindings.Cnf_SoDistrettoZonaView1.collectionModel.selectedRow}"
+                                                  selectionListener="#{bindings.Cnf_SoDistrettoZonaView1.collectionModel.makeCurrent}"
+                                                  rowSelection="single"
+                                                  fetchSize="#{bindings.Cnf_SoDistrettoZonaView1.rangeSize}" id="t1" scrollPolicy="page"
+                                                  binding="#{Cnf_geog.tabZone}">
+                                            <af:column headerText="#{bindings.Cnf_SoDistrettoZonaView1.hints.Coddistrzona.label}"
+                                                       id="c1">
+                                                <af:outputText value="#{row.Coddistrzona}"
+                                                               shortDesc="#{bindings.Cnf_SoDistrettoZonaView1.hints.Coddistrzona.tooltip}"
+                                                               id="ot1">
+                                                    <af:convertNumber groupingUsed="false"
+                                                                      pattern="#{bindings.Cnf_SoDistrettoZonaView1.hints.Coddistrzona.format}"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Cnf_SoDistrettoZonaView1.hints.Descrizione.label}"
+                                                       id="c2" width="250">
+                                                <af:outputText value="#{row.Descrizione}"
+                                                               shortDesc="#{bindings.Cnf_SoDistrettoZonaView1.hints.Descrizione.tooltip}"
+                                                               id="ot2"/>
+                                            </af:column>
+                                            <af:column headerText="#{bindings.Cnf_SoDistrettoZonaView1.hints.Ulss.label}"
+                                                       id="c7">
+                                                <af:outputText value="#{row.Ulss}"
+                                                               shortDesc="#{bindings.Cnf_SoDistrettoZonaView1.hints.Ulss.tooltip}"
+                                                               id="ot8"/>
+                                            </af:column>
+                                        </af:table>
+                                    </af:panelCollection>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="300">
+                                        <f:facet name="first">
+                                            <af:panelHeader text="Configurazioni di screening" id="ph1" size="2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:panelCollection id="pc2" featuresOff="detach freeze wrap"
+                                                                    styleClass="AFStretchWidth">
+                                                    <f:facet name="menus"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t5" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                                            <af:group id="g2">
+                                                                <af:button text="Modifica" id="b4" action="creatEditZona" 
+                                                                    partialTriggers="t2" disabled="#{bindings.Descrbreve==''?'true':'false'}">
+                                                                    <af:setPropertyListener from="edit_cnf"
+                                                                                            to="#{requestScope.action}"
+                                                                                            type="action"/>
+                                                                </af:button>
+                                                                <af:button text="Cancella" id="b5" partialTriggers="t2" disabled="#{bindings.Descrbreve==''?'true':'false'}">
+                                                                    <af:showPopupBehavior popupId="p2"/>
+                                                                </af:button>
+                                                                <af:popup childCreation="deferred" autoCancel="disabled" id="p2">
+                                                                    <af:dialog id="d22" title="Cancella configurazione"
+                                                                               cancelTextAndAccessKey="Annulla"
+                                                                               affirmativeTextAndAccessKey="Cancella"
+                                                                               dialogListener="#{Cnf_geog.delete1Action}">
+                                                                        <f:facet name="buttonBar">
+                                                                            <h:outputText value="Cancellare definitivamente la seguente configurazione di screening?" id="ot144"/>
+                                                                        </f:facet>
+                                                                    </af:dialog>
+                                                                </af:popup>                                                            </af:group>
+                                                            <af:button text="Nuovo" id="b6" action="creatEditZona">
+                                                                <af:setPropertyListener from="create_cnf" to="#{requestScope.action}" type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <f:facet name="statusbar"/>
+                                                    <af:table value="#{bindings.Cnf_SoCnfDistrzonaView2.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Cnf_SoCnfDistrzonaView2.rangeSize}"
+                                                              emptyText="#{bindings.Cnf_SoCnfDistrzonaView2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Cnf_SoCnfDistrzonaView2.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Cnf_SoCnfDistrzonaView2.collectionModel.makeCurrent}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.Cnf_SoCnfDistrzonaView2.rangeSize}"
+                                                              id="t2">
+                                                        <af:column headerText="#{bindings.Cnf_SoCnfDistrzonaView2.hints.Descrbreve.label}"
+                                                                   id="c3" width="150">
+                                                            <af:outputText value="#{row.Descrbreve}"
+                                                                           shortDesc="#{bindings.Cnf_SoCnfDistrzonaView2.hints.Descrbreve.tooltip}"
+                                                                           id="ot3"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Cnf_SoCnfDistrzonaView2.hints.Descrbreve1.label}"
+                                                                   id="c4" width="150">
+                                                            <af:outputText value="#{row.Descrbreve1}"
+                                                                           shortDesc="#{bindings.Cnf_SoCnfDistrzonaView2.hints.Descrbreve1.tooltip}"
+                                                                           id="ot4"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:panelHeader>
+                                        </f:facet>
+                                        <f:facet name="second">
+                                            <af:panelHeader text="Comuni associati alla zona selezionata" id="ph2"
+                                                            size="2">
+                                                <f:facet name="context"/>
+                                                <f:facet name="toolbar"/>
+                                                <f:facet name="menuBar"/>
+                                                <f:facet name="legend"/>
+                                                <f:facet name="info"/>
+                                                <af:panelCollection id="pc3" featuresOff="detach freeze wrap"
+                                                                    styleClass="AFStretchWidth">
+                                                    <f:facet name="menus"/>
+                                                    <f:facet name="toolbar">
+                                                        <af:toolbar id="t6" rendered="#{sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                                            <af:button text="Cancella" id="b7">
+                                                                <af:showPopupBehavior popupId="p3"/>
+                                                            </af:button>
+                                                            <af:popup childCreation="deferred" autoCancel="disabled" id="p3">
+                                                                <af:dialog id="d33" title="Cancella associazione"
+                                                                           cancelTextAndAccessKey="Annulla"
+                                                                           affirmativeTextAndAccessKey="Cancella"
+                                                                           dialogListener="#{Cnf_geog.delete2Action}">
+                                                                    <f:facet name="buttonBar">
+                                                                        <h:outputText value="Cancellare definitivamente la seguente associazione?" id="ot22"/>
+                                                                    </f:facet>
+                                                                </af:dialog>
+                                                            </af:popup>
+                                                            <af:button text="Aggiungi comune" id="b8"
+                                                            useWindow="true" windowHeight="600" windowWidth="750"
+                                                                       action="lovComune">
+                                                                <af:setPropertyListener from="#{bindings.Cnf_SoComuneView2Iterator}"
+                                                                                        to="#{requestScope.iteratorBinding}"
+                                                                                        type="action"/>
+                                                            </af:button>
+                                                        </af:toolbar>
+                                                    </f:facet>
+                                                    <f:facet name="statusbar"/>
+                                                    <af:table value="#{bindings.Cnf_SoComDistrettiZoneView3.collectionModel}"
+                                                              var="row"
+                                                              rows="#{bindings.Cnf_SoComDistrettiZoneView3.rangeSize}"
+                                                              emptyText="#{bindings.Cnf_SoComDistrettiZoneView3.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                                              rowBandingInterval="0"
+                                                              selectedRowKeys="#{bindings.Cnf_SoComDistrettiZoneView3.collectionModel.selectedRow}"
+                                                              selectionListener="#{bindings.Cnf_SoComDistrettiZoneView3.collectionModel.makeCurrent}"
+                                                              rowSelection="single"
+                                                              fetchSize="#{bindings.Cnf_SoComDistrettiZoneView3.rangeSize}"
+                                                              id="t3" partialTriggers="::b8 ::b7">
+                                                        <af:column headerText="#{bindings.Cnf_SoComDistrettiZoneView3.hints.Codcom.label}"
+                                                                   id="c5">
+                                                            <af:outputText value="#{row.Codcom}"
+                                                                           shortDesc="#{bindings.Cnf_SoComDistrettiZoneView3.hints.Codcom.tooltip}"
+                                                                           id="ot5"/>
+                                                        </af:column>
+                                                        <af:column headerText="#{bindings.Cnf_SoComDistrettiZoneView3.hints.Descrizione.label}"
+                                                                   id="c6" width="250">
+                                                            <af:outputText value="#{row.Descrizione}"
+                                                                           shortDesc="#{bindings.Cnf_SoComDistrettiZoneView3.hints.Descrizione.tooltip}"
+                                                                           id="ot6"/>
+                                                        </af:column>
+                                                    </af:table>
+                                                </af:panelCollection>
+                                            </af:panelHeader>
+                                        </f:facet>
+                                    </af:panelSplitter>
+                                </f:facet>
+                            </af:panelSplitter>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Zone"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

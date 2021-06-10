@@ -1,0 +1,551 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="A_SoSoggettoView"
+   Version="12.2.1.11.57"
+   SelectList="A_SoSoggetto.CODTS, 
+       A_SoSoggetto.CODANAGREG, 
+       A_SoSoggetto.CODDISTRZONA, 
+       A_SoSoggetto.CODCOMNASCITA, 
+       A_SoSoggetto.CODCOMRES, 
+       A_SoSoggetto.CODCOMDOM, 
+       A_SoSoggetto.CODCOMSCR, 
+       A_SoSoggetto.CODICEREGMEDICO, 
+       A_SoSoggetto.CODST, 
+       A_SoSoggetto.IDINTERNO, 
+       A_SoSoggetto.CF, 
+       A_SoSoggetto.COGNOME, 
+       A_SoSoggetto.NOME, 
+       A_SoSoggetto.COGNOME_CONIUGE, 
+       A_SoSoggetto.DATA_NASCITA, 
+       A_SoSoggetto.SESSO, 
+       A_SoSoggetto.CAP_COMRES, 
+       A_SoSoggetto.INDIRIZZO_RES, 
+       A_SoSoggetto.CAP_COMDOM, 
+       A_SoSoggetto.INDIRIZZO_DOM, 
+       A_SoSoggetto.CAP_COMSRC, 
+       A_SoSoggetto.INDIRIZZO_SCR, 
+       A_SoSoggetto.TEL1, 
+       A_SoSoggetto.TEL2, 
+       A_SoSoggetto.DATASCELTAMMG, 
+       A_SoSoggetto.ULSS, 
+       A_SoComune.CODCOM, 
+       A_SoComune.DESCRIZIONE, 
+       A_SoComune.CODPR, 
+       A_SoMedico.CODICEREGMEDICO AS CODICEREGMEDICO1, 
+       A_SoMedico.COGNOME AS COGNOME1, 
+       A_SoMedico.NOME AS NOME1, 
+       A_SoMedico.DTADESIONE, 
+       A_SoMedico.DTADES_CO, 
+       A_SoMedico.DTADES_MA, 
+       A_SoComune1.CODCOM AS CODCOM1, 
+       A_SoComune1.DESCRIZIONE AS DESCRIZIONE1, 
+       A_SoComune1.CODPR AS CODPR1, 
+       A_SoComune2.DESCRIZIONE AS DESCRIZIONE2, 
+       A_SoComune2.CODCOM AS CODCOM2, 
+       A_SoComune2.CODPR AS CODPR2, 
+       A_SoSoggetto.CODSTRES, 
+       A_SoSoggetto.CODSTDOM, 
+       DECODE(CODCOMRES,NULL,DECODE(CODSTRES,NULL,LPAD(CODSTRES,6,'0'),NULL),CODCOMRES) AS COD_RESIDENZA, 
+       DECODE(CODCOMDOM,NULL,DECODE(CODSTDOM,NULL,LPAD(CODSTDOM,6,'0'),NULL),CODCOMDOM) AS COD_DOMICILIO, 
+       Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc) AS CAP, 
+       Decode(A_SoSoggetto.cap_comdom,null,A_SoComune1.CAP,A_SoSoggetto.cap_comdom) AS CAP1, 
+       Decode(A_SoSoggetto.cap_comres,null,A_SoComune2.CAP,A_SoSoggetto.cap_comres) AS CAP2, 
+       A_SoMedico.ULSS AS ULSS1, 
+       A_SoSoggetto.EMAIL, 
+       A_SoSoggetto.CELLULARE, 
+       A_SoComune1.RELEASE_CODE, 
+       A_SoComune.RELEASE_CODE AS RELEASE_CODE1, 
+       A_SoComune2.RELEASE_CODE AS RELEASE_CODE2, 
+       A_SoMedico.DTADES_PF, 
+       A_SoSoggetto.RELEASE_CODE_COM_DOM, 
+       A_SoSoggetto.RELEASE_CODE_COM_NAS, 
+       A_SoSoggetto.RELEASE_CODE_COM_RES, 
+       A_SoSoggetto.RELEASE_CODE_COM_SCR, 
+       A_SoSoggetto.RELEASE_CODE_ST_DOM, 
+       A_SoSoggetto.RELEASE_CODE_ST_NAS, 
+       A_SoSoggetto.RELEASE_CODE_ST_RES, 
+       A_SoMedico.DTADES_CA"
+   FromList="SO_SOGGETTO A_SoSoggetto, SO_COMUNE A_SoComune, SO_MEDICO A_SoMedico, SO_COMUNE A_SoComune1, SO_COMUNE A_SoComune2"
+   Where="(A_SoSoggetto.RELEASE_CODE_COM_SCR=A_SoComune.RELEASE_CODE(+) AND A_SoSoggetto.CODICEREGMEDICO=A_SoMedico.CODICEREGMEDICO(+) AND A_SoSoggetto.ulss=A_SoMedico.ulss(+) AND A_SoSoggetto.RELEASE_CODE_COM_DOM=A_SoComune1.RELEASE_CODE(+) AND A_SoSoggetto.RELEASE_CODE_COM_RES=A_SoComune2.RELEASE_CODE(+))"
+   OrderBy="A_SoSoggetto.DATA_NASCITA,A_SoSoggetto.COGNOME,A_SoSoggetto.NOME"
+   BindingStyle="Oracle"
+   CustomQuery="false"
+   ComponentClass="model.global.A_SoSoggettoViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="20"
+   PageIterMode="Partial"
+   RowClass="model.global.A_SoSoggettoViewRowImpl"
+   RowInterface="model.global.common.A_SoSoggettoViewRow"
+   ClientRowProxyName="model.global.client.A_SoSoggettoViewRowClient">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Prog" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <EntityUsage
+      Name="A_SoSoggetto"
+      Entity="model.global.A_SoSoggetto" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.global.A_SoSoggettoView.A_SoSoggetto"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoMedico"
+      Entity="model.global.A_SoMedico"
+      SourceUsage="model.global.A_SoSoggettoView.A_SoComune"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune1"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.global.A_SoSoggettoView.A_SoMedico"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <EntityUsage
+      Name="A_SoComune2"
+      Entity="model.global.A_SoComune"
+      SourceUsage="model.global.A_SoSoggettoView.A_SoComune1"
+      ReadOnly="true"
+      Reference="true" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Codts"
+      IsNotNull="true"
+      EntityAttrName="Codts"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codanagreg"
+      IsNotNull="true"
+      EntityAttrName="Codanagreg"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODANAGREG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      EntityAttrName="Coddistrzona"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODDISTRZONA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomnascita"
+      IsNotNull="true"
+      EntityAttrName="Codcomnascita"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODCOMNASCITA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomres"
+      IsNotNull="true"
+      EntityAttrName="Codcomres"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODCOMRES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomdom"
+      IsNotNull="true"
+      EntityAttrName="Codcomdom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODCOMDOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcomscr"
+      IsNotNull="true"
+      EntityAttrName="Codcomscr"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODCOMSCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico"
+      IsNotNull="true"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODICEREGMEDICO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codst"
+      EntityAttrName="Codst"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODST" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idinterno"
+      EntityAttrName="Idinterno"
+      EntityUsage="A_SoSoggetto"
+      AliasName="IDINTERNO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cf"
+      EntityAttrName="Cf"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CF" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="A_SoSoggetto"
+      AliasName="COGNOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="A_SoSoggetto"
+      AliasName="NOME" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CognomeConiuge"
+      EntityAttrName="CognomeConiuge"
+      EntityUsage="A_SoSoggetto"
+      AliasName="COGNOME_CONIUGE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DataNascita"
+      IsNotNull="true"
+      EntityAttrName="DataNascita"
+      EntityUsage="A_SoSoggetto"
+      AliasName="DATA_NASCITA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Sesso"
+      IsNotNull="true"
+      EntityAttrName="Sesso"
+      EntityUsage="A_SoSoggetto"
+      AliasName="SESSO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CapComres"
+      EntityAttrName="CapComres"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CAP_COMRES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoRes"
+      EntityAttrName="IndirizzoRes"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_RES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CapComdom"
+      EntityAttrName="CapComdom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CAP_COMDOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoDom"
+      EntityAttrName="IndirizzoDom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_DOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CapComsrc"
+      EntityAttrName="CapComsrc"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CAP_COMSRC" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IndirizzoScr"
+      EntityAttrName="IndirizzoScr"
+      EntityUsage="A_SoSoggetto"
+      AliasName="INDIRIZZO_SCR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel1"
+      EntityAttrName="Tel1"
+      EntityUsage="A_SoSoggetto"
+      AliasName="TEL1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tel2"
+      EntityAttrName="Tel2"
+      EntityUsage="A_SoSoggetto"
+      AliasName="TEL2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Datasceltammg"
+      EntityAttrName="Datasceltammg"
+      EntityUsage="A_SoSoggetto"
+      AliasName="DATASCELTAMMG" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss"
+      IsNotNull="true"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoSoggetto"
+      AliasName="ULSS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune"
+      AliasName="CODCOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune"
+      AliasName="DESCRIZIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune"
+      AliasName="CODPR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codiceregmedico1"
+      IsNotNull="true"
+      EntityAttrName="Codiceregmedico"
+      EntityUsage="A_SoMedico"
+      AliasName="CODICEREGMEDICO1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cognome1"
+      IsNotNull="true"
+      EntityAttrName="Cognome"
+      EntityUsage="A_SoMedico"
+      AliasName="COGNOME1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Nome1"
+      IsNotNull="true"
+      EntityAttrName="Nome"
+      EntityUsage="A_SoMedico"
+      AliasName="NOME1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtadesione"
+      EntityAttrName="Dtadesione"
+      EntityUsage="A_SoMedico"
+      AliasName="DTADESIONE" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DtadesCo"
+      EntityAttrName="DtadesCo"
+      EntityUsage="A_SoMedico"
+      AliasName="DTADES_CO" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DtadesMa"
+      EntityAttrName="DtadesMa"
+      EntityUsage="A_SoMedico"
+      AliasName="DTADES_MA" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom1"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune1"
+      AliasName="CODCOM1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione1"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune1"
+      AliasName="DESCRIZIONE1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr1"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune1"
+      AliasName="CODPR1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Descrizione2"
+      IsNotNull="true"
+      EntityAttrName="Descrizione"
+      EntityUsage="A_SoComune2"
+      AliasName="DESCRIZIONE2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codcom2"
+      IsNotNull="true"
+      EntityAttrName="Codcom"
+      EntityUsage="A_SoComune2"
+      AliasName="CODCOM2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codpr2"
+      IsNotNull="true"
+      EntityAttrName="Codpr"
+      EntityUsage="A_SoComune2"
+      AliasName="CODPR2" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codstres"
+      EntityAttrName="Codstres"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODSTRES" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Codstdom"
+      EntityAttrName="Codstdom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CODSTDOM" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodResidenza"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="COD_RESIDENZA"
+      Expression="DECODE(CODCOMRES,NULL,DECODE(CODSTRES,NULL,LPAD(CODSTRES,6,&#39;0&#39;),NULL),CODCOMRES)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodDomicilio"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="COD_DOMICILIO"
+      Expression="DECODE(CODCOMDOM,NULL,DECODE(CODSTDOM,NULL,LPAD(CODSTDOM,6,&#39;0&#39;),NULL),CODCOMDOM)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CAHR"
+      AliasName="CAP"
+      Expression="Decode(A_SoSoggetto.cap_comsrc,null,A_SoComune.CAP,A_SoSoggetto.cap_comsrc)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap1"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP1"
+      Expression="Decode(A_SoSoggetto.cap_comdom,null,A_SoComune1.CAP,A_SoSoggetto.cap_comdom)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Cap2"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="CAP2"
+      Expression="Decode(A_SoSoggetto.cap_comres,null,A_SoComune2.CAP,A_SoSoggetto.cap_comres)"
+      SQLType="VARCHAR" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Ulss1"
+      EntityAttrName="Ulss"
+      EntityUsage="A_SoMedico"
+      AliasName="ULSS1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Email"
+      PrecisionRule="true"
+      EntityAttrName="Email"
+      EntityUsage="A_SoSoggetto"
+      AliasName="EMAIL"/>
+   <ViewAttribute
+      Name="Cellulare"
+      PrecisionRule="true"
+      EntityAttrName="Cellulare"
+      EntityUsage="A_SoSoggetto"
+      AliasName="CELLULARE"/>
+   <ViewAttribute
+      Name="ReleaseCode"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune1"
+      AliasName="RELEASE_CODE"/>
+   <ViewAttribute
+      Name="ReleaseCode1"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune"
+      AliasName="RELEASE_CODE1"/>
+   <ViewAttribute
+      Name="ReleaseCode2"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCode"
+      EntityUsage="A_SoComune2"
+      AliasName="RELEASE_CODE2"/>
+   <ViewAttribute
+      Name="DtadesPf"
+      PrecisionRule="true"
+      EntityAttrName="DtadesPf"
+      EntityUsage="A_SoMedico"
+      AliasName="DTADES_PF"/>
+   <ViewAttribute
+      Name="ReleaseCodeComDom"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComDom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_DOM"/>
+   <ViewAttribute
+      Name="ReleaseCodeComNas"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComNas"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_NAS"/>
+   <ViewAttribute
+      Name="ReleaseCodeComRes"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComRes"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_RES"/>
+   <ViewAttribute
+      Name="ReleaseCodeComScr"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeComScr"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_COM_SCR"/>
+   <ViewAttribute
+      Name="ReleaseCodeStDom"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeStDom"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_ST_DOM"/>
+   <ViewAttribute
+      Name="ReleaseCodeStNas"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeStNas"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_ST_NAS"/>
+   <ViewAttribute
+      Name="ReleaseCodeStRes"
+      PrecisionRule="true"
+      EntityAttrName="ReleaseCodeStRes"
+      EntityUsage="A_SoSoggetto"
+      AliasName="RELEASE_CODE_ST_RES"/>
+   <ViewAttribute
+      Name="DtadesCa"
+      PrecisionRule="true"
+      EntityAttrName="DtadesCa"
+      EntityUsage="A_SoMedico"
+      AliasName="DTADES_CA"/>
+</ViewObject>

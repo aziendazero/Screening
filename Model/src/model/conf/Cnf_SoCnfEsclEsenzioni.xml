@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Cnf_SoCnfEsclEsenzioni"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SO_CNF_ESCL_ESENZIONI"
+  AliasName="Cnf_SoCnfEsclEsenzioni"
+  BindingStyle="OracleName"
+  RowClass="model.conf.Cnf_SoCnfEsclEsenzioniImpl">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="CodEsenzione"
+    IsNotNull="true"
+    Precision="10"
+    ColumnName="COD_ESENZIONE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Descrizione"
+    Precision="100"
+    ColumnName="DESCRIZIONE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_ESCL_ESENZIONI">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Ulss"
+    IsNotNull="true"
+    Precision="6"
+    ColumnName="ULSS"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    PrimaryKey="true"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="6"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Tpscr"
+    IsNotNull="true"
+    Precision="2"
+    ColumnName="TPSCR"
+    SQLType="CHAR"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    PrimaryKey="true"
+    RetrievedOnUpdate="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Idcnfescl"
+    IsNotNull="true"
+    Precision="4"
+    Scale="0"
+    ColumnName="IDCNFESCL"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SO_CNF_ESCL_ESENZIONI"/>
+  <Attribute
+    Name="Dtinserimento"
+    IsNotNull="true"
+    ColumnName="DTINSERIMENTO"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    IsUpdateable="while_insert"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="Opinserimento"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="OPINSERIMENTO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    IsUpdateable="while_insert"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Dtultimamodifica"
+    ColumnName="DTULTIMAMODIFICA"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    HistoryColumn="DateHistory"/>
+  <Attribute
+    Name="Opultmodifica"
+    Precision="100"
+    ColumnName="OPULTMODIFICA"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SO_CNF_ESCL_ESENZIONI"
+    HistoryColumn="UserHistory">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="CkEsclEsenzioniTpscr">
+    <DesignTime>
+      <Attr Name="_checkCondition" Value="Tpscr In ('CI', 'MA', 'CO', 'CA')"/>
+      <Attr Name="_isCheck" Value="true"/>
+      <Attr Name="_DBObjectName" Value="CK_ESCL_ESENZIONI_TPSCR"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="PkSoCnfEsclEsenzioni"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SO_CNF_ESCL_ESENZIONI"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.CodEsenzione"/>
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.Ulss"/>
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.Tpscr"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkCnfEsclEsenIdcnfescl">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="PK_SO_CNF_ESCLUSIONE"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_CNF_ESCL_ESEN_IDCNFESCL"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.Idcnfescl"/>
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.Ulss"/>
+      <Item Value="model.conf.Cnf_SoCnfEsclEsenzioni.Tpscr"/>
+    </AttrArray>
+  </Key>
+</Entity>

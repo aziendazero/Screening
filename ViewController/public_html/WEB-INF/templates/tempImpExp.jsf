@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<af:pageTemplateDef xmlns:af="http://xmlns.oracle.com/adf/faces/rich" var="attrs" definition="private"
+                    xmlns:afc="http://xmlns.oracle.com/adf/faces/rich/component" xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <af:xmlContent>
+        <afc:component>
+            <afc:description/>
+            <afc:display-name>tempImpExp</afc:display-name>
+            <afc:facet>
+                <afc:facet-name>
+                    content
+                </afc:facet-name>
+            </afc:facet>
+            <afc:attribute>
+                <afc:attribute-name>
+                    funzionalita
+                </afc:attribute-name>
+            </afc:attribute>
+            <afc:attribute>
+                <afc:attribute-name>
+                    navigation
+                </afc:attribute-name>
+                <afc:attribute-class>
+                    view.commons.action.Parent_DataForwardAction
+                </afc:attribute-class>
+            </afc:attribute>
+            <afc:attribute>
+                <afc:attribute-name>
+                    viewSubmenu
+                </afc:attribute-name>
+                <afc:attribute-class>
+                    java.lang.Boolean
+                </afc:attribute-class>
+                <afc:default-value>
+                    true
+                </afc:default-value>
+                <afc:required>
+                    false
+                </afc:required>
+            </afc:attribute>
+            <afc:attribute>
+                <afc:attribute-name>
+                    viewSubmenuLevel
+                </afc:attribute-name>
+                <afc:attribute-class>
+                    java.lang.String
+                </afc:attribute-class>
+                <afc:default-value>
+                    1
+                </afc:default-value>
+            </afc:attribute>
+        </afc:component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="pt_psl1" bottomHeight="50px" topHeight="85px" inlineStyle="margin:5px 5px 5px 5px;"
+                           startWidth="0" dimensionsFrom="parent">
+        <f:facet name="start">
+            <af:panelGroupLayout id="pt_pgl8">
+                <af:inputText label="Label 1" id="fvDest" value="#{requestScope.destNav}"
+                              inlineStyle="visibility:hidden"  binding="#{attrs.navigation.fvDest}"/>
+                <af:inputText label="Label 1" id="Globals_MESSAGE_KEY" value="#{sessionScope.Globals_MESSAGE_KEY}"
+                              inlineStyle="visibility:hidden"/>
+                <c:set var="viewcontrollerBundle1"
+                       value="#{adfBundle['viewcontroller.WEB-INF.templates.tempOpFunctionBundle']}"/>
+                <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+                <af:resource type="javascript" source="#{resource['js:jquery-3.2.1.min.js']}"/>
+
+                <af:resource type="javascript">
+                    function wantToSaveOnLoad() {  
+                        var d = $("input[name='pt1:fvDest']").val();
+                        var popup = AdfPage.PAGE.findComponent("pt1:wantToSave");
+                           
+                        if (d!=null &amp;&amp; d != '' &amp;&amp; popup != null)
+                            popup.show();
+                    }
+                    function showGlobalMessage(){
+                        var d = $("input[name='pt1:Globals_MESSAGE_KEY']").val();
+                        var popup = AdfPage.PAGE.findComponent("pt1:Globals_MESSAGE_KEY_MSG_POPUP");
+                           
+                        if (d!=null &amp;&amp; d != '' &amp;&amp; popup != null)
+                            popup.show();
+                    }
+                </af:resource>
+            </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="end"/>
+        <f:facet name="top">
+            <af:decorativeBox id="pt_db1" theme="medium">
+                <f:facet name="center">
+                    <af:panelStretchLayout id="pt_psl2" startWidth="0px" endWidth="140px" bottomHeight="30px">
+                        <f:facet name="center">
+                            <af:panelGroupLayout id="pt_pgl6" halign="left" layout="horizontal"
+                                                 styleClass="AFStretchWidth">
+                                    <af:image source="/images/logo-regione.png"
+                                              shortDesc="Screening Oncologico - Regione Veneto" id="pt_i1"
+                                              inlineStyle="height:25px;"/>
+                                    <af:spacer width="20" height="10" id="pt_s1"/>
+                                <af:navigationPane id="np1" level="0" value="#{integrazioni_menu}" var="menuImpexp"
+                                                   hint="buttons">
+                                    <f:facet name="nodeStamp">
+                                        <af:commandNavigationItem text="#{menuImpexp.label}" id="cni1"
+                                                                  icon="#{menuImpexp.icon}"
+                                                                  action="#{MenuUtilBean.doAction(menuImpexp.refNode.customPropList['defaultOutcome'], attrs.navigation, menuImpexp.refNode.customPropList['params'])}"
+                                                                  destination="#{menuImpexp.destination}"
+                                                                  rendered="#{menuImpexp.rendered}"
+                                                                  styleClass="img16">
+                                        </af:commandNavigationItem>
+                                    </f:facet>
+                                </af:navigationPane>
+                                <af:spacer width="30" height="10" id="pt_s5"/>
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="underConstruction">
+                                    <af:dialog id="pt_d2" title="#{viewcontrollerBundle1.AVVISO}" type="cancel"
+                                               cancelTextAndAccessKey="#{viewcontrollerBundle1.CHIUDI}">
+                                        <af:panelGroupLayout id="pt_pgl9" layout="horizontal" valign="middle" halign="center">
+                                            <af:image source="../images/warning_48.png" id="pt_i2"
+                                                      shortDesc="#{viewcontrollerBundle1.SERVIZIO_NON_DISPONIBILE_}"/>
+                                            <af:spacer width="30" height="10" id="pt_s4"/>
+                                            <h1>
+                                                #{viewcontrollerBundle1.SERVIZIO_NON_DISPONIBILE_}
+                                            </h1>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="Globals_MESSAGE_KEY_MSG_POPUP"
+                                          popupCanceledListener="#{Utility.cancelGlobalMessage}">
+                                    <af:dialog id="pt_d3" title="#{viewcontrollerBundle1.AVVISO}" type="cancel"
+                                               cancelTextAndAccessKey="#{viewcontrollerBundle1.CHIUDI}">
+                                        <af:panelGroupLayout id="pt_pgl91" layout="horizontal" valign="middle" halign="center">
+                                            <af:outputFormatted value="#{sessionScope.Globals_MESSAGE_KEY}" id="pt_of39"/>
+                                        </af:panelGroupLayout>
+                                    </af:dialog>
+                                </af:popup>
+                                
+                                <af:popup childCreation="deferred" autoCancel="disabled" id="wantToSave">
+                                    <af:dialog id="pt_d4" type="cancel" title="#{viewcontrollerBundle1.AVVISO}"
+                                               cancelTextAndAccessKey="#{viewcontrollerBundle1.CHIUDI}">
+                                        <af:panelGroupLayout id="pt_pgl10" layout="horizontal" valign="middle" halign="center">
+                                            <af:image source="../images/warning_48.png" id="pt_i22"
+                                                      shortDesc="#{viewcontrollerBundle1.WANT_TO_SAVE}"/>
+                                            <af:spacer width="30" height="10" id="pt_s6"/>
+                                            <h1>
+                                                #{viewcontrollerBundle1.WANT_TO_SAVE}
+                                            </h1>
+                                        </af:panelGroupLayout>
+                                        <f:facet name="buttonBar">
+                                            <af:button text="#{viewcontrollerBundle1.SALVA_E_PROSEGUI}"
+                                                       id="ctb11"
+                                                       action="#{attrs.navigation.onNavigate()}">
+                                                <af:setPropertyListener from="#{viewScope.destNav}" to="#{requestScope.destination}"
+                                                                        type="action"/>
+                                                <af:setPropertyListener from="Commit" to="#{requestScope.todo}" type="action"/>
+                                            </af:button>
+                                        </f:facet>
+                                    </af:dialog>
+                                </af:popup>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom">
+                            <af:panelStretchLayout id="pt_psl3" topHeight="10px" startWidth="200px" endWidth="200px">
+                                <f:facet name="start">
+                                    <af:outputText value="Screening #{sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': ''}"
+                                                   id="pt_ot1" inlineStyle="font-size:medium;"
+                                                   styleClass="#{sessionScope.scr=='CI'?'TitoloCI':sessionScope.scr=='MA'?'TitoloMA':sessionScope.scr=='CO'?'TitoloCO':sessionScope.scr=='CA'?'TitoloCA':sessionScope.scr=='PF'?'TitoloPF':'Titolo'}"/>
+                                </f:facet>
+                                <f:facet name="end">
+                                    <af:outputFormatted value="Utente #{sessionScope.user}, ULSS #{sessionScope.ulss}"
+                                                        id="pt_of2" styleUsage="instruction"
+                                                        inlineStyle="text-align:right;padding-right:10px"/>
+                                </f:facet>
+                                <f:facet name="top">
+                                    <af:separator id="pt_s3" inlineStyle="border-width:thin;"/>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                        <f:facet name="end">
+                            <af:panelGroupLayout id="pt_pgl7" layout="horizontal">
+                                <af:navigationPane id="pt_np1" hint="buttons" var="menuInfo" value="#{root_menu}"
+                                                   level="0">
+                                    <f:facet name="nodeStamp">
+                                        <af:commandNavigationItem text="#{menuInfo.label}" id="pt_cni1"
+                                                                  destination="#{menuInfo.destination}"
+                                                                  action="#{MenuUtilBean.doActionEvent(menuInfo.refNode.customPropList['defaultOutcome'], menuInfo.refNode.customPropList['eventEvaluation'])}"
+                                                                  icon="#{menuInfo.icon}"/>
+                                    </f:facet>
+                                </af:navigationPane>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="start">
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:decorativeBox>
+        </f:facet>
+        <f:facet name="bottom"/>
+        <f:facet name="center">
+            <af:panelSplitter id="pt_ps1" orientation="vertical" positionedFromEnd="true" splitterPosition="20">
+                <f:facet name="first">
+                    <af:decorativeBox id="pt_db3"
+                                      topHeight="50px">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pt_pgl4" layout="vertical">
+                               <h1 xmlns="http://www.w3.org/1999/xhtml">
+                                    #{attrs.funzionalita}
+                                </h1> 
+                            </af:panelGroupLayout>
+                            
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:facetRef facetName="content"/>
+                        </f:facet>
+                    </af:decorativeBox>
+                </f:facet>
+                <f:facet name="second">
+                    <af:panelGroupLayout id="pt_pgl2" halign="start" layout="horizontal">
+                        <af:popup childCreation="deferred" autoCancel="disabled" id="infoPopup">
+                            <af:dialog id="pt_d1" title="Info" type="ok">
+                                <f:facet name="buttonBar"/>
+                                <af:panelGroupLayout id="pt_pgl3" halign="center" layout="vertical">
+                                    <af:outputText value="Screening" id="pt_ot2"/>
+                                    <af:outputText value="Versione #{initParam.VERSIONE}" id="pt_ot3"/>
+                                    <af:outputText value="Versione base dati #{initParam.VERSIONE_DATABASE}"
+                                                   id="pt_ot5"/>
+                                </af:panelGroupLayout>
+                            </af:dialog>
+                        </af:popup>
+                        <af:outputFormatted value="info" id="pt_of1" styleUsage="pageStamp"
+                                            inlineStyle="text-align:right;">
+                            <af:showPopupBehavior popupId="infoPopup" triggerType="click"/>
+                        </af:outputFormatted>
+                        <af:spacer width="20" height="10" id="pt_s2"/>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:panelSplitter>
+        </f:facet>
+    </af:panelStretchLayout>
+</af:pageTemplateDef>

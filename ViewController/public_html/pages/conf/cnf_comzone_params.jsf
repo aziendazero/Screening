@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <af:document title="cnf_comzone_params.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_geog.comzoneForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempGeo.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1" rendered="#{sessionScope.SOGestioneConfigurazioniRegionali==true}">
+                                    <af:button text="Modifica" id="b1" action="creatEditComzone"
+                                               actionListener="#{Cnf_geog.onDettComzone}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                                              partialTriggers="t1">
+                                                        <af:dialog id="d2" title="Cancella configurazione"
+                                                                   cancelTextAndAccessKey="Annulla" partialTriggers="t1"
+                                                                   affirmativeTextAndAccessKey="Cancella"
+                                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                                            <f:facet name="buttonBar">
+                                                                <h:outputText value="Cancellare definitivamente la seguente configurazione?" id="ot5"/>
+                                                            </f:facet>
+                                                        </af:dialog>
+                                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b3"
+                                           rendered="#{sessionScope.SOGestioneConfigurazioniRegionali==true}"
+                                           action="creatEditComzone">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+                                <af:selectOneChoice value="#{pageFlowScope.ulssSelected}" 
+                                                    label="Azienda sanitaria"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc1"
+                                                    valueChangeListener="#{Cnf_geog.onChangeUlss}"
+                                                    autoSubmit="true">
+                                    <af:selectItem label="Tutte" id="si2"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Cnf_SoAziendaView1.validator}"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoCnfComuniZoneParamView11.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoCnfComuniZoneParamView11.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoCnfComuniZoneParamView11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoCnfComuniZoneParamView11.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoCnfComuniZoneParamView11.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoCnfComuniZoneParamView11.rangeSize}" id="t1"
+                                  autoHeightRows="0" scrollPolicy="page" binding="#{Cnf_geog.tabComzone}"
+                                  partialTriggers="::soc1">
+                            <af:column headerText="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Comune.label}" id="c1"
+                                       sortable="true" sortProperty="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Comune.name}"
+                                       width="200">
+                                <af:outputText value="#{row.Comune}"
+                                               shortDesc="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Comune.tooltip}" id="ot1"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Zona.label}" id="c2"
+                                       width="80" sortable="true" sortProperty="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Zona.name}">
+                                <af:outputText value="#{row.Zona}"
+                                               shortDesc="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Zona.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Altro.label}" id="c3"
+                                sortable="true" noWrap="false" sortProperty="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Altro.name}"
+                                       width="800">
+                                <af:outputText value="#{row.Altro}"
+                                               shortDesc="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Altro.tooltip}"
+                                               id="ot3">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Altro.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Ulss.label}" id="c4"
+                                sortable="true" sortProperty="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Ulss.name}"
+                                       width="80">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Ulss.tooltip}"
+                                               id="ot4">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoCnfComuniZoneParamView11.hints.Ulss.format}"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Configurazione centri di raccolta"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

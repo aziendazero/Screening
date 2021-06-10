@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_dwhCentro.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="start"/>
+                        <f:facet name="end"/>
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="horizontal" halign="end">
+                                <af:toolbar id="t1">
+                                    <af:button text="Conferma" id="b1" action="confirm"/>
+                                    <af:button text="Annulla" id="b2" action="cancel" immediate="true"/>
+                                    <af:button text="Applica" id="b3" action="apply"/>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"/>
+                        <f:facet name="center">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneChoice value="#{bindings.Idcentro1.inputValue}"
+                                                    label="Centro"
+                                                    required="#{bindings.Idcentro1.hints.mandatory}"
+                                                    shortDesc="Centro" id="soc1">
+                                    <f:selectItems value="#{bindings.Idcentro1.items}" id="si1"/>
+                                    <f:validator binding="#{bindings.Idcentro1.validator}"/>
+                                </af:selectOneChoice>
+                                <af:inputText value="#{bindings.Codice.inputValue}"
+                                              label="#{bindings.Codice.hints.label}"
+                                              required="#{bindings.Codice.hints.mandatory}"
+                                              columns="#{bindings.Codice.hints.displayWidth}"
+                                              maximumLength="#{bindings.Codice.hints.precision}"
+                                              shortDesc="#{bindings.Codice.hints.tooltip}" id="it4">
+                                    <f:validator binding="#{bindings.Codice.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.Descrizione.inputValue}"
+                                              label="#{bindings.Descrizione.hints.label}"
+                                              required="#{bindings.Descrizione.hints.mandatory}"
+                                              columns="#{bindings.Descrizione.hints.displayWidth}"
+                                              maximumLength="#{bindings.Descrizione.hints.precision}"
+                                              shortDesc="#{bindings.Descrizione.hints.tooltip}" id="it5">
+                                    <f:validator binding="#{bindings.Descrizione.validator}"/>
+                                </af:inputText>
+                                 <af:selectOneChoice value="#{bindings.Ulss.inputValue}" label="#{bindings.Ulss.label}" disabled="true"
+                                                    rendered="#{sessionScope.regionale?true:false}"
+                                                    shortDesc="#{bindings.Ulss.hints.tooltip}" id="soc5">
+                                    <f:selectItems value="#{bindings.Ulss.items}" id="si5"/>
+                                    <f:validator binding="#{bindings.Ulss.validator}"/>
+                                </af:selectOneChoice>                                  
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Codifica ministeriale"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

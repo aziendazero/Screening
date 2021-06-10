@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoDistrettoZona"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_DISTRETTO_ZONA"
+   AliasName="Cnf_SoDistrettoZona"
+   BindingStyle="Oracle"
+   RowClass="model.conf.Cnf_SoDistrettoZonaImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Coddistrzona"
+      IsNotNull="true"
+      Precision="4"
+      Scale="0"
+      ColumnName="CODDISTRZONA"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_DISTRETTO_ZONA"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Descrizione"
+      IsNotNull="true"
+      Precision="100"
+      ColumnName="DESCRIZIONE"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_DISTRETTO_ZONA" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_DISTRETTO_ZONA"
+      PrimaryKey="true"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <AccessorAttribute
+      Name="Cnf_SoCnfComuniZoneParam"
+      Association="model.FkComZonePHaZonaAssoc"
+      AssociationEnd="model.FkComZonePHaZonaAssoc.Cnf_SoCnfComuniZoneParam"
+      AssociationOtherEnd="model.FkComZonePHaZonaAssoc.Cnf_SoDistrettoZona"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Round_SoCnfDistrzona"
+      Association="model.FkSoCnfDHaRunCnSoDistrAssoc"
+      AssociationEnd="model.FkSoCnfDHaRunCnSoDistrAssoc.Round_SoCnfDistrzona"
+      AssociationOtherEnd="model.FkSoCnfDHaRunCnSoDistrAssoc.Cnf_SoDistrettoZona"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoComDistrettiZone"
+      Association="model.FkSoComDComDistrSoDistrAssoc"
+      AssociationEnd="model.FkSoComDComDistrSoDistrAssoc.Cnf_SoComDistrettiZone"
+      AssociationOtherEnd="model.FkSoComDComDistrSoDistrAssoc.Cnf_SoDistrettoZona"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <AccessorAttribute
+      Name="Cnf_SoSoggetto"
+      Association="model.FkSoSoggeHaDistreSoDistrAssoc"
+      AssociationEnd="model.FkSoSoggeHaDistreSoDistrAssoc.Cnf_SoSoggetto"
+      AssociationOtherEnd="model.FkSoSoggeHaDistreSoDistrAssoc.Cnf_SoDistrettoZona"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </AccessorAttribute>
+   <Key
+      Name="PkSoDistrettoZona"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_DISTRETTO_ZONA"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoDistrettoZona.Coddistrzona" />
+         <Item Value="model.conf.Cnf_SoDistrettoZona.Ulss" />
+      </AttrArray>
+   </Key>
+</Entity>

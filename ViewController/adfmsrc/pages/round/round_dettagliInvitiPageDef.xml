@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="round_dettagliInvitiPageDef"
+                Package="pages.round">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Round_SoSoggettiFilteredView1" RangeSize="10" DataControl="Round_AppModuleDataControl"
+              id="Round_SoSoggettiFilteredView1Iterator"/>
+    <iterator Binds="Round_SoConteggiInvitiView1" RangeSize="10" DataControl="Round_AppModuleDataControl"
+              id="Round_SoConteggiInvitiView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="Round_SoSoggettiFilteredView1Iterator" id="Round_SoSoggettiFilteredView1">
+      <nodeDefinition DefName="model.round.Round_SoSoggettiFilteredView" Name="Round_SoSoggettiFilteredView10">
+        <AttrNames>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Sesso"/>
+          <Item Value="Residenza"/>
+          <Item Value="Domicilio"/>
+          <Item Value="CognomeMed"/>
+          <Item Value="Tel1"/>
+          <Item Value="Dtrichiamo"/>
+          <Item Value="Ulss"/>
+          <Item Value="Tel2"/>
+          <Item Value="NomeMed"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Round_SoConteggiInvitiView1Iterator" id="Round_SoConteggiInvitiView1">
+      <nodeDefinition DefName="model.round.Round_SoConteggiInvitiView" Name="Round_SoConteggiInvitiView10">
+        <AttrNames>
+          <Item Value="Cognome"/>
+          <Item Value="Nome"/>
+          <Item Value="DataNascita"/>
+          <Item Value="Sesso"/>
+          <Item Value="Descrizione"/>
+          <Item Value="Domicilio"/>
+          <Item Value="Cognomemed"/>
+          <Item Value="Tel1"/>
+          <Item Value="Tel2"/>
+          <Item Value="Dtrichiamo"/>
+          <Item Value="TestProposto"/>
+          <Item Value="Ulss"/>
+          <Item Value="Nomemed"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

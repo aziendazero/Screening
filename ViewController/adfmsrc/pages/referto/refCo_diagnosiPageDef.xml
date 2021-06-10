@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.11.57" id="refCo_diagnosiPageDef"
+                Package="pages.referto">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <page path="templates.tempApplicationPageDef" id="ptb1" Refresh="ifNeeded"/>
+    <iterator Binds="Ref_SoRefertocolon2livView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoRefertocolon2livView1Iterator"/>
+    <iterator Binds="Ref_SoInvitiPerRefertiCOView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoInvitiPerRefertiCOView1Iterator"/>
+    <iterator Binds="Ref_SoCnfSugg2livView2" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfSugg2livView2Iterator"/>
+    <iterator Binds="Ref_SoEndoIstologieView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoEndoIstologieView1Iterator"/>
+    <iterator Binds="Ref_SoIntColonIstologieView1" RangeSize="25" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoIntColonIstologieView1Iterator"/>
+    <iterator Binds="Ref_SoCnfRef2livISTOCOView1" RangeSize="-1" DataControl="RefCo_AppModuleDataControl"
+              id="Ref_SoCnfRef2livISTOCOView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="Ref_SoRefertocolon2livView1Iterator" id="Completo">
+      <AttrNames>
+        <Item Value="Completo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Cognome">
+      <AttrNames>
+        <Item Value="Cognome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoCnfSugg2livView2Iterator" id="Descrizione">
+      <AttrNames>
+        <Item Value="Descrizione"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Nome">
+      <AttrNames>
+        <Item Value="Nome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Dtapp">
+      <AttrNames>
+        <Item Value="Dtapp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="DataNascita">
+      <AttrNames>
+        <Item Value="DataNascita"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Tipoinvitodesc">
+      <AttrNames>
+        <Item Value="Tipoinvitodesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="Ref_SoRefertocolon2livView1Iterator" id="Intchiusi">
+      <AttrNames>
+        <Item Value="Intchiusi"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="Ref_SoEndoIstologieView1Iterator" id="Ref_SoEndoIstologieView1">
+      <nodeDefinition DefName="model.referto.Ref_SoEndoIstologieView" Name="Ref_SoEndoIstologieView10">
+        <AttrNames>
+          <Item Value="NEndo"/>
+          <Item Value="Dtendo"/>
+          <Item Value="IstoC"/>
+          <Item Value="IstoP1"/>
+          <Item Value="IstoP2"/>
+          <Item Value="IstoP3"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="Ref_SoIntColonIstologieView1Iterator" id="Ref_SoIntColonIstologieView1">
+      <nodeDefinition DefName="model.referto.Ref_SoIntColonIstologieView" Name="Ref_SoIntColonIstologieView10">
+        <AttrNames>
+          <Item Value="NInt"/>
+          <Item Value="Dtintervento"/>
+          <Item Value="Istologia"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="Ref_SoRefertocolon2livView1Iterator" id="DiagnosiPeggiore" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject" StaticList="false" ListIter="Ref_SoCnfRef2livISTOCOView1Iterator">
+      <AttrNames>
+        <Item Value="DiagnosiPeggiore"/>
+        <Item Value="GrDiagnosi"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Idcnfref2l"/>
+        <Item Value="Gruppo"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Descrizione"/>
+      </ListDisplayAttrNames>
+    </list>
+    <attributeValues IterBinding="Ref_SoInvitiPerRefertiCOView1Iterator" id="Chiave">
+      <AttrNames>
+        <Item Value="Chiave"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

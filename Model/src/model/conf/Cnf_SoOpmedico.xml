@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<Entity
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Cnf_SoOpmedico"
+   Version="12.2.1.11.57"
+   DBObjectType="table"
+   DBObjectName="SO_OPMEDICO"
+   AliasName="Cnf_SoOpmedico"
+   BindingStyle="Oracle"
+   RowClass="model.conf.Cnf_SoOpmedicoImpl" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Attribute
+      Name="Idop"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDOP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Codop"
+      IsNotNull="true"
+      Precision="2"
+      Scale="0"
+      ColumnName="CODOP"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idcentro"
+      Precision="4"
+      Scale="0"
+      ColumnName="IDCENTRO"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Cognome"
+      IsNotNull="true"
+      Precision="40"
+      ColumnName="COGNOME"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Nome"
+      IsNotNull="true"
+      Precision="20"
+      ColumnName="NOME"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Titolo"
+      Precision="20"
+      ColumnName="TITOLO"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Dtfinevalopmedico"
+      ColumnName="DTFINEVALOPMEDICO"
+      SQLType="DATE"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      TableName="SO_OPMEDICO" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Tpscr"
+      IsNotNull="true"
+      Precision="2"
+      ColumnName="TPSCR"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_OPMEDICO"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Ulss"
+      IsNotNull="true"
+      Precision="6"
+      ColumnName="ULSS"
+      SQLType="CHAR"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      TableName="SO_OPMEDICO"
+      RetrievedOnUpdate="true"
+      RetrievedOnInsert="true" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </Attribute>
+   <Attribute
+      Name="Idpool"
+      ColumnName="IDPOOL"
+      SQLType="NUMERIC"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      TableName="SO_OPMEDICO"/>
+   <Attribute
+      Name="Cf"
+      Precision="16"
+      ColumnName="CF"
+      SQLType="VARCHAR"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      TableName="SO_OPMEDICO">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="model.conf.Cnf_SoOpmedico.Cf_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </Attribute>
+   <Key
+      Name="PkSoOpmedico"
+      PrimaryKey="true" >
+      <DesignTime>
+         <Attr Name="_DBObjectName" Value="PK_SO_OPMEDICO"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoOpmedico.Idop" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoOpmedHaTipoOSoCnfT" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CNF_TPOPMEDICO"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_OPMED_HA_TIPO_O_SO_CNF_T"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoOpmedico.Codop" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoOpmedRifCentrSoCentr" >
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="PK_SO_CENTRO_PREL_REF"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_OPMED_RIF_CENTR_SO_CENTR"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoOpmedico.Idcentro" />
+      </AttrArray>
+   </Key>
+   <Key
+      Name="FkSoOpmedRifSoPool">
+      <DesignTime>
+         <Attr Name="_referencedKey" Value="SO_POOL_PK"/>
+         <Attr Name="_isForeign" Value="true"/>
+         <Attr Name="_DBObjectName" Value="FK_SO_OPMED_RIF_SO_POOL"/>
+      </DesignTime>
+      <AttrArray Name="Attributes">
+         <Item Value="model.conf.Cnf_SoOpmedico.Idpool"/>
+      </AttrArray>
+   </Key>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.ModelBundle"/>
+   </ResourceBundle>
+</Entity>

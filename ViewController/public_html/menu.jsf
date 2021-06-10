@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html">
+    <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.menuBundle']}"/>
+    <af:document title="Screening" id="d1">
+        <af:messages id="m2"/>
+        <af:resource type="javascript" source="#{resource['js:jsFunction.js']}"/>
+        <af:form id="f1">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempSimple.jsf" value="#{bindings.ptb1}" id="pt1">
+                <f:facet name="content">
+                    <af:panelGroupLayout id="pgl3">
+                        <af:message id="m1" messageType="warning" rendered="#{pageFlowScope.info_round==true}"
+                                    message="Ci sono comuni privi di round attivo o il cui round è in scadenza"/>
+                        <af:link text="Clicca qui" id="l2" action="dialog:scadenze" useWindow="true"
+                                rendered="#{pageFlowScope.info_round==true}"
+                                 windowEmbedStyle="inlineDocument" windowModalityType="applicationModal"
+                                 windowHeight="600" windowWidth="900"/>
+                        <af:spacer width="10" height="10" id="s2"/>
+                        <af:listView value="#{bindings.Sec_SoWarningView1.collectionModel}" var="item"
+                                     emptyText="#{bindings.Sec_SoWarningView1.viewable ? 'Nessun messaggio da mostrare.' : 'Access Denied.'}"
+                                     fetchSize="#{bindings.Sec_SoWarningView1.rangeSize}" id="lv1">
+                            <af:listItem id="li1">
+                                <af:panelGridLayout id="pgl6">
+                                    <af:gridRow marginTop="1px" height="auto" marginBottom="1px" id="gr7">
+                                        <af:gridCell marginStart="5px" width="auto" id="gc7">
+                                            <af:outputText value="#{item.Titolo}"
+                                                           shortDesc="#{bindings.Sec_SoWarningView1.hints.Titolo.tooltip}"
+                                                           id="ot1" inlineStyle="font-weight:bold;"/>
+                                        </af:gridCell>
+                                         <af:gridCell marginEnd="10px" width="auto" id="gc11">
+                                            <af:outputText value=":"
+                                                           id="ot11" inlineStyle="font-weight:bold;"/>
+                                        </af:gridCell>                                        
+                                        <af:gridCell marginStart="5px" width="auto" marginEnd="5px" id="gc8">
+                                            <af:outputText value="#{item.Testo}"
+                                                           shortDesc="#{bindings.Sec_SoWarningView1.hints.Testo.tooltip}"
+                                                           id="ot2"/>
+                                        </af:gridCell>
+                                    </af:gridRow>
+                                </af:panelGridLayout>
+                            </af:listItem>
+                        </af:listView>
+                        <af:spacer width="10" height="10" id="s10"/>
+                        <af:decorativeBox id="db1" inlineStyle="text-align:center; color:GrayText; font-weight:bold;" rendered="true">
+                            <f:facet name="top">
+                                
+                            </f:facet>
+                            <f:facet name="center">
+                                <af:panelGroupLayout id="pgl5" layout="vertical">
+                                    <af:outputFormatted value="#{sessionScope.recapitoHd}"
+                                        rendered="#{sessionScope.recapitoHd != ''}" id="of6"/>
+                                    <af:spacer width="10" height="10" id="s3"/>
+                                    <!--a href="https://drive.google.com/drive/folders/1x1DUeJWq13F_wK3IkILpcHBlzCzqFACt?usp=sharing"
+                                       target="_blank">Note operative</a-->
+
+                                    <a href="#{sessionScope.linkNoteOperative}" target="_blank">
+                                        <af:outputLabel value="Note operative" rendered="#{sessionScope.linkNoteOperative != null and sessionScope.linkNoteOperative != ''}" id="ol1"/>
+                                    </a>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                        </af:decorativeBox>
+                        <af:panelGridLayout id="pgl12"
+                                            inlineStyle="margin-bottom:10px; margin-left:10px; margin-right:10px; margin-top:10px;">
+                            <af:gridRow id="gr4" marginTop="5px" marginBottom="20px">
+                                <af:gridCell id="gc32" width="100%" halign="stretch" columnSpan="2">
+                                    <af:panelBox text="#{viewcontrollerBundle.FUNZIONI_OPERATIVE}" id="pb2"
+                                                 showDisclosure="false">
+                                        <f:facet name="toolbar"/>
+                                        <af:panelGridLayout rendered="true" id="pgl1">
+                                            <c:set var="numElemXRow"
+                                                   value="#{viewcontrollerBundle.FUNZIONI_OPERATIVE_NUMERO_ELEMENTI_X_RIGA!=null &amp;&amp; !viewcontrollerBundle.FUNZIONI_OPERATIVE_NUMERO_ELEMENTI_X_RIGA.isEmpty()?viewcontrollerBundle.FUNZIONI_OPERATIVE_NUMERO_ELEMENTI_X_RIGA:op_function_menu.estimatedRowCount}"/>
+                                            <af:forEach var="numRow" varStatus="status" begin="0" end="#{numElemXRow}"
+                                                        step="1">
+                                                <af:gridRow id="gr2">
+                                                    <af:iterator id="i1"
+                                                                 value="#{MenuUtilBean.getMenuItemsRenderedSize(op_function_menu)}"
+                                                                 var="opFunctions" first="#{numRow * numElemXRow}"
+                                                                 rows="#{numElemXRow}">
+                                                        <af:gridCell id="gc2" rendered="#{opFunctions.rendered}"
+                                                                     inlineStyle="padding-bottom:10px; padding-right:0px; padding-left:80px; padding-top:10px;"
+                                                                     halign="start">
+                                                            <af:link text="#{opFunctions.label}" id="ci1"
+                                                                     icon="#{opFunctions.icon}"
+                                                                     action="#{MenuUtilBean.doAction(opFunctions.refNode.customPropList['defaultOutcome'], null, opFunctions.refNode.customPropList['params'])}"
+                                                                     rendered="#{opFunctions.rendered}"
+                                                                     iconPosition="top">
+                                                                <af:setPropertyListener from="#{true}"
+                                                                                        to="#{pageFlowScope.initSearch}"
+                                                                                        type="action"/>
+                                                                <af:setPropertyListener from="#{true}"
+                                                                                        to="#{requestScope.hasMenuAction}"
+                                                                                        type="action"/>
+                                                            </af:link>
+                                                        </af:gridCell>
+                                                    </af:iterator>
+                                                </af:gridRow>
+                                            </af:forEach>
+                                        </af:panelGridLayout>
+                                    </af:panelBox>
+                                </af:gridCell>
+                            </af:gridRow>
+                            <af:gridRow id="gr3" marginTop="5px"
+                                        rendered="#{sessionScope.SOImportAnagrafe || sessionScope.SOImportReferti || sessionScope.SOExportAppuntamenti || sessionScope.SOExportAccettazioni || sessionScope.SOImportEsclusioni}">
+                                <af:gridCell id="gc3" width="100%" halign="stretch" columnSpan="2">
+                                    <af:panelBox text="Integrazioni" id="pb1" showDisclosure="false">
+                                        <f:facet name="toolbar"/>
+                                        <af:panelGridLayout rendered="true" id="pgl4">
+                                            <c:set var="numElemXRow" value="5"/>
+                                            <af:forEach var="numRow" varStatus="status" begin="0" end="5" step="1">
+                                                <af:gridRow id="gr5">
+                                                    <af:iterator id="i2" value="#{integrazioni_menu}" var="menuImpexp"
+                                                                 first="#{numRow * numElemXRow}" rows="#{numElemXRow}">
+                                                        <af:gridCell id="gc4" rendered="#{menuImpexp.rendered}"
+                                                                     width="20%"
+                                                                     inlineStyle="padding-bottom:10px; padding-right:0px; padding-left:80px; padding-top:10px;"
+                                                                     halign="start">
+                                                            <af:link text="#{menuImpexp.label}" id="l1"
+                                                                     icon="#{menuImpexp.icon}"
+                                                                     action="#{menuImpexp.doAction}"
+                                                                     rendered="#{menuImpexp.rendered}"
+                                                                     iconPosition="top"/>
+                                                        </af:gridCell>
+                                                    </af:iterator>
+                                                </af:gridRow>
+                                            </af:forEach>
+                                        </af:panelGridLayout>
+                                    </af:panelBox>
+                                </af:gridCell>
+                            </af:gridRow>
+                            <af:gridRow id="gr1" marginTop="5px">
+                                <af:gridCell width="#{sessionScope.scr != 'CA' and sessionScope.scr != 'PF' and sessionScope.SOStatULSS==true or sessionScope.SOStatREG==true ? '29%' : '100%'  }"
+                                             id="gc1" halign="stretch" marginEnd="20px">
+                                    <af:panelBox text="Predisposizione sistema" id="pb3" showDisclosure="false">
+                                        <af:panelGridLayout id="pgl2">
+                                            <af:gridRow height="auto" id="gr6">
+                                                <af:gridCell width="100%" id="gc6"
+                                                             inlineStyle="padding-bottom:10px; padding-right:0px; padding-left:80px; padding-top:10px;">
+                                                    <af:link text="Predisposizione sistema" id="cil1"
+                                                             action="adfMenu_menuConfig" icon="/images/gears.png"
+                                                             iconPosition="top"/>
+                                                </af:gridCell>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:panelBox>
+                                </af:gridCell>
+                                <af:gridCell width="#{sessionScope.scr != 'CA' and sessionScope.scr != 'PF' and sessionScope.SOStatULSS==true or sessionScope.SOStatREG==true ? '70%' : '0px'  }"
+                                             id="gc5" columnSpan="1" halign="stretch">
+                                    <af:panelBox text="#{viewcontrollerBundle.GESTIONE_STATISTICHE}" id="pb29"
+                                                 showDisclosure="false"
+                                                 rendered="#{sessionScope.scr != 'CA' and sessionScope.scr != 'PF' and sessionScope.SOStatULSS==true or sessionScope.SOStatREG==true  }"
+                                                 inlineStyle="height:inherit;">
+                                        <f:facet name="toolbar"/>
+                                        <af:panelGridLayout rendered="true" id="pgl19">
+                                            <af:gridRow id="gr29">
+                                                <af:iterator id="i19" var="statMenu" first="0" value="#{stats_menu}">
+                                                    <af:gridCell id="gc29" rendered="#{statMenu.rendered}" width="25%"
+                                                                 inlineStyle="padding-bottom:10px; padding-right:0px; padding-left:80px; padding-top:10px;"
+                                                                 halign="start">
+                                                        <af:link text="#{statMenu.label}" id="ci19"
+                                                                 icon="#{statMenu.icon}" action="#{statMenu.doAction}"
+                                                                 rendered="#{statMenu.rendered}" iconPosition="top"/>
+                                                    </af:gridCell>
+                                                </af:iterator>
+                                            </af:gridRow>
+                                        </af:panelGridLayout>
+                                    </af:panelBox>
+                                </af:gridCell>
+                            </af:gridRow>
+                        </af:panelGridLayout>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:attribute name="funzionalita"
+                             value="#{af:format(viewcontrollerBundle.SCREENING__0_, sessionScope.scr=='CI'?'Cervicale' : sessionScope.scr=='MA'?'Mammografico' : sessionScope.scr=='CO'?(sessionScope.covid19==true?'Covid19':'del Colon-retto'): sessionScope.scr=='CA'?'Cardiovascolare': sessionScope.scr=='PF'? 'PFAS': '')}"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

@@ -1,0 +1,332 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Sogg_StRef2IntView"
+   Version="12.2.1.11.57"
+   OrderBy="&#34;N_INT&#34;"
+   BindingStyle="Oracle"
+   CustomQuery="true"
+   ComponentClass="model.soggetto.Sogg_StRef2IntViewImpl"
+   PageIterMode="Partial">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Coll|Msg"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT
+    SO_INTERVENTOCITO.IDREFERTO,
+    SO_INTERVENTOCITO.DTINTERVENTO,
+    SO_INTERVENTOCITO.MEDICOINT1,
+    SO_INTERVENTOCITO.TPINTERVENTO,
+    SO_INTERVENTOCITO.GRTPINTERVENTO,
+    SO_INTERVENTOCITO.DTISTCHIR,
+    SO_INTERVENTOCITO.IDMEDISTCHI,
+    SO_INTERVENTOCITO.ISTDIA,
+    SO_INTERVENTOCITO.GRISTDIA,
+    SO_INTERVENTOCITO.IDSUGG,
+    OPMEDINT.TITOLO || ' ' || OPMEDINT.NOME || ' ' || OPMEDINT.COGNOME MEDINT,
+    CNFTIPO.DESCRIZIONE TIPOINT,
+    OPMEDIST.TITOLO || ' ' || OPMEDIST.NOME || ' ' || OPMEDIST.COGNOME MEDIST,
+    CNFIST.DESCRIZIONE ESITOIST,
+    SO_CNF_SUGG_3LIV.ESITOSUGG,
+     /*20080715 MOD numero intervento*/
+     so_interventocito.n_int
+  /*20080715 FINE MOD*/
+ FROM SO_INTERVENTOCITO
+ , SO_OPMEDICO OPMEDINT
+ , SO_CNF_REF2LIV CNFTIPO
+ , SO_OPMEDICO OPMEDIST
+ , SO_CNF_REF2LIV CNFIST
+ , SO_CNF_SUGG_3LIV
+ WHERE OPMEDINT.IDOP (+) = SO_INTERVENTOCITO.MEDICOINT1
+ AND CNFTIPO.IDCNFREF2L (+) = SO_INTERVENTOCITO.TPINTERVENTO
+ AND CNFTIPO.GRUPPO (+) = SO_INTERVENTOCITO.GRTPINTERVENTO
+ AND CNFTIPO.ULSS (+) = SO_INTERVENTOCITO.ULSS
+ AND CNFTIPO.TPSCR (+) = SO_INTERVENTOCITO.TPSCR
+ AND OPMEDIST.IDOP (+) = SO_INTERVENTOCITO.IDMEDISTCHI
+ AND CNFIST.IDCNFREF2L (+) = SO_INTERVENTOCITO.ISTDIA
+ AND CNFIST.GRUPPO (+) = SO_INTERVENTOCITO.GRISTDIA
+ AND CNFIST.ULSS (+) = SO_INTERVENTOCITO.ULSS
+ AND CNFIST.TPSCR (+) = SO_INTERVENTOCITO.TPSCR
+ AND SO_CNF_SUGG_3LIV.IDSUGG3L (+) = SO_INTERVENTOCITO.IDSUGG
+ AND SO_CNF_SUGG_3LIV.ULSS (+) = SO_INTERVENTOCITO.ULSS
+ AND SO_CNF_SUGG_3LIV.TPSCR (+) = SO_INTERVENTOCITO.TPSCR
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Idreferto"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="10"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDREFERTO"
+      Expression="IDREFERTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtintervento"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTINTERVENTO"
+      Expression="DTINTERVENTO"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtintervento_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtintervento_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtintervento_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Medicoint1"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="MEDICOINT1"
+      Expression="MEDICOINT1"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tpintervento"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="TPINTERVENTO"
+      Expression="TPINTERVENTO"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Grtpintervento"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="GRTPINTERVENTO"
+      Expression="GRTPINTERVENTO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Dtistchir"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="DTISTCHIR"
+      Expression="DTISTCHIR"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Dtistchir_LABEL"/>
+            <FMT_FORMAT
+               ResId="Dtistchir_FMT_FORMAT"/>
+            <FMT_FORMATTER
+               ResId="Dtistchir_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idmedistchi"
+      IsPersistent="false"
+      Precision="4"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDMEDISTCHI"
+      Expression="IDMEDISTCHI"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Istdia"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="ISTDIA"
+      Expression="ISTDIA"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Gristdia"
+      IsPersistent="false"
+      Precision="6"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="GRISTDIA"
+      Expression="GRISTDIA"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="6" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Idsugg"
+      IsPersistent="false"
+      Precision="3"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="IDSUGG"
+      Expression="IDSUGG"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Medint"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDINT"
+      Expression="MEDINT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Medint_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Tipoint"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TIPOINT"
+      Expression="TIPOINT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Tipoint_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Medist"
+      IsPersistent="false"
+      Precision="82"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEDIST"
+      Expression="MEDIST"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="82" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Medist_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitoist"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOIST"
+      Expression="ESITOIST"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitoist_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Esitosugg"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ESITOSUGG"
+      Expression="ESITOSUGG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="Esitosugg_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NInt"
+      IsPersistent="false"
+      Precision="2"
+      Scale="0"
+      Type="java.lang.Integer"
+      ColumnType="NUMBER"
+      AliasName="N_INT"
+      Expression="N_INT"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="NInt_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="model.soggetto.common.Sogg_StRef2IntViewMsgBundle"/>
+   </ResourceBundle>
+</ViewObject>

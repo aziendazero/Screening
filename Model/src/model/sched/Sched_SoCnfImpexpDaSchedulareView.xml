@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Sched_SoCnfImpexpDaSchedulareView"
+  Version="12.2.1.11.57"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="Sched_SoCnfImpexpDaSchedulareView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery><![CDATA[SELECT Impexp_SoCnfImpexp.TPDIP,    
+       Impexp_SoCnfImpexp.PROGRULSS,    
+       Impexp_SoCnfImpexp.IMPEXP,    
+       Impexp_SoCnfImpexp.ULSS,    
+       Impexp_SoCnfImpexp.TPSCR,    
+       Impexp_SoCnfImpexp.IDCENTROREF,    
+       Impexp_SoCnfImpexp.ORASCHED,  
+       DECODE(TPDIP, 'AN', 'ANA', 'AC', 'ACC') AS TIPO_PROCESSO  
+FROM  SO_CNF_IMPEXP Impexp_SoCnfImpexp   
+WHERE Impexp_SoCnfImpexp.ORASCHED IS NOT NULL    
+AND Impexp_SoCnfImpexp.TPDIP = 'AC'    
+AND NOT EXISTS (    
+SELECT * FROM SO_CODA_PROCESSI Impexp_SoCodaProcessi    
+WHERE Impexp_SoCodaProcessi.ULSS = Impexp_SoCnfImpexp.ULSS    
+AND Impexp_SoCodaProcessi.TPSCR = Impexp_SoCnfImpexp.TPSCR    
+AND Impexp_SoCodaProcessi.TIPO_PROCESSO = DECODE(Impexp_SoCnfImpexp.TPDIP, 'AN', 'ANA', 'AC', 'ACC')    
+AND TRUNC(SYSDATE + 1) IN (TRUNC(Impexp_SoCodaProcessi.DATA_SCHEDULAZIONE), TRUNC(Impexp_SoCodaProcessi.INIZIO_ESECUZIONE)))]]></SQLQuery>
+  <EntityUsage
+    Name="Impexp_SoCnfImpexp"
+    Entity="model.impexp.Impexp_SoCnfImpexp"/>
+  <ViewAttribute
+    Name="Tpdip"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpdip"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="TPDIP"/>
+  <ViewAttribute
+    Name="Progrulss"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Progrulss"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="PROGRULSS"/>
+  <ViewAttribute
+    Name="Impexp"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Impexp"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="IMPEXP"/>
+  <ViewAttribute
+    Name="Ulss"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Ulss"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="ULSS"/>
+  <ViewAttribute
+    Name="Tpscr"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Tpscr"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="TPSCR"/>
+  <ViewAttribute
+    Name="Idcentroref"
+    PrecisionRule="true"
+    EntityAttrName="Idcentroref"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="IDCENTROREF"/>
+  <ViewAttribute
+    Name="Orasched"
+    PrecisionRule="true"
+    EntityAttrName="Orasched"
+    EntityUsage="Impexp_SoCnfImpexp"
+    AliasName="ORASCHED"/>
+  <ViewAttribute
+    Name="TipoProcesso"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="3"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TIPO_PROCESSO"
+    Expression="TIPO_PROCESSO"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="3"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="model.sched.common.Sched_SoCnfImpexpDaSchedulareViewMsgBundle"/>
+  </ResourceBundle>
+</ViewObject>

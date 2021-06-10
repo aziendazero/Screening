@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="cnf_inserti.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:form id="f1" binding="#{Cnf_docsAction.insertoForm}">
+            <af:pageTemplate viewId="/WEB-INF/templates/tempDocs.jsf" id="pt1">
+                <f:facet name="content">
+                    <af:panelCollection id="pc1" styleClass="AFStretchWidth" featuresOff="detach freeze wrap">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar">
+                            <af:toolbar id="t2">
+                                <af:group id="g1">
+                                    <af:button text="Modifica" id="b1"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                               action="creatEditInserto" actionListener="#{Cnf_docsAction.onDettInserto}">
+                                        <af:setPropertyListener from="edit" to="#{requestScope.action}" type="action"/>
+                                    </af:button>
+                                    <af:button text="Cancella" id="b2"
+                                               rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}">
+                                        <af:showPopupBehavior popupId="p1"/>
+                                    </af:button>
+                                    <af:button text="Download" id="b3">
+                                        <af:fileDownloadActionListener filename="#{bindings.Nomefile.inputValue}"
+                                                                       method="#{Cnf_TemplateLetteraBean.downloadInsertoListener}"/>
+                                    </af:button>
+                                    <af:popup childCreation="deferred" autoCancel="disabled" id="p1"
+                                              partialTriggers="t1">
+                                        <af:dialog id="d2" partialTriggers="t1" affirmativeTextAndAccessKey="Cancella"
+                                                   cancelTextAndAccessKey="Annulla" title="Cancella chiusura"
+                                                   dialogListener="#{ParentBackingBean.deleteAction}">
+                                            <f:facet name="buttonBar"/>
+                                            <af:outputText value="Cancellare definitivamente il seguente inserto?"
+                                                           id="ot40"/>
+                                        </af:dialog>
+                                    </af:popup>
+                                </af:group>
+                                <af:button text="Nuovo" id="b4"
+                                           rendered="${sessionScope.SOGestioneConfigurazioneSistema==true}"
+                                           action="creatEditInserto">
+                                    <af:setPropertyListener from="create" to="#{requestScope.action}" type="action"/>
+                                </af:button>
+				<af:selectOneChoice value="#{pageFlowScope.ulssSelectedInserti}" label="Azienda sanitaria" rendered="#{sessionScope.regionale?true:false}"
+                                    shortDesc="#{bindings.Cnf_SoAziendaView1.hints.tooltip}" id="soc1"
+                                    valueChangeListener="#{Cnf_docsAction.onChangeInserti}" autoSubmit="true"
+                                    binding="#{Cnf_docsAction.selectedInserti}">
+                                    <af:selectItem label="Tutte" id="si44"/>
+                                    <f:selectItems value="#{bindings.Cnf_SoAziendaView1.items}" id="si1"/>
+                                </af:selectOneChoice>
+                            </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.Cnf_SoInsertoView1.collectionModel}" var="row"
+                                  rows="#{bindings.Cnf_SoInsertoView1.rangeSize}"
+                                  emptyText="#{bindings.Cnf_SoInsertoView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.Cnf_SoInsertoView1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.Cnf_SoInsertoView1.collectionModel.makeCurrent}"
+                                  rowSelection="single" fetchSize="#{bindings.Cnf_SoInsertoView1.rangeSize}" id="t1" 
+                                  scrollPolicy="page"  binding="#{Cnf_docsAction.tabInserto}">
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Ulss.label}" id="c5"
+                                       rendered="#{sessionScope.regionale==true}">
+                                <af:outputText value="#{row.Ulss}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Ulss.tooltip}" id="ot5"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Nomefile.label}" id="c2"
+                                       width="200">
+                                <af:outputText value="#{row.Nomefile}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Nomefile.tooltip}"
+                                               id="ot2"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Descrizione.label}" id="c4"
+                                       width="200">
+                                <af:outputText value="#{row.Descrizione}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Descrizione.tooltip}"
+                                               id="ot4"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Dtinserimento.label}" id="c7">
+                                <af:outputText value="#{row.Dtinserimento}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Dtinserimento.tooltip}"
+                                               id="ot7">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoInsertoView1.hints.Dtinserimento.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Opinserimento.label}" id="c8">
+                                <af:outputText value="#{row.Opinserimento}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Opinserimento.tooltip}"
+                                               id="ot8"/>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Dtultmodifica.label}" id="c9">
+                                <af:outputText value="#{row.Dtultmodifica}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Dtultmodifica.tooltip}"
+                                               id="ot9">
+                                    <af:convertDateTime pattern="#{bindings.Cnf_SoInsertoView1.hints.Dtultmodifica.format}"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column headerText="#{bindings.Cnf_SoInsertoView1.hints.Opultmodifica.label}" id="c10">
+                                <af:outputText value="#{row.Opultmodifica}"
+                                               shortDesc="#{bindings.Cnf_SoInsertoView1.hints.Opultmodifica.tooltip}"
+                                               id="ot10"/>
+                            </af:column>
+                        </af:table>
+                    </af:panelCollection>
+                </f:facet>
+                <f:attribute name="funzionalita" value="Inserti"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>
